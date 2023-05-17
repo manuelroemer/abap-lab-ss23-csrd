@@ -1,9 +1,6 @@
 {
   "compilerOptions": {
-    "typeRoots": [
-      "./node_modules/@types",
-      "./node_modules/@sapui5/types"
-    ],
+    "typeRoots": ["./node_modules/@types", "./node_modules/@sapui5/types"],
     "target": "es2022",
     "module": "es2022",
     "moduleResolution": "node",
@@ -14,7 +11,5 @@
     "baseUrl": "./",
     "composite": true
   },
-  "include": [
-    "./webapp/**/*"
-  ]
+  "include": ["./webapp/**/*"]
 }
