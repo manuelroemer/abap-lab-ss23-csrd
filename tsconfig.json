@@ -8,8 +8,7 @@
     "allowJs": false,
     "strict": true,
     "rootDir": "./webapp",
-    "baseUrl": "./",
-    "composite": true
+    "baseUrl": "./"
   },
   "include": ["./webapp/**/*"]
 }
