@@ -1,0 +1,10 @@
+{
+  "endOfLine": "lf",
+  "printWidth": 120,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "bracketSpacing": true,
+  "semi": true,
+  "bracketSameLine": true,
+  "xmlWhitespaceSensitivity": "ignore"
+}
