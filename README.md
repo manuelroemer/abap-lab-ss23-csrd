@@ -24,6 +24,12 @@ This project uses [prettier](https://prettier.io/) for formatting the code. You 
 
 We recommend installing the [Prettier VS Code extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) when working on this codebase.
 
+### Linting
+
+This project uses [ESLint](https://eslint.org/) for linting the code. You can lint the entire project by running `npm run lint`.
+
+We recommend installing the [ESLint VS Code extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) when working on this codebase.
+
 ### TypeScript
 
 The entire project is heavily frontend-based, meaning that most development effort is put into the frontend's codebase. Therefore, we develop the UI in [TypeScript](https://www.typescriptlang.org/). This drastically reduces the potential errors that we can make and gives us more time to actively focus on developing the _project_.
