@@ -15,7 +15,7 @@
     "deploy": "fiori verify",
     "deploy-config": "fiori add deploy-config",
     "undeploy": "fiori undeploy --config ui5-deploy.yaml",
-    "tsc --noEmit": "tsc",
+    "tsc": "tsc --noEmit",
     "format": "prettier -w .",
     "lint": "eslint webapp",
     "prepare": "husky install"
