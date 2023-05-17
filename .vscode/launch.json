@@ -1,0 +1,26 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    // Note: The following launch configurations have the following traits:
+    // - They require the dev server to run (-> `npm start`).
+    // - They require ANY Edge/Chrome process to be closed. The browsers WILL NOT be started
+    //   if they are already running.
+    //   See https://stackoverflow.com/a/55505708 for details.
+    {
+      "name": "Launch Edge",
+      "type": "msedge",
+      "request": "launch",
+      "url": "http://localhost:8080/index.html?sap-ui-xx-viewCache=false",
+      "webRoot": "${workspaceFolder}/webapp",
+      "userDataDir": false
+    },
+    {
+      "name": "Launch Chrome",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:8080/index.html?sap-ui-xx-viewCache=false",
+      "webRoot": "${workspaceFolder}/webapp",
+      "userDataDir": false
+    }
+  ]
+}

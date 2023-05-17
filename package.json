@@ -12,9 +12,11 @@
   "devDependencies": {
     "@prettier/plugin-xml": "2.2.0",
     "@sap/ux-ui5-tooling": "1.9.6",
+    "@sapui5/types": "^1.113.0",
     "@ui5/cli": "3.1.2",
     "prettier": "2.8.8",
     "typescript": "5.0.4",
+    "ui5-tooling-transpile": "^0.7.10",
     "yo": "4.3.1"
   },
   "scripts": {
@@ -23,7 +25,7 @@
     "deploy": "fiori verify",
     "deploy-config": "fiori add deploy-config",
     "undeploy": "fiori undeploy --config ui5-deploy.yaml",
-    "tsc": "tsc",
+    "tsc --noEmit": "tsc",
     "format": "prettier -w ."
   },
   "sapuxLayer": "CUSTOMER_BASE"
