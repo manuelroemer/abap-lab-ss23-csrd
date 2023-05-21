@@ -1,5 +1,17 @@
-<mvc:View controllerName="csrdreporting.controller.Main" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
+<mvc:View
+  controllerName="csrdreporting.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc"
+  displayBlock="true"
+  xmlns="sap.m"
+  xmlns:controls="csrdreporting.forms">
   <Page id="page" title="{i18n>title}">
-    <Text text="Hello world!" />
+    <VBox>
+      <Button press="updateJSON" text="Update JSON" />
+      <Text text="Current message: " />
+      <Input value="{vm>/state/message}" />
+
+      <Title text="Form Engine:" />
+      <controls:FormEngine schema="{vm>/schema}" state="{vm>/state}" />
+    </VBox>
   </Page>
 </mvc:View>
