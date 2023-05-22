@@ -4,6 +4,8 @@ import {
   FormSchema,
   FormSchemaElement,
   FormSchemaElementType,
+  FormSchemaRule,
+  FormSchemaRuleEffect,
   HeadingFormSchemaElement,
   TextFormSchemaElement,
   TextInputFormSchemaElement,
@@ -15,6 +17,7 @@ import VBox from 'sap/m/VBox';
 import Label from 'sap/m/Label';
 import TextArea from 'sap/m/TextArea';
 import Event from 'sap/ui/base/Event';
+import { checkConditions } from '../json-conditions/json-conditions';
 
 export type FormEngineState = Record<string, unknown>;
 
@@ -42,7 +45,14 @@ const elementRenderers: RenderLookup = {
 
 export function render<T extends FormSchemaElement>(element: T, context: FormEngineRenderingContext): Control {
   const renderer = elementRenderers[element.type] as RenderFormSchemaElement;
-  return renderer(element, context);
+  const control = renderer(element, context);
+
+  const { hide } = evaluateRules(element, context.state);
+  if (hide) {
+    control.setVisible(false);
+  }
+
+  return control;
 }
 
 function renderHeading({ text, level = 1, wrap = true }: HeadingFormSchemaElement) {
@@ -76,4 +86,26 @@ function renderDynamicElementWrapper(
       description && new FormattedText({ htmlText: description }),
     ].filter(Boolean) as Array<Control>,
   });
+}
+
+function evaluateRules(element: FormSchemaElement, state: FormEngineState) {
+  const rules = element.rules ?? [];
+  const effects = rules.map((rule) => evaluateOneRule(rule, state));
+
+  return {
+    hide: effects.some((effect) => effect === 'hide'),
+  };
+}
+
+function evaluateOneRule(rule: FormSchemaRule, value: object): undefined | FormSchemaRuleEffect {
+  const rules = rule.conditions ?? [];
+  const satisfy = rule.satisfy?.toUpperCase() ?? 'ALL';
+  const config = { rules, satisfy };
+
+  try {
+    return checkConditions(config, value) ? rule.effect : undefined;
+  } catch (e) {
+    console.warn('Evaluating rule conditions failed.', e, rule, value);
+    return undefined;
+  }
 }

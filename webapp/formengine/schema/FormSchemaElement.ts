@@ -1,3 +1,5 @@
+import { FormSchemaRule } from './FormSchemaRule';
+
 /**
  * A base type for any form schema element.
  *
@@ -9,6 +11,10 @@ export interface FormSchemaElementBase<TType extends string> {
    * This can be used as a type discriminator.
    */
   type: TType;
+  /**
+   * Rules that are automatically evaluated before the element is rendered, e.g., to hide the element.
+   */
+  rules?: Array<FormSchemaRule>;
 }
 
 /**

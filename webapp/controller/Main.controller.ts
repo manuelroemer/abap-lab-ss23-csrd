@@ -26,6 +26,11 @@ export default class MainController extends Controller {
               required: true,
               description: 'Input fields can have a description text. How cool is that?',
             },
+            {
+              type: 'text',
+              text: 'This text will only be displayed when you enter "Hello"!',
+              rules: [{ effect: 'hide', conditions: [{ property: 'message', op: 'neq', value: 'Hello' }] }],
+            },
           ],
         },
       ],
