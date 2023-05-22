@@ -1,13 +1,24 @@
 <mvc:View
+  xmlns:layout="sap.ui.layout"
   controllerName="csrdreporting.controller.Main"
   xmlns:mvc="sap.ui.core.mvc"
   displayBlock="true"
   xmlns="sap.m"
-  xmlns:controls="csrdreporting.formengine">
+  xmlns:formengine="csrdreporting.formengine">
   <Page id="page" title="{i18n>title}">
-    <VBox>
-      <Button class="sapUiLargeMarginBottom" press="updateJSON" text="Update message from outside" />
-      <controls:FormEngine schema="{vm>/schema}" state="{vm>/state}" />
-    </VBox>
+    <layout:FixFlex class="sapUiMediumMargin" fixFirst="false" vertical="false">
+      <layout:flexContent>
+        <VBox>
+          <Title text="Form Engine" level="H1" class="sapUiSmallMarginBottom" />
+          <formengine:FormEngine schema="{vm>/schema}" state="{vm>/state}" />
+        </VBox>
+      </layout:flexContent>
+      <layout:fixContent>
+        <VBox>
+          <Title text="Form Engine State" level="H1" class="sapUiSmallMarginBottom" />
+          <TextArea height="100%" width="300px" rows="30" value="{= JSON.stringify(${vm>/state}, null, 2)}"></TextArea>
+        </VBox>
+      </layout:fixContent>
+    </layout:FixFlex>
   </Page>
 </mvc:View>
