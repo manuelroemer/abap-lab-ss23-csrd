@@ -16,7 +16,13 @@
       <layout:fixContent>
         <VBox>
           <Title text="Form Engine State" level="H1" class="sapUiSmallMarginBottom" />
-          <TextArea height="100%" width="300px" rows="30" value="{= JSON.stringify(${vm>/state}, null, 2)}"></TextArea>
+          <TextArea
+            height="100%"
+            width="300px"
+            rows="30"
+            value="{= JSON.stringify(${vm>/state}, null, 2)}"
+            enabled="false"
+          />
         </VBox>
       </layout:fixContent>
     </layout:FixFlex>
