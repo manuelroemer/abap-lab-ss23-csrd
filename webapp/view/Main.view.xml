@@ -3,14 +3,10 @@
   xmlns:mvc="sap.ui.core.mvc"
   displayBlock="true"
   xmlns="sap.m"
-  xmlns:controls="csrdreporting.forms">
+  xmlns:controls="csrdreporting.formengine">
   <Page id="page" title="{i18n>title}">
     <VBox>
-      <Button press="updateJSON" text="Update JSON" />
-      <Text text="Current message: " />
-      <Input value="{vm>/state/message}" />
-
-      <Title text="Form Engine:" />
+      <Button class="sapUiLargeMarginBottom" press="updateJSON" text="Update message from outside" />
       <controls:FormEngine schema="{vm>/schema}" state="{vm>/state}" />
     </VBox>
   </Page>

@@ -1,16 +1,16 @@
-import Input from 'sap/m/Input';
-import Event from 'sap/ui/base/Event';
 import VBox from 'sap/m/VBox';
 import Control from 'sap/ui/core/Control';
 import RenderManager from 'sap/ui/core/RenderManager';
+import { FormEngineRenderingContext, FormEngineState, render } from './render';
+import { FormSchema } from './schema';
 
 /**
- * @namespace csrdreporting.forms
+ * @namespace csrdreporting.formengine
  */
 export default class FormEngine extends Control {
   static readonly metadata = {
     properties: {
-      schema: { type: 'object', defaultValue: {} },
+      schema: { type: 'object', defaultValue: { pages: [] } },
       state: { type: 'object', defaultValue: {} },
     },
     aggregations: {
@@ -42,19 +42,22 @@ export default class FormEngine extends Control {
   }
 
   private updateRenderedContent() {
-    const schema = this.getSchema();
-    const state = this.getState();
-    console.log('update: ', schema, state);
-
+    const schema = this.getSchema() as FormSchema;
+    const state = this.getState() as FormEngineState;
     this.getContent().removeAllItems();
 
-    const messageInput = new Input({
-      value: (state as any).message,
-      change: (e: Event) => {
-        this.setState({ ...state, message: e.getParameter('value') });
-      },
-    });
+    // TODO: Get current page.
+    const currentPage = schema.pages[0];
+    const context: FormEngineRenderingContext = {
+      schema,
+      state,
+      getState: (id: string) => state[id],
+      setState: (id: string, value: unknown) => this.setState({ ...state, [id]: value }),
+    };
 
-    this.getContent().addItem(messageInput);
+    for (const element of currentPage.elements) {
+      const control = render(element, context);
+      this.getContent().addItem(control);
+    }
   }
 }
