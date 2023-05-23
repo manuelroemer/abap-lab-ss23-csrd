@@ -4,7 +4,6 @@ about: A user story.
 title: 'User Story: '
 labels: user-story
 assignees: ''
-
 ---
 
 ## Description
