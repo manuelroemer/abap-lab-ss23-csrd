@@ -1,3 +1,7 @@
-import Controller from 'sap/ui/core/mvc/Controller';
+import BaseController from './BaseController';
 
-export default class MainController extends Controller {}
+export default class MainController extends BaseController {
+  navToFormBuilder() {
+    this.router.navTo('FormBuilder');
+  }
+}

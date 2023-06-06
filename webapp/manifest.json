@@ -44,7 +44,8 @@
         "sap.ui.comp": {},
         "sap.ui.generic.app": {},
         "sap.ui.table": {},
-        "sap.ushell": {}
+        "sap.ushell": {},
+        "sap.ui.codeeditor": {}
       }
     },
     "contentDensities": {
@@ -60,7 +61,11 @@
       }
     },
     "resources": {
-      "css": []
+      "css": [
+        {
+          "uri": "css/FormBuilder.css"
+        }
+      ]
     },
     "routing": {
       "config": {
@@ -77,6 +82,11 @@
           "name": "Main",
           "target": "Main",
           "pattern": ":?query:"
+        },
+        {
+          "name": "FormBuilder",
+          "target": "FormBuilder",
+          "pattern": "form-builder"
         }
       ],
       "targets": {
@@ -86,6 +96,13 @@
           "clearControlAggregation": false,
           "viewId": "Main",
           "viewName": "Main"
+        },
+        "FormBuilder": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "FormBuilder",
+          "viewName": "FormBuilder"
         }
       }
     },

@@ -1,5 +1,11 @@
-<mvc:View controllerName="csrdreporting.controller.Main" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
+<mvc:View
+  xmlns:layout="sap.ui.layout"
+  controllerName="csrdreporting.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc"
+  displayBlock="true"
+  xmlns="sap.m"
+  xmlns:formengine="csrdreporting.formengine">
   <Page id="page" title="{i18n>title}">
-    <Text text="Hello world!" />
+    <Button text="To Form Builder" press="navToFormBuilder" />
   </Page>
 </mvc:View>

@@ -10,15 +10,18 @@
     "sapui5"
   ],
   "scripts": {
-    "start": "fiori run --open \"index.html?sap-ui-xx-viewCache=false\"",
-    "build": "ui5 build --config=ui5.yaml --clean-dest --dest dist",
+    "start": "npm-run-all --parallel watch watch:controls",
+    "watch": "fiori run --open \"index.html?sap-ui-xx-viewCache=false\"",
+    "watch:controls": "npx @ui5/ts-interface-generator --watch",
+    "declaration": "npx @ui5/ts-interface-generator",
+    "build": "npm run declaration && ui5 build --config=ui5.yaml --clean-dest --dest dist",
     "deploy": "fiori verify",
     "deploy-config": "fiori add deploy-config",
     "undeploy": "fiori undeploy --config ui5-deploy.yaml",
     "tsc": "tsc --noEmit",
     "format": "prettier -w .",
     "lint": "eslint webapp",
-    "prepare": "husky install"
+    "prepare": "husky install && npm run declaration"
   },
   "devDependencies": {
     "@prettier/plugin-xml": "2.2.0",
@@ -27,14 +30,16 @@
     "@typescript-eslint/eslint-plugin": "5.59.6",
     "@typescript-eslint/parser": "5.59.6",
     "@ui5/cli": "3.1.2",
+    "@ui5/ts-interface-generator": "0.5.5",
     "eslint": "8.40.0",
     "eslint-config-prettier": "8.8.0",
     "eslint-plugin-prettier": "4.2.1",
+    "husky": "8.0.3",
+    "npm-run-all": "4.1.5",
     "prettier": "2.8.8",
     "typescript": "5.0.4",
     "ui5-tooling-transpile": "0.7.10",
-    "yo": "4.3.1",
-    "husky": "8.0.3"
+    "yo": "4.3.1"
   },
   "sapuxLayer": "CUSTOMER_BASE"
 }

@@ -1,0 +1,6 @@
+/* Fixes an issue with the SAPUI IconTabBar's stretchContentHeight="true" property which,
+   for whatever reason, not only stretches the height, but also the width. ¯\_(ツ)_/¯. */
+.form-builder-icon-bar {
+  left: unset;
+  right: unset;
+}
