@@ -1,0 +1,50 @@
+<mvc:View
+  xmlns:layout="sap.ui.layout"
+  controllerName="csrdreporting.controller.FormBuilder"
+  xmlns:mvc="sap.ui.core.mvc"
+  displayBlock="true"
+  xmlns="sap.m"
+  xmlns:formengine="csrdreporting.formengine"
+  xmlns:ce="sap.ui.codeeditor">
+  <Page id="page" title="{i18n>FormBuilder_Title}" showNavButton="true" navButtonPress="navBack">
+    <layout:ResponsiveSplitter defaultPane="formEngine">
+      <layout:PaneContainer>
+        <layout:SplitPane id="formEngine">
+          <formengine:FormEngine class="sapUiResponsiveMargin" schema="{vm>/schema}" state="{vm>/state}" />
+        </layout:SplitPane>
+        <layout:SplitPane>
+          <IconTabBar applyContentPadding="false" stretchContentHeight="true" class="form-builder-icon-bar">
+            <items>
+              <IconTabFilter key="schema" text="{i18n>FormBuilder_SchemaTab}">
+                <ce:CodeEditor type="json" value="{vm>/schema}" />
+              </IconTabFilter>
+              <IconTabFilter key="state" text="{i18n>FormBuilder_StateTab}">
+                <ce:CodeEditor type="json" />
+              </IconTabFilter>
+            </items>
+          </IconTabBar>
+        </layout:SplitPane>
+      </layout:PaneContainer>
+    </layout:ResponsiveSplitter>
+    <!-- <layout:FixFlex class="sapUiMediumMargin" fixFirst="false" vertical="false">
+      <layout:flexContent>
+        <VBox>
+          <Title text="Form Engine" level="H1" class="sapUiSmallMarginBottom" />
+          <formengine:FormEngine schema="{vm>/schema}" state="{vm>/state}" />
+        </VBox>
+      </layout:flexContent>
+      <layout:fixContent>
+        <VBox>
+          <Title text="Form Engine State" level="H1" class="sapUiSmallMarginBottom" />
+          <TextArea
+            height="100%"
+            width="300px"
+            rows="30"
+            value="{= JSON.stringify(${vm>/state}, null, 2)}"
+            enabled="false"
+          />
+        </VBox>
+      </layout:fixContent>
+    </layout:FixFlex> -->
+  </Page>
+</mvc:View>

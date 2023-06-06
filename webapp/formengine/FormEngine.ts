@@ -20,7 +20,10 @@ export default class FormEngine extends Control {
 
   static renderer = (rm: RenderManager, control: FormEngine) => {
     const content = control.getContent();
+    rm.openStart('section', control);
+    rm.openEnd();
     rm.renderControl(content);
+    rm.close('section');
   };
 
   private getContent() {
