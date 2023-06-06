@@ -6,6 +6,6 @@
   xmlns="sap.m"
   xmlns:formengine="csrdreporting.formengine">
   <Page id="page" title="{i18n>title}">
-    <Button text="To Form Builder" press="navToFormBuilder"/>
+    <Button text="To Form Builder" press="navToFormBuilder" />
   </Page>
 </mvc:View>
