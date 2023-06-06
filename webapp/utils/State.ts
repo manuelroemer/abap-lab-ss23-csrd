@@ -1,4 +1,5 @@
 import deepClone from 'sap/base/util/deepClone';
+import deepEqual from 'sap/base/util/deepEqual';
 import merge from 'sap/base/util/merge';
 import JSONModel from 'sap/ui/model/json/JSONModel';
 
@@ -36,7 +37,7 @@ import JSONModel from 'sap/ui/model/json/JSONModel';
  * decrement(); // logs: "123"
  * ```
  */
-export interface State<T extends object> {
+export interface State<T extends object = object> {
   /**
    * The {@link JSONModel} that is internally synchronized with the state.
    * Use this model for data-binding to the state.
@@ -54,13 +55,20 @@ export interface State<T extends object> {
    *   determines the next (partial) value based on the current value.
    * @param replace Replaces the entire state with the provided value instead of merging it.
    */
-  set(value: Partial<T> | ((previous?: T) => Partial<T>), replace?: boolean): T;
+  set(value: Partial<T> | ((previous: T) => Partial<T>), replace?: boolean): T;
   /**
    * Subscribes the given callback to state changes.
    * This returns a disposer function which, when called, unsubscribes the given callback.
    * @param cb The {@link StateSubscriber} callback to be invoked when the state changes.
    */
   subscribe(cb: StateSubscriber<T>): () => void;
+  /**
+   * Similarly to {@link subscribe}, this subscribes the given callback to state changes.
+   * This does, however, only invoke the callback when **a specific**, selected value changes.
+   * @param selector A function which returns the value to be watched for changes.
+   * @param cb The {@link StateSubscriber} callback to be invoked when the selected value changes.
+   */
+  watch<S>(selector: (state: T) => S, cb: StateSubscriber<T>): () => void;
   /**
    * Resets the state to its initial value.
    */
@@ -74,7 +82,7 @@ export interface State<T extends object> {
  * - `previousValue`: The previous value.
  * - `state`: The {@link State} object which triggered the notification.
  */
-export type StateSubscriber<T extends object> = (nextValue: T, previousValue: T | undefined, state: State<T>) => void;
+export type StateSubscriber<T extends object> = (nextValue: T, previousValue: T, state: State<T>) => void;
 
 export type StateGet<T extends object> = State<T>['get'];
 export type StateSet<T extends object> = State<T>['set'];
@@ -121,6 +129,16 @@ export function createState<T extends object>(createInitialState: CreateState<T>
     subscribe(cb) {
       subscribers.push(cb);
       return () => subscribers.splice(subscribers.indexOf(cb), 1);
+    },
+    watch(selector, cb) {
+      return this.subscribe((nextValue, previousValue, state) => {
+        const previous = selector(previousValue);
+        const next = selector(nextValue);
+
+        if (!deepEqual(previous, next)) {
+          cb(nextValue, previousValue, state);
+        }
+      });
     },
     reset() {
       this.set(deepClone(initialValue), true);

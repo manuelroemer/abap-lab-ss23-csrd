@@ -1,5 +1,6 @@
 import VBox from 'sap/m/VBox';
 import Control from 'sap/ui/core/Control';
+import Text from 'sap/m/Text';
 import RenderManager from 'sap/ui/core/RenderManager';
 import { FormEngineRenderingContext, FormEngineState, render } from './render';
 import { FormSchema } from './schema';
@@ -49,18 +50,28 @@ export default class FormEngine extends Control {
     const state = this.getState() as FormEngineState;
     this.getContent().removeAllItems();
 
-    // TODO: Get current page.
-    const currentPage = schema.pages[0];
-    const context: FormEngineRenderingContext = {
-      schema,
-      state,
-      getState: (id: string) => state[id],
-      setState: (id: string, value: unknown) => this.setState({ ...state, [id]: value }),
-    };
+    try {
+      // TODO: Get current page. Don't hardcode the number.
+      const currentPage = schema.pages?.[0] ?? { id: '', elements: [] };
+      const context: FormEngineRenderingContext = {
+        schema,
+        state,
+        getState: (id: string) => state[id],
+        setState: (id: string, value: unknown) => this.setState({ ...state, [id]: value }),
+      };
 
-    for (const element of currentPage.elements) {
-      const control = render(element, context);
-      this.getContent().addItem(control);
+      for (const element of currentPage.elements ?? []) {
+        const control = render(element, context);
+        this.getContent().addItem(control);
+      }
+    } catch (e: any) {
+      const errorText = new Text({
+        text: `An error occurred while rendering the form:\n${
+          e?.message ?? e
+        }.\n\nSee the developer console for details.`,
+      });
+      this.getContent().addItem(errorText);
+      console.error('An error occurred while rendering the form:', e);
     }
   }
 }
