@@ -11,7 +11,7 @@ import {
   FormSchemaElementType,
   HeadingFormSchemaElement,
   TextFormSchemaElement,
-  WhiteSpaceFormSchemaElement, 
+  WhiteSpaceFormSchemaElement,
   TextInputFormSchemaElement,
   DynamicFormSchemaElement,
 } from './Schema';
@@ -30,7 +30,7 @@ type RenderLookup = {
 const elementRenderers: RenderLookup = {
   heading: renderHeading,
   text: renderText,
-  whiteSpace: renderWhiteSpace, 
+  whiteSpace: renderWhiteSpace,
   'text-input': renderTextInput,
 };
 
@@ -56,9 +56,11 @@ function renderText({ text }: TextFormSchemaElement) {
 
 function renderWhiteSpace({ present }: WhiteSpaceFormSchemaElement) {
   if (present) {
-    return new FormattedText({ htmlText:"________________________________________ \n\n________________________________________" });
+    return new FormattedText({
+      htmlText: '________________________________________ \n\n________________________________________',
+    });
   }
-  return new FormattedText({}); 
+  return new FormattedText({});
 }
 
 function renderTextInput(element: TextInputFormSchemaElement, context: FormEngineContext) {

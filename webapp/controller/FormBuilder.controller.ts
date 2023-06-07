@@ -73,7 +73,7 @@ const defaultFormSchema: FormSchema = {
         },
         {
           type: 'whiteSpace',
-          present: true, 
+          present: true,
         },
         {
           type: 'text',
