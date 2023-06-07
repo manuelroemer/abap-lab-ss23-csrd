@@ -10,7 +10,20 @@
     <layout:ResponsiveSplitter defaultPane="formEngine">
       <layout:PaneContainer>
         <layout:SplitPane id="formEngine">
-          <formengine:FormEngine class="sapUiResponsiveMargin" schema="{state>/schema}" state="{state>/state}" />
+          <VBox>
+            <OverflowToolbar>
+              <Label text="{state>/pageTitle}" />
+              <ToolbarSpacer />
+              <Button text="{i18n>FormBuilder_PreviousPage}" press="onPreviousPagePress" />
+              <Button text="{i18n>FormBuilder_NextPage}" press="onNextPagePress" />
+            </OverflowToolbar>
+            <formengine:FormEngine
+              class="sapUiResponsiveMargin"
+              schema="{state>/schema}"
+              state="{state>/state}"
+              page="{state>/page}"
+            />
+          </VBox>
         </layout:SplitPane>
         <layout:SplitPane>
           <IconTabBar applyContentPadding="false" stretchContentHeight="true" class="form-builder-icon-bar">

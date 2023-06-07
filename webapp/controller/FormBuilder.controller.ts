@@ -1,13 +1,7 @@
 import BaseController from './BaseController';
 import { createState } from '../utils/State';
 import { FormSchema } from 'formengine/Schema';
-
-interface FormBuilderState {
-  schema: object;
-  state: object;
-  schemaJson: string;
-  stateJson: string;
-}
+import { FormEngineState } from 'formengine/FormEngine';
 
 const defaultFormSchema: FormSchema = {
   pages: [
@@ -47,8 +41,27 @@ const defaultFormSchema: FormSchema = {
         },
       ],
     },
+    {
+      id: 'page2',
+      name: 'Page 2',
+      elements: [
+        {
+          type: 'heading',
+          text: 'Hello from page 2!',
+        },
+      ],
+    },
   ],
 };
+
+interface FormBuilderState {
+  schema: Partial<FormSchema>;
+  state: FormEngineState;
+  schemaJson: string;
+  stateJson: string;
+  page: number;
+  pageTitle: string;
+}
 
 export default class FormBuilderController extends BaseController {
   state = createState<FormBuilderState>(() => ({
@@ -56,6 +69,8 @@ export default class FormBuilderController extends BaseController {
     schemaJson: JSON.stringify(defaultFormSchema, null, 4),
     state: {},
     stateJson: '{}',
+    page: 0,
+    pageTitle: defaultFormSchema.pages[0].name ?? '',
   }));
 
   public onInit() {
@@ -83,6 +98,23 @@ export default class FormBuilderController extends BaseController {
         this.state.set({ stateJson: JSON.stringify(state, null, 4) });
       },
     );
+
+    this.state.watch(
+      (s) => s.page,
+      ({ page }) => {
+        const schemaPage = this.state.get().schema?.pages?.[page];
+        const pageTitle = schemaPage?.name ?? schemaPage?.id ?? 'Unnamed page';
+        return this.state.set({ pageTitle });
+      },
+    );
+  }
+
+  onPreviousPagePress() {
+    this.state.set(({ page }) => ({ page: page - 1 }));
+  }
+
+  onNextPagePress() {
+    this.state.set(({ page }) => ({ page: page + 1 }));
   }
 }
 

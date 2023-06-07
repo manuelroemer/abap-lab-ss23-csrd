@@ -75,7 +75,8 @@ export default class FormEngine extends Control {
     this.getContent().removeAllItems();
 
     try {
-      const currentPage = schema.pages[page];
+      const adjustedPage = Math.max(0, Math.min(page, schema.pages.length - 1));
+      const currentPage = schema.pages[adjustedPage];
       const context: FormEngineContext = {
         schema,
         state,
