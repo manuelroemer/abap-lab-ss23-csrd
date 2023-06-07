@@ -27,7 +27,7 @@ const defaultFormSchema: FormSchema = {
         },
         {
           type: 'text',
-          text: 'This text will only be displayed when you enter "Hello"!',
+          text: 'This text will only be displayed when you enter "Hello world!"!',
           effects: [
             {
               effect: 'hide',
