@@ -16,6 +16,7 @@ export type FormEngineState = Record<string, unknown>;
 export interface FormEngineContext {
   readonly schema: FormSchema;
   readonly state: FormEngineState;
+  readonly page: number;
   getValue(id: string): unknown;
   setValue(id: string, value: unknown): void;
 }
@@ -29,6 +30,7 @@ export default class FormEngine extends Control {
     properties: {
       schema: { type: 'object', defaultValue: { pages: [] } },
       state: { type: 'object', defaultValue: {} },
+      page: { type: 'number', defaultValue: 0 },
     },
     aggregations: {
       _content: { type: 'sap.ui.core.Control', multiple: false, visibility: 'hidden' },
@@ -61,22 +63,28 @@ export default class FormEngine extends Control {
     this.updateRenderedContent();
   }
 
+  setPage(page: number) {
+    this.setProperty('page', page, true);
+    this.updateRenderedContent();
+  }
+
   private updateRenderedContent() {
     const schema = this.getSchema() as FormSchema;
     const state = this.getState() as FormEngineState;
+    const page = this.getPage() as number;
     this.getContent().removeAllItems();
 
     try {
-      // TODO: Get current page. Don't hardcode the number.
-      const currentPage = schema.pages?.[0] ?? { id: '', elements: [] };
+      const currentPage = schema.pages[page];
       const context: FormEngineContext = {
         schema,
         state,
+        page,
         getValue: (id: string) => state[id],
         setValue: (id: string, value: unknown) => this.setState({ ...state, [id]: value }),
       };
 
-      for (const element of currentPage.elements ?? []) {
+      for (const element of currentPage.elements) {
         const control = render(element, context);
         this.getContent().addItem(control);
       }
