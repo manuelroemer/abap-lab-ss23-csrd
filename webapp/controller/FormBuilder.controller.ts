@@ -51,6 +51,58 @@ const defaultFormSchema: FormSchema = {
         },
       ],
     },
+    {
+      id: 'page3',
+      name: 'Page 3',
+      elements: [
+        {
+          type: 'heading',
+          text: 'I don`t work here ... just cleaning :)',
+        },
+        {
+          type: 'text',
+          text: 'Enter what you earn:',
+        },
+        {
+          type: 'text-input',
+          id: 'yourSalary',
+          placeholder: 'Your salary?',
+          label: 'Message',
+          required: true,
+          description: 'Input fields can have a description text. How cool is that?',
+        },
+        {
+          type: 'whiteSpace',
+          present: true, 
+        },
+        {
+          type: 'text',
+          text: 'Enter what you would pay me:',
+        },
+        {
+          type: 'text-input',
+          id: 'mySalary',
+          placeholder: 'My salary?',
+          label: 'Message',
+          required: true,
+          description: 'Input fields can have a description text. How cool is that?',
+        },
+        {
+          type: 'text',
+          text: 'Now we are getting there :D',
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                type: 'le',
+                left: { type: 'value', id: 'yourSalary' },
+                right: { type: 'value', id: 'mySalary' },
+              },
+            },
+          ],
+        },
+      ],
+    },
   ],
 };
 
