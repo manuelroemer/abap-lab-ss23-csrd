@@ -1,15 +1,4 @@
 import Control from 'sap/ui/core/Control';
-import {
-  DynamicFormSchemaElement,
-  FormSchema,
-  FormSchemaElement,
-  FormSchemaElementType,
-  FormSchemaRule,
-  FormSchemaRuleEffect,
-  HeadingFormSchemaElement,
-  TextFormSchemaElement,
-  TextInputFormSchemaElement,
-} from './schema';
 import Title from 'sap/m/Title';
 import FormattedText from 'sap/m/FormattedText';
 import Input from 'sap/m/Input';
@@ -17,20 +6,20 @@ import VBox from 'sap/m/VBox';
 import Label from 'sap/m/Label';
 import TextArea from 'sap/m/TextArea';
 import Event from 'sap/ui/base/Event';
-import { checkConditions } from '../json-conditions/json-conditions';
-
-export type FormEngineState = Record<string, unknown>;
-
-export interface FormEngineRenderingContext {
-  schema: FormSchema;
-  state: FormEngineState;
-  getState(id: string): unknown;
-  setState(id: string, value: unknown): void;
-}
+import {
+  FormSchemaElement,
+  FormSchemaElementType,
+  HeadingFormSchemaElement,
+  TextFormSchemaElement,
+  TextInputFormSchemaElement,
+  DynamicFormSchemaElement,
+} from './Schema';
+import { FormEngineContext, FormEngineState } from './FormEngine';
+import { isExpressionTruthy } from './Expressions';
 
 type RenderFormSchemaElement<T extends FormSchemaElement = FormSchemaElement> = (
   element: T,
-  context: FormEngineRenderingContext,
+  context: FormEngineContext,
 ) => Control;
 
 type RenderLookup = {
@@ -43,7 +32,7 @@ const elementRenderers: RenderLookup = {
   'text-input': renderTextInput,
 };
 
-export function render<T extends FormSchemaElement>(element: T, context: FormEngineRenderingContext): Control {
+export function render<T extends FormSchemaElement>(element: T, context: FormEngineContext): Control {
   const renderer = elementRenderers[element.type] as RenderFormSchemaElement;
   const control = renderer(element, context);
 
@@ -63,11 +52,11 @@ function renderText({ text }: TextFormSchemaElement) {
   return new FormattedText({ htmlText: text });
 }
 
-function renderTextInput(element: TextInputFormSchemaElement, context: FormEngineRenderingContext) {
+function renderTextInput(element: TextInputFormSchemaElement, context: FormEngineContext) {
   const { id, placeholder, rows = 1 } = element;
-  const { getState, setState } = context;
-  const value = getState(element.id)?.toString() ?? '';
-  const onChange = (e: Event) => setState(id, e.getParameter('value'));
+  const { getValue, setValue } = context;
+  const value = getValue(element.id)?.toString() ?? '';
+  const onChange = (e: Event) => setValue(id, e.getParameter('value'));
   const input =
     rows > 1
       ? new Input({ placeholder, value, change: onChange })
@@ -89,23 +78,10 @@ function renderDynamicElementWrapper(
 }
 
 function evaluateRules(element: FormSchemaElement, state: FormEngineState) {
-  const rules = element.rules ?? [];
-  const effects = rules.map((rule) => evaluateOneRule(rule, state));
+  const elementEffects = element.effects ?? [];
+  const effectsToApply = elementEffects.filter((e) => isExpressionTruthy(e.condition, state));
 
   return {
-    hide: effects.some((effect) => effect === 'hide'),
+    hide: effectsToApply.some((e) => e.effect === 'hide'),
   };
-}
-
-function evaluateOneRule(rule: FormSchemaRule, value: object): undefined | FormSchemaRuleEffect {
-  const rules = rule.conditions ?? [];
-  const satisfy = rule.satisfy?.toUpperCase() ?? 'ALL';
-  const config = { rules, satisfy };
-
-  try {
-    return checkConditions(config, value) ? rule.effect : undefined;
-  } catch (e) {
-    console.warn('Evaluating rule conditions failed.', e, rule, value);
-    return undefined;
-  }
 }

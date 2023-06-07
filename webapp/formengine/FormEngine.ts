@@ -2,10 +2,26 @@ import VBox from 'sap/m/VBox';
 import Control from 'sap/ui/core/Control';
 import Text from 'sap/m/Text';
 import RenderManager from 'sap/ui/core/RenderManager';
-import { FormEngineRenderingContext, FormEngineState, render } from './render';
-import { FormSchema } from './schema';
+import { render } from './Rendering';
+import { FormSchema } from './Schema';
 
 /**
+ * Represents the internal state of the user-entered data that the form engine captures and renders.
+ */
+export type FormEngineState = Record<string, unknown>;
+
+/**
+ * Represents data that is provided by the form engine control to renderers.
+ */
+export interface FormEngineContext {
+  readonly schema: FormSchema;
+  readonly state: FormEngineState;
+  getValue(id: string): unknown;
+  setValue(id: string, value: unknown): void;
+}
+
+/**
+ * The form engine control which renders a dynamic UI based on a JSON document.
  * @namespace csrdreporting.formengine
  */
 export default class FormEngine extends Control {
@@ -53,11 +69,11 @@ export default class FormEngine extends Control {
     try {
       // TODO: Get current page. Don't hardcode the number.
       const currentPage = schema.pages?.[0] ?? { id: '', elements: [] };
-      const context: FormEngineRenderingContext = {
+      const context: FormEngineContext = {
         schema,
         state,
-        getState: (id: string) => state[id],
-        setState: (id: string, value: unknown) => this.setState({ ...state, [id]: value }),
+        getValue: (id: string) => state[id],
+        setValue: (id: string, value: unknown) => this.setState({ ...state, [id]: value }),
       };
 
       for (const element of currentPage.elements ?? []) {

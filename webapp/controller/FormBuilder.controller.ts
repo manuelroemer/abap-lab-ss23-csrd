@@ -1,6 +1,6 @@
 import BaseController from './BaseController';
 import { createState } from '../utils/State';
-import { FormSchema } from 'formengine/schema';
+import { FormSchema } from 'formengine/Schema';
 
 interface FormBuilderState {
   schema: object;
@@ -34,7 +34,16 @@ const defaultFormSchema: FormSchema = {
         {
           type: 'text',
           text: 'This text will only be displayed when you enter "Hello"!',
-          rules: [{ effect: 'hide', conditions: [{ property: 'message', op: 'neq', value: 'Hello' }] }],
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                type: 'eq',
+                left: { type: 'value', id: 'message' },
+                right: 'Hello world!',
+              },
+            },
+          ],
         },
       ],
     },
