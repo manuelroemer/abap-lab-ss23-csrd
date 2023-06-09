@@ -79,7 +79,7 @@ function renderDynamicElementWrapper(
 
 function evaluateRules(element: FormSchemaElement, state: FormEngineState) {
   const elementEffects = element.effects ?? [];
-  const effectsToApply = elementEffects.filter((e) => isExpressionTruthy(e.condition, state));
+  const effectsToApply = elementEffects.filter((e) => !isExpressionTruthy(e.condition, state));
 
   return {
     hide: effectsToApply.some((e) => e.effect === 'hide'),

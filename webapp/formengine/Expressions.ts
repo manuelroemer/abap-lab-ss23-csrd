@@ -10,7 +10,51 @@ function evaluateExpression(expression: FormSchemaExpressionOrPrimitive, state: 
     return expression;
   }
 
-  return true;
+  if (expression.type === 'value') {
+    return state[expression.id];
+  }
+
+  if (expression.type === 'not') {
+    const tempValue = evaluateExpression(expression.value, state);
+    return !tempValue;
+  }
+
+  const leftValue = evaluateExpression(expression.left, state);
+  const rightValue = evaluateExpression(expression.right, state);
+
+  if (expression.type === 'and') {
+    return !!leftValue && !!rightValue;
+  }
+
+  if (expression.type === 'or') {
+    return !!leftValue || !!rightValue;
+  }
+
+  if (expression.type === 'eq') {
+    return leftValue == rightValue;
+  }
+
+  if (expression.type === 'ne') {
+    return leftValue != rightValue;
+  }
+
+  if (expression.type === 'lt') {
+    return +leftValue < +rightValue;
+  }
+
+  if (expression.type === 'le') {
+    return +leftValue <= +rightValue;
+  }
+
+  if (expression.type === 'gt') {
+    return +leftValue > +rightValue;
+  }
+
+  if (expression.type === 'ge') {
+    return +leftValue >= +rightValue;
+  }
+
+  return false;
 }
 
 /**
