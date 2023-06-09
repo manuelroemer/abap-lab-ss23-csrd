@@ -136,10 +136,6 @@ export interface TextFormSchemaElement extends StaticFormSchemaElement<'text'> {
   text: string;
 }
 
-export interface WhiteSpaceFormSchemaElement extends StaticFormSchemaElement<'whiteSpace'> {
-  present: boolean;
-}
-
 export interface TextInputFormSchemaElement extends DynamicFormSchemaElement<'text-input'> {
   placeholder?: string;
   rows?: number;
@@ -148,11 +144,7 @@ export interface TextInputFormSchemaElement extends DynamicFormSchemaElement<'te
 /**
  * A union of all known form schema elements.
  */
-export type FormSchemaElement =
-  | HeadingFormSchemaElement
-  | TextFormSchemaElement
-  | TextInputFormSchemaElement
-  | WhiteSpaceFormSchemaElement;
+export type FormSchemaElement = HeadingFormSchemaElement | TextFormSchemaElement | TextInputFormSchemaElement;
 
 /**
  * A union of all known form schema element types.

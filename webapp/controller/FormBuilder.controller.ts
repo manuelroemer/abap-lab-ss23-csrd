@@ -72,10 +72,6 @@ const defaultFormSchema: FormSchema = {
           description: 'Input fields can have a description text. How cool is that?',
         },
         {
-          type: 'whiteSpace',
-          present: true,
-        },
-        {
           type: 'text',
           text: 'Enter what you would pay me:',
         },
