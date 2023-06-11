@@ -87,7 +87,8 @@
           "name": "FormBuilder",
           "target": "FormBuilder",
           "pattern": "form-builder"
-        }
+        },
+        { "name": "Questionnaire", "target": "Questionnaire", "pattern": "questionnaire/:id:" }
       ],
       "targets": {
         "Main": {
@@ -103,6 +104,13 @@
           "clearControlAggregation": false,
           "viewId": "FormBuilder",
           "viewName": "FormBuilder"
+        },
+        "Questionnaire": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Questionnaire",
+          "viewName": "Questionnaire"
         }
       }
     },
