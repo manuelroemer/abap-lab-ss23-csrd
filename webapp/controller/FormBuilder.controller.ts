@@ -26,6 +26,59 @@ const defaultFormSchema: FormSchema = {
           description: 'Input fields can have a description text. How cool is that?',
         },
         {
+          type: 'boolean-choice',
+          id: 'Boolean-Choice',
+          label: 'BooleanChoice',
+          required: true,
+        },
+        {
+          type: 'single-choice',
+          id: 'Single-Choice',
+          options: [
+            { value: 'test1', display: 'Test1' },
+            { value: 'test2', display: 'Test2' },
+          ],
+          columns: 2,
+          label: 'SingleChoice',
+          required: true,
+        },
+        {
+          type: 'single-choice-select',
+          id: 'Single-Choice-Select',
+          options: [
+            { value: 'test12435', display: 'Test12435' },
+            { value: 'test23534', display: 'Test23534' },
+          ],
+          label: 'SingleChoiceSelect',
+          required: true,
+        },
+
+        {
+          type: 'multi-choice',
+          id: 'Multi-Choice',
+          options: [
+            { value: 'test123', display: 'Test123' },
+            { value: 'test234', display: 'Test234' },
+          ],
+          label: 'MultiChoice',
+          required: true,
+        },
+        {
+          type: 'date-time',
+          id: 'Date-Time',
+          label: 'DateTime',
+          required: true,
+        },
+        {
+          type: 'number-input',
+          id: 'Number-Input',
+          min: 0,
+          max: 10,
+          stepperDescription: 'EUR',
+          label: 'NumberInput',
+          required: true,
+        },
+        {
           type: 'text',
           text: 'This text will only be displayed when you enter "Hello world!"!',
           effects: [

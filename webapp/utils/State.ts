@@ -120,8 +120,8 @@ export function createState<T extends object>(createInitialState: CreateState<T>
       }
 
       console.group('State change');
-      console.info('Previous: ', previousValue);
-      console.info('Next: ', nextValue);
+      console.debug('Previous: ', previousValue);
+      console.debug('Next: ', nextValue);
       console.groupEnd();
 
       return nextValue;
