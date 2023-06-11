@@ -1,35 +1,3 @@
-<!-- <mvc:View
-  xmlns:layout="sap.ui.layout"
-  controllerName="csrdreporting.controller.FormBuilder"
-  xmlns:mvc="sap.ui.core.mvc"
-  displayBlock="true"
-  xmlns:formengine="csrdreporting.formengine"
-  xmlns="sap.m">
-  <Page id="Questionnaire" showNavButton="true" navButtonPress="navBack">
-    <content>
-      <ObjectHeader title="{i18n>Questionnaire_Title}" />
-      <Breadcrumbs currentLocationText="Page1">
-        <Link text="CSRD" />
-        <Link text="General Disclosure" />
-      </Breadcrumbs>
-      <VBox>
-        <formengine:FormEngine
-          class="sapUiResponsiveMargin"
-          schema="{state>/schema}"
-          state="{state>/state}"
-          page="{state>/page}"
-        />
-      </VBox>
-    </content>
-    <footer>
-      <Toolbar>
-        <ToolbarSpacer />
-        <Button text="{i18n>Questionnaire_PreviousStep}" />
-        <Button type="Emphasized" text="{i18n>Questionnaire_NextStep}" />
-      </Toolbar>
-    </footer>
-  </Page>
-</mvc:View> -->
 <mvc:View
   xmlns:mvc="sap.ui.core.mvc"
   xmlns="sap.uxap"
