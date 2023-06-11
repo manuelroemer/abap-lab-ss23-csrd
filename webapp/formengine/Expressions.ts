@@ -1,5 +1,5 @@
 import { FormEngineState } from './FormEngine';
-import { FormSchemaExpressionOrPrimitive, FormSchemaExpressionPrimitive, FormSchemaExpression } from './Schema';
+import { FormSchemaExpressionOrPrimitive, FormSchemaExpressionPrimitive } from './Schema';
 
 export function isExpressionTruthy(expression: FormSchemaExpressionOrPrimitive, state: FormEngineState) {
   return !!evaluateExpression(expression, state);
