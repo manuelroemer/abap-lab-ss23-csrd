@@ -141,10 +141,64 @@ export interface TextInputFormSchemaElement extends DynamicFormSchemaElement<'te
   rows?: number;
 }
 
+export interface ChoiceOption {
+  value: string;
+  display?: string;
+}
+
+/**
+ * RadioButtons with multiple options
+ */
+export interface SingleChoiceFormSchemaElement extends DynamicFormSchemaElement<'single-choice'> {
+  options: Array<ChoiceOption>;
+  columns?: number;
+}
+
+/**
+ * Select with multiple options
+ */
+export interface SingleChoiceSelectFormSchemaElement extends DynamicFormSchemaElement<'single-choice-select'> {
+  options: Array<ChoiceOption>;
+}
+
+/**
+ * Checkboxes
+ */
+export interface MultiChoiceFormSchemaElement extends DynamicFormSchemaElement<'multi-choice'> {
+  options: Array<ChoiceOption>;
+}
+
+/**
+ * Yes/No Input as RadioButtons
+ */
+export interface BooleanChoiceFormSchemaElement extends DynamicFormSchemaElement<'boolean-choice'> {
+  columns?: number;
+}
+
+/**
+ * Number Stepper
+ */
+export interface NumberStepInputFormSchemaElement extends DynamicFormSchemaElement<'number-input'> {
+  min: number;
+  max: number;
+  stepperDescription?: string;
+}
+
+export type DateTimeFormSchemaElement = DynamicFormSchemaElement<'date-time'>;
+
 /**
  * A union of all known form schema elements.
  */
-export type FormSchemaElement = HeadingFormSchemaElement | TextFormSchemaElement | TextInputFormSchemaElement;
+export type FormSchemaElement =
+  | HeadingFormSchemaElement
+  | TextFormSchemaElement
+  | TextInputFormSchemaElement
+  | SingleChoiceFormSchemaElement
+  | SingleChoiceSelectFormSchemaElement
+  | MultiChoiceFormSchemaElement
+  | BooleanChoiceFormSchemaElement
+  | NumberStepInputFormSchemaElement
+  | DateTimeFormSchemaElement;
 
 /**
  * A union of all known form schema element types.
