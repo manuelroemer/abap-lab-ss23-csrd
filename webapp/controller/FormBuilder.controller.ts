@@ -24,6 +24,16 @@ const defaultFormSchema: FormSchema = {
           label: 'Message',
           required: true,
           description: 'Input fields can have a description text. How cool is that?',
+          validationRules: [
+            {
+              message: 'You must write "Hello world!".',
+              condition: {
+                type: 'eq',
+                left: { type: 'value', id: 'message' },
+                right: 'Hello world!',
+              },
+            },
+          ],
         },
         {
           type: 'boolean-choice',

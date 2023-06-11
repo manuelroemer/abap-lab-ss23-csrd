@@ -110,6 +110,8 @@ export interface DynamicFormSchemaElement<TType extends string> extends FormSche
    * A description of the element, similar to a helper text.
    */
   description?: string;
+
+  validationRules?: Array<FormSchemaElementValidationRules>;
 }
 
 /**
@@ -117,6 +119,11 @@ export interface DynamicFormSchemaElement<TType extends string> extends FormSche
  */
 export interface FormSchemaElementEffect {
   effect: 'hide';
+  condition: FormSchemaExpressionOrPrimitive;
+}
+
+export interface FormSchemaElementValidationRules {
+  message: string;
   condition: FormSchemaExpressionOrPrimitive;
 }
 
