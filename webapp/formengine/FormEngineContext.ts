@@ -42,9 +42,7 @@ export function createFormEngineContext(schema: FormSchema = emptySchema, state:
     const canGoForward = context.page < context.schema.pages.length - 1;
     const canGoBackward = context.page > 0;
     const currentPage = context.schema.pages[context.page];
-    const currentPageValidationErrors = context.currentPage
-      ? getValidationErrorsForPage(context.currentPage, context.state)
-      : [];
+    const currentPageValidationErrors = currentPage ? getValidationErrorsForPage(currentPage, context.state) : [];
 
     return {
       ...context,
