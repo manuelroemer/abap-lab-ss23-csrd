@@ -64,6 +64,9 @@
       "css": [
         {
           "uri": "css/FormBuilder.css"
+        },
+        {
+          "uri": "css/FormEngine.css"
         }
       ]
     },
@@ -88,7 +91,11 @@
           "target": "FormBuilder",
           "pattern": "form-builder"
         },
-        { "name": "Questionnaire", "target": "Questionnaire", "pattern": "questionnaire/:id:" }
+        {
+          "name": "Questionnaire",
+          "target": "Questionnaire",
+          "pattern": "questionnaire/:id:"
+        }
       ],
       "targets": {
         "Main": {

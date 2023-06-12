@@ -12,17 +12,16 @@
         <layout:SplitPane id="formEngine">
           <VBox>
             <OverflowToolbar>
-              <Label text="{state>/pageTitle}" />
+              <Label text="{= ${formEngine>/currentPage/title} || ${formEngine>/currentPage/id} }" />
               <ToolbarSpacer />
-              <Button text="{i18n>FormBuilder_PreviousPage}" press="onPreviousPagePress" />
-              <Button text="{i18n>FormBuilder_NextPage}" press="onNextPagePress" />
+              <Button
+                text="{i18n>FormBuilder_PreviousPage}"
+                enabled="{formEngine>/canGoBackward}"
+                press="onPreviousPagePress"
+              />
+              <Button text="{i18n>FormBuilder_NextPage}" enabled="{formEngine>/canGoForward}" press="onNextPagePress" />
             </OverflowToolbar>
-            <formengine:FormEngine
-              class="sapUiResponsiveMargin"
-              schema="{state>/schema}"
-              state="{state>/state}"
-              page="{state>/page}"
-            />
+            <formengine:FormEngine class="sapUiResponsiveMargin" formEngineContext="{formEngine>/}" />
           </VBox>
         </layout:SplitPane>
         <layout:SplitPane>

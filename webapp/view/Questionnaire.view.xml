@@ -6,15 +6,11 @@
   xmlns:formengine="csrdreporting.formengine"
   controllerName="csrdreporting.controller.Questionnaire"
   height="100%">
-  <ObjectPageLayout id="QuestionnairePageLayout" upperCaseAnchorBar="false" showFooter="true">
+  <ObjectPageLayout id="QuestionnairePageLayout" showFooter="true">
     <headerTitle>
-      <ObjectPageHeader id="questionnaire" objectTitle="Questionnaire">
-        <breadcrumbs>
-          <m:Breadcrumbs currentLocationText="Page1">
-            <m:Link text="CSRD" />
-            <m:Link text="General Disclosure" />
-          </m:Breadcrumbs>
-        </breadcrumbs>
+      <ObjectPageHeader
+        objectTitle="{i18n>Questionnaire_Title}"
+        objectSubtitle="{= ${formEngine>/currentPage/title} || ${formEngine>/currentPage/id} }">
         <actions>
           <ObjectPageHeaderActionButton icon="sap-icon://edit" text="edit" importance="Medium" tooltip="edit" />
           <ObjectPageHeaderActionButton icon="sap-icon://save" text="save" tooltip="save" />
@@ -27,28 +23,29 @@
         </actions>
       </ObjectPageHeader>
     </headerTitle>
-    <headerContent>
-      <m:Title text="{state>/pageTitle}" />
-    </headerContent>
+
     <sections>
-      <ObjectPageSection>
-        <ObjectPageSubSection titleUppercase="false">
-          <m:VBox>
-            <formengine:FormEngine
-              class="sapUiResponsiveMargin"
-              schema="{state>/schema}"
-              state="{state>/state}"
-              page="{state>/page}"
-            />
-          </m:VBox>
+      <ObjectPageSection showTitle="false">
+        <ObjectPageSubSection>
+          <formengine:FormEngine class="sapUiResponsiveMargin" formEngineContext="{formEngine>/}" />
         </ObjectPageSubSection>
       </ObjectPageSection>
     </sections>
+
     <footer>
       <m:OverflowToolbar>
         <m:ToolbarSpacer />
-        <m:Button text="{i18n>Questionnaire_PreviousStep}" />
-        <m:Button type="Emphasized" text="{i18n>Questionnaire_NextStep}" />
+        <m:Button
+          text="{i18n>Questionnaire_PreviousStep}"
+          enabled="{formEngine>/canGoBackward}"
+          press="onPreviousPress"
+        />
+        <m:Button
+          type="Emphasized"
+          text="{i18n>Questionnaire_NextStep}"
+          enabled="{formEngine>/canGoForward}"
+          press="onNextPress"
+        />
       </m:OverflowToolbar>
     </footer>
   </ObjectPageLayout>

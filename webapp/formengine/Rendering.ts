@@ -20,7 +20,7 @@ import {
   SingleChoiceSelectFormSchemaElement,
   DateTimeFormSchemaElement,
 } from './Schema';
-import { FormEngineContext, FormEngineState } from './FormEngine';
+import { FormEngineContext, FormEngineState } from './FormEngineContext';
 import { isExpressionTruthy } from './Expressions';
 import RadioButtonGroup from 'sap/m/RadioButtonGroup';
 import RadioButton from 'sap/m/RadioButton';
@@ -29,6 +29,9 @@ import StepInput from 'sap/m/StepInput';
 import ListItem from 'sap/ui/core/ListItem';
 import Select from 'sap/m/Select';
 import DateTimePicker from 'sap/m/DateTimePicker';
+import { uniq } from '../utils/Uniq';
+import { ValueState } from 'sap/ui/core/library';
+import { FlexAlignItems } from 'sap/m/library';
 
 type RenderFormSchemaElement<T extends FormSchemaElement = FormSchemaElement> = (
   element: T,
@@ -60,6 +63,8 @@ export function render<T extends FormSchemaElement>(element: T, context: FormEng
     control.setVisible(false);
   }
 
+  control.addStyleClass('sapUiSmallMarginBottom');
+
   return control;
 }
 
@@ -78,9 +83,9 @@ function renderTextInput(element: TextInputFormSchemaElement, context: FormEngin
   const onChange = (e: Event) => setValue(id, e.getParameter('value'));
   const input =
     rows > 1
-      ? new Input({ placeholder, value, change: onChange })
-      : new TextArea({ placeholder, rows, value, change: onChange });
-  return renderDynamicElementWrapper(element, input);
+      ? new Input({ width: '100%', placeholder, value, change: onChange })
+      : new TextArea({ width: '100%', placeholder, rows, value, change: onChange });
+  return renderDynamicElementWrapper(element, input, context);
 }
 
 function renderSingleChoice(element: SingleChoiceFormSchemaElement, context: FormEngineContext) {
@@ -99,7 +104,7 @@ function renderSingleChoice(element: SingleChoiceFormSchemaElement, context: For
     selectedIndex: options.findIndex((o) => o.value === value),
     buttons: options.map((option) => new RadioButton({ text: option.display ?? option.value })),
   });
-  return renderDynamicElementWrapper(element, input);
+  return renderDynamicElementWrapper(element, input, context);
 }
 
 function renderSingleChoiceSelect(element: SingleChoiceSelectFormSchemaElement, context: FormEngineContext) {
@@ -110,37 +115,47 @@ function renderSingleChoiceSelect(element: SingleChoiceSelectFormSchemaElement, 
     const selectedItemKey = e.getParameter('selectedItem').getKey();
     const selectedOption = options.find((option) => option.value === selectedItemKey);
     setValue(id, selectedOption?.value);
-    console.log(selectedOption);
   };
 
+  const items = [
+    new ListItem({ key: '', text: '' }),
+    ...options.map((option) => new ListItem({ key: option.value, text: option.display ?? option.value })),
+  ];
+
   const input = new Select({
+    width: '100%',
     selectedKey: value,
     change: onSelect,
-    items: [new ListItem({ key: '', text: '' })].concat(
-      options.map((option) => new ListItem({ key: option.value, text: option.display ?? option.value })),
-    ),
+    items,
   });
-  return renderDynamicElementWrapper(element, input);
+
+  return renderDynamicElementWrapper(element, input, context);
 }
 
 function renderMultiChoice(element: MultiChoiceFormSchemaElement, context: FormEngineContext) {
   const { id, options } = element;
-  const { getValue, setValue } = context;
-  const value = (getValue(element.id) as Array<string>) ?? [];
+  const { state, setState } = context;
+  const value = (state[element.id] as Array<string>) ?? [];
 
   const items = options.map((option) => {
-    const selected = value.includes(option.value);
     const onSelect = (e: Event) => {
       const isSelected = e.getParameter('selected') as boolean;
-      const nextValue = isSelected ? [...value, option.value] : value.filter((v) => v === option.value);
-      setValue(id, nextValue);
+      setState({
+        ...state,
+        [id]: isSelected ? uniq([...value, option.value]) : value.filter((v) => v !== option.value),
+        [`${id}.${option.value}`]: isSelected,
+      });
     };
-    return new CheckBox({ text: option.display ?? option.value, selected, select: onSelect });
+
+    return new CheckBox({
+      text: option.display ?? option.value,
+      selected: value.includes(option.value),
+      select: onSelect,
+    });
   });
-  const input = new VBox({
-    items: items,
-  });
-  return renderDynamicElementWrapper(element, input);
+
+  const container = new VBox({ items: items });
+  return renderDynamicElementWrapper(element, container, context);
 }
 
 function renderBooleanChoice(element: BooleanChoiceFormSchemaElement, context: FormEngineContext) {
@@ -150,14 +165,14 @@ function renderBooleanChoice(element: BooleanChoiceFormSchemaElement, context: F
   const value = getValue(element.id);
   const hasValue = typeof value === 'boolean';
   const onSelect = (e: Event) => setValue(id, e.getParameter('selectedIndex') === 0);
-
-  const input = new RadioButtonGroup({
+  const inputs = new RadioButtonGroup({
     columns: columns,
     select: onSelect,
     selectedIndex: hasValue ? (value ? 0 : 1) : -1,
     buttons: options.map((option) => new RadioButton({ text: option })),
   });
-  return renderDynamicElementWrapper(element, input);
+
+  return renderDynamicElementWrapper(element, inputs, context);
 }
 
 function renderNumberInput(element: NumberStepInputFormSchemaElement, context: FormEngineContext) {
@@ -165,16 +180,16 @@ function renderNumberInput(element: NumberStepInputFormSchemaElement, context: F
   const { getValue, setValue } = context;
   const value = getValue(element.id) as number;
   const onChange = (e: Event) => setValue(id, e.getParameter('value'));
-
   const input = new StepInput({
+    width: '100%',
     value,
     min,
     max,
-    change: onChange,
     description: stepperDescription,
-    textAlign: 'Center',
+    change: onChange,
   });
-  return renderDynamicElementWrapper(element, input);
+
+  return renderDynamicElementWrapper(element, input, context);
 }
 
 function renderDateTime(element: DateTimeFormSchemaElement, context: FormEngineContext) {
@@ -182,22 +197,44 @@ function renderDateTime(element: DateTimeFormSchemaElement, context: FormEngineC
   const { getValue, setValue } = context;
   const value = getValue(element.id) as string;
   const onChange = (e: Event) => setValue(id, e.getParameter('value'));
-
-  const input = new DateTimePicker({ value: value, change: onChange });
-  return renderDynamicElementWrapper(element, input);
+  const input = new DateTimePicker({ width: '100%', value: value, change: onChange });
+  return renderDynamicElementWrapper(element, input, context);
 }
 
 function renderDynamicElementWrapper(
-  { label, description = '', required = false }: DynamicFormSchemaElement<string>,
+  element: DynamicFormSchemaElement<string>,
   innerControl: Control,
+  context: FormEngineContext,
 ) {
-  return new VBox({
+  const { id, label, description = '', helperText = '', required = false } = element;
+
+  // Validation: If validation errors are to be shown, we can make the changes here.
+  // We can usually just leverage SAPUI's value state for appending validation info.
+  // Note that not every control might have this.
+  // If we ever implement such a control, we might have to inject "custom" error text here
+  // (e.g., via a red text).
+  if (context.showValidationErrors) {
+    const anyInnerControl = innerControl as any;
+    const controlValidationErrors = context.currentPageValidationErrors.filter((e) => e.elementId === id);
+    const hasErrors = controlValidationErrors.length > 0;
+
+    if (hasErrors) {
+      anyInnerControl.setValueState?.(ValueState.Error);
+      anyInnerControl.setValueStateText?.(controlValidationErrors.map((e) => e.message).join('\n'));
+    }
+  }
+
+  const container = new VBox({
+    alignItems: FlexAlignItems.Stretch,
     items: [
       label && new Label({ text: label, required }),
+      description && new FormattedText({ htmlText: description }).addStyleClass('sapUiTinyMarginBottom'),
       innerControl,
-      description && new FormattedText({ htmlText: description }),
+      helperText && new FormattedText({ htmlText: helperText }),
     ].filter(Boolean) as Array<Control>,
   });
+
+  return container;
 }
 
 function evaluateRules(element: FormSchemaElement, state: FormEngineState) {

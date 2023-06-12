@@ -6,9 +6,7 @@
     "moduleResolution": "node",
     "skipLibCheck": true,
     "allowJs": false,
-    "strict": true,
-    "rootDir": "./webapp",
-    "baseUrl": "./webapp"
+    "strict": true
   },
   "include": ["./webapp/**/*"]
 }

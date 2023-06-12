@@ -1,3 +1,7 @@
+export const emptySchema: FormSchema = {
+  pages: [],
+};
+
 export interface FormSchemaExpressionBase<TType extends string> {
   type: TType;
 }
@@ -53,9 +57,9 @@ export interface FormSchemaPage {
    */
   id: string;
   /**
-   * A display name of the page.
+   * The pages title, for display.
    */
-  name?: string;
+  title?: string;
   /**
    * The page's elements.
    */
@@ -107,10 +111,17 @@ export interface DynamicFormSchemaElement<TType extends string> extends FormSche
    */
   label?: string;
   /**
-   * A description of the element, similar to a helper text.
+   * A description of the element, describing its purpose in detail.
    */
   description?: string;
-
+  /**
+   * An additional helper text which provides granular information about the element,
+   * further enriching the information provided by `description`.
+   */
+  helperText?: string;
+  /**
+   * A set of validation rules which allow dynamic error generation.
+   */
   validationRules?: Array<FormSchemaElementValidationRules>;
 }
 

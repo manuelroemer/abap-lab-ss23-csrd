@@ -1,5 +1,5 @@
 import { isExpressionTruthy } from './Expressions';
-import { FormEngineState } from './FormEngine';
+import { FormEngineState } from './FormEngineContext';
 import { DynamicFormSchemaElement, FormSchemaElement, FormSchemaPage } from './Schema';
 
 export interface ValidationError {
@@ -22,9 +22,11 @@ export function getValidationErrorsForElement(
     if (isEffectivelyEmpty(elementValue)) {
       errors.push({ elementId: element.id, message: 'This field is required.' });
     }
-  } else if (isValidatableElement(element)) {
+  }
+
+  if (isValidatableElement(element)) {
     for (const rule of element.validationRules) {
-      if (isExpressionTruthy(rule.condition, state)) {
+      if (!isExpressionTruthy(rule.condition, state)) {
         errors.push({ elementId: element.id, message: rule.message });
       }
     }

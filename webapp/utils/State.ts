@@ -1,6 +1,5 @@
 import deepClone from 'sap/base/util/deepClone';
 import deepEqual from 'sap/base/util/deepEqual';
-import merge from 'sap/base/util/merge';
 import JSONModel from 'sap/ui/model/json/JSONModel';
 
 /**
@@ -54,8 +53,9 @@ export interface State<T extends object = object> {
    * @param value The state's next value. Can be a partial value or a function which
    *   determines the next (partial) value based on the current value.
    * @param replace Replaces the entire state with the provided value instead of merging it.
+   * @param notify Whether to notify subscribers about the state change.
    */
-  set(value: Partial<T> | ((previous: T) => Partial<T>), replace?: boolean): T;
+  set(value: Partial<T> | ((previous: T) => Partial<T>), replace?: boolean, notify?: boolean): T;
   /**
    * Subscribes the given callback to state changes.
    * This returns a disposer function which, when called, unsubscribes the given callback.
@@ -97,6 +97,7 @@ export function createState<T extends object>(createInitialState: CreateState<T>
   const model = new JSONModel({});
   const subscribers: Array<StateSubscriber<T>> = [];
   let currentValue = undefined as unknown as T;
+  let lastNotifiedValue = undefined as unknown as T;
   let initialValue: T = undefined as unknown as T;
 
   const state = Object.freeze<State<T>>({
@@ -104,27 +105,30 @@ export function createState<T extends object>(createInitialState: CreateState<T>
     get() {
       return currentValue;
     },
-    set(value, replace = false) {
+    set(value, replace = false, notify = true) {
       if (typeof value === 'function') {
         value = value(currentValue);
       }
 
-      const previousValue = currentValue;
-      const nextValue = (replace ? value : merge({}, currentValue, value)) as T;
+      currentValue = (replace ? value : Object.assign({}, currentValue, value)) as T;
 
-      currentValue = nextValue;
-      model.setProperty('/', deepClone(nextValue));
+      if (notify) {
+        const previous = lastNotifiedValue;
+        const next = currentValue;
+        lastNotifiedValue = currentValue;
+        model.setProperty('/', deepClone(next));
 
-      for (const subscriber of subscribers) {
-        subscriber(nextValue, previousValue, this);
+        for (const subscriber of subscribers) {
+          subscriber(next, previous, state);
+        }
+
+        console.group('State change');
+        console.debug('Previous: ', previous);
+        console.debug('Next: ', next);
+        console.groupEnd();
       }
 
-      console.group('State change');
-      console.debug('Previous: ', previousValue);
-      console.debug('Next: ', nextValue);
-      console.groupEnd();
-
-      return nextValue;
+      return currentValue;
     },
     subscribe(cb) {
       subscribers.push(cb);
