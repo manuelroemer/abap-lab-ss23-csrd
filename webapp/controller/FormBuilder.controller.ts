@@ -1,7 +1,7 @@
 import BaseController from './BaseController';
 import { createState } from '../utils/State';
-import { FormSchema } from 'formengine/Schema';
-import { FormEngineState } from 'formengine/FormEngine';
+import { FormSchema } from '../formengine/Schema';
+import { createFormEngineContext } from '../formengine/FormEngineContext';
 
 const defaultFormSchema: FormSchema = {
   pages: [
@@ -166,66 +166,54 @@ const defaultFormSchema: FormSchema = {
 };
 
 interface FormBuilderState {
-  schema: Partial<FormSchema>;
-  state: FormEngineState;
   schemaJson: string;
   stateJson: string;
-  page: number;
-  pageTitle: string;
 }
 
 export default class FormBuilderController extends BaseController {
+  formEngineState = createFormEngineContext(defaultFormSchema);
+
   state = createState<FormBuilderState>(() => ({
-    schema: defaultFormSchema,
     schemaJson: JSON.stringify(defaultFormSchema, null, 4),
-    state: {},
     stateJson: '{}',
-    page: 0,
-    pageTitle: defaultFormSchema.pages[0].name ?? '',
   }));
 
   public onInit() {
     this.connectState(this.state);
+    this.connectState(this.formEngineState, 'formEngine');
 
     this.state.watch(
       (s) => s.schemaJson,
       ({ schemaJson }) => {
         const schema = tryParseJson(schemaJson);
-        schema && this.state.set({ schema });
+        schema && this.formEngineState.get().setSchema(schema);
       },
     );
 
     this.state.watch(
       (s) => s.stateJson,
       ({ stateJson }) => {
+        console.log('JSON change: ', stateJson.substring(0, 10));
         const state = tryParseJson(stateJson);
-        state && this.state.set({ state });
+        state && this.formEngineState.get().setState(state);
       },
     );
 
-    this.state.watch(
+    this.formEngineState.watch(
       (s) => s.state,
       ({ state }) => {
+        console.log('Engine state change: ', state);
         this.state.set({ stateJson: JSON.stringify(state, null, 4) });
-      },
-    );
-
-    this.state.watch(
-      (s) => s.page,
-      ({ page }) => {
-        const schemaPage = this.state.get().schema?.pages?.[page];
-        const pageTitle = schemaPage?.name ?? schemaPage?.id ?? 'Unnamed page';
-        return this.state.set({ pageTitle });
       },
     );
   }
 
   onPreviousPagePress() {
-    this.state.set(({ page }) => ({ page: page - 1 }));
+    this.formEngineState.get().goBackward();
   }
 
   onNextPagePress() {
-    this.state.set(({ page }) => ({ page: page + 1 }));
+    this.formEngineState.get().goForward();
   }
 }
 

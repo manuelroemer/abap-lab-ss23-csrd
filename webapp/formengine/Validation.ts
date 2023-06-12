@@ -1,5 +1,5 @@
 import { isExpressionTruthy } from './Expressions';
-import { FormEngineState } from './FormEngine';
+import { FormEngineState } from './FormEngineContext';
 import { DynamicFormSchemaElement, FormSchemaElement, FormSchemaPage } from './Schema';
 
 export interface ValidationError {

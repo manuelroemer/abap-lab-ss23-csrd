@@ -19,7 +19,7 @@ export default class BaseController extends Controller {
     }
   }
 
-  connectState(state: State) {
-    this.getView()?.setModel(state.model, 'state');
+  connectState(state: State, modelName = 'state') {
+    this.getView()?.setModel(state.model, modelName);
   }
 }

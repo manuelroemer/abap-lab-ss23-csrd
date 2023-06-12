@@ -1,7 +1,7 @@
 import BaseController from './BaseController';
 import { createState } from '../utils/State';
-import { FormSchema } from 'formengine/Schema';
-import { FormEngineState } from 'formengine/FormEngine';
+import { FormEngineState } from '../formengine/FormEngineContext';
+import { FormSchema } from '../formengine/Schema';
 
 const defaultFormSchema: FormSchema = {
   pages: [

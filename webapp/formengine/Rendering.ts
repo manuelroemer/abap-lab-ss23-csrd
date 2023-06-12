@@ -20,7 +20,7 @@ import {
   SingleChoiceSelectFormSchemaElement,
   DateTimeFormSchemaElement,
 } from './Schema';
-import { FormEngineContext, FormEngineState } from './FormEngine';
+import { FormEngineContext, FormEngineState } from './FormEngineContext';
 import { isExpressionTruthy } from './Expressions';
 import RadioButtonGroup from 'sap/m/RadioButtonGroup';
 import RadioButton from 'sap/m/RadioButton';
@@ -29,6 +29,7 @@ import StepInput from 'sap/m/StepInput';
 import ListItem from 'sap/ui/core/ListItem';
 import Select from 'sap/m/Select';
 import DateTimePicker from 'sap/m/DateTimePicker';
+import { uniq } from '../utils/Uniq';
 
 type RenderFormSchemaElement<T extends FormSchemaElement = FormSchemaElement> = (
   element: T,
@@ -120,27 +121,34 @@ function renderSingleChoiceSelect(element: SingleChoiceSelectFormSchemaElement, 
       options.map((option) => new ListItem({ key: option.value, text: option.display ?? option.value })),
     ),
   });
+
   return renderDynamicElementWrapper(element, input);
 }
 
 function renderMultiChoice(element: MultiChoiceFormSchemaElement, context: FormEngineContext) {
   const { id, options } = element;
-  const { getValue, setValue } = context;
-  const value = (getValue(element.id) as Array<string>) ?? [];
+  const { state, setState } = context;
+  const value = (state[element.id] as Array<string>) ?? [];
 
   const items = options.map((option) => {
-    const selected = value.includes(option.value);
     const onSelect = (e: Event) => {
       const isSelected = e.getParameter('selected') as boolean;
-      const nextValue = isSelected ? [...value, option.value] : value.filter((v) => v === option.value);
-      setValue(id, nextValue);
+      setState({
+        ...state,
+        [id]: isSelected ? uniq([...value, option.value]) : value.filter((v) => v !== option.value),
+        [`${id}.${option.value}`]: isSelected,
+      });
     };
-    return new CheckBox({ text: option.display ?? option.value, selected, select: onSelect });
+
+    return new CheckBox({
+      text: option.display ?? option.value,
+      selected: value.includes(option.value),
+      select: onSelect,
+    });
   });
-  const input = new VBox({
-    items: items,
-  });
-  return renderDynamicElementWrapper(element, input);
+
+  const container = new VBox({ items: items });
+  return renderDynamicElementWrapper(element, container);
 }
 
 function renderBooleanChoice(element: BooleanChoiceFormSchemaElement, context: FormEngineContext) {
@@ -150,14 +158,14 @@ function renderBooleanChoice(element: BooleanChoiceFormSchemaElement, context: F
   const value = getValue(element.id);
   const hasValue = typeof value === 'boolean';
   const onSelect = (e: Event) => setValue(id, e.getParameter('selectedIndex') === 0);
-
-  const input = new RadioButtonGroup({
+  const inputs = new RadioButtonGroup({
     columns: columns,
     select: onSelect,
     selectedIndex: hasValue ? (value ? 0 : 1) : -1,
     buttons: options.map((option) => new RadioButton({ text: option })),
   });
-  return renderDynamicElementWrapper(element, input);
+
+  return renderDynamicElementWrapper(element, inputs);
 }
 
 function renderNumberInput(element: NumberStepInputFormSchemaElement, context: FormEngineContext) {
@@ -165,7 +173,6 @@ function renderNumberInput(element: NumberStepInputFormSchemaElement, context: F
   const { getValue, setValue } = context;
   const value = getValue(element.id) as number;
   const onChange = (e: Event) => setValue(id, e.getParameter('value'));
-
   const input = new StepInput({
     value,
     min,
@@ -174,6 +181,7 @@ function renderNumberInput(element: NumberStepInputFormSchemaElement, context: F
     description: stepperDescription,
     textAlign: 'Center',
   });
+
   return renderDynamicElementWrapper(element, input);
 }
 
@@ -182,7 +190,6 @@ function renderDateTime(element: DateTimeFormSchemaElement, context: FormEngineC
   const { getValue, setValue } = context;
   const value = getValue(element.id) as string;
   const onChange = (e: Event) => setValue(id, e.getParameter('value'));
-
   const input = new DateTimePicker({ value: value, change: onChange });
   return renderDynamicElementWrapper(element, input);
 }

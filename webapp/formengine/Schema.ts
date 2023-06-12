@@ -1,3 +1,7 @@
+export const emptySchema: FormSchema = {
+  pages: [],
+};
+
 export interface FormSchemaExpressionBase<TType extends string> {
   type: TType;
 }
