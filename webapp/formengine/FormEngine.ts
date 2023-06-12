@@ -22,6 +22,7 @@ export default class FormEngine extends Control {
   static renderer = (rm: RenderManager, control: FormEngine) => {
     const content = control.getContent();
     rm.openStart('section', control);
+    rm.class('form-engine');
     rm.openEnd();
     rm.renderControl(content);
     rm.close('section');

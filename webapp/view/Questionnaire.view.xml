@@ -8,13 +8,7 @@
   height="100%">
   <ObjectPageLayout id="QuestionnairePageLayout" upperCaseAnchorBar="false" showFooter="true">
     <headerTitle>
-      <ObjectPageHeader id="questionnaire" objectTitle="Questionnaire">
-        <breadcrumbs>
-          <m:Breadcrumbs currentLocationText="Page1">
-            <m:Link text="CSRD" />
-            <m:Link text="General Disclosure" />
-          </m:Breadcrumbs>
-        </breadcrumbs>
+      <ObjectPageHeader id="questionnaire" objectTitle="{i18n>Questionnaire_Title}">
         <actions>
           <ObjectPageHeaderActionButton icon="sap-icon://edit" text="edit" importance="Medium" tooltip="edit" />
           <ObjectPageHeaderActionButton icon="sap-icon://save" text="save" tooltip="save" />
@@ -28,18 +22,13 @@
       </ObjectPageHeader>
     </headerTitle>
     <headerContent>
-      <m:Title text="{state>/pageTitle}" />
+      <m:Title text="{= ${formEngine>/currentPage/title} || ${formEngine>/currentPage/id} }" />
     </headerContent>
     <sections>
       <ObjectPageSection>
         <ObjectPageSubSection titleUppercase="false">
           <m:VBox>
-            <formengine:FormEngine
-              class="sapUiResponsiveMargin"
-              schema="{state>/schema}"
-              state="{state>/state}"
-              page="{state>/page}"
-            />
+            <formengine:FormEngine class="sapUiResponsiveMargin" formEngineContext="{formEngine>/}" />
           </m:VBox>
         </ObjectPageSubSection>
       </ObjectPageSection>
@@ -47,8 +36,17 @@
     <footer>
       <m:OverflowToolbar>
         <m:ToolbarSpacer />
-        <m:Button text="{i18n>Questionnaire_PreviousStep}" />
-        <m:Button type="Emphasized" text="{i18n>Questionnaire_NextStep}" />
+        <m:Button
+          text="{i18n>Questionnaire_PreviousStep}"
+          enabled="{formEngine>/canGoBackward}"
+          press="onPreviousPress"
+        />
+        <m:Button
+          type="Emphasized"
+          text="{i18n>Questionnaire_NextStep}"
+          enabled="{formEngine>/canGoForward}"
+          press="onNextPress"
+        />
       </m:OverflowToolbar>
     </footer>
   </ObjectPageLayout>

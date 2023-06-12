@@ -1,5 +1,6 @@
 import { StateSet, createState } from '../utils/State';
 import { FormSchema, FormSchemaPage, emptySchema } from './Schema';
+import { ValidationError, getValidationErrorsForPage } from './Validation';
 
 /**
  * Represents the internal state of the user-entered data that the form engine captures and renders.
@@ -16,6 +17,8 @@ export interface FormEngineContext {
   readonly currentPage?: FormSchemaPage;
   readonly canGoForward: boolean;
   readonly canGoBackward: boolean;
+  readonly currentPageValidationErrors: Array<ValidationError>;
+  readonly showValidationErrors: boolean;
   setSchema(schema: FormSchema): void;
   setState(state: FormEngineState): void;
   setPage(page: number): void;
@@ -35,18 +38,29 @@ export function createFormEngineContext(schema: FormSchema = emptySchema, state:
     return set(withComputedProps(next));
   };
 
-  const withComputedProps = (context: FormEngineContext) => ({
-    ...context,
-    canGoForward: context.page < context.schema.pages.length - 1,
-    canGoBackward: context.page > 0,
-    currentPage: context.schema.pages[context.page],
-  });
+  const withComputedProps = (context: FormEngineContext): FormEngineContext => {
+    const canGoForward = context.page < context.schema.pages.length - 1;
+    const canGoBackward = context.page > 0;
+    const currentPage = context.schema.pages[context.page];
+    const currentPageValidationErrors = context.currentPage
+      ? getValidationErrorsForPage(context.currentPage, context.state)
+      : [];
+
+    return {
+      ...context,
+      canGoForward,
+      canGoBackward,
+      currentPage,
+      currentPageValidationErrors,
+    };
+  };
 
   return createState<FormEngineContext>(({ get, set }) =>
     withComputedProps({
       schema,
       state,
       page,
+      showValidationErrors: false,
 
       setSchema(schema: FormSchema) {
         update(set, { schema });
@@ -60,11 +74,16 @@ export function createFormEngineContext(schema: FormSchema = emptySchema, state:
         const { schema } = get();
         const maxPages = schema.pages.length;
         const clampedPage = Math.max(0, Math.min(page, maxPages - 1));
-        update(set, { page: clampedPage });
+        update(set, { page: clampedPage, showValidationErrors: false });
       },
 
       goForward() {
-        const { canGoForward, page, setPage } = get();
+        const { canGoForward, page, currentPageValidationErrors, setPage } = get();
+
+        if (currentPageValidationErrors.length > 0) {
+          set({ showValidationErrors: true });
+          return false;
+        }
 
         if (canGoForward) {
           setPage(page + 1);
