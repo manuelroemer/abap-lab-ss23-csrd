@@ -1,5 +1,6 @@
 import { isExpressionTruthy } from './Expressions';
 import { FormEngineState } from './FormEngineContext';
+import { evaluateRules } from './Rules';
 import { DynamicFormSchemaElement, FormSchemaElement, FormSchemaPage } from './Schema';
 
 export interface ValidationError {
@@ -16,6 +17,10 @@ export function getValidationErrorsForElement(
   state: FormEngineState,
 ): Array<ValidationError> {
   const errors: Array<ValidationError> = [];
+
+  if (evaluateRules(element, state).hide) {
+    return [];
+  }
 
   if (isRequiredElement(element)) {
     const elementValue = state[element.id];
