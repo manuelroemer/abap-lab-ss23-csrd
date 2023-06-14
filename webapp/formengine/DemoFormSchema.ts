@@ -23,7 +23,10 @@ export const demoFormSchema: FormSchema = {
             { value: 'gas', display: 'natural gas' },
             { value: 'other-non-renewable', display: 'other non-renewable sources' },
             { value: 'nuclear', display: 'nuclear products' },
-            { value: 'purchased-non-renew', display: 'purchased or acquired electricity, heat, steam, and cooling from non-renewable sources' },
+            {
+              value: 'purchased-non-renew',
+              display: 'purchased or acquired electricity, heat, steam, and cooling from non-renewable sources',
+            },
           ],
           label: 'Non-renewable Sources',
           required: false,
@@ -33,7 +36,11 @@ export const demoFormSchema: FormSchema = {
           id: 'Multi-Choice2',
           options: [
             { value: 'renew-fuel', display: 'renewable fuel sources' },
-            { value: 'purchased-renew', display: 'consumption of purchased or acquired electricity, heat, steam, and cooling from renewable sources' },
+            {
+              value: 'purchased-renew',
+              display:
+                'consumption of purchased or acquired electricity, heat, steam, and cooling from renewable sources',
+            },
             { value: 'self-generated', display: 'self-generated non-fuel renewable energy' },
           ],
           label: 'Renewable Sources',
@@ -50,7 +57,7 @@ export const demoFormSchema: FormSchema = {
           text: 'Energy consumption',
         },
         {
-          type: 'text-input', 
+          type: 'text-input',
           id: 'TotalEnergyConsumption',
           placeholder: 'Total energy consumption in MWH',
           label: 'Total energy consumption in MWH:',
@@ -58,7 +65,7 @@ export const demoFormSchema: FormSchema = {
           required: false,
         },
         {
-          type: 'text-input', 
+          type: 'text-input',
           id: 'coal-amount',
           placeholder: 'energy consumption in MWH',
           label: 'Energy consumption from coal and coal products',
@@ -73,9 +80,9 @@ export const demoFormSchema: FormSchema = {
               },
             },
           ],
-        }, 
+        },
         {
-          type: 'text-input', 
+          type: 'text-input',
           id: 'petroleum-amount',
           placeholder: 'energy consumption in MWH',
           label: 'Energy consumption from crude oil and petroleum products',
@@ -92,7 +99,7 @@ export const demoFormSchema: FormSchema = {
           ],
         },
         {
-          type: 'text-input', 
+          type: 'text-input',
           id: 'gas-amount',
           placeholder: 'energy consumption in MWH',
           label: 'Energy consumption from natural gas',
@@ -107,9 +114,9 @@ export const demoFormSchema: FormSchema = {
               },
             },
           ],
-        }, 
+        },
         {
-          type: 'text-input', 
+          type: 'text-input',
           id: 'other-non-renewable-amount',
           placeholder: 'energy consumption in MWH',
           label: 'Energy consumption from other non-renewable sources',
@@ -124,9 +131,9 @@ export const demoFormSchema: FormSchema = {
               },
             },
           ],
-        }, 
+        },
         {
-          type: 'text-input', 
+          type: 'text-input',
           id: 'nuclear-amount',
           placeholder: 'energy consumption in MWH',
           label: 'Energy consumption from nuclear products',
@@ -141,12 +148,13 @@ export const demoFormSchema: FormSchema = {
               },
             },
           ],
-        }, 
+        },
         {
-          type: 'text-input', 
+          type: 'text-input',
           id: 'purchased-non-renew-amount',
           placeholder: 'energy consumption in MWH',
-          label: 'Energy consumption from purchased or acquired electricity, heat, steam, and cooling from non-renewable sources',
+          label:
+            'Energy consumption from purchased or acquired electricity, heat, steam, and cooling from non-renewable sources',
           required: false,
           effects: [
             {
@@ -160,7 +168,7 @@ export const demoFormSchema: FormSchema = {
           ],
         },
         {
-          type: 'text-input', 
+          type: 'text-input',
           id: 'renew-fuel-amount',
           placeholder: 'energy consumption in MWH',
           label: 'Energy consumption from renewable fuel sources',
@@ -175,12 +183,13 @@ export const demoFormSchema: FormSchema = {
               },
             },
           ],
-        }, 
+        },
         {
-          type: 'text-input', 
+          type: 'text-input',
           id: 'purchased-renew-amount',
           placeholder: 'energy consumption in MWH',
-          label: 'Energy consumption of purchased or acquired electricity, heat, steam, and cooling from renewable sources',
+          label:
+            'Energy consumption of purchased or acquired electricity, heat, steam, and cooling from renewable sources',
           required: false,
           effects: [
             {
@@ -192,9 +201,9 @@ export const demoFormSchema: FormSchema = {
               },
             },
           ],
-        }, 
+        },
         {
-          type: 'text-input', 
+          type: 'text-input',
           id: 'self-generated-amount',
           placeholder: 'energy consumption in MWH',
           label: 'Energy consumption from self-generated non-fuel renewable energy',
@@ -209,7 +218,7 @@ export const demoFormSchema: FormSchema = {
               },
             },
           ],
-        }, 
+        },
       ],
     },
 
