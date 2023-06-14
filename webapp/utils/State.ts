@@ -94,6 +94,7 @@ export type CreateState<T extends object> = (stateAccessors: { get: StateGet<T>;
  * @returns A {@link State} which holds the initial value provided by {@link createInitialState}.
  */
 export function createState<T extends object>(createInitialState: CreateState<T>): State<T> {
+  const maxCloneDepth = 100;
   const model = new JSONModel({});
   const subscribers: Array<StateSubscriber<T>> = [];
   let currentValue = undefined as unknown as T;
@@ -116,7 +117,7 @@ export function createState<T extends object>(createInitialState: CreateState<T>
         const previous = lastNotifiedValue;
         const next = currentValue;
         lastNotifiedValue = currentValue;
-        model.setProperty('/', deepClone(next));
+        model.setProperty('/', deepClone(next, maxCloneDepth));
 
         for (const subscriber of subscribers) {
           subscriber(next, previous, state);
@@ -139,13 +140,13 @@ export function createState<T extends object>(createInitialState: CreateState<T>
         const previous = selector(previousValue);
         const next = selector(nextValue);
 
-        if (!deepEqual(previous, next)) {
+        if (!deepEqual(previous, next, maxCloneDepth)) {
           cb(nextValue, previousValue, state);
         }
       });
     },
     reset() {
-      this.set(deepClone(initialValue), true);
+      this.set(deepClone(initialValue, maxCloneDepth), true);
     },
   });
 
@@ -158,7 +159,7 @@ export function createState<T extends object>(createInitialState: CreateState<T>
   // run into cycles.
   model.attachPropertyChange(() => {
     const modelValue = model.getProperty('/');
-    state.set(deepClone(modelValue));
+    state.set(deepClone(modelValue, maxCloneDepth));
   });
 
   return state;
