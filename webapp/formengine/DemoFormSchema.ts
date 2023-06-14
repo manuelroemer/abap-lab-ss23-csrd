@@ -39,25 +39,25 @@ export const demoFormSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'or',
-                left: { 
-                  type: 'and', 
+                left: {
+                  type: 'and',
                   left: {
                     type: 'gt',
                     left: { type: 'value', id: 'numEmployees' },
                     right: 250,
-                  }, 
+                  },
                   right: {
-                    type: 'or', 
+                    type: 'or',
                     left: {
                       type: 'gt',
                       left: { type: 'value', id: 'netSales' },
                       right: 40,
-                    }, 
+                    },
                     right: {
                       type: 'gt',
                       left: { type: 'value', id: 'totalBalancesheet' },
                       right: 20,
-                    }, 
+                    },
                   },
                 },
                 right: {
@@ -66,12 +66,12 @@ export const demoFormSchema: FormSchema = {
                     type: 'gt',
                     left: { type: 'value', id: 'netSales' },
                     right: 40,
-                  }, 
+                  },
                   right: {
                     type: 'gt',
                     left: { type: 'value', id: 'totalBalancesheet' },
                     right: 20,
-                  }, 
+                  },
                 },
               },
             },
