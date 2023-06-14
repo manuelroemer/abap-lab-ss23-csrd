@@ -3,6 +3,83 @@ import { FormSchema } from './Schema';
 export const demoFormSchema: FormSchema = {
   pages: [
     {
+      id: 'csrdrelevant',
+      title: 'CSRD-Relevance',
+      elements: [
+        {
+          type: 'heading',
+          text: 'Is the CRSD relevant for your company? ',
+        },
+        {
+          type: 'text-input',
+          id: 'numEmployees',
+          placeholder: 'Employees',
+          label: 'Please enter the number of employees in your company:',
+          required: false,
+        },
+        {
+          type: 'text-input',
+          id: 'netSales',
+          placeholder: 'Net sales in million euros',
+          label: 'Please enter your net sales (in million euros):',
+          required: false,
+        },
+        {
+          type: 'text-input',
+          id: 'totalBalancesheet',
+          placeholder: 'Balance sheet total in million euros',
+          label: 'Please enter your balance sheet total (in million euros):',
+          required: false,
+        },
+        {
+          type: 'text',
+          text: 'Your company fullfills at least two out of the three requirements and has to submit the CSRD!',
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                type: 'or',
+                left: { 
+                  type: 'and', 
+                  left: {
+                    type: 'gt',
+                    left: { type: 'value', id: 'numEmployees' },
+                    right: 250,
+                  }, 
+                  right: {
+                    type: 'or', 
+                    left: {
+                      type: 'gt',
+                      left: { type: 'value', id: 'netSales' },
+                      right: 40,
+                    }, 
+                    right: {
+                      type: 'gt',
+                      left: { type: 'value', id: 'totalBalancesheet' },
+                      right: 20,
+                    }, 
+                  },
+                },
+                right: {
+                  type: 'and',
+                  left: {
+                    type: 'gt',
+                    left: { type: 'value', id: 'netSales' },
+                    right: 40,
+                  }, 
+                  right: {
+                    type: 'gt',
+                    left: { type: 'value', id: 'totalBalancesheet' },
+                    right: 20,
+                  }, 
+                },
+              },
+            },
+          ],
+        },
+      ],
+    },
+    {
       id: 'consumption-check',
       title: 'Consumption-Check',
       elements: [
