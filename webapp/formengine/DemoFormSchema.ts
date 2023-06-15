@@ -4,28 +4,29 @@ export const demoFormSchema: FormSchema = {
   pages: [
     {
       id: 'demo-page',
-      title: 'Demo-Page',
+      title: 'Demo Page',
       elements: [],
     },
     {
-      id: 'allControls',
+      id: 'all-controls',
       title: 'All Controls',
       elements: [
         {
           type: 'heading',
-          text: 'Hello From the Form Engine!',
+          text: 'Hello From the Form Engine! I am a Heading!',
         },
         {
           type: 'text',
-          text: 'This text is automatically generated from a JSON schema.',
+          text: 'I am a simple text. You should already know me from the previous page.',
         },
         {
-          type: 'text-input',
           id: 'message',
+          type: 'text-input',
           placeholder: 'Enter a message',
           label: 'Message',
           required: true,
-          description: 'Input fields can have a description text. How cool is that?',
+          description: 'Enter a message that you want to convey to the world.',
+          helperText: "If you don't know what to write, try navigating to the next page.",
           validationRules: [
             {
               message: 'You must write "Hello world!".',
@@ -38,70 +39,65 @@ export const demoFormSchema: FormSchema = {
           ],
         },
         {
-          type: 'boolean-choice',
-          id: 'Boolean-Choice',
-          label: 'BooleanChoice',
-          required: true,
-        },
-        {
-          type: 'single-choice',
-          id: 'Single-Choice',
-          options: [
-            { value: 'test1', display: 'Test1' },
-            { value: 'test2', display: 'Test2' },
-          ],
-          columns: 2,
-          label: 'SingleChoice',
-          required: true,
-        },
-        {
-          type: 'single-choice-select',
-          id: 'Single-Choice-Select',
-          options: [
-            { value: 'test12435', display: 'Test12435' },
-            { value: 'test23534', display: 'Test23534' },
-          ],
-          label: 'SingleChoiceSelect',
-          required: true,
-        },
-
-        {
-          type: 'multi-choice',
-          id: 'Multi-Choice',
-          options: [
-            { value: 'test123', display: 'Test123' },
-            { value: 'test234', display: 'Test234' },
-          ],
-          label: 'MultiChoice',
-          required: true,
-        },
-        {
-          type: 'date-time',
-          id: 'Date-Time',
-          label: 'DateTime',
-          required: true,
-        },
-        {
           type: 'number-input',
-          id: 'Number-Input',
+          id: 'a-number',
+          label: 'What is your favorite number?',
+          description: 'You have to pick one between 0 and 1000.',
           min: 0,
-          max: 10,
-          label: 'NumberInput',
+          max: 1000,
           required: true,
         },
         {
-          type: 'text',
-          text: 'This text will only be displayed when you enter "Hello world!"!',
-          effects: [
-            {
-              effect: 'hide',
-              condition: {
-                type: 'eq',
-                left: { type: 'value', id: 'message' },
-                right: 'Hello world!',
-              },
-            },
+          type: 'boolean-choice',
+          id: 'choice-understood',
+          label: 'Message confirmation',
+          description: 'Did you understand what message you had to write?',
+          helperText: 'Tip: It has no effect what you choose here.',
+          required: false,
+        },
+        {
+          id: 'animal',
+          type: 'single-choice',
+          label: 'Your favorite animal',
+          description: 'If you had to pick one, what is your favorite animal?',
+          options: [
+            { value: 'cat', display: 'Cat 🐈' },
+            { value: 'dog', display: 'Dog 🐕' },
+            { value: 'pandö', display: 'Panda 🐼' },
+            { value: 'whale', display: 'Whale 🐳' },
           ],
+          required: false,
+          columns: 2,
+        },
+        {
+          id: 'dessert',
+          type: 'single-choice-select',
+          label: 'What is your favorite dessert?',
+          options: [
+            { value: 'cake', display: 'Cake 🍰' },
+            { value: 'cookie', display: 'Cookie 🍪' },
+            { value: 'ice', display: 'Ice 🍧' },
+          ],
+          required: false,
+        },
+        {
+          id: 'fruits',
+          type: 'multi-choice',
+          label: 'Fruits',
+          description: 'What type of fruit do you like?',
+          options: [
+            { value: 'apples', display: 'Apples 🍎' },
+            { value: 'bananas', display: 'Bananas 🍌' },
+            { value: 'cherries', display: 'Cherry 🍒' },
+          ],
+          required: false,
+        },
+        {
+          id: 'today',
+          type: 'date-time',
+          label: "What is today's date?",
+          helperText: 'Hint: You can also pick any other date. We do not discriminate.',
+          required: false,
         },
       ],
     },
