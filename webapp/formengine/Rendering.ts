@@ -32,6 +32,7 @@ import DateTimePicker from 'sap/m/DateTimePicker';
 import { uniq } from '../utils/Uniq';
 import { ValueState } from 'sap/ui/core/library';
 import { FlexAlignItems } from 'sap/m/library';
+import { evaluateRules } from './Rules';
 
 type RenderFormSchemaElement<T extends FormSchemaElement = FormSchemaElement> = (
   element: T,
@@ -235,13 +236,4 @@ function renderDynamicElementWrapper(
   });
 
   return container;
-}
-
-function evaluateRules(element: FormSchemaElement, state: FormEngineState) {
-  const elementEffects = element.effects ?? [];
-  const effectsToApply = elementEffects.filter((e) => !isExpressionTruthy(e.condition, state));
-
-  return {
-    hide: effectsToApply.some((e) => e.effect === 'hide'),
-  };
 }
