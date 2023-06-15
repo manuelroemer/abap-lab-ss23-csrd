@@ -4,11 +4,11 @@ export const csrdSchema: FormSchema = {
   pages: [
     {
       id: 'csrdrelevant',
-      title: 'CSRD-Relevance',
+      title: 'CSRD Relevance',
       elements: [
         {
           type: 'heading',
-          text: 'Is the CRSD relevant for your company? ',
+          text: 'Is the CRSD relevant for your company?',
         },
         {
           type: 'text-input',
@@ -81,7 +81,7 @@ export const csrdSchema: FormSchema = {
     },
     {
       id: 'consumption-check',
-      title: 'Consumption-Check',
+      title: 'Consumption Check',
       elements: [
         {
           type: 'heading',
