@@ -11,24 +11,24 @@ export const csrdSchema: FormSchema = {
           text: 'Is the CRSD relevant for your company?',
         },
         {
-          type: 'text-input',
+          type: 'number-input',
           id: 'numEmployees',
-          placeholder: 'Employees',
-          label: 'Please enter the number of employees in your company:',
+          label: 'Employees',
+          description: 'Please enter the number of employees in your company:',
           required: false,
         },
         {
-          type: 'text-input',
+          type: 'number-input',
           id: 'netSales',
-          placeholder: 'Net sales in million euros',
-          label: 'Please enter your net sales (in million euros):',
+          label: 'Net sales in million euros',
+          description: 'Please enter your net sales (in million euros):',
           required: false,
         },
         {
-          type: 'text-input',
+          type: 'number-input',
           id: 'totalBalancesheet',
-          placeholder: 'Balance sheet total in million euros',
-          label: 'Please enter your balance sheet total (in million euros):',
+          label: 'Balance sheet total in million euros',
+          description: 'Please enter your balance sheet total (in million euros):',
           required: false,
         },
         {
@@ -124,17 +124,17 @@ export const csrdSchema: FormSchema = {
           required: false,
         },
         {
-          type: 'text-input',
+          type: 'number-input',
           id: 'TotalEnergyConsumption',
-          placeholder: 'Total energy consumption in MWH',
+          label: 'Total energy consumption in MWH',
           description: 'What is the total energy consumption of your company?',
           required: false,
         },
         {
-          type: 'text-input',
+          type: 'number-input',
           id: 'coal-amount',
-          placeholder: 'energy consumption in MWH',
-          label: 'Energy consumption from coal and coal products',
+          label: 'energy consumption in MWH',
+          description: 'Energy consumption from coal and coal products:',
           required: false,
           effects: [
             {
@@ -148,10 +148,10 @@ export const csrdSchema: FormSchema = {
           ],
         },
         {
-          type: 'text-input',
+          type: 'number-input',
           id: 'petroleum-amount',
-          placeholder: 'energy consumption in MWH',
-          label: 'Energy consumption from crude oil and petroleum products',
+          label: 'energy consumption in MWH',
+          description: 'Energy consumption from crude oil and petroleum products',
           required: false,
           effects: [
             {
@@ -165,10 +165,10 @@ export const csrdSchema: FormSchema = {
           ],
         },
         {
-          type: 'text-input',
+          type: 'number-input',
           id: 'gas-amount',
-          placeholder: 'energy consumption in MWH',
-          label: 'Energy consumption from natural gas',
+          label: 'energy consumption in MWH',
+          description: 'Energy consumption from natural gas',
           required: false,
           effects: [
             {
@@ -182,10 +182,10 @@ export const csrdSchema: FormSchema = {
           ],
         },
         {
-          type: 'text-input',
+          type: 'number-input',
           id: 'other-non-renewable-amount',
-          placeholder: 'energy consumption in MWH',
-          label: 'Energy consumption from other non-renewable sources',
+          label: 'energy consumption in MWH',
+          description: 'Energy consumption from other non-renewable sources',
           required: false,
           effects: [
             {
@@ -199,10 +199,10 @@ export const csrdSchema: FormSchema = {
           ],
         },
         {
-          type: 'text-input',
+          type: 'number-input',
           id: 'nuclear-amount',
-          placeholder: 'energy consumption in MWH',
-          label: 'Energy consumption from nuclear products',
+          label: 'Nuclear energy consumption in MWH',
+          description: 'Energy consumption from nuclear products',
           required: false,
           effects: [
             {
@@ -216,10 +216,10 @@ export const csrdSchema: FormSchema = {
           ],
         },
         {
-          type: 'text-input',
+          type: 'number-input',
           id: 'purchased-non-renew-amount',
-          placeholder: 'energy consumption in MWH',
-          label:
+          label: 'Non-renewable energy consumption in MWH',
+          description:
             'Energy consumption from purchased or acquired electricity, heat, steam, and cooling from non-renewable sources',
           required: false,
           effects: [
@@ -234,10 +234,10 @@ export const csrdSchema: FormSchema = {
           ],
         },
         {
-          type: 'text-input',
+          type: 'number-input',
           id: 'renew-fuel-amount',
-          placeholder: 'energy consumption in MWH',
-          label: 'Energy consumption from renewable fuel sources',
+          label: 'Renewable fuel energy consumption in MWH',
+          description: 'Energy consumption from renewable fuel sources',
           required: false,
           effects: [
             {
@@ -251,10 +251,10 @@ export const csrdSchema: FormSchema = {
           ],
         },
         {
-          type: 'text-input',
+          type: 'number-input',
           id: 'purchased-renew-amount',
-          placeholder: 'energy consumption in MWH',
-          label:
+          label: 'Renewable energy consumption in MWH',
+          description:
             'Energy consumption of purchased or acquired electricity, heat, steam, and cooling from renewable sources',
           required: false,
           effects: [
@@ -269,10 +269,10 @@ export const csrdSchema: FormSchema = {
           ],
         },
         {
-          type: 'text-input',
+          type: 'number-input',
           id: 'self-generated-amount',
-          placeholder: 'energy consumption in MWH',
-          label: 'Energy consumption from self-generated non-fuel renewable energy',
+          label: 'Self-generated energy consumption in MWH',
+          description: 'Energy consumption from self-generated non-fuel renewable energy',
           required: false,
           effects: [
             {

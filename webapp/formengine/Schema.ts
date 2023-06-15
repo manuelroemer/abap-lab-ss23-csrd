@@ -197,8 +197,8 @@ export interface BooleanChoiceFormSchemaElement extends DynamicFormSchemaElement
  * Number Stepper
  */
 export interface NumberStepInputFormSchemaElement extends DynamicFormSchemaElement<'number-input'> {
-  min: number;
-  max: number;
+  min?: number;
+  max?: number;
   stepperDescription?: string;
 }
 
