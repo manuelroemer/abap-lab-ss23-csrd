@@ -3,6 +3,152 @@ import { FormSchema } from './Schema';
 export const demoFormSchema: FormSchema = {
   pages: [
     {
+      id: 'expression-test',
+      title: 'Expression-Test',
+      elements: [
+        {
+          type: 'number-input',
+          id: 'num1',
+          min: 0,
+          max: 10,
+          label: 'Pease input a number here:',
+          required: false,
+        },
+        {
+          type: 'number-input',
+          id: 'num2',
+          min: 0,
+          max: 10,
+          label: 'Pease input another number here:',
+          required: false,
+        },
+        {
+          type: 'text',
+          text: 'Num1 is bigger than Num2! (>)',
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                type: 'gt',
+                left: { type: 'value', id: 'num1'}, 
+                right:  { type: 'value', id: 'num2'}, 
+              }, 
+            }, 
+          ], 
+        },
+        {
+          type: 'text',
+          text: 'Num1 is smaller than Num2! (<)',
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                type: 'lt',
+                left: { type: 'value', id: 'num1'}, 
+                right:  { type: 'value', id: 'num2'}, 
+              }, 
+            }, 
+          ], 
+        },
+        {
+          type: 'text',
+          text: 'Num1 is bigger than or equal to Num2! (>=)',
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                type: 'ge',
+                left: { type: 'value', id: 'num1'}, 
+                right:  { type: 'value', id: 'num2'}, 
+              }, 
+            }, 
+          ], 
+        },
+        {
+          type: 'text',
+          text: 'Num1 is smaller than or equal to Num2! (<=)',
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                type: 'le',
+                left: { type: 'value', id: 'num1'}, 
+                right:  { type: 'value', id: 'num2'}, 
+              }, 
+            }, 
+          ], 
+        },
+        {
+          type: 'boolean-choice',
+          id: 'bool1',
+          label: 'Choice 1',
+          required: true,
+        },
+        {
+          type: 'boolean-choice',
+          id: 'bool2',
+          label: 'Choice 2',
+          required: true,
+        },
+        {
+          type: 'text',
+          text: 'Both booleans are true (yes)! (AND)',
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                type: 'and',
+                left: { type: 'value', id: 'bool1'}, 
+                right:  { type: 'value', id: 'bool2'}, 
+              }, 
+            }, 
+          ], 
+        },
+        {
+          type: 'text',
+          text: 'Either of booleans is true (yes)! (OR)',
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                type: 'or',
+                left: { type: 'value', id: 'bool1'}, 
+                right:  { type: 'value', id: 'bool2'}, 
+              }, 
+            }, 
+          ], 
+        },
+        {
+          type: 'text',
+          text: 'Both booleans have the same value! (EQ)',
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                type: 'eq',
+                left: { type: 'value', id: 'bool1'}, 
+                right:  { type: 'value', id: 'bool2'}, 
+              }, 
+            }, 
+          ], 
+        },
+        {
+          type: 'text',
+          text: 'The booleans have different values! (NE)',
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                type: 'ne',
+                left: { type: 'value', id: 'bool1'}, 
+                right:  { type: 'value', id: 'bool2'}, 
+              }, 
+            }, 
+          ], 
+        },
+      ], 
+    },
+    {
       id: 'csrdrelevant',
       title: 'CSRD-Relevance',
       elements: [
