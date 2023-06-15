@@ -110,7 +110,7 @@ export const demoFormSchema: FormSchema = {
           id: 'num1',
           min: 0,
           max: 10,
-          label: 'Pease input a number here:',
+          label: 'Please input a number here:',
           required: false,
         },
         {
@@ -118,7 +118,7 @@ export const demoFormSchema: FormSchema = {
           id: 'num2',
           min: 0,
           max: 10,
-          label: 'Pease input another number here:',
+          label: 'Please input another number here:',
           required: false,
         },
         {
