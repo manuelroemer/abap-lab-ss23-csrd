@@ -11,7 +11,7 @@
       <ObjectPageHeader
         objectTitle="{i18n>Questionnaire_Title}"
         objectSubtitle="{= ${formEngine>/currentPage/title} || ${formEngine>/currentPage/id} }">
-        <actions>
+        <!-- <actions>
           <ObjectPageHeaderActionButton icon="sap-icon://edit" text="edit" importance="Medium" tooltip="edit" />
           <ObjectPageHeaderActionButton icon="sap-icon://save" text="save" tooltip="save" />
           <ObjectPageHeaderActionButton
@@ -20,7 +20,7 @@
             importance="Low"
             tooltip="action-settings"
           />
-        </actions>
+        </actions> -->
       </ObjectPageHeader>
     </headerTitle>
 

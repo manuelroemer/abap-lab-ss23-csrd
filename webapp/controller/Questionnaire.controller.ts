@@ -1,9 +1,9 @@
 import BaseController from './BaseController';
-import { demoFormSchema } from '../formengine/DemoFormSchema';
 import { createFormEngineContext } from '../formengine/FormEngineContext';
+import { csrdSchema } from '../formengine/CsrdSchema';
 
 export default class QuestionnaireController extends BaseController {
-  formEngineState = createFormEngineContext(demoFormSchema);
+  formEngineState = createFormEngineContext(csrdSchema);
 
   public onInit() {
     this.connectState(this.formEngineState, 'formEngine');

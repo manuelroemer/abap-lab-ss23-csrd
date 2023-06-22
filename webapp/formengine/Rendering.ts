@@ -20,8 +20,7 @@ import {
   SingleChoiceSelectFormSchemaElement,
   DateTimeFormSchemaElement,
 } from './Schema';
-import { FormEngineContext, FormEngineState } from './FormEngineContext';
-import { isExpressionTruthy } from './Expressions';
+import { FormEngineContext } from './FormEngineContext';
 import RadioButtonGroup from 'sap/m/RadioButtonGroup';
 import RadioButton from 'sap/m/RadioButton';
 import CheckBox from 'sap/m/CheckBox';
@@ -69,8 +68,8 @@ export function render<T extends FormSchemaElement>(element: T, context: FormEng
   return control;
 }
 
-function renderHeading({ text, level = 1, wrap = true }: HeadingFormSchemaElement) {
-  return new Title({ text, level: `H${level}`, wrapping: wrap });
+function renderHeading({ text, level = 3, wrap = true }: HeadingFormSchemaElement) {
+  return new Title({ text, level: `H${level}`, titleStyle: `H${level}`, wrapping: wrap });
 }
 
 function renderText({ text }: TextFormSchemaElement) {
