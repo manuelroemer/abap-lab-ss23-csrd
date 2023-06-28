@@ -1,4 +1,5 @@
 import { StateSet, createState } from '../utils/State';
+import { evaluateRules } from './Rules';
 import { FormSchema, FormSchemaPage, emptySchema } from './Schema';
 import { ValidationError, getValidationErrorsForPage } from './Validation';
 
@@ -11,13 +12,48 @@ export type FormEngineState = Record<string, unknown>;
  * Represents data that is provided by the form engine control to renderers.
  */
 export interface FormEngineContext {
+  /**
+   * The form schema that is tracked by the context.
+   */
   readonly schema: FormSchema;
+  /**
+   * The current form engine state tracked by the context.
+   */
   readonly state: FormEngineState;
+  /**
+   * The index of the currently displayed page, relative to `schema.pages`.
+   */
   readonly page: number;
+  /**
+   * The index of the previous page to be displayed.
+   */
+  readonly previousPageIndex: number;
+  /**
+   * The index of the next page to be displayed.
+   */
+  readonly nextPageIndex: number;
+  /**
+   * The currently displayed page or `undefined` if the schema contains no pages.
+   */
   readonly currentPage?: FormSchemaPage;
+  /**
+   * Whether it's possible to go forward.
+   * False if the current page is the last visible page.
+   */
   readonly canGoForward: boolean;
+  /**
+   * Whether it's possible to go backward.
+   * False if the current page is the first visible page.
+   */
   readonly canGoBackward: boolean;
+  /**
+   * The validation errors for the current page.
+   */
   readonly currentPageValidationErrors: Array<ValidationError>;
+  /**
+   * Whether validation errors should be displayed by the UI.
+   * This is `false` until the user attempts to navigate to the next page.
+   */
   readonly showValidationErrors: boolean;
   setSchema(schema: FormSchema): void;
   setState(state: FormEngineState): void;
@@ -39,15 +75,26 @@ export function createFormEngineContext(schema: FormSchema = emptySchema, state:
   };
 
   const withComputedProps = (context: FormEngineContext): FormEngineContext => {
-    const canGoForward = context.page < context.schema.pages.length - 1;
-    const canGoBackward = context.page > 0;
-    const currentPage = context.schema.pages[context.page];
-    const currentPageValidationErrors = currentPage ? getValidationErrorsForPage(currentPage, context.state) : [];
+    const { schema, state, page } = context;
+
+    // The previous/next page is not, simply, the previous/next page in the schema, but instead the
+    // page that is *not* hidden according to its effect rules.
+    const pagesHidden = schema.pages.map((page) => evaluateRules(page, state).hide);
+    const previousPageIndex = schema.pages.findLastIndex((_, index) => index < page && !pagesHidden[index]);
+    const nextPageIndex = schema.pages.findIndex((_, index) => index > page && !pagesHidden[index]);
+    const currentPage = schema.pages[page];
+
+    const canGoForward = nextPageIndex >= 0;
+    const canGoBackward = previousPageIndex >= 0;
+
+    const currentPageValidationErrors = currentPage ? getValidationErrorsForPage(currentPage, state) : [];
 
     return {
       ...context,
       canGoForward,
       canGoBackward,
+      previousPageIndex,
+      nextPageIndex,
       currentPage,
       currentPageValidationErrors,
     };
@@ -60,15 +107,15 @@ export function createFormEngineContext(schema: FormSchema = emptySchema, state:
       page,
       showValidationErrors: false,
 
-      setSchema(schema: FormSchema) {
+      setSchema(schema) {
         update(set, { schema });
       },
 
-      setState(state: FormEngineState) {
+      setState(state) {
         update(set, { state });
       },
 
-      setPage(page: number) {
+      setPage(page) {
         const { schema } = get();
         const maxPages = schema.pages.length;
         const clampedPage = Math.max(0, Math.min(page, maxPages - 1));
@@ -76,7 +123,7 @@ export function createFormEngineContext(schema: FormSchema = emptySchema, state:
       },
 
       goForward() {
-        const { canGoForward, page, currentPageValidationErrors, setPage } = get();
+        const { schema, canGoForward, nextPageIndex, currentPageValidationErrors, setPage } = get();
 
         if (currentPageValidationErrors.length > 0) {
           set({ showValidationErrors: true });
@@ -84,7 +131,7 @@ export function createFormEngineContext(schema: FormSchema = emptySchema, state:
         }
 
         if (canGoForward) {
-          setPage(page + 1);
+          setPage(nextPageIndex);
           return true;
         }
 
@@ -92,10 +139,10 @@ export function createFormEngineContext(schema: FormSchema = emptySchema, state:
       },
 
       goBackward() {
-        const { canGoBackward, page, setPage } = get();
+        const { canGoBackward, previousPageIndex, setPage } = get();
 
         if (canGoBackward) {
-          setPage(page - 1);
+          setPage(previousPageIndex);
           return true;
         }
 

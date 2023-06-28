@@ -64,6 +64,10 @@ export interface FormSchemaPage {
    * The page's elements.
    */
   elements: Array<FormSchemaElement>;
+  /**
+   * Rules that are automatically evaluated before the page is rendered, e.g., to hide the page.
+   */
+  effects?: Array<FormSchemaElementEffect>;
 }
 
 /**
