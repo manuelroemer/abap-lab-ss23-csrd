@@ -47,6 +47,11 @@ export interface FormEngineContext {
    */
   readonly canGoBackward: boolean;
   /**
+   * Whether it's possible to submit the form.
+   * True if the last page has been reached.
+   */
+  readonly canSubmit: boolean;
+  /**
    * The validation errors for the current page.
    */
   readonly currentPageValidationErrors: Array<ValidationError>;
@@ -60,6 +65,7 @@ export interface FormEngineContext {
   setPage(page: number): void;
   goForward(): boolean;
   goBackward(): boolean;
+  submit(): boolean;
   getValue(id: string): unknown;
   setValue(id: string, value: unknown): void;
 }
@@ -82,10 +88,13 @@ export function createFormEngineContext(schema: FormSchema = emptySchema, state:
     const pagesHidden = schema.pages.map((page) => evaluateRules(page, state).hide);
     const previousPageIndex = schema.pages.findLastIndex((_, index) => index < page && !pagesHidden[index]);
     const nextPageIndex = schema.pages.findIndex((_, index) => index > page && !pagesHidden[index]);
+
     const currentPage = schema.pages[page];
+    const isLastPage = pagesHidden.slice(page).filter((hidden) => hidden).length === 0;
 
     const canGoForward = nextPageIndex >= 0;
     const canGoBackward = previousPageIndex >= 0;
+    const canSubmit = isLastPage;
 
     const currentPageValidationErrors = currentPage ? getValidationErrorsForPage(currentPage, state) : [];
 
@@ -93,6 +102,7 @@ export function createFormEngineContext(schema: FormSchema = emptySchema, state:
       ...context,
       canGoForward,
       canGoBackward,
+      canSubmit,
       previousPageIndex,
       nextPageIndex,
       currentPage,
@@ -123,7 +133,7 @@ export function createFormEngineContext(schema: FormSchema = emptySchema, state:
       },
 
       goForward() {
-        const { schema, canGoForward, nextPageIndex, currentPageValidationErrors, setPage } = get();
+        const { canGoForward, nextPageIndex, currentPageValidationErrors, setPage } = get();
 
         if (currentPageValidationErrors.length > 0) {
           set({ showValidationErrors: true });
@@ -147,6 +157,21 @@ export function createFormEngineContext(schema: FormSchema = emptySchema, state:
         }
 
         return false;
+      },
+
+      submit() {
+        const { canSubmit } = get();
+
+        if (!canSubmit) {
+          return false;
+        }
+
+        if (this.currentPageValidationErrors.length > 0) {
+          set({ showValidationErrors: true });
+          return false;
+        }
+
+        return true;
       },
 
       getValue(id) {
