@@ -90,7 +90,7 @@ export function createFormEngineContext(schema: FormSchema = emptySchema, state:
     const nextPageIndex = schema.pages.findIndex((_, index) => index > page && !pagesHidden[index]);
 
     const currentPage = schema.pages[page];
-    const isLastPage = pagesHidden.slice(page).filter((hidden) => hidden).length === 0;
+    const isLastPage = pagesHidden.slice(page + 1).filter((hidden) => !hidden).length === 0;
 
     const canGoForward = nextPageIndex >= 0;
     const canGoBackward = previousPageIndex >= 0;
@@ -160,13 +160,13 @@ export function createFormEngineContext(schema: FormSchema = emptySchema, state:
       },
 
       submit() {
-        const { canSubmit } = get();
+        const { canSubmit, currentPageValidationErrors } = get();
 
         if (!canSubmit) {
           return false;
         }
 
-        if (this.currentPageValidationErrors.length > 0) {
+        if (currentPageValidationErrors.length > 0) {
           set({ showValidationErrors: true });
           return false;
         }
