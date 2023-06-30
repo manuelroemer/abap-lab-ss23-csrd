@@ -8,4 +8,8 @@ export default class MainController extends BaseController {
   navToQuestionnaire() {
     this.router.navTo('Questionnaire');
   }
+
+  navToCustomerManagement() {
+    this.router.navTo('CustomerManagement');
+  }
 }

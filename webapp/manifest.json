@@ -104,6 +104,11 @@
           "name": "Questionnaire",
           "target": "Questionnaire",
           "pattern": "questionnaire/:id:"
+        },
+        {
+          "name": "CustomerManagement",
+          "target": "CustomerManagement",
+          "pattern": "management"
         }
       ],
       "targets": {
@@ -127,6 +132,13 @@
           "clearControlAggregation": false,
           "viewId": "Questionnaire",
           "viewName": "Questionnaire"
+        },
+        "CustomerManagement": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "CustomerManagement",
+          "viewName": "CustomerManagement"
         }
       }
     },
