@@ -10,8 +10,8 @@
     <headerTitle>
       <ObjectPageHeader
         objectTitle="{i18n>Questionnaire_Title}"
-        objectSubtitle="{= ${formEngine>/currentPage/title} || ${formEngine>/currentPage/id} }">
-      </ObjectPageHeader>
+        objectSubtitle="{= ${formEngine>/currentPage/title} || ${formEngine>/currentPage/id} }"
+      />
     </headerTitle>
 
     <sections>
