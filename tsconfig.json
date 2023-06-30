@@ -6,7 +6,8 @@
     "moduleResolution": "node",
     "skipLibCheck": true,
     "allowJs": false,
-    "strict": true
+    "strict": true,
+    "noImplicitAny": false
   },
   "include": ["./webapp/**/*"]
 }

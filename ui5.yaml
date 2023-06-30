@@ -17,10 +17,9 @@ server:
             - /resources
             - /test-resources
           url: https://ui5.sap.com
-        # TODO: Uncomment once we need to connect to the backend. Potentially swap the paths.
-        # backend:
-        #   - path: /sap
-        #     url: https://s72lp1.ucc.in.tum.de:8100
+        backend:
+          - path: /sap
+            url: https://s72lp1.ucc.in.tum.de:8100
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:
