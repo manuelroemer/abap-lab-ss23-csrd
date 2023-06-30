@@ -99,7 +99,7 @@
         {
           "name": "CustomerManagement",
           "target": "CustomerManagement",
-          "pattern": "customer-management"
+          "pattern": "management"
         }
       ],
       "targets": {
