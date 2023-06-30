@@ -1,0 +1,73 @@
+<mvc:View
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:layout="sap.ui.layout"
+  xmlns:core="sap.ui.core"
+  xmlns="sap.m"
+  controllerName="csrdreporting.controller.CustomerManagement"
+  height="100%">
+  <Page id="CustomerManagementPageLayout" showFooter="true">
+    <content>
+      <layout:FixFlex class="fixFlexVertical">
+        <layout:fixContent>
+          <ObjectHeader title="{i18n>Management_Title}" backgroundDesign="Solid" condensed="true">
+            <ObjectAttribute text="Manage the customers and filled questionnaires." />
+          </ObjectHeader>
+        </layout:fixContent>
+        <layout:flexContent>
+          <SplitContainer id="splitContainer" initialDetail="placeholder" initialMaster="master">
+            <masterPages>
+              <Page id="master" title="Customers" backgroundDesign="List">
+                <headerContent>
+                  <Button icon="sap-icon://add" tooltip="Add Customer" />
+                </headerContent>
+                <List>
+                  <CustomListItem>
+                    <HBox>
+                      <core:Icon
+                        size="2rem"
+                        src="sap-icon://person-placeholder"
+                        class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+                      />
+                      <VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
+                        <Text text="Customer 1" />
+                        <Label text="customer-code-1" />
+                      </VBox>
+                      <HBox alignItems="Center" justifyContent="End" width="100%">
+                        <Button icon="sap-icon://edit" type="Transparent" tooltip="Edit Customer" />
+                        <Button icon="sap-icon://decline" type="Transparent" tooltip="Delete Customer" />
+                      </HBox>
+                    </HBox>
+                  </CustomListItem>
+                  <CustomListItem>
+                    <HBox>
+                      <core:Icon
+                        size="2rem"
+                        src="sap-icon://person-placeholder"
+                        class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+                      />
+                      <VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
+                        <Text text="Customer 2" />
+                        <Label text="customer-code-2" />
+                      </VBox>
+                      <HBox alignItems="Center" justifyContent="End" width="100%">
+                        <Button icon="sap-icon://edit" type="Transparent" tooltip="Edit Customer" />
+                        <Button icon="sap-icon://decline" type="Transparent" tooltip="Delete Customer" />
+                      </HBox>
+                    </HBox>
+                  </CustomListItem>
+                </List>
+              </Page>
+            </masterPages>
+            <detailPages>
+              <Page id="placeholder" title="Test" backgroundDesign="Solid" />
+              <Page id="detail" title="Filled Questionnaires" backgroundDesign="Solid">
+                <Label text="Detail page 1" class="sapUiTinyMarginEnd" />
+                <Button text="Go to Detail page 2" />
+              </Page>
+            </detailPages>
+          </SplitContainer>
+        </layout:flexContent>
+      </layout:FixFlex>
+    </content>
+  </Page>
+</mvc:View>
