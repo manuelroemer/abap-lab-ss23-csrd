@@ -13,6 +13,19 @@ npm start # To start a local dev server.
 # A browser window should automatically open on localhost:8080.
 ```
 
+To function correctly, the app must connect to an OData backend. We were using the infrastructure hosted by the TUM's UCC.
+If you have access to that infrastructure, you can use it by creating a `.env` file in the repository's root with the following content:
+
+```ini
+# For deployment.
+S72_USER=YOUR_USERNAME
+S72_PASSWORD=YOUR_PASSWORD
+
+# For local development.
+FIORI_TOOLS_USER=YOUR_USERNAME
+FIORI_TOOLS_PASSWORD=YOUR_PASSWORD
+```
+
 ### Debugging
 
 For development, you need to use VS Code. The project contains a [`launch.json`](./.vscode/launch.json) file for debugging the app in Edge/Chrome.  

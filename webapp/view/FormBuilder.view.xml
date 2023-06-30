@@ -19,7 +19,13 @@
                 enabled="{formEngine>/canGoBackward}"
                 press="onPreviousPagePress"
               />
-              <Button text="{i18n>FormBuilder_NextPage}" enabled="{formEngine>/canGoForward}" press="onNextPagePress" />
+              <Button
+                text="{i18n>FormBuilder_NextPage}"
+                enabled="{formEngine>/canGoForward}"
+                visible="{= !${formEngine>/canSubmit} }"
+                press="onNextPagePress"
+              />
+              <Button text="{i18n>FormBuilder_Submit}" visible="{formEngine>/canSubmit}" press="onSubmitPress" />
             </OverflowToolbar>
             <formengine:FormEngine class="sapUiResponsiveMargin" formEngineContext="{formEngine>/}" />
           </VBox>

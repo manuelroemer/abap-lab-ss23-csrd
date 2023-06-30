@@ -14,6 +14,15 @@
       "id": "@sap/generator-fiori:basic",
       "version": "1.9.5",
       "toolsId": "88ac33d3-f817-4ff5-88d3-32ceac8b73c8"
+    },
+    "dataSources": {
+      "svc": {
+        "uri": "/sap/opu/odata/sap/Z_00_T1_SS23_CSRD_SRV/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      }
     }
   },
   "sap.ui": {

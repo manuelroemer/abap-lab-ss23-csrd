@@ -34,7 +34,14 @@
           type="Emphasized"
           text="{i18n>Questionnaire_NextStep}"
           enabled="{formEngine>/canGoForward}"
+          visible="{= !${formEngine>/canSubmit} }"
           press="onNextPress"
+        />
+        <m:Button
+          type="Emphasized"
+          text="{i18n>Questionnaire_Submit}"
+          visible="{formEngine>/canSubmit}"
+          press="onSubmitPress"
         />
       </m:OverflowToolbar>
     </footer>

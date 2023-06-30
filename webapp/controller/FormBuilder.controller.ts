@@ -2,6 +2,7 @@ import BaseController from './BaseController';
 import { createState } from '../utils/State';
 import { createFormEngineContext } from '../formengine/FormEngineContext';
 import { demoFormSchema } from '../formengine/DemoFormSchema';
+import MessageBox from 'sap/m/MessageBox';
 
 interface FormBuilderState {
   schemaJson: string;
@@ -52,6 +53,19 @@ export default class FormBuilderController extends BaseController {
 
   onNextPagePress() {
     this.formEngineState.get().goForward();
+  }
+
+  onSubmitPress() {
+    if (this.formEngineState.get().submit()) {
+      MessageBox.success(
+        'The form would have been submitted successfully. You can see the console output for details about the final form engine state.',
+        { title: 'Form Submitted Successfully' },
+      );
+
+      console.group('📄 Submitted Form state: ');
+      console.info(this.formEngineState.get().state);
+      console.groupEnd();
+    }
   }
 }
 

@@ -3,11 +3,6 @@ import { FormSchema } from './Schema';
 export const demoFormSchema: FormSchema = {
   pages: [
     {
-      id: 'demo-page',
-      title: 'Demo Page',
-      elements: [],
-    },
-    {
       id: 'all-controls',
       title: 'All Controls',
       elements: [
@@ -98,6 +93,30 @@ export const demoFormSchema: FormSchema = {
           label: "What is today's date?",
           helperText: 'Hint: You can also pick any other date. We do not discriminate.',
           required: false,
+        },
+      ],
+    },
+    {
+      id: 'conditional-panda-page',
+      title: 'The Panda',
+      effects: [
+        {
+          effect: 'hide',
+          condition: {
+            type: 'eq',
+            left: { type: 'value', id: 'animal' },
+            right: 'pandö',
+          },
+        },
+      ],
+      elements: [
+        {
+          type: 'heading',
+          text: 'Panda Page',
+        },
+        {
+          type: 'text',
+          text: 'This page is only visible if you chose the Panda. 🐼',
         },
       ],
     },

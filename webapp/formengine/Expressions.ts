@@ -1,10 +1,21 @@
 import { FormEngineState } from './FormEngineContext';
 import { FormSchemaExpressionOrPrimitive, FormSchemaExpressionPrimitive } from './Schema';
 
+/**
+ * Returns a boolean indicating whether the given form schema expression is truthy.
+ * @param expression The expression to be evaluated.
+ * @param state The current form engine state.
+ */
 export function isExpressionTruthy(expression: FormSchemaExpressionOrPrimitive, state: FormEngineState) {
   return !!evaluateExpression(expression, state);
 }
 
+/**
+ * Evaluates a form schema expression and returns the result.
+ * This result can be any value, e.g., a number, a string, a boolean, etc.
+ * @param expression The expression to be evaluated.
+ * @param state The current form engine state.
+ */
 function evaluateExpression(expression: FormSchemaExpressionOrPrimitive, state: FormEngineState): any {
   if (isPrimitive(expression)) {
     return expression;

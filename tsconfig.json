@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
     "typeRoots": ["./node_modules/@types", "./node_modules/@sapui5/types"],
-    "target": "es2022",
-    "module": "es2022",
+    "target": "ESNext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "skipLibCheck": true,
     "allowJs": false,
-    "strict": true
+    "strict": true,
+    "noImplicitAny": false
   },
   "include": ["./webapp/**/*"]
 }
