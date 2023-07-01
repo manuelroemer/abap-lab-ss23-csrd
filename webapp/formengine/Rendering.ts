@@ -15,6 +15,7 @@ import {
   DynamicFormSchemaElement,
   BooleanChoiceFormSchemaElement,
   MultiChoiceFormSchemaElement,
+  CheckboxFormSchemaElement, 
   SingleChoiceFormSchemaElement,
   NumberStepInputFormSchemaElement,
   SingleChoiceSelectFormSchemaElement,
@@ -89,25 +90,6 @@ function renderTextInput(element: TextInputFormSchemaElement, context: FormEngin
   return renderDynamicElementWrapper(element, input, context);
 }
 
-function renderSingleChoice(element: SingleChoiceFormSchemaElement, context: FormEngineContext) {
-  const { id, options, columns = 1 } = element;
-  const { getValue, setValue } = context;
-  const value = getValue(element.id) ?? '';
-  const onSelect = (e: Event) => {
-    const selectedIndex = e.getParameter('selectedIndex');
-    const selectedOption = options[selectedIndex];
-    setValue(id, selectedOption.value);
-  };
-
-  const input = new RadioButtonGroup({
-    columns: columns,
-    select: onSelect,
-    selectedIndex: options.findIndex((o) => o.value === value),
-    buttons: options.map((option) => new RadioButton({ text: option.display ?? option.value })),
-  });
-  return renderDynamicElementWrapper(element, input, context);
-}
-
 function renderCheckbox(element: CheckboxFormSchemaElement, context: FormEngineContext) {
   const { id, option } = element;
   const { state, setState } = context;
@@ -133,6 +115,25 @@ function renderCheckbox(element: CheckboxFormSchemaElement, context: FormEngineC
   boxes.push(box);
   const container = new VBox({ items: boxes });
   return renderDynamicElementWrapper(element, container, context);
+}
+
+function renderSingleChoice(element: SingleChoiceFormSchemaElement, context: FormEngineContext) {
+  const { id, options, columns = 1 } = element;
+  const { getValue, setValue } = context;
+  const value = getValue(element.id) ?? '';
+  const onSelect = (e: Event) => {
+    const selectedIndex = e.getParameter('selectedIndex');
+    const selectedOption = options[selectedIndex];
+    setValue(id, selectedOption.value);
+  };
+
+  const input = new RadioButtonGroup({
+    columns: columns,
+    select: onSelect,
+    selectedIndex: options.findIndex((o) => o.value === value),
+    buttons: options.map((option) => new RadioButton({ text: option.display ?? option.value })),
+  });
+  return renderDynamicElementWrapper(element, input, context);
 }
 
 function renderSingleChoiceSelect(element: SingleChoiceSelectFormSchemaElement, context: FormEngineContext) {
