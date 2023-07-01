@@ -21,8 +21,8 @@ export const csrdSchema: FormSchema = {
           level: 5,
         },
         {
-          type: "text-input", 
-          id: 'impactGHGEmiss', 
+          type: 'text-input',
+          id: 'impactGHGEmiss',
         },
         {
           type: 'heading',
@@ -41,23 +41,22 @@ export const csrdSchema: FormSchema = {
             { value: 'changingTemp', display: 'Changing temperature (air, freshwater, marine water)' },
             {
               value: 'heatStress',
-              display:
-                'Heat stress',
+              display: 'Heat stress',
             },
             { value: 'temperatureVari', display: 'Temperature variability' },
             { value: 'permafrostThawing', display: 'Permafrost thawing' },
           ],
           required: false,
-          description: 'Temperature-related chronic:', 
+          description: 'Temperature-related chronic:',
           effects: [
             {
               effect: 'hide',
               condition: {
-                 type: 'value', 
-                 id: 'tempRelated.tempRelated', 
+                type: 'value',
+                id: 'tempRelated.tempRelated',
               },
             },
-          ]
+          ],
         },
         {
           type: 'multi-choice',
@@ -66,8 +65,7 @@ export const csrdSchema: FormSchema = {
             { value: 'heatWave', display: 'Heat wave' },
             {
               value: 'coldwave',
-              display:
-                'Cold wave/frost',
+              display: 'Cold wave/frost',
             },
             { value: 'wildfire', display: 'Wildfire' },
           ],
@@ -77,25 +75,26 @@ export const csrdSchema: FormSchema = {
             {
               effect: 'hide',
               condition: {
-                 type: 'value', 
-                 id: 'tempRelated.tempRelated', 
+                type: 'value',
+                id: 'tempRelated.tempRelated',
               },
             },
-          ]
+          ],
         },
         {
-          type: 'text-input', 
-          id: 'temperature-related-input', 
-          description: 'Assessment of how its assets and business activities may be exposed and are sensitive to these temperature-related hazards, creating gross physical risks for the undertaking.', 
+          type: 'text-input',
+          id: 'temperature-related-input',
+          description:
+            'Assessment of how its assets and business activities may be exposed and are sensitive to these temperature-related hazards, creating gross physical risks for the undertaking.',
           effects: [
             {
               effect: 'hide',
               condition: {
-                 type: 'value', 
-                 id: 'tempRelated.tempRelated', 
+                type: 'value',
+                id: 'tempRelated.tempRelated',
               },
             },
-          ]
+          ],
         },
         {
           id: 'windRelated',
@@ -105,20 +104,18 @@ export const csrdSchema: FormSchema = {
         {
           type: 'multi-choice',
           id: 'windRelated-chronic',
-          options: [
-            { value: 'changingTWind', display: 'Changing wind patterns' },
-          ],
+          options: [{ value: 'changingTWind', display: 'Changing wind patterns' }],
           required: false,
-          description: 'Wind-related chronic:', 
+          description: 'Wind-related chronic:',
           effects: [
             {
               effect: 'hide',
               condition: {
-                 type: 'value', 
-                 id: 'windRelated.windRelated', 
+                type: 'value',
+                id: 'windRelated.windRelated',
               },
             },
-          ]
+          ],
         },
         {
           type: 'multi-choice',
@@ -127,8 +124,7 @@ export const csrdSchema: FormSchema = {
             { value: 'cyclones', display: 'Cyclones, hurricanes, typhoons' },
             {
               value: 'storms',
-              display:
-                'Storms (including blizzards, dust, and sandstorms)',
+              display: 'Storms (including blizzards, dust, and sandstorms)',
             },
             { value: 'tornado', display: 'Tornado' },
           ],
@@ -138,25 +134,26 @@ export const csrdSchema: FormSchema = {
             {
               effect: 'hide',
               condition: {
-                 type: 'value', 
-                 id: 'windRelated.windRelated', 
+                type: 'value',
+                id: 'windRelated.windRelated',
               },
             },
-          ]
+          ],
         },
         {
-          type: 'text-input', 
-          id: 'wind-related-input', 
-          description: 'Assessment of how its assets and business activities may be exposed and are sensitive to these wind-related hazards, creating gross physical risks for the undertaking.', 
+          type: 'text-input',
+          id: 'wind-related-input',
+          description:
+            'Assessment of how its assets and business activities may be exposed and are sensitive to these wind-related hazards, creating gross physical risks for the undertaking.',
           effects: [
             {
               effect: 'hide',
               condition: {
-                 type: 'value', 
-                 id: 'windRelated.windRelated', 
+                type: 'value',
+                id: 'windRelated.windRelated',
               },
             },
-          ]
+          ],
         },
         {
           id: 'waterRelated',
@@ -167,11 +164,13 @@ export const csrdSchema: FormSchema = {
           type: 'multi-choice',
           id: 'waterRelated-chronic',
           options: [
-            { value: 'changingPrecipitation', display: 'Changing precipitation patterns and types (rain, hail, snow/ice)' },
+            {
+              value: 'changingPrecipitation',
+              display: 'Changing precipitation patterns and types (rain, hail, snow/ice)',
+            },
             {
               value: 'hydrologicalVari',
-              display:
-                'Precipitation or hydrological variability',
+              display: 'Precipitation or hydrological variability',
             },
             { value: 'oceanAcidification', display: 'Ocean acidification' },
             { value: 'salineIntrusion', display: 'Saline intrusion' },
@@ -179,16 +178,16 @@ export const csrdSchema: FormSchema = {
             { value: 'waterStress', display: 'Water stress' },
           ],
           required: false,
-          description: 'Water-related chronic:', 
+          description: 'Water-related chronic:',
           effects: [
             {
               effect: 'hide',
               condition: {
-                 type: 'value', 
-                 id: 'waterRelated.waterRelated', 
+                type: 'value',
+                id: 'waterRelated.waterRelated',
               },
             },
-          ]
+          ],
         },
         {
           type: 'multi-choice',
@@ -197,8 +196,7 @@ export const csrdSchema: FormSchema = {
             { value: 'drought', display: 'Drought' },
             {
               value: 'heavyPrecipitation',
-              display:
-                'Heavy precipitation (rain, hail, snow/ice)',
+              display: 'Heavy precipitation (rain, hail, snow/ice)',
             },
             { value: 'flood', display: 'Flood (coastal, fluvial, pluvial, ground water)' },
             { value: 'glacialLake', display: 'Glacial lake outburst' },
@@ -209,25 +207,26 @@ export const csrdSchema: FormSchema = {
             {
               effect: 'hide',
               condition: {
-                 type: 'value', 
-                 id: 'waterRelated.waterRelated', 
+                type: 'value',
+                id: 'waterRelated.waterRelated',
               },
             },
-          ]
+          ],
         },
         {
-          type: 'text-input', 
-          id: 'water-related-input', 
-          description: 'Assessment of how its assets and business activities may be exposed and are sensitive to these water-related hazards, creating gross physical risks for the undertaking.', 
+          type: 'text-input',
+          id: 'water-related-input',
+          description:
+            'Assessment of how its assets and business activities may be exposed and are sensitive to these water-related hazards, creating gross physical risks for the undertaking.',
           effects: [
             {
               effect: 'hide',
               condition: {
-                 type: 'value', 
-                 id: 'waterRelated.waterRelated', 
+                type: 'value',
+                id: 'waterRelated.waterRelated',
               },
             },
-          ]
+          ],
         },
         {
           id: 'solidMassRelated',
@@ -241,23 +240,22 @@ export const csrdSchema: FormSchema = {
             { value: 'coastalErosion', display: 'Coastal erosion' },
             {
               value: 'soilDegradation',
-              display:
-                'Soil degradation',
+              display: 'Soil degradation',
             },
             { value: 'soilErosion', display: 'Soil erosion' },
             { value: 'Solifluction', display: 'Solifluction' },
           ],
           required: false,
-          description: 'Solid mass-related chronic:', 
+          description: 'Solid mass-related chronic:',
           effects: [
             {
               effect: 'hide',
               condition: {
-                 type: 'value', 
-                 id: 'solidMassRelated.solidMassRelated', 
+                type: 'value',
+                id: 'solidMassRelated.solidMassRelated',
               },
             },
-          ]
+          ],
         },
         {
           type: 'multi-choice',
@@ -266,8 +264,7 @@ export const csrdSchema: FormSchema = {
             { value: 'avalanche', display: 'Avalanche' },
             {
               value: 'landslide',
-              display:
-                'Landslide',
+              display: 'Landslide',
             },
             { value: 'subsidence', display: 'Subsidence' },
           ],
@@ -277,28 +274,29 @@ export const csrdSchema: FormSchema = {
             {
               effect: 'hide',
               condition: {
-                 type: 'value', 
-                 id: 'solidMassRelated.solidMassRelated', 
+                type: 'value',
+                id: 'solidMassRelated.solidMassRelated',
               },
             },
-          ]
+          ],
         },
         {
-          type: 'text-input', 
-          id: 'solidMass-related-input', 
-          description: 'Assessment of how its assets and business activities may be exposed and are sensitive to these solid mass-related hazards, creating gross physical risks for the undertaking.', 
+          type: 'text-input',
+          id: 'solidMass-related-input',
+          description:
+            'Assessment of how its assets and business activities may be exposed and are sensitive to these solid mass-related hazards, creating gross physical risks for the undertaking.',
           effects: [
             {
               effect: 'hide',
               condition: {
-                 type: 'value', 
-                 id: 'solidMassRelated.solidMassRelated', 
+                type: 'value',
+                id: 'solidMassRelated.solidMassRelated',
               },
             },
-          ]
+          ],
         },
-      ], 
-    }, 
+      ],
+    },
     {
       id: 'E1-5',
       title: 'E1-5 Climate change',
