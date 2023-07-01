@@ -13,26 +13,26 @@ export const csrdSchema: FormSchema = {
         {
           type: 'heading',
           text: 'The undertaking shall provide information on its energy consumption and mix.',
-          level: 4 
+          level: 4,
         },
         {
           type: 'heading',
           text: '35: What is the total energy consumption of your company in MWh?',
-          level: 5 
+          level: 5,
         },
         {
           type: 'number-input',
-          id: 'totalEnergyCons', 
+          id: 'totalEnergyCons',
         },
         {
           type: 'heading',
           text: '35 (a): Consumption from non-renewable sources:',
-          level: 5
+          level: 5,
         },
         {
           type: 'number-input',
-          id: 'totalNonRenewEnergyCons', 
-          label: 'Total energy consumption from non-renewable sources in MWh:'
+          id: 'totalNonRenewEnergyCons',
+          label: 'Total energy consumption from non-renewable sources in MWh:',
         },
         {
           id: 'coal',
@@ -167,12 +167,12 @@ export const csrdSchema: FormSchema = {
         {
           type: 'heading',
           text: '35 (b) Consumption from renewable sources:',
-          level: 5
+          level: 5,
         },
         {
           type: 'number-input',
-          id: 'totalRenewEnergyCons', 
-          label: 'Total energy consumption from renewable sources in MWh:'
+          id: 'totalRenewEnergyCons',
+          label: 'Total energy consumption from renewable sources in MWh:',
         },
         {
           type: 'multi-choice',
@@ -244,7 +244,7 @@ export const csrdSchema: FormSchema = {
         {
           type: 'heading',
           text: '36: Does the company produce energy?',
-          level: 5
+          level: 5,
         },
         {
           type: 'boolean-choice',
@@ -277,12 +277,12 @@ export const csrdSchema: FormSchema = {
         {
           type: 'heading',
           text: 'The undertaking shall provide information on its payment practices to support transparency about these practices given the importance of timely cash flows to business partners, especially with respect to late payments to small and medium enterprises (SMEs).',
-          level: 5 
+          level: 5,
         },
         {
           type: 'heading',
           text: '33 (a) What is the average time the company takes to pay an invoice from the date when the contractual or statutory term of payment starts to be calculated, in number of days?',
-          level: 5, 
+          level: 5,
         },
         {
           type: 'number-input',
@@ -291,7 +291,7 @@ export const csrdSchema: FormSchema = {
         {
           type: 'heading',
           text: '33 (b): A description of the undertaking’s standard payment terms in number of days by main category of suppliers and the percentage of its payments aligned with these standard terms is required here.',
-          level: 5
+          level: 5,
         },
         {
           type: 'boolean-choice',
@@ -303,7 +303,7 @@ export const csrdSchema: FormSchema = {
         {
           type: 'heading',
           text: 'An example of what the description of standard contract term disclosures in paragraph 33 (b) could look like:',
-          level: 6, 
+          level: 6,
           effects: [
             {
               effect: 'hide',
@@ -330,7 +330,7 @@ export const csrdSchema: FormSchema = {
         {
           type: 'heading',
           text: '33 (c) What is the number of legal proceedings (currently outstanding) during the reporting period for late payments?',
-          level: 5, 
+          level: 5,
         },
         {
           type: 'number-input',
