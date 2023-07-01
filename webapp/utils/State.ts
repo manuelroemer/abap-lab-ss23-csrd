@@ -86,7 +86,8 @@ export type StateSubscriber<T extends object> = (nextValue: T, previousValue: T,
 
 export type StateGet<T extends object> = State<T>['get'];
 export type StateSet<T extends object> = State<T>['set'];
-export type CreateState<T extends object> = (stateAccessors: { get: StateGet<T>; set: StateSet<T> }) => T;
+export type StateAccessors<T extends object> = { get: StateGet<T>; set: StateSet<T> };
+export type CreateState<T extends object> = (stateAccessors: StateAccessors<T>) => T;
 
 /**
  * Creates a new {@link State} object from the provided initial value.
