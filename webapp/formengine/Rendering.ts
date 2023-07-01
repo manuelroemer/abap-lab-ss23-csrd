@@ -95,19 +95,19 @@ function renderCheckbox(element: CheckboxFormSchemaElement, context: FormEngineC
   const { state, setState } = context;
   const value = (state[element.id] as Array<string>) ?? [];
 
-    const onSelect = (e: Event) => {
-      const isSelected = e.getParameter('selected') as boolean;
-      setState({
-        ...state,
-        [id]: isSelected ? uniq([...value, option.value]) : value.filter((v) => v !== option.value),
-        [`${id}.${option.value}`]: isSelected,
-      });
-    };
-    const checkbox = new CheckBox({
-      text: option.display ?? option.value,
-      selected: value.includes(option.value),
-      select: onSelect,
+  const onSelect = (e: Event) => {
+    const isSelected = e.getParameter('selected') as boolean;
+    setState({
+      ...state,
+      [id]: isSelected ? uniq([...value, option.value]) : value.filter((v) => v !== option.value),
+      [`${id}.${option.value}`]: isSelected,
     });
+  };
+  const checkbox = new CheckBox({
+    text: option.display ?? option.value,
+    selected: value.includes(option.value),
+    select: onSelect,
+  });
   return renderDynamicElementWrapper(element, checkbox, context);
 }
 
