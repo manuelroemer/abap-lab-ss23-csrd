@@ -285,24 +285,24 @@ export const csrdSchema: FormSchema = {
           level: 5,
         },
         {
-          type: 'number-input', 
+          type: 'number-input',
           id: 'numMaleManagement',
-          label: 'Number of male employees at the top management level:'
-        }, 
+          label: 'Number of male employees at the top management level:',
+        },
         {
-          type: 'number-input', 
+          type: 'number-input',
           id: 'percMaleManagement',
-          label: 'Percentage of male employees at the top management level:'
+          label: 'Percentage of male employees at the top management level:',
         },
         {
-          type: 'number-input', 
+          type: 'number-input',
           id: 'numFemaleManagement',
-          label: 'Number of male employees at the top management level:'
+          label: 'Number of male employees at the top management level:',
         },
         {
-          type: 'number-input', 
+          type: 'number-input',
           id: 'percFemaleManagement',
-          label: 'Percentage of male employees at the top management level:'
+          label: 'Percentage of male employees at the top management level:',
         },
         {
           type: 'heading',
@@ -310,21 +310,21 @@ export const csrdSchema: FormSchema = {
           level: 5,
         },
         {
-          type: 'number-input', 
+          type: 'number-input',
           id: 'percU30Empl',
-          label: 'Percentage of employees under 30 years old:'
+          label: 'Percentage of employees under 30 years old:',
         },
         {
-          type: 'number-input', 
+          type: 'number-input',
           id: 'perc30To50Empl',
-          label: 'Percentage of employees between 30 and 50 years old:'
+          label: 'Percentage of employees between 30 and 50 years old:',
         },
         {
-          type: 'number-input', 
+          type: 'number-input',
           id: 'percO50Empl',
-          label: 'Percentage of employees older than 50 years old:'
+          label: 'Percentage of employees older than 50 years old:',
         },
-      ], 
+      ],
     },
     {
       id: 'G1-6',
