@@ -46,6 +46,7 @@ const elementRenderers: RenderLookup = {
   heading: renderHeading,
   text: renderText,
   'text-input': renderTextInput,
+  'checkbox': renderCheckbox,
   'single-choice': renderSingleChoice,
   'single-choice-select': renderSingleChoiceSelect,
   'multi-choice': renderMultiChoice,
@@ -105,6 +106,33 @@ function renderSingleChoice(element: SingleChoiceFormSchemaElement, context: For
     buttons: options.map((option) => new RadioButton({ text: option.display ?? option.value })),
   });
   return renderDynamicElementWrapper(element, input, context);
+}
+
+function renderCheckbox(element: CheckboxFormSchemaElement, context: FormEngineContext) {
+  const { id, option } = element;
+  const { state, setState } = context;
+  const value = (state[element.id] as Array<string>) ?? [];
+
+  const blob = () => {
+    const onSelect = (e: Event) => {
+      const isSelected = e.getParameter('selected') as boolean;
+      setState({
+        ...state,
+        [id]: isSelected ? uniq([...value, option.value]) : value.filter((v) => v !== option.value),
+        [`${id}.${option.value}`]: isSelected,
+      });
+    };
+    return new CheckBox({
+      text: option.display ?? option.value,
+      selected: value.includes(option.value),
+      select: onSelect,
+    });
+  };
+  const box = blob();
+  const boxes = new Array();
+  boxes.push(box);
+  const container = new VBox({ items: boxes });
+  return renderDynamicElementWrapper(element, container, context);
 }
 
 function renderSingleChoiceSelect(element: SingleChoiceSelectFormSchemaElement, context: FormEngineContext) {
