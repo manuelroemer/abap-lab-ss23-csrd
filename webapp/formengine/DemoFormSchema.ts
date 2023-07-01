@@ -94,6 +94,14 @@ export const demoFormSchema: FormSchema = {
           helperText: 'Hint: You can also pick any other date. We do not discriminate.',
           required: false,
         },
+        {
+          id: 'TestCheckbox',
+          type: 'checkbox',
+          option: {
+            value: 'TestCheckbox',
+            display: 'Apples 🍎',
+          },
+        },
       ],
     },
     {
