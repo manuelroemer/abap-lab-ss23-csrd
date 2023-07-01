@@ -4,7 +4,7 @@ export const csrdSchema: FormSchema = {
   pages: [
     {
       id: 'E1-5',
-      title: 'E1-5',
+      title: 'E1-5 Climate change',
       elements: [
         {
           type: 'heading',
@@ -267,8 +267,68 @@ export const csrdSchema: FormSchema = {
       ],
     },
     {
+      id: 'S1-9',
+      title: 'S1-9 Own workforce',
+      elements: [
+        {
+          type: 'heading',
+          text: 'S1-9 – Diversity indicators',
+        },
+        {
+          type: 'heading',
+          text: 'The undertaking shall disclose the gender distribution at top management and the age distribution amongst its employees.',
+          level: 5,
+        },
+        {
+          type: 'heading',
+          text: '65 (a) Specify the the gender distribution in number and percentage at top management level amongst its employees:',
+          level: 5,
+        },
+        {
+          type: 'number-input', 
+          id: 'numMaleManagement',
+          label: 'Number of male employees at the top management level:'
+        }, 
+        {
+          type: 'number-input', 
+          id: 'percMaleManagement',
+          label: 'Percentage of male employees at the top management level:'
+        },
+        {
+          type: 'number-input', 
+          id: 'numFemaleManagement',
+          label: 'Number of male employees at the top management level:'
+        },
+        {
+          type: 'number-input', 
+          id: 'percFemaleManagement',
+          label: 'Percentage of male employees at the top management level:'
+        },
+        {
+          type: 'heading',
+          text: '65 (b) Distribution of employees by age group',
+          level: 5,
+        },
+        {
+          type: 'number-input', 
+          id: 'percU30Empl',
+          label: 'Percentage of employees under 30 years old:'
+        },
+        {
+          type: 'number-input', 
+          id: 'perc30To50Empl',
+          label: 'Percentage of employees between 30 and 50 years old:'
+        },
+        {
+          type: 'number-input', 
+          id: 'percO50Empl',
+          label: 'Percentage of employees older than 50 years old:'
+        },
+      ], 
+    },
+    {
       id: 'G1-6',
-      title: 'G1-6',
+      title: 'G1-6 Business conduct',
       elements: [
         {
           type: 'heading',
