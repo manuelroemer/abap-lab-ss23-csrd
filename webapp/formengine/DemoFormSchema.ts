@@ -2,7 +2,6 @@ import { FormSchema } from './Schema';
 
 export const demoFormSchema: FormSchema = {
   pages: [
-    
     {
       id: 'SBM-1',
       title: 'SBM-1',
@@ -23,8 +22,8 @@ export const demoFormSchema: FormSchema = {
             display: 'Apples 🍎',
           },
         },
-      ], 
-    }, 
+      ],
+    },
     {
       id: 'all-controls',
       title: 'All Controls',

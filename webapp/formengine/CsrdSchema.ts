@@ -2,7 +2,6 @@ import { FormSchema } from './Schema';
 
 export const csrdSchema: FormSchema = {
   pages: [
-    
     {
       id: 'E1-5',
       title: 'E1-5',
@@ -16,13 +15,13 @@ export const csrdSchema: FormSchema = {
           text: 'The undertaking shall provide information on its energy consumption and mix',
         },
         {
-          type: 'number-input', 
-          id: 'totalEnergyCons', 
-          label: 'What is the total energy consumption of your company?'
-        }, 
+          type: 'number-input',
+          id: 'totalEnergyCons',
+          label: 'What is the total energy consumption of your company?',
+        },
         {
-          type: 'text', 
-          text: 'Consumption from non-renewable sources:'
+          type: 'text',
+          text: 'Consumption from non-renewable sources:',
         },
         {
           id: 'coal',
@@ -141,7 +140,8 @@ export const csrdSchema: FormSchema = {
         {
           type: 'number-input',
           id: 'purchased-non-renew-amount',
-          label: 'Energy consumption from purchased or acquired electricity, heat, steam, and cooling from non-renewable sources in MWH',
+          label:
+            'Energy consumption from purchased or acquired electricity, heat, steam, and cooling from non-renewable sources in MWH',
           required: false,
           effects: [
             {
@@ -236,51 +236,56 @@ export const csrdSchema: FormSchema = {
           text: 'The undertaking shall provide information on its payment practices to support transparency about these practices given the importance of timely cash flows to business partners, especially with respect to late payments to small and medium enterprises (SMEs).',
         },
         {
-          type: 'number-input', 
-          id: 'AvgTimeToPayInvoice', 
-          description: 'What is the average time the company takes to pay an invoice from the date when the contractual or statutory term of payment starts to be calculated, in number of days?'
-        }, 
+          type: 'number-input',
+          id: 'AvgTimeToPayInvoice',
+          description:
+            'What is the average time the company takes to pay an invoice from the date when the contractual or statutory term of payment starts to be calculated, in number of days?',
+        },
         {
-          type: 'text', 
-          text: 'A description of the undertaking’s standard payment terms in number of days by main category of suppliers and the percentage of its payments aligned with these standard terms is required here.', 
-        }, 
+          type: 'text',
+          text: 'A description of the undertaking’s standard payment terms in number of days by main category of suppliers and the percentage of its payments aligned with these standard terms is required here.',
+        },
         {
           type: 'boolean-choice',
           id: 'variingStandards',
-          description: 'Is the company dealing with standard contractual payment terms that differ significantly depending on country or type of supplier?',
+          description:
+            'Is the company dealing with standard contractual payment terms that differ significantly depending on country or type of supplier?',
           required: false,
         },
         {
-          type: 'text', 
-          text: 'An example of what the description of standard contract term disclosures in paragraph 33 (b) could look like:', 
+          type: 'text',
+          text: 'An example of what the description of standard contract term disclosures in paragraph 33 (b) could look like:',
           effects: [
             {
               effect: 'hide',
               condition: {
-                type: 'value', id: 'variingStandards' 
+                type: 'value',
+                id: 'variingStandards',
               },
             },
           ],
-        }, 
-        {
-          type: 'text', 
-          text: 'ABC’s standard contract payment terms are payment on invoice for wholesalers which encompass approximately 80% of its annual invoices. It pays for services received within 30 days after receipt of the invoice which are about 5% of its annual invoices. The remainder of its invoices are paid within 60 days of receipt except for those in country X which in accordance with the marketplace standards are paid within 90 days of receipt.', 
-          effects: [
-            {
-              effect: 'hide',
-              condition: {
-                type: 'value', id: 'variingStandards' 
-              },
-            },
-          ],
-        }, 
-        {
-          type: 'number-input', 
-          id: 'numOfLegalProceedingsOutstanding', 
-          description: 'What is the number of legal proceedings (currently outstanding) during the reporting period for late payments?', 
         },
-      ], 
-    }, 
+        {
+          type: 'text',
+          text: 'ABC’s standard contract payment terms are payment on invoice for wholesalers which encompass approximately 80% of its annual invoices. It pays for services received within 30 days after receipt of the invoice which are about 5% of its annual invoices. The remainder of its invoices are paid within 60 days of receipt except for those in country X which in accordance with the marketplace standards are paid within 90 days of receipt.',
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                type: 'value',
+                id: 'variingStandards',
+              },
+            },
+          ],
+        },
+        {
+          type: 'number-input',
+          id: 'numOfLegalProceedingsOutstanding',
+          description:
+            'What is the number of legal proceedings (currently outstanding) during the reporting period for late payments?',
+        },
+      ],
+    },
     {
       id: 'csrdrelevant',
       title: 'CSRD Relevance',
