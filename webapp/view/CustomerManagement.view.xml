@@ -18,9 +18,9 @@
             <masterPages>
               <Page id="master" title="Customers" backgroundDesign="List">
                 <headerContent>
-                  <Button icon="sap-icon://add" tooltip="Add Customer" />
+                  <Button icon="sap-icon://add" tooltip="Add Customer" press="onCustomerAddPress" />
                 </headerContent>
-                <List>
+                <List items="{svc>/CustomerSet}">
                   <CustomListItem>
                     <HBox>
                       <core:Icon
@@ -29,41 +29,41 @@
                         class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
                       />
                       <VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
-                        <Text text="Customer 1" />
-                        <Label text="customer-code-1" />
+                        <Text text="{svc>Name}" />
+                        <Label text="{svc>CustomerCode}" />
                       </VBox>
                       <HBox alignItems="Center" justifyContent="End" width="100%">
-                        <Button icon="sap-icon://edit" type="Transparent" tooltip="Edit Customer" />
-                        <Button icon="sap-icon://decline" type="Transparent" tooltip="Delete Customer" />
-                      </HBox>
-                    </HBox>
-                  </CustomListItem>
-                  <CustomListItem>
-                    <HBox>
-                      <core:Icon
-                        size="2rem"
-                        src="sap-icon://person-placeholder"
-                        class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
-                      />
-                      <VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
-                        <Text text="Customer 2" />
-                        <Label text="customer-code-2" />
-                      </VBox>
-                      <HBox alignItems="Center" justifyContent="End" width="100%">
-                        <Button icon="sap-icon://edit" type="Transparent" tooltip="Edit Customer" />
+                        <Button
+                          icon="sap-icon://edit"
+                          type="Transparent"
+                          tooltip="Edit Customer"
+                          press=".onCustomerEditPress"
+                        />
                         <Button icon="sap-icon://decline" type="Transparent" tooltip="Delete Customer" />
                       </HBox>
                     </HBox>
                   </CustomListItem>
                 </List>
+                <Dialog id="customerDialog" title="{state>/customerDialogTitle}" draggable="true">
+                  <content>
+                    <VBox class="sapUiLargeMargin">
+                      <Text text="{i18n>Management_DialogCustomerName}" />
+                      <Input id="customerName" value="{state>/customerName}" />
+                      <Text text="{i18n>Management_DialogCustomerCode}" />
+                      <Input id="customerCode" value="{state>/customerCode}" />
+                    </VBox>
+                  </content>
+                  <beginButton>
+                    <Button text="{i18n>Management_SubmitCustomer}" press="onCustomerDialogSubmit" type="Emphasized" />
+                  </beginButton>
+                  <endButton>
+                    <Button text="{i18n>Management_CancelCustomerDialog}" press="" />
+                  </endButton>
+                </Dialog>
               </Page>
             </masterPages>
             <detailPages>
-              <Page id="placeholder" title="Test" backgroundDesign="Solid" />
-              <Page id="detail" title="Filled Questionnaires" backgroundDesign="Solid">
-                <Label text="Detail page 1" class="sapUiTinyMarginEnd" />
-                <Button text="Go to Detail page 2" />
-              </Page>
+
             </detailPages>
           </SplitContainer>
         </layout:flexContent>
