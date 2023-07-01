@@ -222,6 +222,7 @@ export type FormSchemaElement =
   | HeadingFormSchemaElement
   | TextFormSchemaElement
   | TextInputFormSchemaElement
+  | CheckboxFormSchemaElement
   | SingleChoiceFormSchemaElement
   | SingleChoiceSelectFormSchemaElement
   | MultiChoiceFormSchemaElement
