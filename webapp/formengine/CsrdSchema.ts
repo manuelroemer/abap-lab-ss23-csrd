@@ -3,6 +3,303 @@ import { FormSchema } from './Schema';
 export const csrdSchema: FormSchema = {
   pages: [
     {
+      id: 'IRO-1',
+      title: 'IRO-1 Climate change',
+      elements: [
+        {
+          type: 'heading',
+          text: 'IRO-1 – Description of the processes to identify and assess material climate-related impacts, risks and opportunities',
+        },
+        {
+          type: 'heading',
+          text: 'The undertaking shall describe the process to identify and assess climate-related impacts, risks and opportunities.',
+          level: 4,
+        },
+        {
+          type: 'heading',
+          text: '18 (a): The companies impacts on climate change, in particular, the undertaking’s GHG emissions: ',
+          level: 5,
+        },
+        {
+          type: "text-input", 
+          id: 'impactGHGEmiss', 
+        },
+        {
+          type: 'heading',
+          text: '18 (b): Climate-related physical risks in own operations and along the value chain: ',
+          level: 5,
+        },
+        {
+          id: 'tempRelated',
+          type: 'checkbox',
+          option: { value: 'tempRelated', display: 'Temperature-related' },
+        },
+        {
+          type: 'multi-choice',
+          id: 'tempRelated-chronic',
+          options: [
+            { value: 'changingTemp', display: 'Changing temperature (air, freshwater, marine water)' },
+            {
+              value: 'heatStress',
+              display:
+                'Heat stress',
+            },
+            { value: 'temperatureVari', display: 'Temperature variability' },
+            { value: 'permafrostThawing', display: 'Permafrost thawing' },
+          ],
+          required: false,
+          description: 'Temperature-related chronic:', 
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                 type: 'value', 
+                 id: 'tempRelated.tempRelated', 
+              },
+            },
+          ]
+        },
+        {
+          type: 'multi-choice',
+          id: 'tempRelated-acute',
+          options: [
+            { value: 'heatWave', display: 'Heat wave' },
+            {
+              value: 'coldwave',
+              display:
+                'Cold wave/frost',
+            },
+            { value: 'wildfire', display: 'Wildfire' },
+          ],
+          required: false,
+          description: 'Temperature-related acute:',
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                 type: 'value', 
+                 id: 'tempRelated.tempRelated', 
+              },
+            },
+          ]
+        },
+        {
+          type: 'text-input', 
+          id: 'temperature-related-input', 
+          description: 'Assessment of how its assets and business activities may be exposed and are sensitive to these temperature-related hazards, creating gross physical risks for the undertaking.', 
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                 type: 'value', 
+                 id: 'tempRelated.tempRelated', 
+              },
+            },
+          ]
+        },
+        {
+          id: 'windRelated',
+          type: 'checkbox',
+          option: { value: 'windRelated', display: 'Wind-related' },
+        },
+        {
+          type: 'multi-choice',
+          id: 'windRelated-chronic',
+          options: [
+            { value: 'changingTWind', display: 'Changing wind patterns' },
+          ],
+          required: false,
+          description: 'Wind-related chronic:', 
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                 type: 'value', 
+                 id: 'windRelated.windRelated', 
+              },
+            },
+          ]
+        },
+        {
+          type: 'multi-choice',
+          id: 'windRelated-acute',
+          options: [
+            { value: 'cyclones', display: 'Cyclones, hurricanes, typhoons' },
+            {
+              value: 'storms',
+              display:
+                'Storms (including blizzards, dust, and sandstorms)',
+            },
+            { value: 'tornado', display: 'Tornado' },
+          ],
+          required: false,
+          description: 'Wind-related acute:',
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                 type: 'value', 
+                 id: 'windRelated.windRelated', 
+              },
+            },
+          ]
+        },
+        {
+          type: 'text-input', 
+          id: 'wind-related-input', 
+          description: 'Assessment of how its assets and business activities may be exposed and are sensitive to these wind-related hazards, creating gross physical risks for the undertaking.', 
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                 type: 'value', 
+                 id: 'windRelated.windRelated', 
+              },
+            },
+          ]
+        },
+        {
+          id: 'waterRelated',
+          type: 'checkbox',
+          option: { value: 'waterRelated', display: 'Water-related' },
+        },
+        {
+          type: 'multi-choice',
+          id: 'waterRelated-chronic',
+          options: [
+            { value: 'changingPrecipitation', display: 'Changing precipitation patterns and types (rain, hail, snow/ice)' },
+            {
+              value: 'hydrologicalVari',
+              display:
+                'Precipitation or hydrological variability',
+            },
+            { value: 'oceanAcidification', display: 'Ocean acidification' },
+            { value: 'salineIntrusion', display: 'Saline intrusion' },
+            { value: 'seaLevelRise', display: 'Sea level rise' },
+            { value: 'waterStress', display: 'Water stress' },
+          ],
+          required: false,
+          description: 'Water-related chronic:', 
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                 type: 'value', 
+                 id: 'waterRelated.waterRelated', 
+              },
+            },
+          ]
+        },
+        {
+          type: 'multi-choice',
+          id: 'waterRelated-acute',
+          options: [
+            { value: 'drought', display: 'Drought' },
+            {
+              value: 'heavyPrecipitation',
+              display:
+                'Heavy precipitation (rain, hail, snow/ice)',
+            },
+            { value: 'flood', display: 'Flood (coastal, fluvial, pluvial, ground water)' },
+            { value: 'glacialLake', display: 'Glacial lake outburst' },
+          ],
+          required: false,
+          description: 'Water-related acute:',
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                 type: 'value', 
+                 id: 'waterRelated.waterRelated', 
+              },
+            },
+          ]
+        },
+        {
+          type: 'text-input', 
+          id: 'water-related-input', 
+          description: 'Assessment of how its assets and business activities may be exposed and are sensitive to these water-related hazards, creating gross physical risks for the undertaking.', 
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                 type: 'value', 
+                 id: 'waterRelated.waterRelated', 
+              },
+            },
+          ]
+        },
+        {
+          id: 'solidMassRelated',
+          type: 'checkbox',
+          option: { value: 'solidMassRelated', display: 'Solid mass-related' },
+        },
+        {
+          type: 'multi-choice',
+          id: 'solidMassRelated-chronic',
+          options: [
+            { value: 'coastalErosion', display: 'Coastal erosion' },
+            {
+              value: 'soilDegradation',
+              display:
+                'Soil degradation',
+            },
+            { value: 'soilErosion', display: 'Soil erosion' },
+            { value: 'Solifluction', display: 'Solifluction' },
+          ],
+          required: false,
+          description: 'Solid mass-related chronic:', 
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                 type: 'value', 
+                 id: 'solidMassRelated.solidMassRelated', 
+              },
+            },
+          ]
+        },
+        {
+          type: 'multi-choice',
+          id: 'solidMassRelated-acute',
+          options: [
+            { value: 'avalanche', display: 'Avalanche' },
+            {
+              value: 'landslide',
+              display:
+                'Landslide',
+            },
+            { value: 'subsidence', display: 'Subsidence' },
+          ],
+          required: false,
+          description: 'Solid mass-related acute:',
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                 type: 'value', 
+                 id: 'solidMassRelated.solidMassRelated', 
+              },
+            },
+          ]
+        },
+        {
+          type: 'text-input', 
+          id: 'solidMass-related-input', 
+          description: 'Assessment of how its assets and business activities may be exposed and are sensitive to these solid mass-related hazards, creating gross physical risks for the undertaking.', 
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                 type: 'value', 
+                 id: 'solidMassRelated.solidMassRelated', 
+              },
+            },
+          ]
+        },
+      ], 
+    }, 
+    {
       id: 'E1-5',
       title: 'E1-5 Climate change',
       elements: [
