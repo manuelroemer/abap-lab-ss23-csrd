@@ -233,7 +233,7 @@ export const csrdSchema: FormSchema = {
         },
         {
           type: 'text',
-          text: 'The undertaking shall provide information on its payment practices to support transparency about these practices given the importance of timely cash flows to business partners, especially with respect to late payments to small and medium enterprises (SMEs).',
+          text: '<b>The undertaking shall provide information on its payment practices to support transparency about these practices given the importance of timely cash flows to business partners, especially with respect to late payments to small and medium enterprises (SMEs).</b>',
         },
         {
           type: 'number-input',

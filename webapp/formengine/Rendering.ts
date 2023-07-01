@@ -95,7 +95,6 @@ function renderCheckbox(element: CheckboxFormSchemaElement, context: FormEngineC
   const { state, setState } = context;
   const value = (state[element.id] as Array<string>) ?? [];
 
-  const blob = () => {
     const onSelect = (e: Event) => {
       const isSelected = e.getParameter('selected') as boolean;
       setState({
@@ -104,17 +103,12 @@ function renderCheckbox(element: CheckboxFormSchemaElement, context: FormEngineC
         [`${id}.${option.value}`]: isSelected,
       });
     };
-    return new CheckBox({
+    const checkbox = new CheckBox({
       text: option.display ?? option.value,
       selected: value.includes(option.value),
       select: onSelect,
     });
-  };
-  const box = blob();
-  const boxes = new Array();
-  boxes.push(box);
-  const container = new VBox({ items: boxes });
-  return renderDynamicElementWrapper(element, container, context);
+  return renderDynamicElementWrapper(element, checkbox, context);
 }
 
 function renderSingleChoice(element: SingleChoiceFormSchemaElement, context: FormEngineContext) {
