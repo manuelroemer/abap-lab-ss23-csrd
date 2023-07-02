@@ -19,6 +19,10 @@ interface AsyncStateInternal<TArgs, TData, TError> {
    * @param force Whether to force a new fetch. Default is `false` (which deduplicates the fetch calls).
    */
   fetch(args: TArgs, force?: boolean): Promise<TData>;
+  /**
+   * Resets the state to `idle`, purging any `data` and `error`.
+   */
+  reset(): void;
 }
 
 interface AsyncStateInternalFull<TArgs, TData, TError> extends AsyncStateInternal<TArgs, TData, TError> {
@@ -209,13 +213,25 @@ export function createAsync<TArgs = void, TData = unknown, TError = unknown>({
     // inside `currentRunPromise`).
     // -> Discard whatever result was produced by this run and simply return the result of the
     //    most up-to-date promise/run.
-    return await currentRunPromise!;
+    return await (currentRunPromise ?? Promise.reject(new Error('Operation reset or canceled.')));
+  };
+
+  const reset = () => {
+    setState({
+      status: 'idle',
+      data: undefined,
+      error: undefined,
+    });
+
+    currentRun = 0;
+    currentRunPromise = undefined;
   };
 
   return withComputed({
     data: undefined,
     status: 'idle',
     fetch: fetchInternal,
+    reset,
   });
 }
 

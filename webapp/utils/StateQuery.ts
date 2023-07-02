@@ -70,8 +70,7 @@ export function createQuery<TArgs = void, TData = unknown, TError = unknown>(
   options: QueryStateOptions<TArgs, TData, TError>,
 ): QueryState<TArgs, TData, TError> {
   const {
-    key,
-    state: { get, set, watch },
+    state: { watch },
     getArgs,
   } = options;
 
@@ -82,15 +81,10 @@ export function createQuery<TArgs = void, TData = unknown, TError = unknown>(
     // Force a refetch here to cancel/overwrite any ongoing query fetch.
     const args = getArgs(state);
 
+    // If the args change such that the query is no longer enabled, we must manually reset the
+    // state to idle. Otherwise we could mistakenly show stale data/errors.
     if (args === null || args === undefined) {
-      set({
-        [key]: {
-          ...get()[key],
-          status: 'idle',
-          data: undefined,
-          error: undefined,
-        },
-      });
+      asyncState.reset();
     }
 
     if (args !== null && args !== undefined) {
