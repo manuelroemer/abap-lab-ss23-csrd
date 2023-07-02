@@ -81,7 +81,7 @@
                     <f:customLayout>
                       <grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, 23rem)" gridGap="1rem" />
                     </f:customLayout>
-                    <f:GridListItem>
+                    <f:GridListItem type="Active" press="onFormSchemaResultPress">
                       <VBox class="sapUiSmallMargin">
                         <HBox>
                           <core:Icon size="4rem" src="sap-icon://documents" class="sapUiSmallMargin" />

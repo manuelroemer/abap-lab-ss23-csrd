@@ -41,6 +41,20 @@ export default class CustomerManagementController extends BaseController {
   onInit() {
     this.connectState(this.state);
     connectRouterState(this.state, this.router);
+
+    this.state.watch(
+      (state) => state.parameters.customerId,
+      async (state) => {
+        try {
+          const formSchemaResults = await getAllFormSchemaResultEntities({
+            filters: [new Filter({ path: 'CustomerId', operator: 'EQ', value1: state.parameters.customerId })],
+          });
+          this.state.set({ customerFormSchemaResults: formSchemaResults.results });
+        } catch (e) {
+          MessageBox.error('Error by loading the questionnaires.');
+        }
+      },
+    );
   }
 
   onCustomerAddPress() {
@@ -109,14 +123,7 @@ export default class CustomerManagementController extends BaseController {
 
   async onCustomerPress(e: Event) {
     const customer = entityFromEvent<CustomerEntity>(e, 'svc');
-    try {
-      const formSchemaResults = await getAllFormSchemaResultEntities({
-        filters: [new Filter({ path: 'CustomerId', operator: 'EQ', value1: customer?.Id })],
-      });
-      this.state.set({ customerFormSchemaResults: formSchemaResults.results });
-    } catch (e) {
-      MessageBox.error('Error by loading the questionnaires.');
-    }
+    this.router.navTo('CustomerManagement', { customerId: customer?.Id });
   }
 
   async onQuestionnaireDeletePress(e: Event) {
@@ -127,5 +134,18 @@ export default class CustomerManagementController extends BaseController {
     } catch (e) {
       MessageBox.error('Error by deleting the questionnaire');
     }
+  }
+
+  onFormSchemaResultPress(e: Event) {
+    const result = entityFromEvent<FormSchemaResultEntity>(e, 'state');
+
+    const {
+      parameters: { customerId },
+    } = this.state.get();
+    this.router.navTo('Questionnaire', {
+      formSchemaType: 'demo',
+      customerId,
+      '?query': { formSchemaResultId: result?.Id },
+    });
   }
 }
