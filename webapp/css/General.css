@@ -1,0 +1,7 @@
+.myBackgroundStyle {
+  background-size: 25vw;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: right bottom;
+  background-image: url('../assets/hexagon.png');
+}

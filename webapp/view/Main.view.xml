@@ -2,12 +2,95 @@
   xmlns:layout="sap.ui.layout"
   controllerName="csrdreporting.controller.Main"
   xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
   displayBlock="true"
   xmlns="sap.m"
+  xmlns:lf="sap.ui.layout.form"
+  xmlns:f="sap.f"
+  xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:formengine="csrdreporting.formengine">
-  <Page id="page" title="{i18n>title}">
-    <Button text="To Form Builder" press="navToFormBuilder" />
-    <Button text="To Questionnaire Page" press="navToQuestionnaire" />
-    <Button text="To Customer Management Page" press="navToCustomerManagement" />
+  <Page id="page" showHeader="false">
+    <content>
+      <layout:FixFlex class="fixFlexVertical">
+        <layout:fixContent>
+          <ObjectHeader backgroundDesign="Solid" title="{i18n>title}">
+            <ObjectAttribute text="Manage the customers and filled questionnaires." />
+          </ObjectHeader>
+        </layout:fixContent>
+        <layout:flexContent>
+          <Page id="details" showHeader="false" class="myBackgroundStyle">
+            <ObjectHeader title="Actions" condensed="true" backgroundDesign="Transparent" />
+            <Panel id="panelForGrid" backgroundDesign="Transparent">
+              <f:GridList id="gridList">
+                <f:customLayout>
+                  <grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, 20rem)" gridGap="2rem" />
+                </f:customLayout>
+                <f:GridListItem type="Active" press="onSelectDialogPress">
+                  <VBox class="sapUiSmallMargin">
+                    <HBox>
+                      <core:Icon size="3rem" src="sap-icon://survey" class="sapUiSmallMargin" />
+                      <VBox alignItems="Start" justifyContent="Center" width="100%">
+                        <Title text="Fill Questionnaire" level="H1" />
+                        <Label text="Fill out a new questionnaire" />
+                      </VBox>
+                    </HBox>
+                    <Text text="Here you can fill out a new CSRD questionnaire." class="sapUiTinyMargin" />
+                  </VBox>
+                </f:GridListItem>
+
+                <f:GridListItem type="Active" press="navToCustomerManagement">
+                  <VBox class="sapUiSmallMargin">
+                    <HBox>
+                      <core:Icon size="3rem" src="sap-icon://user-edit" class="sapUiSmallMargin" />
+                      <VBox alignItems="Start" justifyContent="Center" width="100%">
+                        <Title text="Management" level="H1" />
+                        <Label text="Questionnaire and Customer" />
+                      </VBox>
+                    </HBox>
+                    <Text
+                      text="Here you can manage customers and their questionnaires that were filled in the past."
+                      class="sapUiTinyMargin"
+                    />
+                  </VBox>
+                </f:GridListItem>
+                <f:GridListItem type="Active" press="navToFormBuilder">
+                  <VBox class="sapUiSmallMargin">
+                    <HBox>
+                      <core:Icon size="3rem" src="sap-icon://database" class="sapUiSmallMargin" />
+                      <VBox alignItems="Start" justifyContent="Center" width="100%">
+                        <Title text="Form Builder" level="H1" />
+                        <Label text="Create and edit FormSchemas" />
+                      </VBox>
+                    </HBox>
+                    <Text text="Here you can create and edit your FormSchemas." class="sapUiTinyMargin" />
+                  </VBox>
+                </f:GridListItem>
+              </f:GridList>
+            </Panel>
+          </Page>
+        </layout:flexContent>
+      </layout:FixFlex>
+      <SelectDialog
+        id="customerSelectDialog"
+        noDataText="No Customers Found"
+        title="{i18n>Homepage_DialogTitle}"
+        search="onSearch"
+        confirm="onDialogClose"
+        cancel="onDialogClose"
+        draggable="true"
+        contentHeight="auto"
+        contentWidth="auto"
+        items="{svc>/CustomerSet}">
+        <StandardListItem
+          title="{svc>Name}"
+          description="{svc>CustomerCode}"
+          icon="sap-icon://person-placeholder"
+          iconDensityAware="false"
+          iconInset="false"
+          type="Active"
+          class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
+        />
+      </SelectDialog>
+    </content>
   </Page>
 </mvc:View>

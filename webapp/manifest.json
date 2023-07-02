@@ -72,6 +72,9 @@
     "resources": {
       "css": [
         {
+          "uri": "css/General.css"
+        },
+        {
           "uri": "css/FormBuilder.css"
         },
         {
