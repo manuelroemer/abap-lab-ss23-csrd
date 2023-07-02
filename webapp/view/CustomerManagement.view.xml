@@ -11,7 +11,7 @@
     <content>
       <layout:FixFlex class="fixFlexVertical">
         <layout:fixContent>
-          <ObjectHeader title="{i18n>Management_Title}" backgroundDesign="Solid" condensed="true">
+          <ObjectHeader title="{i18n>CustomerManagement_Title}" backgroundDesign="Solid" condensed="true">
             <ObjectAttribute text="Manage the customers and filled questionnaires." />
           </ObjectHeader>
         </layout:fixContent>
@@ -60,22 +60,22 @@
                 <Dialog id="customerDialog" title="{state>/customerDialogTitle}" draggable="true">
                   <content>
                     <VBox class="sapUiMediumMargin">
-                      <Label text="{i18n>Management_DialogCustomerName}" required="true" />
+                      <Label text="{i18n>CustomerManagement_DialogCustomerName}" required="true" />
                       <Input id="customerName" value="{state>/customerName}" required="true" />
-                      <Label text="{i18n>Management_DialogCustomerCode}" required="true" />
+                      <Label text="{i18n>CustomerManagement_DialogCustomerCode}" required="true" />
                       <Input id="customerCode" value="{state>/customerCode}" required="true" />
                     </VBox>
                   </content>
                   <beginButton>
                     <Button
-                      text="{i18n>Management_SubmitCustomer}"
+                      text="{i18n>CustomerManagement_SubmitCustomer}"
                       press="onCustomerDialogSubmit"
                       type="Emphasized"
                       enabled="{= !!${state>/customerName} &amp;&amp; !!${state>/customerCode} &amp;&amp; !${state>/submitCustomerMutation/isPending} }"
                     />
                   </beginButton>
                   <endButton>
-                    <Button text="{i18n>Management_CancelCustomerDialog}" press="onCustomerDialogCancel" />
+                    <Button text="{i18n>CustomerManagement_CancelCustomerDialog}" press="onCustomerDialogCancel" />
                   </endButton>
                 </Dialog>
               </Page>

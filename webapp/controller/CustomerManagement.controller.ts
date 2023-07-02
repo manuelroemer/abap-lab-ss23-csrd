@@ -173,13 +173,13 @@ export default class CustomerManagementController extends BaseController {
   async onCustomerDeletePress(e: Event) {
     const customer = entityFromEvent<CustomerEntity>(e, 'svc')!;
 
-    if (await showConfirmation({ text: 'Are you sure that you want to delete this customer?' })) {
+    if (await showConfirmation({ text: this.translate('CustomerManagement_ConfirmCustomerDeletion') })) {
       try {
         await this.state.get().deleteCustomerMutation.fetch(customer.Id);
-        MessageToast.show('Successfully deleted the customer.');
+        MessageToast.show(this.translate('CustomerManagement_CustomerDeletionSuccess'));
       } catch (e) {
         console.error('Error while deleting a customer: ', e);
-        MessageBox.error('An unexpected error occured while deleting the customer.');
+        MessageBox.error(this.translate('CustomerManagement_CustomerDeletionError'));
       }
     }
   }
@@ -187,10 +187,10 @@ export default class CustomerManagementController extends BaseController {
   async onCustomerDialogSubmit() {
     try {
       await this.state.get().submitCustomerMutation.fetch();
-      MessageToast.show('Successfully saved the customer data.');
+      MessageToast.show(this.translate('CustomerManagement_CustomerSubmitSuccess'));
     } catch (e) {
       console.error('Error while submitting a customer: ', e);
-      MessageBox.error('An unexpected error occured while saving the customer data.');
+      MessageBox.error(this.translate('CustomerManagement_CustomerSubmitError'));
     }
   }
 
@@ -201,13 +201,13 @@ export default class CustomerManagementController extends BaseController {
   async onQuestionnaireDeletePress(e: Event) {
     const formSchemaResult = entityFromEvent<FormSchemaResultEntity>(e, 'state')!;
 
-    if (await showConfirmation({ text: 'Are you sure that you want to delete this questionnaire?' })) {
+    if (await showConfirmation({ text: this.translate('CustomerManagement_ConfirmFormSchemaResultDeletion') })) {
       try {
         await this.state.get().deleteFormSchemaResultMutation.fetch(formSchemaResult.Id);
-        MessageToast.show('Successfully deleted the questionnaire.');
+        MessageToast.show(this.translate('CustomerManagement_FormSchemaResultDeletionSuccess'));
       } catch (e) {
         console.error('Error while deleting a form schema result: ', e);
-        MessageBox.error('An unexpected error occured while deleting the questionnaire.');
+        MessageBox.error(this.translate('CustomerManagement_FormSchemaResultDeletionError'));
       }
     }
   }

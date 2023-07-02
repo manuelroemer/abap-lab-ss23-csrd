@@ -2,10 +2,16 @@ import UIComponent from 'sap/ui/core/UIComponent';
 import Controller from 'sap/ui/core/mvc/Controller';
 import History from 'sap/ui/core/routing/History';
 import { State } from '../utils/State';
+import ResourceModel from 'sap/ui/model/resource/ResourceModel';
+import ResourceBundle from 'sap/base/i18n/ResourceBundle';
 
 export default class BaseController extends Controller {
   get router() {
     return UIComponent.getRouterFor(this);
+  }
+
+  get i18n() {
+    return this.getView()!.getModel('i18n')! as ResourceModel;
   }
 
   navBack() {
@@ -36,5 +42,10 @@ export default class BaseController extends Controller {
         state.reset();
       }
     });
+  }
+
+  translate(key: string, fallback = key) {
+    const bundle = this.i18n.getResourceBundle() as ResourceBundle;
+    return bundle.getText(key) ?? fallback;
   }
 }
