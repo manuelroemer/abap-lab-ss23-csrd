@@ -6,7 +6,6 @@ export function entityFromEvent<T = unknown>(e, modelName): T | undefined {
   }
 
   const bindingContext = item.getBindingContext(modelName);
-  console.log(bindingContext);
   if (!bindingContext) {
     console.warn(`No binding context could be retrieved from the item. modelName: ${modelName}`, e, item);
     return undefined;

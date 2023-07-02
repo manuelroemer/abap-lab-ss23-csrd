@@ -3,9 +3,11 @@
   xmlns:layout="sap.ui.layout"
   xmlns:core="sap.ui.core"
   xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:grid="sap.ui.layout.cssgrid"
   controllerName="csrdreporting.controller.CustomerManagement"
   height="100%">
-  <Page id="CustomerManagementPageLayout" showFooter="true">
+  <Page id="CustomerManagementPageLayout" showFooter="true" showNavButton="true" navButtonPress="navBack">
     <content>
       <layout:FixFlex class="fixFlexVertical">
         <layout:fixContent>
@@ -21,7 +23,7 @@
                   <Button icon="sap-icon://add" tooltip="Add Customer" press="onCustomerAddPress" />
                 </headerContent>
                 <List items="{svc>/CustomerSet}">
-                  <CustomListItem>
+                  <CustomListItem type="Active" press="onCustomerPress">
                     <HBox>
                       <core:Icon
                         size="2rem"
@@ -39,31 +41,66 @@
                           tooltip="Edit Customer"
                           press=".onCustomerEditPress"
                         />
-                        <Button icon="sap-icon://decline" type="Transparent" tooltip="Delete Customer" />
+                        <Button
+                          icon="sap-icon://decline"
+                          type="Transparent"
+                          tooltip="Delete Customer"
+                          press="onCustomerDeletePress"
+                        />
                       </HBox>
                     </HBox>
                   </CustomListItem>
                 </List>
                 <Dialog id="customerDialog" title="{state>/customerDialogTitle}" draggable="true">
                   <content>
-                    <VBox class="sapUiLargeMargin">
-                      <Text text="{i18n>Management_DialogCustomerName}" />
-                      <Input id="customerName" value="{state>/customerName}" />
-                      <Text text="{i18n>Management_DialogCustomerCode}" />
-                      <Input id="customerCode" value="{state>/customerCode}" />
+                    <VBox class="sapUiMediumMargin">
+                      <Label text="{i18n>Management_DialogCustomerName}" required="true" />
+                      <Input id="customerName" value="{state>/customerName}" required="true" />
+                      <Label text="{i18n>Management_DialogCustomerCode}" required="true" />
+                      <Input id="customerCode" value="{state>/customerCode}" required="true" />
                     </VBox>
                   </content>
                   <beginButton>
-                    <Button text="{i18n>Management_SubmitCustomer}" press="onCustomerDialogSubmit" type="Emphasized" />
+                    <Button
+                      text="{i18n>Management_SubmitCustomer}"
+                      press="onCustomerDialogSubmit"
+                      type="Emphasized"
+                      enabled="{= !!${state>/customerName} &amp;&amp; !!${state>/customerCode} }"
+                    />
                   </beginButton>
                   <endButton>
-                    <Button text="{i18n>Management_CancelCustomerDialog}" press="" />
+                    <Button text="{i18n>Management_CancelCustomerDialog}" press="onCustomerDialogCancel" />
                   </endButton>
                 </Dialog>
               </Page>
             </masterPages>
             <detailPages>
-
+              <Page id="details" title="Questionnaires">
+                <Panel id="panelForGridList" backgroundDesign="Transparent">
+                  <f:GridList id="gridList" items="{state>/customerFormSchemaResults}">
+                    <f:customLayout>
+                      <grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, 23rem)" gridGap="1rem" />
+                    </f:customLayout>
+                    <f:GridListItem>
+                      <VBox class="sapUiSmallMargin">
+                        <HBox>
+                          <core:Icon size="4rem" src="sap-icon://documents" class="sapUiSmallMargin" />
+                          <VBox alignItems="Start" justifyContent="Center" width="100%">
+                            <Title text="CSRD" level="H1" />
+                            <Label text="Filled on: {path: 'state>UpdatedAt', type: 'sap.ui.model.type.DateTime'}" />
+                          </VBox>
+                          <Button
+                            icon="sap-icon://decline"
+                            type="Transparent"
+                            tooltip="Delete Questionnaire"
+                            press=".onQuestionnaireDeletePress"
+                          />
+                        </HBox>
+                      </VBox>
+                    </f:GridListItem>
+                  </f:GridList>
+                </Panel>
+              </Page>
             </detailPages>
           </SplitContainer>
         </layout:flexContent>

@@ -108,7 +108,7 @@
         {
           "name": "CustomerManagement",
           "target": "CustomerManagement",
-          "pattern": "management"
+          "pattern": "management/:customerId:"
         }
       ],
       "targets": {

@@ -4,7 +4,7 @@ import { State } from './State';
 /**
  * Represents how route and query parameters are stored in a state.
  */
-export interface RouterState<TParameters extends object, TQuery extends object> {
+export interface RouterState<TParameters extends object = object, TQuery extends object = object> {
   /**
    * The route parameters.
    */
@@ -21,7 +21,7 @@ export interface RouterState<TParameters extends object, TQuery extends object> 
  * @param state The state into which the route parameters should be merged.
  * @param router The router to which the state should listen.
  */
-export function connectRouterState<TParameters extends object, TQuery extends object>(
+export function connectRouterState<TParameters extends object = object, TQuery extends object = object>(
   state: State<RouterState<TParameters, TQuery>>,
   router: Router,
 ) {
