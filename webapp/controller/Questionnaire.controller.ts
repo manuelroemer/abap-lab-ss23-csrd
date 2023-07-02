@@ -4,7 +4,6 @@ import { QueryState, createQuery } from '../utils/StateQuery';
 import { CustomerEntity, getCustomerEntity } from '../api/CustomerEntity';
 import {
   FormSchemaResultEntity,
-  FormSchemaResultEntityCreate,
   createFormSchemaResultEntity,
   getFormSchemaResultEntity,
   updateFormSchemaResultEntity,

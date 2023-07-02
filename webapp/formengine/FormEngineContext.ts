@@ -1,4 +1,4 @@
-import { State, StateSet, createState } from '../utils/State';
+import { State, createState } from '../utils/State';
 import { evaluateRules } from './Rules';
 import { FormSchema, FormSchemaPage, emptySchema } from './Schema';
 import { ValidationError, getValidationErrorsForPage } from './Validation';
