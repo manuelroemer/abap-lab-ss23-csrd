@@ -70,7 +70,9 @@ export interface FormEngineContext {
   setValue(id: string, value: unknown): void;
 }
 
-export function createFormEngineContext({ get, set }: State<FormEngineContext>) {
+export type FormEngineContextInit = Partial<Pick<FormEngineContext, 'schema' | 'state' | 'page'>>;
+
+export function createFormEngineContext({ get, set }: State<FormEngineContext>, init: FormEngineContextInit = {}) {
   // Update performs a two-staged update of the context state.
   // Stage 1 updates the state with the values provided by the caller.
   // Stage 2 sets all computed properties derived from the base state.
@@ -111,9 +113,9 @@ export function createFormEngineContext({ get, set }: State<FormEngineContext>) 
   };
 
   return withComputedProps({
-    schema: emptySchema,
-    state: {},
-    page: 0,
+    schema: init.schema ?? emptySchema,
+    state: init.state ?? {},
+    page: init.page ?? 0,
     showValidationErrors: false,
 
     setSchema(schema) {
@@ -184,6 +186,6 @@ export function createFormEngineContext({ get, set }: State<FormEngineContext>) 
   } as FormEngineContext);
 }
 
-export function createFormEngineContextState() {
-  return createState<FormEngineContext>((state) => createFormEngineContext(state));
+export function createFormEngineContextState(init?: FormEngineContextInit) {
+  return createState<FormEngineContext>((state) => createFormEngineContext(state, init));
 }

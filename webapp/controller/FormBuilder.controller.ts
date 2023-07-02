@@ -10,7 +10,7 @@ interface FormBuilderState {
 }
 
 export default class FormBuilderController extends BaseController {
-  formEngineState = createFormEngineContextState(demoFormSchema);
+  formEngineState = createFormEngineContextState({ schema: demoFormSchema });
 
   state = createState<FormBuilderState>(() => ({
     schemaJson: JSON.stringify(demoFormSchema, null, 4),
