@@ -427,7 +427,10 @@ export const csrdSchema: FormSchema = {
           type: 'multi-choice',
           id: 'technology-choice',
           options: [
-            { value: 'lowerEmissionsOptions', display: 'Substitution of existing products and services with lower emissions options' },
+            {
+              value: 'lowerEmissionsOptions',
+              display: 'Substitution of existing products and services with lower emissions options',
+            },
             {
               value: 'unsuccessfulInvestment',
               display: 'Unsuccessful investment in new technologies',
