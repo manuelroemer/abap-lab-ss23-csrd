@@ -1,7 +1,6 @@
-import { StateGet, StateSet } from './State';
+import { State } from './State';
 
-interface AsyncStateInternal<TArgs extends object, TData, TError> {
-  __promise?: Promise<TData>;
+interface AsyncStateInternal<TArgs, TData, TError> {
   /**
    * The last successfully resolved data.
    */
@@ -17,11 +16,12 @@ interface AsyncStateInternal<TArgs extends object, TData, TError> {
   /**
    * Performs the asynchronous operation which is tracked by the state.
    * @param args Arguments passed to/required by the function.
+   * @param force Whether to force a new fetch. Default is `false` (which deduplicates the fetch calls).
    */
-  fetch(args: TArgs): Promise<TData>;
+  fetch(args: TArgs, force?: boolean): Promise<TData>;
 }
 
-interface AsyncStateInternalFull<TArgs extends object, TData, TError> extends AsyncStateInternal<TArgs, TData, TError> {
+interface AsyncStateInternalFull<TArgs, TData, TError> extends AsyncStateInternal<TArgs, TData, TError> {
   /**
    * Whether `status` is `idle`.
    */
@@ -40,20 +40,16 @@ interface AsyncStateInternalFull<TArgs extends object, TData, TError> extends As
   isError: boolean;
 }
 
-export type AsyncState<TArgs extends object, TData> = Omit<AsyncStateInternalFull<TArgs, TData, any>, '__promise'>;
+export type AsyncState<TArgs = void, TData = unknown, TError = unknown> = AsyncStateInternalFull<TArgs, TData, TError>;
 
 /**
  * Options required by {@link createAsync}.
  */
-export interface AsyncStateOptions<TArgs extends object, TData, TError> {
+export interface AsyncStateOptions<TArgs, TData, TError> {
   /**
-   * The {@link StateGet} getter function of the state within which {@link createAsync} is called.
+   * The state into which the async state is integrated.
    */
-  get: StateGet<object>;
-  /**
-   * The {@link StateSet} setter function of the state within which {@link createAsync} is called.
-   */
-  set: StateSet<object>;
+  state: State<object>;
   /**
    * The name of the property under which the result of {@link createAsync} is stored within the state.
    * This is used internally to update/set the value of the async state information.
@@ -97,10 +93,9 @@ export interface AsyncStateOptions<TArgs extends object, TData, TError> {
  *   id: string;
  * }
  *
- * const myState = createState<MyState>(({ get, set }) => ({
+ * const myState = createState<MyState>(({ state }) => ({
  *   resource: createAsync({
- *     get,
- *     set,
+ *     state,
  *     key: 'resource',
  *     async fetch({ id }: MyResourceArgs) {
  *       return await httpRequest<MyResource>(`/api/v1/my-resource/${id}`);
@@ -124,16 +119,27 @@ export interface AsyncStateOptions<TArgs extends object, TData, TError> {
  * console.log(myState.get().resource.status); // success or error
  * ```
  */
-export function createAsync<TArgs extends object = object, TData = unknown, TError = unknown>({
-  get,
-  set,
+export function createAsync<TArgs = void, TData = unknown, TError = unknown>({
+  state: { get, set },
   key,
   fetch,
   onSuccess,
   onError,
-}: AsyncStateOptions<TArgs, TData, TError>): AsyncState<TArgs, TData> {
-  const getState = () => get()[key] as AsyncStateInternal<TArgs, TData, TError>;
+}: AsyncStateOptions<TArgs, TData, TError>): AsyncState<TArgs, TData, TError> {
+  // This promise reflects the currently pending/running fetch operation.
+  // If undefined, no fetch operation is running.
+  //
+  // `currentRun` is incremented whenever a new run is started via `fetch`.
+  // This allows multiple concurrent fetches to determine which one is outdated.
+  // Example for the `currentRun` assignments (time progresses from left to right):
+  //
+  // fetch (1)   fetch (3)   fetch (4)
+  //    fetch (2)
+  //                           fetch (5)
+  let currentRunPromise: Promise<TData> | undefined = undefined;
+  let currentRun = 0;
 
+  const getState = () => get()[key] as AsyncStateInternal<TArgs, TData, TError>;
   const setState = (update: Partial<AsyncStateInternal<TArgs, TData, TError>>) => {
     set({
       [key]: withComputed({
@@ -143,41 +149,43 @@ export function createAsync<TArgs extends object = object, TData = unknown, TErr
     });
   };
 
-  return withComputed({
-    __promise: undefined,
-    data: undefined,
-    status: 'idle',
-    async fetch(args) {
-      const current = getState();
+  const fetchInternal = async (args, force = false) => {
+    const current = getState();
 
-      // We don't want to allow multiple concurrently resolving promises.
-      // If a promise is already pending at the moment, don't start a new one.
-      // Simply await the pending one.
-      if (current.status === 'pending' && current.__promise) {
-        return await current.__promise;
-      }
+    // If `force` is `false`, we deduplicate calls to fetch.
+    // This means that, if another fetch is already running at the moment,
+    // we don't kick off another concurrent fetch, but instead just wait for the current one
+    // to resolve.
+    if (current.status === 'pending' && currentRunPromise && !force) {
+      return await currentRunPromise;
+    }
 
-      try {
-        const promise = fetch(args);
+    // Otherwise, i.e., when we are forced to start a new fetch, or when no fetch is running at the moment,
+    // start a new one.
+    // Store that newest fetch run in the promise and increment the `currentRun` counter, so that
+    // it's possible to determine if other concurrently running fetches are outdated.
+    return await (currentRunPromise = runMostRecentFetch(args, ++currentRun));
+  };
 
+  const runMostRecentFetch = async (args: TArgs, thisRun: number) => {
+    try {
+      setState({ status: 'pending' });
+      const data = await fetch(args);
+
+      // If this is the most recent run, we are allowed to update the state with our results.
+      if (currentRun === thisRun) {
         setState({
-          __promise: promise,
-          status: 'pending',
-        });
-
-        const data = await promise;
-
-        setState({
-          __promise: undefined,
           status: 'success',
           data,
         });
 
         onSuccess?.(data);
         return data;
-      } catch (error: any) {
+      }
+    } catch (error: any) {
+      // If this is the most recent run, we are allowed to update the state with our results.
+      if (currentRun === thisRun) {
         setState({
-          __promise: undefined,
           status: 'error',
           error,
         });
@@ -185,7 +193,20 @@ export function createAsync<TArgs extends object = object, TData = unknown, TErr
         onError?.(error);
         throw error;
       }
-    },
+    }
+
+    // If we get here, currentRun !== thisRun.
+    // This means that the current run was "overwritten" via a new fetch call (which is now stored
+    // inside `currentRunPromise`).
+    // -> Discard whatever result was produced by this run and simply return the result of the
+    //    most up-to-date promise/run.
+    return await currentRunPromise!;
+  };
+
+  return withComputed({
+    data: undefined,
+    status: 'idle',
+    fetch: fetchInternal,
   });
 }
 
@@ -193,7 +214,7 @@ export function createAsync<TArgs extends object = object, TData = unknown, TErr
  * Converts an {@link AsyncStateInternal} to the full {@link AsyncStateInternalFull} state
  * by computing the missing properties.
  */
-function withComputed<TArgs extends object, TData, TError>(
+function withComputed<TArgs, TData, TError>(
   state: AsyncStateInternal<TArgs, TData, TError>,
 ): AsyncStateInternalFull<TArgs, TData, TError> {
   return {
