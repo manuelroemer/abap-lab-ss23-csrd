@@ -1,6 +1,6 @@
 import BaseController from './BaseController';
 import { createState } from '../utils/State';
-import { createFormEngineContext } from '../formengine/FormEngineContext';
+import { createFormEngineContextState } from '../formengine/FormEngineContext';
 import { demoFormSchema } from '../formengine/DemoFormSchema';
 import MessageBox from 'sap/m/MessageBox';
 
@@ -10,7 +10,7 @@ interface FormBuilderState {
 }
 
 export default class FormBuilderController extends BaseController {
-  formEngineState = createFormEngineContext(demoFormSchema);
+  formEngineState = createFormEngineContextState(demoFormSchema);
 
   state = createState<FormBuilderState>(() => ({
     schemaJson: JSON.stringify(demoFormSchema, null, 4),

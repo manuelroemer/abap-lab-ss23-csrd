@@ -5,6 +5,7 @@ import type { Entity, EntityCreate, EntityUpdate } from './Entity';
  * The shape of the `FormSchemaResult` backend entity.
  */
 export interface FormSchemaResultEntity extends Entity {
+  CustomerId: string;
   FormSchemaId: string;
   ResultJson: string;
   MetadataJson: string;
@@ -14,6 +15,7 @@ export interface FormSchemaResultEntity extends Entity {
  * The shape of the `FormSchemaResult` backend entity, as expected during a create operation.
  */
 export interface FormSchemaResultEntityCreate extends EntityCreate {
+  CustomerId: string;
   FormSchemaId: string;
   ResultJson: string;
   MetadataJson: string;

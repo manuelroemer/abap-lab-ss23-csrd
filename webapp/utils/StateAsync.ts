@@ -38,6 +38,14 @@ interface AsyncStateInternalFull<TArgs, TData, TError> extends AsyncStateInterna
    * Whether `status` is `error`.
    */
   isError: boolean;
+  /**
+   * Whether `data` is set.
+   */
+  hasData: boolean;
+  /**
+   * Whether `error` is set.
+   */
+  hasError: boolean;
 }
 
 export type AsyncState<TArgs = void, TData = unknown, TError = unknown> = AsyncStateInternalFull<TArgs, TData, TError>;
@@ -177,6 +185,7 @@ export function createAsync<TArgs = void, TData = unknown, TError = unknown>({
         setState({
           status: 'success',
           data,
+          error: undefined,
         });
 
         onSuccess?.(data);
@@ -223,5 +232,7 @@ function withComputed<TArgs, TData, TError>(
     isPending: state.status === 'pending',
     isSuccess: state.status === 'success',
     isError: state.status === 'error',
+    hasData: !!state.data,
+    hasError: !!state.error,
   };
 }

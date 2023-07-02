@@ -4,7 +4,7 @@ import { AsyncState, AsyncStateOptions, createAsync } from './StateAsync';
  * Options required by {@link createAsync}.
  */
 export interface QueryStateOptions<TArgs, TData, TError> extends AsyncStateOptions<TArgs, TData, TError> {
-  getArgs(state: unknown): TArgs;
+  getArgs(state: unknown): TArgs | null | undefined;
 }
 
 export type QueryState<TArgs = void, TData = unknown, TError = unknown> = AsyncState<TArgs, TData, TError>;
@@ -70,7 +70,8 @@ export function createQuery<TArgs = void, TData = unknown, TError = unknown>(
   options: QueryStateOptions<TArgs, TData, TError>,
 ): QueryState<TArgs, TData, TError> {
   const {
-    state: { watch },
+    key,
+    state: { get, set, watch },
     getArgs,
   } = options;
 
@@ -79,7 +80,22 @@ export function createQuery<TArgs = void, TData = unknown, TError = unknown>(
   watch(getArgs, (state) => {
     // Whenever the query's args change, refetch.
     // Force a refetch here to cancel/overwrite any ongoing query fetch.
-    asyncState.fetch(getArgs(state), true);
+    const args = getArgs(state);
+
+    if (args === null || args === undefined) {
+      set({
+        [key]: {
+          ...get()[key],
+          status: 'idle',
+          data: undefined,
+          error: undefined,
+        },
+      });
+    }
+
+    if (args !== null && args !== undefined) {
+      asyncState.fetch(args, true);
+    }
   });
 
   return asyncState;
