@@ -75,7 +75,7 @@
               </Page>
             </masterPages>
             <detailPages>
-              <Page id="details" title="Questionnaires">
+              <Page id="details" title="Questionnaires" backgroundDesign="Transparent">
                 <Panel id="panelForGridList" backgroundDesign="Transparent">
                   <f:GridList id="gridList" items="{state>/customerFormSchemaResults}">
                     <f:customLayout>
