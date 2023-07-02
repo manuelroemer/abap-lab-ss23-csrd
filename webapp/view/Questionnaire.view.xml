@@ -64,13 +64,10 @@
     Form engine controls.
     -->
     <uxap:footer>
-      <OverflowToolbar visible="{= ${state>/customerQuery/hasData} &amp;&amp; ${state>/formSchemaQuery/hasData} &amp;&amp; !${state>/formSchemaResultQuery/hasError} }">
+      <OverflowToolbar
+        visible="{= ${state>/customerQuery/hasData} &amp;&amp; ${state>/formSchemaQuery/hasData} &amp;&amp; !${state>/formSchemaResultQuery/hasError} }">
         <ToolbarSpacer />
-        <Button
-          text="{i18n>Questionnaire_PreviousStep}"
-          enabled="{state>/canGoBackward}"
-          press="onPreviousPress"
-        />
+        <Button text="{i18n>Questionnaire_PreviousStep}" enabled="{state>/canGoBackward}" press="onPreviousPress" />
         <Button
           type="Emphasized"
           text="{i18n>Questionnaire_NextStep}"
