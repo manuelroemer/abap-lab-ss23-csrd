@@ -21,35 +21,35 @@ export const csrdSchema: FormSchema = {
           level: 5,
         },
         {
-          type: 'text-input', 
-          id: 'scope', 
-        }, 
+          type: 'text-input',
+          id: 'scope',
+        },
         {
           type: 'heading',
           text: '34 (b) Disclose the risk assessment approach followed, including the risk prioritisation methodology:',
           level: 5,
         },
         {
-          type: 'text-input', 
-          id: 'riskPrioritisation', 
-        }, 
+          type: 'text-input',
+          id: 'riskPrioritisation',
+        },
         {
           type: 'heading',
           text: '34 (c) Disclose the main risks identified, actual and potential, and their mitigation strategies including related controls:',
           level: 5,
         },
         {
-          type: 'text-input', 
-          id: 'mainRisks', 
-        }, 
+          type: 'text-input',
+          id: 'mainRisks',
+        },
         {
           type: 'heading',
           text: '34 (d) Provide a description of how the undertaking integrates the findings of its risk assessment and internal controls as regards the sustainability reporting process into relevant internal functions and processes:',
           level: 5,
         },
         {
-          type: 'text-input', 
-          id: 'integrationRisks', 
+          type: 'text-input',
+          id: 'integrationRisks',
         },
         {
           type: 'heading',
@@ -57,11 +57,11 @@ export const csrdSchema: FormSchema = {
           level: 5,
         },
         {
-          type: 'text-input', 
-          id: 'periodicReporting', 
+          type: 'text-input',
+          id: 'periodicReporting',
         },
-      ], 
-    }, 
+      ],
+    },
     {
       id: 'IRO-1',
       title: 'IRO-1 Climate change',
