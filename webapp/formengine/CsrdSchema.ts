@@ -13,7 +13,7 @@ export const csrdSchema: FormSchema = {
         {
           type: 'heading',
           text: 'The undertaking shall describe the process to identify and assess climate-related impacts, risks and opportunities.',
-          level: 4,
+          level: 5,
         },
         {
           type: 'heading',
@@ -33,6 +33,20 @@ export const csrdSchema: FormSchema = {
           id: 'tempRelated',
           type: 'checkbox',
           option: { value: 'tempRelated', display: 'Temperature-related' },
+        },
+        {
+          type: 'heading',
+          text: 'Temperature-related',
+          level: 5,
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                type: 'value',
+                id: 'tempRelated.tempRelated',
+              },
+            },
+          ],
         },
         {
           type: 'multi-choice',
@@ -102,6 +116,20 @@ export const csrdSchema: FormSchema = {
           option: { value: 'windRelated', display: 'Wind-related' },
         },
         {
+          type: 'heading',
+          text: 'Wind-related',
+          level: 5,
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                type: 'value',
+                id: 'windRelated.windRelated',
+              },
+            },
+          ],
+        },
+        {
           type: 'multi-choice',
           id: 'windRelated-chronic',
           options: [{ value: 'changingTWind', display: 'Changing wind patterns' }],
@@ -159,6 +187,20 @@ export const csrdSchema: FormSchema = {
           id: 'waterRelated',
           type: 'checkbox',
           option: { value: 'waterRelated', display: 'Water-related' },
+        },
+        {
+          type: 'heading',
+          text: 'Water-related',
+          level: 5,
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                type: 'value',
+                id: 'waterRelated.waterRelated',
+              },
+            },
+          ],
         },
         {
           type: 'multi-choice',
@@ -234,6 +276,20 @@ export const csrdSchema: FormSchema = {
           option: { value: 'solidMassRelated', display: 'Solid mass-related' },
         },
         {
+          type: 'heading',
+          text: 'Solid mass-related',
+          level: 5,
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                type: 'value',
+                id: 'solidMassRelated.solidMassRelated',
+              },
+            },
+          ],
+        },
+        {
           type: 'multi-choice',
           id: 'solidMassRelated-chronic',
           options: [
@@ -295,6 +351,183 @@ export const csrdSchema: FormSchema = {
             },
           ],
         },
+        {
+          type: 'heading',
+          text: '18 (c): Climate-related transition risks and opportunities in own operations and along the value chain:',
+          level: 5,
+        },
+        {
+          type: 'heading',
+          text: 'Examples of climate-related transition events (examples based on TCFD classification):',
+          level: 5,
+        },
+        {
+          id: 'policy',
+          type: 'checkbox',
+          option: { value: 'policy', display: 'Policy and legal' },
+        },
+        {
+          type: 'heading',
+          text: 'Policy and legal:',
+          level: 5,
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                type: 'value',
+                id: 'policy.policy',
+              },
+            },
+          ],
+        },
+        {
+          type: 'multi-choice',
+          id: 'policy-choice',
+          options: [
+            { value: 'pricingOfGHG', display: 'Increased pricing of GHG emissions' },
+            {
+              value: 'enhancedEmissions-reporting',
+              display: 'Enhanced emissions-reporting obligations',
+            },
+            { value: 'mandatesServices', display: 'Mandates on and regulation of existing products and services' },
+            { value: 'mandatesProcesses', display: 'Mandates on and regulation of existing production processes' },
+            { value: 'litigation', display: 'Exposure to litigation' },
+          ],
+          required: false,
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                type: 'value',
+                id: 'policy.policy',
+              },
+            },
+          ],
+        },
+        {
+          id: 'technology',
+          type: 'checkbox',
+          option: { value: 'technology', display: 'Technology' },
+        },
+        {
+          type: 'heading',
+          text: 'Technology:',
+          level: 5,
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                type: 'value',
+                id: 'technology.technology',
+              },
+            },
+          ],
+        },
+        {
+          type: 'multi-choice',
+          id: 'technology-choice',
+          options: [
+            { value: 'lowerEmissionsOptions', display: 'Substitution of existing products and services with lower emissions options' },
+            {
+              value: 'unsuccessfulInvestment',
+              display: 'Unsuccessful investment in new technologies',
+            },
+            { value: 'lowerEmissionsTech', display: 'Costs of transition to lower emissions technology' },
+          ],
+          required: false,
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                type: 'value',
+                id: 'technology.technology',
+              },
+            },
+          ],
+        },
+        {
+          id: 'market',
+          type: 'checkbox',
+          option: { value: 'market', display: 'Market' },
+        },
+        {
+          type: 'heading',
+          text: 'Market:',
+          level: 5,
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                type: 'value',
+                id: 'market.market',
+              },
+            },
+          ],
+        },
+        {
+          type: 'multi-choice',
+          id: 'market-choice',
+          options: [
+            { value: 'customerBehaviour', display: 'Changing customer behaviour' },
+            {
+              value: 'uncertaintyMarket',
+              display: 'Uncertainty in market signals',
+            },
+            { value: 'costRawMaterials', display: 'Increased cost of raw materials' },
+          ],
+          required: false,
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                type: 'value',
+                id: 'market.market',
+              },
+            },
+          ],
+        },
+        {
+          id: 'reputation',
+          type: 'checkbox',
+          option: { value: 'reputation', display: 'Reputation' },
+        },
+        {
+          type: 'heading',
+          text: 'Reputation:',
+          level: 5,
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                type: 'value',
+                id: 'reputation.reputation',
+              },
+            },
+          ],
+        },
+        {
+          type: 'multi-choice',
+          id: 'reputation-choice',
+          options: [
+            { value: 'shiftPreference', display: 'Shifts in consumer preference' },
+            {
+              value: 'stigmatization',
+              display: 'Stigmatization of sector',
+            },
+            { value: 'stakeholderConcern', display: 'Increased stakeholder concern' },
+            { value: 'stakeholderFeedback', display: 'Negative stakeholder feedback' },
+          ],
+          required: false,
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                type: 'value',
+                id: 'reputation.reputation',
+              },
+            },
+          ],
+        },
       ],
     },
     {
@@ -308,7 +541,7 @@ export const csrdSchema: FormSchema = {
         {
           type: 'heading',
           text: 'The undertaking shall provide information on its energy consumption and mix.',
-          level: 4,
+          level: 5,
         },
         {
           type: 'heading',
