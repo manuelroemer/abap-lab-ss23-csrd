@@ -38,6 +38,11 @@ import JSONModel from 'sap/ui/model/json/JSONModel';
  */
 export interface State<T extends object = object> {
   /**
+   * A reference to the state object itself.
+   * Useful when destructuring the state.
+   */
+  state: State<T>;
+  /**
    * The {@link JSONModel} that is internally synchronized with the state.
    * Use this model for data-binding to the state.
    */
@@ -82,11 +87,14 @@ export interface State<T extends object = object> {
  * - `previousValue`: The previous value.
  * - `state`: The {@link State} object which triggered the notification.
  */
-export type StateSubscriber<T extends object> = (nextValue: T, previousValue: T, state: State<T>) => void;
+export type StateSubscriber<T extends object> = (nextValue: T, previousValue: T | undefined, state: State<T>) => void;
 
 export type StateGet<T extends object> = State<T>['get'];
 export type StateSet<T extends object> = State<T>['set'];
-export type CreateState<T extends object> = (stateAccessors: { get: StateGet<T>; set: StateSet<T> }) => T;
+export type StateSubscribe<T extends object> = State<T>['subscribe'];
+export type StateWatch<T extends object> = State<T>['watch'];
+export type StateReset<T extends object> = State<T>['reset'];
+export type CreateState<T extends object> = (state: State<T>) => T;
 
 /**
  * Creates a new {@link State} object from the provided initial value.
@@ -102,6 +110,9 @@ export function createState<T extends object>(createInitialState: CreateState<T>
   let initialValue: T = undefined as unknown as T;
 
   const state = Object.freeze<State<T>>({
+    get state() {
+      return state;
+    },
     model,
     get() {
       return currentValue;
@@ -114,19 +125,24 @@ export function createState<T extends object>(createInitialState: CreateState<T>
       currentValue = (replace ? value : Object.assign({}, currentValue, value)) as T;
 
       if (notify) {
-        const previous = lastNotifiedValue;
-        const next = currentValue;
-        lastNotifiedValue = currentValue;
-        model.setProperty('/', deepClone(next, maxCloneDepth));
+        // Run the notification on the next tick.
+        // This is done because subscribers can themselves call `set` again, which would cause out-of-order
+        // state updates.
+        setTimeout(() => {
+          const previous = lastNotifiedValue;
+          const next = currentValue;
+          lastNotifiedValue = currentValue;
+          model.setProperty('/', deepClone(next, maxCloneDepth));
 
-        for (const subscriber of subscribers) {
-          subscriber(next, previous, state);
-        }
+          for (const subscriber of subscribers) {
+            subscriber(next, previous, state);
+          }
 
-        console.group('State change');
-        console.debug('Previous: ', previous);
-        console.debug('Next: ', next);
-        console.groupEnd();
+          console.group('State change');
+          console.debug('Previous: ', previous);
+          console.debug('Next: ', next);
+          console.groupEnd();
+        }, 0);
       }
 
       return currentValue;
@@ -136,7 +152,15 @@ export function createState<T extends object>(createInitialState: CreateState<T>
       return () => subscribers.splice(subscribers.indexOf(cb), 1);
     },
     watch(selector, cb) {
-      return this.subscribe((nextValue, previousValue, state) => {
+      return state.subscribe((nextValue, previousValue, state) => {
+        // Special case: When the state is created for the first time, we don't have a previous value.
+        // The selector requires it, which is why we cannot call the selector here.
+        // Instead, immediately invoke the callback (because the state *did* change, from nothing to something).
+        if (previousValue === undefined) {
+          cb(nextValue, previousValue, state);
+          return;
+        }
+
         const previous = selector(previousValue);
         const next = selector(nextValue);
 
@@ -146,7 +170,7 @@ export function createState<T extends object>(createInitialState: CreateState<T>
       });
     },
     reset() {
-      this.set(deepClone(initialValue, maxCloneDepth), true);
+      state.set(deepClone(initialValue, maxCloneDepth), true);
     },
   });
 

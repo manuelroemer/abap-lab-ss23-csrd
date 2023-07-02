@@ -103,7 +103,7 @@
         {
           "name": "Questionnaire",
           "target": "Questionnaire",
-          "pattern": "questionnaire/:id:"
+          "pattern": "questionnaire/{formSchemaType}/customer/{customerId}/:?query:"
         },
         {
           "name": "CustomerManagement",
