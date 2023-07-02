@@ -1,7 +1,7 @@
 .myBackgroundStyle {
-  background-size: 300px;
+  background-size: 25vw;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-position: center;
-  background-image: url('https://cdn.pixabay.com/photo/2013/07/12/17/01/panda-151705_960_720.png');
+  background-position: right bottom;
+  background-image: url('../assets/hexagon.png');
 }

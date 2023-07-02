@@ -91,10 +91,6 @@
           class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
         />
       </SelectDialog>
-
-      <Button text="To Form Builder" press="navToFormBuilder" />
-      <Button text="To Questionnaire Page" press="navToQuestionnaire" />
-      <Button text="To Customer Management Page" press="navToCustomerManagement" />
     </content>
   </Page>
 </mvc:View>
