@@ -13,6 +13,7 @@ import { RouterState, connectRouterState } from '../utils/StateRouter';
 import { FormEngineContext, createFormEngineContext } from '../formengine/FormEngineContext';
 import { FormSchemaEntity, getFormSchemaEntity } from '../api/FormSchemaEntity';
 import { AsyncState, createAsync } from '../utils/StateAsync';
+import MessageToast from 'sap/m/MessageToast';
 
 interface QuestionnaireState
   extends RouterState<{ customerId: string; formSchemaType: string }, { formSchemaResultId: string }>,
@@ -103,14 +104,18 @@ export default class QuestionnaireController extends BaseController {
   }
 
   async onSubmitPress() {
-    const { submit, submitMutation } = this.state.get();
+    const {
+      submit,
+      submitMutation,
+      parameters: { customerId },
+    } = this.state.get();
 
     if (submit()) {
-      if (await submitMutation.fetch()) {
-        MessageBox.success('Your questionnaire was successfully saved!', {
-          title: 'Questionnaire Saved',
-        });
-      } else {
+      try {
+        await submitMutation.fetch();
+        MessageToast.show('Your questionnaire was successfully saved!');
+        this.router.navTo('CustomerManagement', { customerId });
+      } catch {
         MessageBox.error('Your questionnaire could not be saved!', {
           title: 'Questionnaire Not Saved',
         });
