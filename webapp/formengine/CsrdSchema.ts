@@ -3,6 +3,66 @@ import { FormSchema } from './Schema';
 export const csrdSchema: FormSchema = {
   pages: [
     {
+      id: 'GOV-5',
+      title: 'GOV-5 General disclosures',
+      elements: [
+        {
+          type: 'heading',
+          text: 'GOV-5 - Risk management and internal controls over sustainability reporting',
+        },
+        {
+          type: 'heading',
+          text: 'The undertaking shall disclose the main features of its risk management and internal control system in relation to the sustainability reporting process(es).',
+          level: 5,
+        },
+        {
+          type: 'heading',
+          text: '34 (a) Disclose the scope, main features and components of the risk management and internal control processes and systems in relation to sustainability reporting:',
+          level: 5,
+        },
+        {
+          type: 'text-input', 
+          id: 'scope', 
+        }, 
+        {
+          type: 'heading',
+          text: '34 (b) Disclose the risk assessment approach followed, including the risk prioritisation methodology:',
+          level: 5,
+        },
+        {
+          type: 'text-input', 
+          id: 'riskPrioritisation', 
+        }, 
+        {
+          type: 'heading',
+          text: '34 (c) Disclose the main risks identified, actual and potential, and their mitigation strategies including related controls:',
+          level: 5,
+        },
+        {
+          type: 'text-input', 
+          id: 'mainRisks', 
+        }, 
+        {
+          type: 'heading',
+          text: '34 (d) Provide a description of how the undertaking integrates the findings of its risk assessment and internal controls as regards the sustainability reporting process into relevant internal functions and processes:',
+          level: 5,
+        },
+        {
+          type: 'text-input', 
+          id: 'integrationRisks', 
+        },
+        {
+          type: 'heading',
+          text: '34 (e) Provide a description of the periodic reporting of the findings to the administrative, management and supervisory bodies:',
+          level: 5,
+        },
+        {
+          type: 'text-input', 
+          id: 'periodicReporting', 
+        },
+      ], 
+    }, 
+    {
       id: 'IRO-1',
       title: 'IRO-1 Climate change',
       elements: [
@@ -828,12 +888,12 @@ export const csrdSchema: FormSchema = {
         {
           type: 'number-input',
           id: 'numFemaleManagement',
-          label: 'Number of male employees at the top management level:',
+          label: 'Number of female employees at the top management level:',
         },
         {
           type: 'number-input',
           id: 'percFemaleManagement',
-          label: 'Percentage of male employees at the top management level:',
+          label: 'Percentage of female employees at the top management level:',
         },
         {
           type: 'heading',
