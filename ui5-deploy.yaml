@@ -15,14 +15,14 @@ builder:
       configuration:
         target:
           url: https://s72lp1.ucc.in.tum.de:8100
-          client: "300"
+          client: '300'
           auth: basic
         credentials:
           username: env:S72_USER
           password: env:S72_PASSWORD
         app:
           name: Z_00_T1_SS23_FE
-          description: ""
+          description: ''
           package: Z_00_T1_SS23_CSRD
           transport: S72K901368
         exclude:
