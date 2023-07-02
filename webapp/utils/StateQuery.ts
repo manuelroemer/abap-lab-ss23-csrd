@@ -7,7 +7,15 @@ export interface QueryStateOptions<TArgs, TData, TError> extends AsyncStateOptio
   getArgs(state: unknown): TArgs | null | undefined;
 }
 
-export type QueryState<TArgs = void, TData = unknown, TError = unknown> = AsyncState<TArgs, TData, TError>;
+export type QueryState<TArgs = void, TData = unknown, TError = unknown> = Omit<
+  AsyncState<TArgs, TData, TError>,
+  'fetch'
+> & {
+  /**
+   * Refetches the query's data.
+   */
+  fetch(): Promise<TData>;
+};
 
 /**
  * Creates a {@link QueryState} object that can be added to a state container.
@@ -70,11 +78,25 @@ export function createQuery<TArgs = void, TData = unknown, TError = unknown>(
   options: QueryStateOptions<TArgs, TData, TError>,
 ): QueryState<TArgs, TData, TError> {
   const {
-    state: { watch },
+    state: { get, watch },
     getArgs,
   } = options;
 
   const asyncState = createAsync(options);
+
+  const fetch = () => {
+    const args = getArgs(get());
+
+    if (args !== null && args !== undefined) {
+      return asyncState.fetch(args, true);
+    } else {
+      return Promise.reject(
+        new Error(
+          'fetch was called, but the arguments of the query resolved to a null or undefined. The query cannot fetch like this.',
+        ),
+      );
+    }
+  };
 
   watch(getArgs, (state) => {
     // Whenever the query's args change, refetch.
@@ -85,12 +107,13 @@ export function createQuery<TArgs = void, TData = unknown, TError = unknown>(
     // state to idle. Otherwise we could mistakenly show stale data/errors.
     if (args === null || args === undefined) {
       asyncState.reset();
-    }
-
-    if (args !== null && args !== undefined) {
-      asyncState.fetch(args, true);
+    } else {
+      fetch();
     }
   });
 
-  return asyncState;
+  return {
+    ...asyncState,
+    fetch,
+  };
 }

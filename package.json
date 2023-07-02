@@ -15,8 +15,7 @@
     "watch:controls": "npx @ui5/ts-interface-generator --watch",
     "declaration": "npx @ui5/ts-interface-generator",
     "build": "npm run declaration && ui5 build --config=ui5.yaml --clean-dest --dest dist",
-    "deploy": "fiori verify",
-    "deploy-config": "fiori add deploy-config",
+    "deploy": "npm run build && fiori deploy --config ui5-deploy.yaml --yes && rimraf archive.zip",
     "undeploy": "fiori undeploy --config ui5-deploy.yaml",
     "tsc": "tsc --noEmit",
     "format": "prettier -w .",
@@ -39,7 +38,14 @@
     "prettier": "2.8.8",
     "typescript": "5.0.4",
     "ui5-tooling-transpile": "0.7.10",
-    "yo": "4.3.1"
+    "yo": "4.3.1",
+    "rimraf": "3.0.2",
+    "ui5-task-flatten-library": "0.2.5"
   },
-  "sapuxLayer": "CUSTOMER_BASE"
+  "sapuxLayer": "CUSTOMER_BASE",
+  "ui5": {
+    "dependencies": [
+      "ui5-task-flatten-library"
+    ]
+  }
 }
