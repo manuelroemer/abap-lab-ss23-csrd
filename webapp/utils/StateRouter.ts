@@ -24,11 +24,19 @@ export interface RouterState<TParameters extends object = object, TQuery extends
 export function connectRouterState<TParameters extends object = object, TQuery extends object = object>(
   state: State<RouterState<TParameters, TQuery>>,
   router: Router,
+  routeName?: string,
 ) {
-  router.attachRoutePatternMatched((e) => {
+  const handler = (e) => {
     const parameters = { ...e.getParameters().arguments };
     const query = { ...parameters['?query'] };
     delete parameters['?query'];
     state.set({ parameters, query });
-  });
+  };
+
+  const route = router.getRoute(routeName ?? '');
+  if (route) {
+    route.attachPatternMatched(handler);
+  } else {
+    router.attachRoutePatternMatched(handler);
+  }
 }

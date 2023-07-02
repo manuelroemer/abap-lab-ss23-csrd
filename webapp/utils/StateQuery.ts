@@ -90,7 +90,11 @@ export function createQuery<TArgs = void, TData = unknown, TError = unknown>(
     if (args !== null && args !== undefined) {
       return asyncState.fetch(args, true);
     } else {
-      return Promise.reject(new Error('Cannot re-fetch the query. No arguments were returned.'));
+      return Promise.reject(
+        new Error(
+          'fetch was called, but the arguments of the query resolved to a null or undefined. The query cannot fetch like this.',
+        ),
+      );
     }
   };
 
@@ -103,9 +107,9 @@ export function createQuery<TArgs = void, TData = unknown, TError = unknown>(
     // state to idle. Otherwise we could mistakenly show stale data/errors.
     if (args === null || args === undefined) {
       asyncState.reset();
+    } else {
+      fetch();
     }
-
-    fetch();
   });
 
   return {

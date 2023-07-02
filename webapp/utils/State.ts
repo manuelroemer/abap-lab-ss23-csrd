@@ -96,12 +96,23 @@ export type StateWatch<T extends object> = State<T>['watch'];
 export type StateReset<T extends object> = State<T>['reset'];
 export type CreateState<T extends object> = (state: State<T>) => T;
 
+interface StateOptions {
+  /**
+   * A display name for the state.
+   * Used when logging state changes.
+   */
+  name?: string;
+}
+
 /**
  * Creates a new {@link State} object from the provided initial value.
  * @param createInitialState Creates the initial state object.
  * @returns A {@link State} which holds the initial value provided by {@link createInitialState}.
  */
-export function createState<T extends object>(createInitialState: CreateState<T>): State<T> {
+export function createState<T extends object>(
+  createInitialState: CreateState<T>,
+  options: StateOptions = {},
+): State<T> {
   const maxCloneDepth = 100;
   const model = new JSONModel({});
   const subscribers: Array<StateSubscriber<T>> = [];
@@ -138,7 +149,7 @@ export function createState<T extends object>(createInitialState: CreateState<T>
             subscriber(next, previous, state);
           }
 
-          console.group('State change');
+          console.group(`State change${options.name ? ' - ' + options.name : ''}`);
           console.debug('Previous: ', previous);
           console.debug('Next: ', next);
           console.groupEnd();

@@ -25,74 +25,78 @@ interface QuestionnaireState
 }
 
 export default class QuestionnaireController extends BaseController {
-  state = createState<QuestionnaireState>(({ state, get }) => ({
-    parameters: {},
-    query: {},
+  state = createState<QuestionnaireState>(
+    ({ state, get }) => ({
+      parameters: {},
+      query: {},
 
-    customerQuery: createQuery({
-      state,
-      key: 'customerQuery',
-      getArgs: (state: QuestionnaireState) => state.parameters.customerId,
-      fetch: (id: string) => getCustomerEntity(id),
+      customerQuery: createQuery({
+        state,
+        key: 'customerQuery',
+        getArgs: (state: QuestionnaireState) => state.parameters.customerId,
+        fetch: (id: string) => getCustomerEntity(id),
+      }),
+
+      formSchemaResultQuery: createQuery({
+        state,
+        key: 'formSchemaResultQuery',
+        getArgs: (state: QuestionnaireState) =>
+          state.query.formSchemaResultId ? state.query.formSchemaResultId : null,
+        fetch: (id: string) => getFormSchemaResultEntity(id),
+        onSuccess(formSchemaResult) {
+          const { setState } = get();
+          setState(JSON.parse(formSchemaResult.ResultJson));
+        },
+      }),
+
+      formSchemaQuery: createQuery({
+        state,
+        key: 'formSchemaQuery',
+        getArgs: (state: QuestionnaireState) =>
+          state.formSchemaResultQuery.data?.FormSchemaId ?? state.parameters.formSchemaType,
+        fetch: (id: string) => getFormSchemaEntity(id),
+        onSuccess(formSchema) {
+          const { setSchema } = get();
+          setSchema(JSON.parse(formSchema.SchemaJson));
+        },
+      }),
+
+      submitMutation: createAsync({
+        state,
+        key: 'submitMutation',
+        fetch() {
+          const {
+            parameters: { customerId },
+            query: { formSchemaResultId },
+            formSchemaQuery,
+            state,
+          } = get();
+
+          if (formSchemaResultId) {
+            return updateFormSchemaResultEntity(formSchemaResultId, {
+              FormSchemaId: formSchemaQuery.data!.Id,
+              MetadataJson: '{}',
+              ResultJson: JSON.stringify(state),
+            });
+          } else {
+            return createFormSchemaResultEntity({
+              CustomerId: customerId!,
+              FormSchemaId: formSchemaQuery.data!.Id,
+              MetadataJson: '{}',
+              ResultJson: JSON.stringify(state),
+            });
+          }
+        },
+      }),
+
+      ...createFormEngineContext(state),
     }),
-
-    formSchemaResultQuery: createQuery({
-      state,
-      key: 'formSchemaResultQuery',
-      getArgs: (state: QuestionnaireState) => (state.query.formSchemaResultId ? state.query.formSchemaResultId : null),
-      fetch: (id: string) => getFormSchemaResultEntity(id),
-      onSuccess(formSchemaResult) {
-        const { setState } = get();
-        setState(JSON.parse(formSchemaResult.ResultJson));
-      },
-    }),
-
-    formSchemaQuery: createQuery({
-      state,
-      key: 'formSchemaQuery',
-      getArgs: (state: QuestionnaireState) =>
-        state.formSchemaResultQuery.data?.FormSchemaId ?? state.parameters.formSchemaType ?? 'UNKNOWN_FORM_SCHEMA',
-      fetch: (id: string) => getFormSchemaEntity(id),
-      onSuccess(formSchema) {
-        const { setSchema } = get();
-        setSchema(JSON.parse(formSchema.SchemaJson));
-      },
-    }),
-
-    submitMutation: createAsync({
-      state,
-      key: 'submitMutation',
-      fetch() {
-        const {
-          parameters: { customerId },
-          query: { formSchemaResultId },
-          formSchemaQuery,
-          state,
-        } = get();
-
-        if (formSchemaResultId) {
-          return updateFormSchemaResultEntity(formSchemaResultId, {
-            FormSchemaId: formSchemaQuery.data!.Id,
-            MetadataJson: '{}',
-            ResultJson: JSON.stringify(state),
-          });
-        } else {
-          return createFormSchemaResultEntity({
-            CustomerId: customerId!,
-            FormSchemaId: formSchemaQuery.data!.Id,
-            MetadataJson: '{}',
-            ResultJson: JSON.stringify(state),
-          });
-        }
-      },
-    }),
-
-    ...createFormEngineContext(state),
-  }));
+    { name: 'Questionnaire' },
+  );
 
   public onInit() {
     this.connectState(this.state);
-    connectRouterState(this.state, this.router);
+    connectRouterState(this.state, this.router, 'Questionnaire');
   }
 
   onPreviousPress() {

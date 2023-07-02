@@ -7,7 +7,7 @@
   xmlns:grid="sap.ui.layout.cssgrid"
   controllerName="csrdreporting.controller.CustomerManagement"
   height="100%">
-  <Page id="CustomerManagementPageLayout" showFooter="true" showNavButton="true" navButtonPress="navBack">
+  <Page showFooter="true" showNavButton="true" navButtonPress="navBack">
     <content>
       <layout:FixFlex class="fixFlexVertical">
         <layout:fixContent>
@@ -16,6 +16,9 @@
           </ObjectHeader>
         </layout:fixContent>
         <layout:flexContent>
+          <!--
+          The master view, showing the list of all customers.
+          -->
           <SplitContainer id="splitContainer" initialDetail="placeholder" initialMaster="master">
             <masterPages>
               <Page id="master" title="Customers" backgroundDesign="List">
@@ -24,17 +27,16 @@
                 </headerContent>
                 <List items="{svc>/CustomerSet}">
                   <CustomListItem type="Active" press="onCustomerPress">
-                    <HBox>
-                      <core:Icon
-                        size="2rem"
-                        src="sap-icon://person-placeholder"
-                        class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
-                      />
-                      <VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
+                    <HBox class="sapUiSmallMargin" alignItems="Center">
+                      <core:Icon size="2rem" src="sap-icon://person-placeholder" class="sapUiSmallMarginBeginEnd" />
+                      <VBox class="sapUiSmallMarginBegin">
+                        <layoutData>
+                          <FlexItemData growFactor="1" />
+                        </layoutData>
                         <Text text="{svc>Name}" />
                         <Label text="{svc>CustomerCode}" />
                       </VBox>
-                      <HBox alignItems="Center" justifyContent="End" width="100%">
+                      <HBox alignItems="Center">
                         <Button
                           icon="sap-icon://edit"
                           type="Transparent"
@@ -51,6 +53,10 @@
                     </HBox>
                   </CustomListItem>
                 </List>
+
+                <!--
+                Dialog for editing and creating a new customer.
+                -->
                 <Dialog id="customerDialog" title="{state>/customerDialogTitle}" draggable="true">
                   <content>
                     <VBox class="sapUiMediumMargin">
@@ -65,7 +71,7 @@
                       text="{i18n>Management_SubmitCustomer}"
                       press="onCustomerDialogSubmit"
                       type="Emphasized"
-                      enabled="{= !!${state>/customerName} &amp;&amp; !!${state>/customerCode} }"
+                      enabled="{= !!${state>/customerName} &amp;&amp; !!${state>/customerCode} &amp;&amp; !${state>/submitCustomerMutation/isPending} }"
                     />
                   </beginButton>
                   <endButton>
@@ -74,10 +80,18 @@
                 </Dialog>
               </Page>
             </masterPages>
+
             <detailPages>
-              <Page id="details" title="Questionnaires">
-                <Panel id="panelForGridList" backgroundDesign="Transparent">
-                  <f:GridList id="gridList" items="{state>/customerFormSchemaResults}">
+              <!--
+              Details page showing the filled questionnaires/form schema results of the currently selected customer.
+              -->
+              <Page
+                id="details"
+                title="Questionnaires"
+                busy="{state>/customerFormSchemasQuery/isPending}"
+                busyIndicatorDelay="0">
+                <Panel backgroundDesign="Transparent">
+                  <f:GridList id="gridList" items="{state>/customerFormSchemasQuery/data}" showNoData="false">
                     <f:customLayout>
                       <grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, 23rem)" gridGap="1rem" />
                     </f:customLayout>
