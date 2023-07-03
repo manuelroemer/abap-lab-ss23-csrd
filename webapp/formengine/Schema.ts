@@ -169,6 +169,13 @@ export interface ChoiceOption {
 }
 
 /**
+ * Single checkbox
+ */
+export interface CheckboxFormSchemaElement extends DynamicFormSchemaElement<'checkbox'> {
+  option: ChoiceOption;
+}
+
+/**
  * RadioButtons with multiple options
  */
 export interface SingleChoiceFormSchemaElement extends DynamicFormSchemaElement<'single-choice'> {
@@ -215,6 +222,7 @@ export type FormSchemaElement =
   | HeadingFormSchemaElement
   | TextFormSchemaElement
   | TextInputFormSchemaElement
+  | CheckboxFormSchemaElement
   | SingleChoiceFormSchemaElement
   | SingleChoiceSelectFormSchemaElement
   | MultiChoiceFormSchemaElement

@@ -15,6 +15,7 @@ import {
   DynamicFormSchemaElement,
   BooleanChoiceFormSchemaElement,
   MultiChoiceFormSchemaElement,
+  CheckboxFormSchemaElement,
   SingleChoiceFormSchemaElement,
   NumberStepInputFormSchemaElement,
   SingleChoiceSelectFormSchemaElement,
@@ -46,6 +47,7 @@ const elementRenderers: RenderLookup = {
   heading: renderHeading,
   text: renderText,
   'text-input': renderTextInput,
+  checkbox: renderCheckbox,
   'single-choice': renderSingleChoice,
   'single-choice-select': renderSingleChoiceSelect,
   'multi-choice': renderMultiChoice,
@@ -68,7 +70,7 @@ export function render<T extends FormSchemaElement>(element: T, context: FormEng
   return control;
 }
 
-function renderHeading({ text, level = 3, wrap = true }: HeadingFormSchemaElement) {
+function renderHeading({ text, level = 2, wrap = true }: HeadingFormSchemaElement) {
   return new Title({ text, level: `H${level}`, titleStyle: `H${level}`, wrapping: wrap });
 }
 
@@ -86,6 +88,27 @@ function renderTextInput(element: TextInputFormSchemaElement, context: FormEngin
       ? new Input({ width: '100%', placeholder, value, change: onChange })
       : new TextArea({ width: '100%', placeholder, rows, value, change: onChange });
   return renderDynamicElementWrapper(element, input, context);
+}
+
+function renderCheckbox(element: CheckboxFormSchemaElement, context: FormEngineContext) {
+  const { id, option } = element;
+  const { state, setState } = context;
+  const value = (state[element.id] as Array<string>) ?? [];
+
+  const onSelect = (e: Event) => {
+    const isSelected = e.getParameter('selected') as boolean;
+    setState({
+      ...state,
+      [id]: isSelected ? uniq([...value, option.value]) : value.filter((v) => v !== option.value),
+      [`${id}.${option.value}`]: isSelected,
+    });
+  };
+  const checkbox = new CheckBox({
+    text: option.display ?? option.value,
+    selected: value.includes(option.value),
+    select: onSelect,
+  });
+  return renderDynamicElementWrapper(element, checkbox, context);
 }
 
 function renderSingleChoice(element: SingleChoiceFormSchemaElement, context: FormEngineContext) {

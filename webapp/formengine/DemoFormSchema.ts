@@ -3,6 +3,28 @@ import { FormSchema } from './Schema';
 export const demoFormSchema: FormSchema = {
   pages: [
     {
+      id: 'SBM-1',
+      title: 'SBM-1',
+      elements: [
+        {
+          type: 'heading',
+          text: 'Disclosure Requirement SBM-1 – Market position, strategy, business model(s) and value chain',
+        },
+        {
+          type: 'text',
+          text: 'The undertaking shall disclose its market position, the elements of its strategy that relate to or impact sustainability matters, its business model(s) and its value chain.',
+        },
+        {
+          id: 'TestCheckbox',
+          type: 'checkbox',
+          option: {
+            value: 'TestCheckbox',
+            display: 'Apples 🍎',
+          },
+        },
+      ],
+    },
+    {
       id: 'all-controls',
       title: 'All Controls',
       elements: [
@@ -93,6 +115,14 @@ export const demoFormSchema: FormSchema = {
           label: "What is today's date?",
           helperText: 'Hint: You can also pick any other date. We do not discriminate.',
           required: false,
+        },
+        {
+          id: 'TestCheckbox',
+          type: 'checkbox',
+          option: {
+            value: 'TestCheckbox',
+            display: 'Apples 🍎',
+          },
         },
       ],
     },
