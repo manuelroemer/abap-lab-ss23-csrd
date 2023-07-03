@@ -623,7 +623,7 @@ export const csrdSchema: FormSchema = {
         {
           type: 'number-input',
           id: 'totalNonRenewEnergyCons',
-          label: 'Total energy consumption from non-renewable sources in MWh:',
+          description: 'Total energy consumption from non-renewable sources in MWh:',
         },
         {
           id: 'coal',
@@ -633,7 +633,7 @@ export const csrdSchema: FormSchema = {
         {
           type: 'number-input',
           id: 'coal-amount',
-          label: 'Energy consumption from coal and coal products in MWh:',
+          description: 'Energy consumption from coal and coal products in MWh:',
           required: false,
           effects: [
             {
@@ -654,7 +654,7 @@ export const csrdSchema: FormSchema = {
         {
           type: 'number-input',
           id: 'petroleum-amount',
-          label: 'Energy consumption from crude oil and petroleum products in MWh:',
+          description: 'Energy consumption from crude oil and petroleum products in MWh:',
           required: false,
           effects: [
             {
@@ -675,7 +675,7 @@ export const csrdSchema: FormSchema = {
         {
           type: 'number-input',
           id: 'gas-amount',
-          label: 'Energy consumption from natural gas in MWh:',
+          description: 'Energy consumption from natural gas in MWh:',
           required: false,
           effects: [
             {
@@ -696,7 +696,7 @@ export const csrdSchema: FormSchema = {
         {
           type: 'number-input',
           id: 'other-non-renewable-amount',
-          label: 'Energy consumption from other non-renewable sources in MWh:',
+          description: 'Energy consumption from other non-renewable sources in MWh:',
           required: false,
           effects: [
             {
@@ -717,7 +717,7 @@ export const csrdSchema: FormSchema = {
         {
           type: 'number-input',
           id: 'nuclear-amount',
-          label: 'Nuclear energy consumption in MWh:',
+          description: 'Nuclear energy consumption in MWh:',
           required: false,
           effects: [
             {
@@ -741,7 +741,7 @@ export const csrdSchema: FormSchema = {
         {
           type: 'number-input',
           id: 'purchased-non-renew-amount',
-          label:
+          description:
             'Energy consumption from purchased or acquired electricity, heat, steam, and cooling from non-renewable sources in MWh:',
           required: false,
           effects: [
@@ -763,70 +763,70 @@ export const csrdSchema: FormSchema = {
         {
           type: 'number-input',
           id: 'totalRenewEnergyCons',
-          label: 'Total energy consumption from renewable sources in MWh:',
+          description: 'Total energy consumption from renewable sources in MWh:',
         },
         {
-          type: 'multi-choice',
-          id: 'Multi-Choice2',
-          options: [
-            { value: 'renew-fuel', display: 'renewable fuel sources' },
-            {
-              value: 'purchased-renew',
-              display:
-                'consumption of purchased or acquired electricity, heat, steam, and cooling from renewable sources',
-            },
-            { value: 'self-generated', display: 'self-generated non-fuel renewable energy' },
-          ],
-          label: 'Renewable Sources',
-          required: false,
+          id: 'renew-fuel',
+          type: 'checkbox',
+          option: { value: 'renew-fuel', display: 'renewable fuel sources' },
         },
         {
           type: 'number-input',
           id: 'renew-fuel-amount',
-          label: 'Renewable fuel energy consumption in MWh',
-          description: 'Energy consumption from renewable fuel sources',
+          description: 'Energy consumption from renewable fuel sources in MWh:',
           required: false,
           effects: [
             {
               effect: 'hide',
               condition: {
                 type: 'eq',
-                left: { type: 'value', id: 'Multi-Choice2.renew-fuel' },
+                left: { type: 'value', id: 'renew-fuel.renew-fuel' },
                 right: true,
               },
             },
           ],
+        },
+        {
+          id: 'purchased-renew',
+          type: 'checkbox',
+          option: {
+            value: 'purchased-renew',
+            display:
+              'purchased or acquired electricity, heat, steam, and cooling from renewable sources',
+          },
         },
         {
           type: 'number-input',
           id: 'purchased-renew-amount',
-          label: 'Renewable energy consumption in MWh',
-          description:
-            'Energy consumption of purchased or acquired electricity, heat, steam, and cooling from renewable sources',
+          description: 'Energy consumption of purchased or acquired electricity, heat, steam, and cooling from renewable sources in MWh:',
           required: false,
           effects: [
             {
               effect: 'hide',
               condition: {
                 type: 'eq',
-                left: { type: 'value', id: 'Multi-Choice2.purchased-renew' },
+                left: { type: 'value', id: 'purchased-renew.purchased-renew' },
                 right: true,
               },
             },
           ],
         },
         {
+          id: 'self-generated',
+          type: 'checkbox',
+          option: { value: 'self-generated', display: 'self-generated non-fuel renewable energy' },
+        },
+        {
           type: 'number-input',
           id: 'self-generated-amount',
-          label: 'Self-generated energy consumption in MWH',
-          description: 'Energy consumption from self-generated non-fuel renewable energy',
+          description: 'Energy consumption from self-generated non-fuel renewable energy in MWH',
           required: false,
           effects: [
             {
               effect: 'hide',
               condition: {
                 type: 'eq',
-                left: { type: 'value', id: 'Multi-Choice2.self-generated' },
+                left: { type: 'value', id: 'self-generated.self-generated' },
                 right: true,
               },
             },
@@ -987,6 +987,15 @@ export const csrdSchema: FormSchema = {
           type: 'number-input',
           id: 'numOfLegalProceedingsOutstanding',
         },
+        {
+          type: 'heading',
+          text: '33 (d) Include complementary information necessary to provide sufficient context:',
+          level: 5,
+        },
+        {
+          type: 'text-input', 
+          id: 'complementaryPaymentPractices', 
+        }, 
       ],
     },
     {
