@@ -987,7 +987,7 @@ export const csrdSchema: FormSchema = {
         {
           type: 'number-input',
           id: 'periodicReporting',
-          label: 'total energy consumption in high climate impact sectors in MWh:', 
+          label: 'total energy consumption in high climate impact sectors in MWh:',
         },
         {
           type: 'number-input',
@@ -1000,17 +1000,17 @@ export const csrdSchema: FormSchema = {
           level: 5,
         },
         {
-          type: 'text-input', 
-          id: 'sectorSpecification', 
-        },  
+          type: 'text-input',
+          id: 'sectorSpecification',
+        },
         {
           type: 'heading',
           text: '40: Disclose the reconciliation to the relevant line item or notes in the financial statements of the net revenue amount from activities in high climate impact sectors (the denominator in the calculation of the energy intensity required by paragraph 37):',
           level: 5,
         },
         {
-          type: 'text-input', 
-          id: 'lineItems', 
+          type: 'text-input',
+          id: 'lineItems',
         },
       ],
     },
@@ -1155,6 +1155,5 @@ export const csrdSchema: FormSchema = {
         },
       ],
     },
-    
   ],
 };
