@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: '2.6'
+metadata:
+  name: csrdreporting
+type: application
+builder:
+  resources:
+    excludes:
+      - /test/**
+      - /localService/**
+  customTasks:
+    - name: deploy-to-abap
+      afterTask: generateCachebusterInfo
+      configuration:
+        target:
+          url: https://s72lp1.ucc.in.tum.de:8100
+          client: '300'
+          auth: basic
+        credentials:
+          username: env:S72_USER
+          password: env:S72_PASSWORD
+        app:
+          name: Z_00_T1_SS23_FE
+          description: ''
+          package: Z_00_T1_SS23_CSRD
+          transport: S72K901368
+        exclude:
+          - /test/

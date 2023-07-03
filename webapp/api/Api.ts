@@ -32,10 +32,10 @@ export function createStandardODataApi<
       return readEntity<TEntity>(`${entitySet}('${id}')`, parameters);
     },
     createEntity(data: TEntityCreate, parameters?: CreateEntityParameters) {
-      return createEntity<TEntityCreate>(entitySet, data, parameters);
+      return createEntity<TEntity, TEntityCreate>(entitySet, data, parameters);
     },
     updateEntity(id: string, data: Partial<TEntityUpdate>, parameters?: UpdateEntityParameters) {
-      return updateEntity<Partial<TEntityUpdate>>(`${entitySet}('${id}')`, data, parameters);
+      return updateEntity<TEntity, Partial<TEntityUpdate>>(`${entitySet}('${id}')`, data, parameters);
     },
     deleteEntity(id: string, parameters?: DeleteEntityParameters) {
       return deleteEntity(`${entitySet}('${id}')`, parameters);
@@ -70,7 +70,11 @@ export type CreateEntityParameters = Omit<ODataModelCreateParameters, 'success' 
  * @param data The object to be created.
  * @param parameters Additional request parameters.
  */
-export function createEntity<T extends object = object>(path: string, data: T, parameters?: CreateEntityParameters) {
+export function createEntity<T extends object = object, TData extends object = T>(
+  path: string,
+  data: TData,
+  parameters?: CreateEntityParameters,
+) {
   return new Promise<T>((res, rej) => {
     service.create(path, data, {
       ...parameters,
@@ -89,7 +93,11 @@ export type UpdateEntityParameters = Omit<ODataModelUpdateParameters, 'success' 
  * @param data The object to be updated.
  * @param parameters Additional request parameters.
  */
-export function updateEntity<T extends object>(path: string, data: T, parameters?: UpdateEntityParameters) {
+export function updateEntity<T extends object, TData extends object = T>(
+  path: string,
+  data: TData,
+  parameters?: UpdateEntityParameters,
+) {
   return new Promise<T>((res, rej) => {
     service.update(path, data, {
       ...parameters,

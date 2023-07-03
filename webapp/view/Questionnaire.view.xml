@@ -1,49 +1,89 @@
 <mvc:View
+  xmlns="sap.m"
   xmlns:mvc="sap.ui.core.mvc"
-  xmlns="sap.uxap"
+  xmlns:uxap="sap.uxap"
   xmlns:layout="sap.ui.layout"
-  xmlns:m="sap.m"
   xmlns:formengine="csrdreporting.formengine"
   controllerName="csrdreporting.controller.Questionnaire"
   height="100%">
-  <ObjectPageLayout id="QuestionnairePageLayout" showFooter="true">
-    <headerTitle>
-      <ObjectPageHeader
-        objectTitle="{i18n>Questionnaire_Title}"
-        objectSubtitle="{= ${formEngine>/currentPage/title} || ${formEngine>/currentPage/id} }"
-      />
-    </headerTitle>
+  <Page showNavButton="true" navButtonPress="navBack">
+    <uxap:ObjectPageLayout
+      id="QuestionnairePageLayout"
+      showFooter="true"
+      busyIndicatorDelay="0"
+      busy="{= ${state>/customerQuery/isLoading} || ${state>/formSchemaQuery/isLoading} || ${state>/formSchemaResultQuery/isLoading} }">
+      <uxap:headerTitle>
+        <uxap:ObjectPageHeader
+          objectTitle="{i18n>Questionnaire_Title}"
+          objectSubtitle="{= ${state>/currentPage/title} || ${state>/currentPage/id} }"
+        />
+      </uxap:headerTitle>
 
-    <sections>
-      <ObjectPageSection showTitle="false">
-        <ObjectPageSubSection>
-          <formengine:FormEngine class="sapUiResponsiveMargin" formEngineContext="{formEngine>/}" />
-        </ObjectPageSubSection>
-      </ObjectPageSection>
-    </sections>
+      <!--
+    Error Notifications.
+    Conditionally displayed when the data fetching queries resolve with an error.
+    -->
+      <uxap:sections>
+        <uxap:ObjectPageSection
+          title="{i18n>Questionnaire_ErrorTitle}"
+          visible="{= ${state>/customerQuery/hasError} || ${state>/formSchemaResultQuery/hasError} }">
+          <uxap:ObjectPageSubSection>
+            <VBox>
+              <MessageStrip
+                class="sapUiSmallMarginBottom"
+                text="{i18n>Questionnaire_CustomerError} {state>/customerQuery/error/message} ({state>/customerQuery/error/statusCode})"
+                type="Error"
+                visible="{state>/customerQuery/hasError}"
+              />
+              <MessageStrip
+                text="{i18n>Questionnaire_FormSchemaError} {state>/formSchemaQuery/error/message} ({state>/formSchemaQuery/error/statusCode})"
+                type="Error"
+                visible="{state>/formSchemaQuery/hasError}"
+              />
+              <MessageStrip
+                text="{i18n>Questionnaire_FormSchemaResultError} {state>/formSchemaResultQuery/error/message} ({state>/formSchemaResultQuery/error/statusCode})"
+                type="Error"
+                visible="{state>/formSchemaResultQuery/hasError}"
+              />
+            </VBox>
+          </uxap:ObjectPageSubSection>
+        </uxap:ObjectPageSection>
 
-    <footer>
-      <m:OverflowToolbar>
-        <m:ToolbarSpacer />
-        <m:Button
-          text="{i18n>Questionnaire_PreviousStep}"
-          enabled="{formEngine>/canGoBackward}"
-          press="onPreviousPress"
-        />
-        <m:Button
-          type="Emphasized"
-          text="{i18n>Questionnaire_NextStep}"
-          enabled="{formEngine>/canGoForward}"
-          visible="{= !${formEngine>/canSubmit} }"
-          press="onNextPress"
-        />
-        <m:Button
-          type="Emphasized"
-          text="{i18n>Questionnaire_Submit}"
-          visible="{formEngine>/canSubmit}"
-          press="onSubmitPress"
-        />
-      </m:OverflowToolbar>
-    </footer>
-  </ObjectPageLayout>
+        <!--
+      The main section displaying the form engine (i.e., the questionnaire).
+      -->
+        <uxap:ObjectPageSection
+          showTitle="false"
+          visible="{= ${state>/customerQuery/hasData} &amp;&amp; ${state>/formSchemaQuery/hasData} &amp;&amp; !${state>/formSchemaResultQuery/hasError} }">
+          <uxap:ObjectPageSubSection>
+            <formengine:FormEngine class="sapUiResponsiveMargin" formEngineContext="{state>/}" />
+          </uxap:ObjectPageSubSection>
+        </uxap:ObjectPageSection>
+      </uxap:sections>
+
+      <!--
+    Form engine controls.
+    -->
+      <uxap:footer>
+        <OverflowToolbar
+          visible="{= ${state>/customerQuery/hasData} &amp;&amp; ${state>/formSchemaQuery/hasData} &amp;&amp; !${state>/formSchemaResultQuery/hasError} }">
+          <ToolbarSpacer />
+          <Button text="{i18n>Questionnaire_PreviousStep}" enabled="{state>/canGoBackward}" press="onPreviousPress" />
+          <Button
+            type="Emphasized"
+            text="{i18n>Questionnaire_NextStep}"
+            enabled="{state>/canGoForward}"
+            visible="{= !${state>/canSubmit} }"
+            press="onNextPress"
+          />
+          <Button
+            type="Emphasized"
+            text="{i18n>Questionnaire_Submit}"
+            visible="{state>/canSubmit}"
+            press="onSubmitPress"
+          />
+        </OverflowToolbar>
+      </uxap:footer>
+    </uxap:ObjectPageLayout>
+  </Page>
 </mvc:View>
