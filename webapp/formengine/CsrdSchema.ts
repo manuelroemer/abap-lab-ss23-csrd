@@ -987,12 +987,12 @@ export const csrdSchema: FormSchema = {
         {
           type: 'number-input',
           id: 'periodicReporting',
-          label: 'total energy consumption in high climate impact sectors in MWh:',
+          description: 'Total energy consumption in high climate impact sectors in MWh:',
         },
         {
           type: 'number-input',
           id: 'periodicReporting',
-          label: 'Net revenue in high climate impact sectors:',
+          description: 'Net revenue in high climate impact sectors:',
         },
         {
           type: 'heading',
