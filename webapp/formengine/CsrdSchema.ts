@@ -3,8 +3,95 @@ import { FormSchema } from './Schema';
 export const csrdSchema: FormSchema = {
   pages: [
     {
+      id: 'csrdrelevant',
+      title: 'CSRD Relevance',
+      elements: [
+        {
+          type: 'heading',
+          text: 'Is the CRSD relevant for your company?',
+        },
+        {
+          type: 'number-input',
+          id: 'numEmployees',
+          label: 'Employees',
+          description: 'Please enter the number of employees in your company:',
+          required: true,
+        },
+        {
+          type: 'number-input',
+          id: 'netSales',
+          label: 'Net sales in million euros',
+          description: 'Please enter your net sales (in million euros):',
+          required: true,
+        },
+        {
+          type: 'number-input',
+          id: 'totalBalancesheet',
+          label: 'Balance sheet total in million euros',
+          description: 'Please enter your balance sheet total (in million euros):',
+          required: true,
+        },
+        {
+          type: 'text',
+          text: '',
+          effects: [
+            {
+              effect: 'hide',
+              condition: {
+                type: 'or',
+                left: {
+                  type: 'and',
+                  left: {
+                    type: 'gt',
+                    left: { type: 'value', id: 'numEmployees' },
+                    right: 250,
+                  },
+                  right: {
+                    type: 'or',
+                    left: {
+                      type: 'gt',
+                      left: { type: 'value', id: 'netSales' },
+                      right: 40,
+                    },
+                    right: {
+                      type: 'gt',
+                      left: { type: 'value', id: 'totalBalancesheet' },
+                      right: 20,
+                    },
+                  },
+                },
+                right: {
+                  type: 'and',
+                  left: {
+                    type: 'gt',
+                    left: { type: 'value', id: 'netSales' },
+                    right: 40,
+                  },
+                  right: {
+                    type: 'gt',
+                    left: { type: 'value', id: 'totalBalancesheet' },
+                    right: 20,
+                  },
+                },
+              },
+            },
+          ],
+        },
+      ],
+    },
+    {
       id: 'GOV-5',
       title: 'GOV-5 General disclosures',
+      effects: [
+        {
+          effect: 'hide',
+          condition: {
+            type: 'gt',
+            left: { type: 'value', id: 'numEmployees' },
+            right: 250,
+          },
+        },
+      ],
       elements: [
         {
           type: 'heading',
@@ -17,7 +104,7 @@ export const csrdSchema: FormSchema = {
         },
         {
           type: 'heading',
-          text: '34 (a) Disclose the scope, main features and components of the risk management and internal control processes and systems in relation to sustainability reporting:',
+          text: '34 (a): Disclose the scope, main features and components of the risk management and internal control processes and systems in relation to sustainability reporting:',
           level: 5,
         },
         {
@@ -26,7 +113,7 @@ export const csrdSchema: FormSchema = {
         },
         {
           type: 'heading',
-          text: '34 (b) Disclose the risk assessment approach followed, including the risk prioritisation methodology:',
+          text: '34 (b): Disclose the risk assessment approach followed, including the risk prioritisation methodology:',
           level: 5,
         },
         {
@@ -35,7 +122,7 @@ export const csrdSchema: FormSchema = {
         },
         {
           type: 'heading',
-          text: '34 (c) Disclose the main risks identified, actual and potential, and their mitigation strategies including related controls:',
+          text: '34 (c): Disclose the main risks identified, actual and potential, and their mitigation strategies including related controls:',
           level: 5,
         },
         {
@@ -44,7 +131,7 @@ export const csrdSchema: FormSchema = {
         },
         {
           type: 'heading',
-          text: '34 (d) Provide a description of how the undertaking integrates the findings of its risk assessment and internal controls as regards the sustainability reporting process into relevant internal functions and processes:',
+          text: '34 (d): Provide a description of how the undertaking integrates the findings of its risk assessment and internal controls as regards the sustainability reporting process into relevant internal functions and processes:',
           level: 5,
         },
         {
@@ -53,7 +140,7 @@ export const csrdSchema: FormSchema = {
         },
         {
           type: 'heading',
-          text: '34 (e) Provide a description of the periodic reporting of the findings to the administrative, management and supervisory bodies:',
+          text: '34 (e): Provide a description of the periodic reporting of the findings to the administrative, management and supervisory bodies:',
           level: 5,
         },
         {
@@ -63,12 +150,12 @@ export const csrdSchema: FormSchema = {
       ],
     },
     {
-      id: 'IRO-1',
-      title: 'IRO-1 Climate change',
+      id: 'IRO-1-E1',
+      title: 'IRO-1-E1 Climate change',
       elements: [
         {
           type: 'heading',
-          text: 'IRO-1 – Description of the processes to identify and assess material climate-related impacts, risks and opportunities',
+          text: 'IRO-1-E1 – Description of the processes to identify and assess material climate-related impacts, risks and opportunities',
         },
         {
           type: 'heading',
@@ -591,6 +678,38 @@ export const csrdSchema: FormSchema = {
             },
           ],
         },
+        {
+          type: 'heading',
+          text: '19: Explain how it has used climate-related scenario analysis to inform the identification and assessment of physical and transition risks and opportunities over the short-, medium- and long-term time horizons:',
+          level: 5,
+        },
+        {
+          type: 'heading',
+          text: 'Short-term:',
+          level: 5,
+        },
+        {
+          type: 'text-input',
+          id: 'shortTerm',
+        },
+        {
+          type: 'heading',
+          text: 'Medium-term:',
+          level: 5,
+        },
+        {
+          type: 'text-input',
+          id: 'mediumTerm',
+        },
+        {
+          type: 'heading',
+          text: 'Long-term:',
+          level: 5,
+        },
+        {
+          type: 'text-input',
+          id: 'longTerm',
+        },
       ],
     },
     {
@@ -791,14 +910,14 @@ export const csrdSchema: FormSchema = {
           type: 'checkbox',
           option: {
             value: 'purchased-renew',
-            display:
-              'purchased or acquired electricity, heat, steam, and cooling from renewable sources',
+            display: 'purchased or acquired electricity, heat, steam, and cooling from renewable sources',
           },
         },
         {
           type: 'number-input',
           id: 'purchased-renew-amount',
-          description: 'Energy consumption of purchased or acquired electricity, heat, steam, and cooling from renewable sources in MWh:',
+          description:
+            'Energy consumption of purchased or acquired electricity, heat, steam, and cooling from renewable sources in MWh:',
           required: false,
           effects: [
             {
@@ -855,6 +974,44 @@ export const csrdSchema: FormSchema = {
             },
           ],
         },
+        {
+          type: 'heading',
+          text: 'Energy intensity based on net revenue',
+          level: 5,
+        },
+        {
+          type: 'heading',
+          text: '37: Provide information on the energy intensity (total energy consumption per net revenue) associated with activities in high climate impact sectors:',
+          level: 5,
+        },
+        {
+          type: 'number-input',
+          id: 'periodicReporting',
+          label: 'total energy consumption in high climate impact sectors in MWh:', 
+        },
+        {
+          type: 'number-input',
+          id: 'periodicReporting',
+          label: 'Net revenue in high climate impact sectors:',
+        },
+        {
+          type: 'heading',
+          text: '39: Specify the high climate impact sectors that are used to determine the energy intensity required by paragraph 37:',
+          level: 5,
+        },
+        {
+          type: 'text-input', 
+          id: 'sectorSpecification', 
+        },  
+        {
+          type: 'heading',
+          text: '40: Disclose the reconciliation to the relevant line item or notes in the financial statements of the net revenue amount from activities in high climate impact sectors (the denominator in the calculation of the energy intensity required by paragraph 37):',
+          level: 5,
+        },
+        {
+          type: 'text-input', 
+          id: 'lineItems', 
+        },
       ],
     },
     {
@@ -872,7 +1029,7 @@ export const csrdSchema: FormSchema = {
         },
         {
           type: 'heading',
-          text: '65 (a) Specify the the gender distribution in number and percentage at top management level amongst its employees:',
+          text: '65 (a): Specify the the gender distribution in number and percentage at top management level amongst its employees:',
           level: 5,
         },
         {
@@ -897,7 +1054,7 @@ export const csrdSchema: FormSchema = {
         },
         {
           type: 'heading',
-          text: '65 (b) Distribution of employees by age group',
+          text: '65 (b): Distribution of employees by age group',
           level: 5,
         },
         {
@@ -932,7 +1089,7 @@ export const csrdSchema: FormSchema = {
         },
         {
           type: 'heading',
-          text: '33 (a) What is the average time the company takes to pay an invoice from the date when the contractual or statutory term of payment starts to be calculated, in number of days?',
+          text: '33 (a): What is the average time the company takes to pay an invoice from the date when the contractual or statutory term of payment starts to be calculated, in number of days?',
           level: 5,
         },
         {
@@ -980,7 +1137,7 @@ export const csrdSchema: FormSchema = {
         },
         {
           type: 'heading',
-          text: '33 (c) What is the number of legal proceedings (currently outstanding) during the reporting period for late payments?',
+          text: '33 (c): What is the number of legal proceedings (currently outstanding) during the reporting period for late payments?',
           level: 5,
         },
         {
@@ -989,91 +1146,15 @@ export const csrdSchema: FormSchema = {
         },
         {
           type: 'heading',
-          text: '33 (d) Include complementary information necessary to provide sufficient context:',
+          text: '33 (d): Include complementary information necessary to provide sufficient context:',
           level: 5,
         },
         {
-          type: 'text-input', 
-          id: 'complementaryPaymentPractices', 
-        }, 
-      ],
-    },
-    {
-      id: 'csrdrelevant',
-      title: 'CSRD Relevance',
-      elements: [
-        {
-          type: 'heading',
-          text: 'Is the CRSD relevant for your company?',
-        },
-        {
-          type: 'number-input',
-          id: 'numEmployees',
-          label: 'Employees',
-          description: 'Please enter the number of employees in your company:',
-          required: false,
-        },
-        {
-          type: 'number-input',
-          id: 'netSales',
-          label: 'Net sales in million euros',
-          description: 'Please enter your net sales (in million euros):',
-          required: false,
-        },
-        {
-          type: 'number-input',
-          id: 'totalBalancesheet',
-          label: 'Balance sheet total in million euros',
-          description: 'Please enter your balance sheet total (in million euros):',
-          required: false,
-        },
-        {
-          type: 'text',
-          text: 'Your company fullfills at least two out of the three requirements and has to submit the CSRD!',
-          effects: [
-            {
-              effect: 'hide',
-              condition: {
-                type: 'or',
-                left: {
-                  type: 'and',
-                  left: {
-                    type: 'gt',
-                    left: { type: 'value', id: 'numEmployees' },
-                    right: 250,
-                  },
-                  right: {
-                    type: 'or',
-                    left: {
-                      type: 'gt',
-                      left: { type: 'value', id: 'netSales' },
-                      right: 40,
-                    },
-                    right: {
-                      type: 'gt',
-                      left: { type: 'value', id: 'totalBalancesheet' },
-                      right: 20,
-                    },
-                  },
-                },
-                right: {
-                  type: 'and',
-                  left: {
-                    type: 'gt',
-                    left: { type: 'value', id: 'netSales' },
-                    right: 40,
-                  },
-                  right: {
-                    type: 'gt',
-                    left: { type: 'value', id: 'totalBalancesheet' },
-                    right: 20,
-                  },
-                },
-              },
-            },
-          ],
+          type: 'text-input',
+          id: 'complementaryPaymentPractices',
         },
       ],
     },
+    
   ],
 };
