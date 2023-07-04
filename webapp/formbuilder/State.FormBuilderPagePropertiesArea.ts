@@ -11,11 +11,13 @@ export function createFormBuilderPagePropertiesAreaSlice({
   get,
   set,
 }: State<FormBuilderState>): FormBuilderStatePagePropertiesAreaSlice {
+  // Sync: schema page => pageToEdit
   state.watch(
     (s) => s.currentPage,
     ({ currentPage }) => set({ pageToEdit: currentPage }),
   );
 
+  // Sync: pageToEdit => schema page
   state.watch(
     (s) => s.pageToEdit,
     ({ currentPage, pageToEdit }) => {
