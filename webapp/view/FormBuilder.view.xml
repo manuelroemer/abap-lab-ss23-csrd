@@ -13,25 +13,7 @@
           <mvc:XMLView class="h-100" viewName="csrdreporting.view.FormBuilderPageArea" />
         </layout:SplitPane>
         <layout:SplitPane id="formEngine">
-          <VBox>
-            <OverflowToolbar>
-              <Label text="{= ${state>/currentPage/title} || ${state>/currentPage/id} }" />
-              <ToolbarSpacer />
-              <Button
-                text="{i18n>FormBuilder_PreviousPage}"
-                enabled="{state>/canGoBackward}"
-                press="onPreviousPagePress"
-              />
-              <Button
-                text="{i18n>FormBuilder_NextPage}"
-                enabled="{state>/canGoForward}"
-                visible="{= !${state>/canSubmit} }"
-                press="onNextPagePress"
-              />
-              <Button text="{i18n>FormBuilder_Submit}" visible="{state>/canSubmit}" press="onSubmitPress" />
-            </OverflowToolbar>
-            <formengine:FormEngine class="sapUiResponsiveMargin" formEngineContext="{state>/}" />
-          </VBox>
+          <mvc:XMLView class="h-100" viewName="csrdreporting.view.FormBuilderPreviewArea" />
         </layout:SplitPane>
         <layout:SplitPane>
           <IconTabBar applyContentPadding="false" stretchContentHeight="true" class="form-builder-icon-bar">

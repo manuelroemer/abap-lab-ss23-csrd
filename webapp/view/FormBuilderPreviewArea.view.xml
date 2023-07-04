@@ -1,0 +1,24 @@
+<mvc:View
+  xmlns:layout="sap.ui.layout"
+  controllerName="csrdreporting.controller.FormBuilderPreviewArea"
+  xmlns:mvc="sap.ui.core.mvc"
+  displayBlock="true"
+  xmlns="sap.m"
+  xmlns:formengine="csrdreporting.formengine">
+  <Page title="{= ${state>/currentPage/title} || ${state>/currentPage/id} || 'Page Preview' }">
+    <headerContent>
+      <Button text="{i18n>FormBuilder_PreviousPage}" enabled="{state>/canGoBackward}" press="onPreviousPagePress" />
+      <Button
+        text="{i18n>FormBuilder_NextPage}"
+        enabled="{state>/canGoForward}"
+        visible="{= !${state>/canSubmit} }"
+        press="onNextPagePress"
+      />
+      <Button text="{i18n>FormBuilder_Submit}" visible="{state>/canSubmit}" press="onSubmitPress" type="Emphasized" />
+    </headerContent>
+
+    <content>
+      <formengine:FormEngine class="sapUiResponsiveMargin" formEngineContext="{state>/}" />
+    </content>
+  </Page>
+</mvc:View>
