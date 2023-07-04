@@ -26,16 +26,16 @@ export function createFormBuilderFormEngineSlice({
   watch(
     (s) => s.schemaJson,
     ({ schemaJson }) => {
-      const schema = tryParseJson(schemaJson);
-      schema && get().setSchema(schema);
+      const schema = parseObjectOr(schemaJson, emptySchema);
+      get().setSchema(schema);
     },
   );
 
   watch(
     (s) => s.stateJson,
     ({ stateJson }) => {
-      const state = tryParseJson(stateJson);
-      state && get().setState(state);
+      const state = parseObjectOr(stateJson, {});
+      get().setState(state);
     },
   );
 
@@ -64,10 +64,11 @@ function stringifyJson(value: any) {
   return JSON.stringify(value, null, 4);
 }
 
-function tryParseJson(json: string) {
+function parseObjectOr(json: string, fallback) {
   try {
-    return JSON.parse(json);
+    const result = JSON.parse(json);
+    return result && typeof result === 'object' ? result : fallback;
   } catch (e) {
-    return undefined;
+    return fallback;
   }
 }

@@ -7,8 +7,13 @@
   xmlns:formengine="csrdreporting.formengine"
   xmlns:ce="sap.ui.codeeditor">
   <Page id="page" title="{i18n>FormBuilder_Title}" showNavButton="true" navButtonPress="navBack">
-    <layout:ResponsiveSplitter defaultPane="formEngine">
+    <layout:ResponsiveSplitter defaultPane="formEngine" >
       <layout:PaneContainer>
+        <layout:SplitPane id="pages">
+          <List items="{state>/schema/pages}">
+            <StandardListItem title="{state>title}" />
+          </List>
+        </layout:SplitPane>
         <layout:SplitPane id="formEngine">
           <VBox>
             <OverflowToolbar>
