@@ -87,8 +87,7 @@ export function createFormEngineContext({ get, set }: State<FormEngineContext>, 
   // Stage 2 sets all computed properties derived from the base state.
   // Only stage 2 notifies subscribers.
   const update = (context: Partial<FormEngineContext>) => {
-    const next = set(context, false, false);
-    return set(withComputedProps(next));
+    return set(withComputedProps({ ...get(), ...context }));
   };
 
   const withComputedProps = (context: FormEngineContext): FormEngineContext => {
