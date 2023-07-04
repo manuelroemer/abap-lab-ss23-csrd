@@ -1,0 +1,42 @@
+<mvc:View
+  xmlns:layout="sap.ui.layout"
+  controllerName="csrdreporting.controller.FormBuilderPageArea"
+  xmlns:mvc="sap.ui.core.mvc"
+  displayBlock="true"
+  xmlns="sap.m">
+  <Page title="Pages">
+    <headerContent>
+      <Button icon="sap-icon://add" tooltip="Add Page" press="onAddPagePress" />
+      <ToolbarSeparator />
+      <Button
+        icon="sap-icon://slim-arrow-up"
+        tooltip="Move Up"
+        press="onMovePageUpPress"
+        enabled="{= !!${state>/currentPage} }"
+      />
+      <Button
+        icon="sap-icon://slim-arrow-down"
+        tooltip="Move Down"
+        press="onMovePageDownPress"
+        enabled="{= !!${state>/currentPage} }"
+      />
+      <Button
+        icon="sap-icon://delete"
+        tooltip="Delete Page"
+        press="onDeletePagePress"
+        enabled="{= !!${state>/currentPage} }"
+      />
+    </headerContent>
+
+    <content>
+      <List
+        id="pagesList"
+        items="{state>/schema/pages}"
+        mode="SingleSelectMaster"
+        includeItemInSelection="true"
+        selectionChange="onPageSelectionChange">
+        <StandardListItem title="{= ${state>title} || '--' }" description="{= ${state>id} || '--' }" />
+      </List>
+    </content>
+  </Page>
+</mvc:View>

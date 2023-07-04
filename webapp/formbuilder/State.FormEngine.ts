@@ -40,6 +40,13 @@ export function createFormBuilderFormEngineSlice({
   );
 
   watch(
+    (s) => s.schema,
+    ({ schema }) => {
+      set({ schemaJson: stringifyJson(schema) });
+    },
+  );
+
+  watch(
     (s) => s.state,
     ({ state }) => {
       set({ stateJson: stringifyJson(state) });

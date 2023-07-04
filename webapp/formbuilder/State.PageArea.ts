@@ -3,13 +3,22 @@ import { State } from '../utils/State';
 import { FormBuilderState } from './State';
 
 export interface FormBuilderStatePageAreaSlice {
-  addPage(index?: number): void;
-  removePage(page: FormSchemaPage): void;
+  getSelectedPage(): FormSchemaPage | undefined;
+  addPage(): void;
+  removeSelectedPage(): void;
+  moveSelectedPageUp(): void;
+  moveSelectedPageDown(): void;
 }
 
-export function createFormBuilderPageAreaSlice({ get }: State<FormBuilderState>): FormBuilderStatePageAreaSlice {
+export function createFormBuilderPageAreaSlice({ get, set }: State<FormBuilderState>): FormBuilderStatePageAreaSlice {
   return {
-    addPage(index = -1) {
+    getSelectedPage() {
+      const { schema, page } = get();
+      const pages = schema.pages ?? [];
+      return pages[page];
+    },
+
+    addPage() {
       const { schema, setSchema } = get();
       const currentPages = schema.pages ?? [];
       const newPage: FormSchemaPage = {
@@ -19,22 +28,69 @@ export function createFormBuilderPageAreaSlice({ get }: State<FormBuilderState>)
       };
 
       const nextPages = [...currentPages];
-      nextPages.splice(index, 0, newPage);
+      nextPages.push(newPage);
 
       setSchema({
         ...schema,
         pages: nextPages,
       });
+
+      set({ page: nextPages.length - 1 });
     },
 
-    removePage(page) {
-      const { schema, setSchema } = get();
+    removeSelectedPage() {
+      const { schema, setSchema, page, setPage } = get();
       const currentPages = schema.pages ?? [];
+      const nextPages = currentPages.filter((_, index) => index !== page);
 
       setSchema({
         ...schema,
-        pages: currentPages.filter((p) => p !== page),
+        pages: nextPages,
       });
+
+      if (nextPages.length > 0) {
+        setPage(Math.max(0, page - 1));
+      } else {
+        setPage(0);
+      }
+    },
+
+    moveSelectedPageUp() {
+      const { schema, page, currentPage, setSchema, setPage } = get();
+      const currentPages = schema.pages ?? [];
+
+      if (currentPage && page >= 1) {
+        const nextPages = [...currentPages];
+        const tmp = nextPages[page];
+        nextPages[page] = nextPages[page - 1];
+        nextPages[page - 1] = tmp;
+
+        setSchema({
+          ...schema,
+          pages: nextPages,
+        });
+
+        setPage(page - 1);
+      }
+    },
+
+    moveSelectedPageDown() {
+      const { schema, page, currentPage, setSchema, setPage } = get();
+      const currentPages = schema.pages ?? [];
+
+      if (currentPage && page < currentPages.length - 1) {
+        const nextPages = [...currentPages];
+        const tmp = nextPages[page];
+        nextPages[page] = nextPages[page + 1];
+        nextPages[page + 1] = tmp;
+
+        setSchema({
+          ...schema,
+          pages: nextPages,
+        });
+
+        setPage(page + 1);
+      }
     },
   };
 }

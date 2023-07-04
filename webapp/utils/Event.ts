@@ -1,13 +1,17 @@
-export function entityFromEvent<T = unknown>(e, modelName): T | undefined {
-  const item = e.getSource();
-  if (!item) {
+export function entityFromEvent<T = unknown>(e, modelName: string): T | undefined {
+  const source = e.getSource();
+  if (!source) {
     console.warn('No item could be retrieved from the event source.', e);
     return undefined;
   }
 
-  const bindingContext = item.getBindingContext(modelName);
+  return entityFromSource(source, modelName);
+}
+
+export function entityFromSource(source: any, modelName: string) {
+  const bindingContext = source.getBindingContext(modelName);
   if (!bindingContext) {
-    console.warn(`No binding context could be retrieved from the item. modelName: ${modelName}`, e, item);
+    console.warn(`No binding context could be retrieved from the source. modelName: ${modelName}`, source);
     return undefined;
   }
 

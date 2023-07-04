@@ -16,3 +16,5 @@ export function createFormBuilderState() {
     ...createFormBuilderPageAreaSlice(state),
   }));
 }
+
+export const formBuilderState = createFormBuilderState();
