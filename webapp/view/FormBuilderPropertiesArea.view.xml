@@ -11,6 +11,9 @@
         <IconTabFilter key="page" text="Page">
           <mvc:XMLView class="h-100" viewName="csrdreporting.view.FormBuilderPagePropertiesArea" />
         </IconTabFilter>
+        <IconTabFilter key="element" text="Element">
+          <mvc:XMLView class="h-100" viewName="csrdreporting.view.FormBuilderElementPropertiesArea" />
+        </IconTabFilter>
         <IconTabFilter key="schema" text="{i18n>FormBuilder_SchemaTab}">
           <ce:CodeEditor type="json" value="{state>/schemaJson}" />
         </IconTabFilter>

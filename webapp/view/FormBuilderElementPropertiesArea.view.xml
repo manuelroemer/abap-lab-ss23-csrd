@@ -1,0 +1,20 @@
+<mvc:View
+  xmlns:layout="sap.ui.layout"
+  controllerName="csrdreporting.controller.FormBuilderElementPropertiesArea"
+  xmlns:mvc="sap.ui.core.mvc"
+  displayBlock="true"
+  xmlns="sap.m">
+  <VBox class="sapUiMediumMargin">
+    <VBox visible="{= !${state>/elementToEdit} }">
+      <Text text="Select an element to edit its details." />
+    </VBox>
+
+    <VBox visible="{= !!${state>/elementToEdit} }">
+      <Label text="ID" required="true" />
+      <Input value="{state>/elementToEdit/id}" required="true" />
+      <FormattedText
+        htmlText="A unique identifier of the element. This value should not be used by any other element on any page. An example could be &lt;code&gt;first-element&lt;/code&gt;."
+      />
+    </VBox>
+  </VBox>
+</mvc:View>
