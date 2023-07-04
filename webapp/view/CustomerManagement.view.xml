@@ -61,9 +61,14 @@
                   <content>
                     <VBox class="sapUiMediumMargin">
                       <Label text="{i18n>CustomerManagement_DialogCustomerName}" required="true" />
-                      <Input id="customerName" value="{state>/customerName}" required="true" placeholder="Capgemini"/>
+                      <Input id="customerName" value="{state>/customerName}" required="true" placeholder="Capgemini" />
                       <Label text="{i18n>CustomerManagement_DialogCustomerCode}" required="true" />
-                      <Input id="customerCode" value="{state>/customerCode}" required="true" placeholder="customer-123"/>
+                      <Input
+                        id="customerCode"
+                        value="{state>/customerCode}"
+                        required="true"
+                        placeholder="customer-123"
+                      />
                     </VBox>
                   </content>
                   <beginButton>
