@@ -6,7 +6,7 @@
   xmlns="sap.m"
   xmlns:formengine="csrdreporting.formengine"
   xmlns:ce="sap.ui.codeeditor">
-  <Page id="page" title="{i18n>FormBuilder_Title}" showNavButton="true" navButtonPress="navBack">
+  <Page title="{i18n>FormBuilder_Title}" showNavButton="true" navButtonPress="navBack">
     <layout:ResponsiveSplitter defaultPane="formEngine">
       <layout:PaneContainer>
         <layout:SplitPane id="pages">
@@ -15,17 +15,8 @@
         <layout:SplitPane id="formEngine">
           <mvc:XMLView class="h-100" viewName="csrdreporting.view.FormBuilderPreviewArea" />
         </layout:SplitPane>
-        <layout:SplitPane>
-          <IconTabBar applyContentPadding="false" stretchContentHeight="true" class="form-builder-icon-bar">
-            <items>
-              <IconTabFilter key="schema" text="{i18n>FormBuilder_SchemaTab}">
-                <ce:CodeEditor type="json" value="{state>/schemaJson}" />
-              </IconTabFilter>
-              <IconTabFilter key="state" text="{i18n>FormBuilder_StateTab}">
-                <ce:CodeEditor type="json" value="{state>/stateJson}" />
-              </IconTabFilter>
-            </items>
-          </IconTabBar>
+        <layout:SplitPane id="properties">
+          <mvc:XMLView class="h-100" viewName="csrdreporting.view.FormBuilderPropertiesArea" />
         </layout:SplitPane>
       </layout:PaneContainer>
     </layout:ResponsiveSplitter>

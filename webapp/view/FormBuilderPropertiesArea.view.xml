@@ -1,0 +1,23 @@
+<mvc:View
+  xmlns:layout="sap.ui.layout"
+  controllerName="csrdreporting.controller.FormBuilderPropertiesArea"
+  xmlns:mvc="sap.ui.core.mvc"
+  displayBlock="true"
+  xmlns="sap.m"
+  xmlns:ce="sap.ui.codeeditor">
+  <Page title="Properties">
+    <IconTabBar applyContentPadding="false" stretchContentHeight="true" class="form-builder-icon-bar">
+      <items>
+        <IconTabFilter key="page" text="Page">
+          <mvc:XMLView class="h-100" viewName="csrdreporting.view.FormBuilderPagePropertiesArea" />
+        </IconTabFilter>
+        <IconTabFilter key="schema" text="{i18n>FormBuilder_SchemaTab}">
+          <ce:CodeEditor type="json" value="{state>/schemaJson}" />
+        </IconTabFilter>
+        <IconTabFilter key="state" text="{i18n>FormBuilder_StateTab}">
+          <ce:CodeEditor type="json" value="{state>/stateJson}" />
+        </IconTabFilter>
+      </items>
+    </IconTabBar>
+  </Page>
+</mvc:View>

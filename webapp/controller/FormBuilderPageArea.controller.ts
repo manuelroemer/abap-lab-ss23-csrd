@@ -13,7 +13,7 @@ export default class FormBuilderPageAreaController extends BaseController {
     // becomes empty).
     // -> We must do this manually. Again.
     formBuilderState.watch(
-      (s) => s.page,
+      (s) => [s.page, s.schema],
       ({ page }) => {
         const list = this.byId('pagesList') as List;
         list.setSelectedItem(list.getItems()[page]);

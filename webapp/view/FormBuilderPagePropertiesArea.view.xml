@@ -1,0 +1,26 @@
+<mvc:View
+  xmlns:layout="sap.ui.layout"
+  controllerName="csrdreporting.controller.FormBuilderPagePropertiesArea"
+  xmlns:mvc="sap.ui.core.mvc"
+  displayBlock="true"
+  xmlns="sap.m">
+  <VBox class="sapUiMediumMargin">
+    <VBox visible="{= !${state>/pageToEdit} }">
+      <Text text="Select a page to edit its details." />
+    </VBox>
+
+    <VBox visible="{= !!${state>/pageToEdit} }">
+      <Label text="ID" required="true" />
+      <Input value="{state>/pageToEdit/id}" required="true" />
+      <FormattedText
+        htmlText="A unique identifier of the page. This value should not be used by any other page. An example could be &lt;code&gt;first-page&lt;/code&gt;."
+      />
+
+      <Label text="Title" class="sapUiSmallMarginTop" />
+      <Input value="{state>/pageToEdit/title}" required="true" />
+      <Text
+        text="The page's title. This is displayed to the user when filling out the questionnaire. This is optional. If not given, the ID is used as a fallback."
+      />
+    </VBox>
+  </VBox>
+</mvc:View>
