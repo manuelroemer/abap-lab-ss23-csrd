@@ -82,10 +82,8 @@ export interface FormEngineContext {
 export type FormEngineContextInit = Partial<Pick<FormEngineContext, 'schema' | 'state' | 'page' | 'onRenderElement'>>;
 
 export function createFormEngineContext({ get, set }: State<FormEngineContext>, init: FormEngineContextInit = {}) {
-  // Update performs a two-staged update of the context state.
-  // Stage 1 updates the state with the values provided by the caller.
-  // Stage 2 sets all computed properties derived from the base state.
-  // Only stage 2 notifies subscribers.
+  // Update is used instead of `set` here to update the state.
+  // The difference to `set` is that `update` auto-computes certain properties.
   const update = (context: Partial<FormEngineContext>) => {
     return set(withComputedProps({ ...get(), ...context }));
   };
