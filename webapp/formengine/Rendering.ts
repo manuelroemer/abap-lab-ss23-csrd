@@ -58,7 +58,8 @@ const elementRenderers: RenderLookup = {
 
 export function render<T extends FormSchemaElement>(element: T, context: FormEngineContext): Control {
   const renderer = elementRenderers[element.type] as RenderFormSchemaElement;
-  const control = renderer(element, context);
+  const rawControl = renderer(element, context);
+  const control = context.onRenderElement(element, context, rawControl);
 
   const { hide } = evaluateRules(element, context.state);
   if (hide) {

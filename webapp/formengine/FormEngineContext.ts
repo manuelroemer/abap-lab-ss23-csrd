@@ -1,6 +1,7 @@
+import Control from 'sap/ui/core/Control';
 import { State, createState } from '../utils/State';
 import { evaluateRules } from './Rules';
-import { FormSchema, FormSchemaPage, emptySchema } from './Schema';
+import { FormSchema, FormSchemaElement, FormSchemaPage, emptySchema } from './Schema';
 import { ValidationError, getValidationErrorsForPage } from './Validation';
 
 /**
@@ -68,9 +69,17 @@ export interface FormEngineContext {
   submit(): boolean;
   getValue(id: string): unknown;
   setValue(id: string, value: unknown): void;
+  /**
+   * A hook which is called by the form engine once a control to be rendered has been generated.
+   * Can be used to modify the control before it is rendered.
+   * @param element The element to be rendered.
+   * @param context The same form engine context.
+   * @param control The control that will be rendered.
+   */
+  onRenderElement(element: FormSchemaElement, context: FormEngineContext, control: Control): Control;
 }
 
-export type FormEngineContextInit = Partial<Pick<FormEngineContext, 'schema' | 'state' | 'page'>>;
+export type FormEngineContextInit = Partial<Pick<FormEngineContext, 'schema' | 'state' | 'page' | 'onRenderElement'>>;
 
 export function createFormEngineContext({ get, set }: State<FormEngineContext>, init: FormEngineContextInit = {}) {
   // Update performs a two-staged update of the context state.
@@ -113,10 +122,11 @@ export function createFormEngineContext({ get, set }: State<FormEngineContext>, 
   };
 
   return withComputedProps({
+    showValidationErrors: false,
     schema: init.schema ?? emptySchema,
     state: init.state ?? {},
     page: init.page ?? 0,
-    showValidationErrors: false,
+    onRenderElement: init.onRenderElement ?? ((_, __, control) => control),
 
     setSchema(schema) {
       update({ schema });
