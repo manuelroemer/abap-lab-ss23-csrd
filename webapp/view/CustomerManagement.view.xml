@@ -7,7 +7,7 @@
   xmlns:grid="sap.ui.layout.cssgrid"
   controllerName="csrdreporting.controller.CustomerManagement"
   height="100%">
-  <Page showFooter="true" showNavButton="true" navButtonPress="navBack">
+  <Page showFooter="true" showNavButton="true" navButtonPress="navBack" navButtonTooltip="Back">
     <content>
       <layout:FixFlex class="fixFlexVertical">
         <layout:fixContent>
@@ -61,9 +61,9 @@
                   <content>
                     <VBox class="sapUiMediumMargin">
                       <Label text="{i18n>CustomerManagement_DialogCustomerName}" required="true" />
-                      <Input id="customerName" value="{state>/customerName}" required="true" />
+                      <Input id="customerName" value="{state>/customerName}" required="true" placeholder="Capgemini"/>
                       <Label text="{i18n>CustomerManagement_DialogCustomerCode}" required="true" />
-                      <Input id="customerCode" value="{state>/customerCode}" required="true" />
+                      <Input id="customerCode" value="{state>/customerCode}" required="true" placeholder="customer-123"/>
                     </VBox>
                   </content>
                   <beginButton>
@@ -89,11 +89,12 @@
                 id="details"
                 title="Questionnaires"
                 busy="{state>/customerFormSchemasQuery/isPending}"
-                busyIndicatorDelay="0">
+                busyIndicatorDelay="0"
+                class="myBackgroundStyle">
                 <Panel backgroundDesign="Transparent">
                   <f:GridList id="gridList" items="{state>/customerFormSchemasQuery/data}" showNoData="false">
                     <f:customLayout>
-                      <grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, 23rem)" gridGap="1rem" />
+                      <grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, 23rem)" gridGap="2rem" />
                     </f:customLayout>
                     <f:GridListItem type="Active" press="onFormSchemaResultPress">
                       <VBox class="sapUiSmallMargin">

@@ -112,6 +112,11 @@
           "name": "CustomerManagement",
           "target": "CustomerManagement",
           "pattern": "management/:customerId:"
+        },
+        {
+          "name": "FormSchemaManagement",
+          "target": "FormSchemaManagement",
+          "pattern": "form-schema-management"
         }
       ],
       "targets": {
@@ -142,6 +147,13 @@
           "clearControlAggregation": false,
           "viewId": "CustomerManagement",
           "viewName": "CustomerManagement"
+        },
+        "FormSchemaManagement": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "FormSchemaManagement",
+          "viewName": "FormSchemaManagement"
         }
       }
     },

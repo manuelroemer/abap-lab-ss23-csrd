@@ -43,7 +43,7 @@
                     <HBox>
                       <core:Icon size="3rem" src="sap-icon://user-edit" class="sapUiSmallMargin" />
                       <VBox alignItems="Start" justifyContent="Center" width="100%">
-                        <Title text="Management" level="H1" />
+                        <Title text="Customer Management" level="H1" />
                         <Label text="Questionnaire and Customer" />
                       </VBox>
                     </HBox>
@@ -53,12 +53,12 @@
                     />
                   </VBox>
                 </f:GridListItem>
-                <f:GridListItem type="Active" press="navToFormBuilder">
+                <f:GridListItem type="Active" press="navToFormSchemaManagement">
                   <VBox class="sapUiSmallMargin">
                     <HBox>
                       <core:Icon size="3rem" src="sap-icon://database" class="sapUiSmallMargin" />
                       <VBox alignItems="Start" justifyContent="Center" width="100%">
-                        <Title text="Form Builder" level="H1" />
+                        <Title text="FormSchema Management" level="H1" />
                         <Label text="Create and edit FormSchemas" />
                       </VBox>
                     </HBox>

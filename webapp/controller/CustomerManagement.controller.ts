@@ -173,7 +173,12 @@ export default class CustomerManagementController extends BaseController {
   async onCustomerDeletePress(e: Event) {
     const customer = entityFromEvent<CustomerEntity>(e, 'svc')!;
 
-    if (await showConfirmation({ text: this.translate('CustomerManagement_ConfirmCustomerDeletion') })) {
+    if (
+      await showConfirmation({
+        title: this.translate('CustomerManagement_CustomerDeletionTitle'),
+        text: this.translate('CustomerManagement_ConfirmCustomerDeletion'),
+      })
+    ) {
       try {
         await this.state.get().deleteCustomerMutation.fetch(customer.Id);
         MessageToast.show(this.translate('CustomerManagement_CustomerDeletionSuccess'));
@@ -201,7 +206,12 @@ export default class CustomerManagementController extends BaseController {
   async onQuestionnaireDeletePress(e: Event) {
     const formSchemaResult = entityFromEvent<FormSchemaResultEntity>(e, 'state')!;
 
-    if (await showConfirmation({ text: this.translate('CustomerManagement_ConfirmFormSchemaResultDeletion') })) {
+    if (
+      await showConfirmation({
+        title: this.translate('CustomerManagement_FormSchemaResultDeletionTitle'),
+        text: this.translate('CustomerManagement_ConfirmFormSchemaResultDeletion'),
+      })
+    ) {
       try {
         await this.state.get().deleteFormSchemaResultMutation.fetch(formSchemaResult.Id);
         MessageToast.show(this.translate('CustomerManagement_FormSchemaResultDeletionSuccess'));

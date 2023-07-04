@@ -6,7 +6,7 @@
   xmlns:formengine="csrdreporting.formengine"
   controllerName="csrdreporting.controller.Questionnaire"
   height="100%">
-  <Page showNavButton="true" navButtonPress="navBack">
+  <Page showNavButton="true" navButtonPress="navBack" navButtonTooltip="Back">
     <uxap:ObjectPageLayout
       id="QuestionnairePageLayout"
       showFooter="true"
