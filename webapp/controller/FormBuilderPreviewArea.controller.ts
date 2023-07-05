@@ -27,7 +27,7 @@ export default class FormBuilderPreviewAreaController extends BaseController {
                 }).addStyleClass('sapUiTinyMarginEnd'),
                 new Button({
                   icon: 'sap-icon://edit',
-                  press: () => formBuilderState.get().editElement(elementIndex),
+                  press: () => formBuilderState.get().setElementToEdit(elementIndex),
                 }).addStyleClass('sapUiTinyMarginEnd'),
                 new Button({
                   icon: 'sap-icon://delete',

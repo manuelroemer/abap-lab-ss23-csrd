@@ -6,7 +6,7 @@ import { FormBuilderState } from './State';
 export interface FormBuilderStateElementPropertiesAreaSlice {
   elementToEditIndex?: number;
   elementToEdit?: FormSchemaElement;
-  editElement(index: number): void;
+  setElementToEdit(index?: number): void;
 }
 
 export function createFormBuilderElementPropertiesAreaSlice({
@@ -34,10 +34,12 @@ export function createFormBuilderElementPropertiesAreaSlice({
     elementToEdit: undefined,
     elementToEditIndex: undefined,
 
-    editElement(index) {
+    setElementToEdit(index) {
       const { currentPage } = get();
-      const elementToEdit = currentPage?.elements?.[index];
-      set({ elementToEdit, elementToEditIndex: index });
+      set({
+        elementToEdit: typeof index === 'number' ? currentPage?.elements?.[index] : undefined,
+        elementToEditIndex: index,
+      });
     },
   };
 }

@@ -42,18 +42,21 @@ export function createFormBuilderPreviewAreaSlice({ get }: State<FormBuilderStat
     },
 
     moveElementUp(index) {
-      const { page, schema, setSchema } = get();
+      const { page, schema, setSchema, setElementToEdit } = get();
       setSchema(updateElements(schema, page, (elements) => safeSwap([...elements], index, index - 1)));
+      setElementToEdit(undefined);
     },
 
     moveElementDown(index) {
-      const { page, schema, setSchema } = get();
+      const { page, schema, setSchema, setElementToEdit } = get();
       setSchema(updateElements(schema, page, (elements) => safeSwap([...elements], index, index + 1)));
+      setElementToEdit(undefined);
     },
 
     deleteElement(index) {
-      const { page, schema, setSchema } = get();
+      const { page, schema, setSchema, setElementToEdit } = get();
       setSchema(updateElements(schema, page, (elements) => elements.filter((_, i) => i !== index)));
+      setElementToEdit(undefined);
     },
   };
 }
