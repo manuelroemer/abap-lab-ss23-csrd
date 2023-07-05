@@ -4,7 +4,7 @@
   xmlns:mvc="sap.ui.core.mvc"
   displayBlock="true"
   xmlns="sap.m">
-  <Page title="Pages">
+  <Page title="Pages" backgroundDesign="List">
     <headerContent>
       <Button icon="sap-icon://add" tooltip="Add Page" press="onAddPagePress" />
       <ToolbarSeparator />

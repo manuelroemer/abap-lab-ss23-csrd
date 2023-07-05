@@ -54,14 +54,7 @@ export function createFormBuilderFormEngineSlice({
   );
 
   return {
-    ...createFormEngineContext(state, {
-      schema: emptySchema,
-      onRenderElement(element, context, control) {
-        // TODO: Inject elements for adding new elements.
-        return control;
-      },
-    }),
-
+    ...createFormEngineContext(state, { schema: emptySchema }),
     schemaJson: stringifyJson(emptySchema),
     stateJson: '{}',
   };

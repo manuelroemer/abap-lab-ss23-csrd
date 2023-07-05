@@ -1,9 +1,13 @@
 import { FormSchemaPage } from '../formengine/Schema';
+import { updatePage } from '../formengine/SchemaReducers';
 import { State } from '../utils/State';
 import { FormBuilderState } from './State';
 
 export interface FormBuilderStatePagePropertiesAreaSlice {
-  pageToEdit?: Pick<FormSchemaPage, 'id' | 'title'>;
+  /**
+   * The currently selected page.
+   */
+  pageToEdit?: FormSchemaPage;
 }
 
 export function createFormBuilderPagePropertiesAreaSlice({
@@ -23,22 +27,14 @@ export function createFormBuilderPagePropertiesAreaSlice({
     ({ currentPage, pageToEdit }) => {
       if (currentPage && pageToEdit) {
         const { page, schema, setSchema } = get();
-        const nextPages = schema.pages.map((p, index) => {
-          if (index === page) {
-            return {
-              ...p,
-              id: pageToEdit.id,
-              title: pageToEdit.title,
-            };
-          }
 
-          return p;
-        });
-
-        setSchema({
-          ...schema,
-          pages: nextPages,
-        });
+        setSchema(
+          updatePage(schema, page, (pageToUpdate) => ({
+            ...pageToUpdate,
+            id: pageToEdit.id,
+            title: pageToEdit.title,
+          })),
+        );
       }
     },
   );

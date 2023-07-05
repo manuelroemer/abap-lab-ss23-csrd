@@ -6,7 +6,7 @@
   xmlns="sap.m"
   xmlns:formengine="csrdreporting.formengine"
   xmlns:ce="sap.ui.codeeditor">
-  <Page title="{i18n>FormBuilder_Title}" showNavButton="true" navButtonPress="navBack">
+  <Page backgroundDesign="List" title="{i18n>FormBuilder_Title}" showNavButton="true" navButtonPress="navBack">
     <layout:ResponsiveSplitter defaultPane="formEngine">
       <layout:PaneContainer>
         <layout:SplitPane id="pages">

@@ -5,7 +5,7 @@
   displayBlock="true"
   xmlns="sap.m"
   xmlns:formengine="csrdreporting.formengine">
-  <Page title="{= ${state>/currentPage/title} || ${state>/currentPage/id} || 'Page Preview' }">
+  <Page backgroundDesign="List" title="{= ${state>/currentPage/title} || ${state>/currentPage/id} || 'Page Preview' }">
     <headerContent>
       <Button text="{i18n>FormBuilder_PreviousPage}" enabled="{state>/canGoBackward}" press="onPreviousPagePress" />
       <Button
