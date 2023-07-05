@@ -1,70 +1,71 @@
 import BaseController from './BaseController';
 import { createState } from '../utils/State';
-import { createFormEngineContextState } from '../formengine/FormEngineContext';
-import { demoFormSchema } from '../formengine/DemoFormSchema';
+import { FormEngineContext, createFormEngineContext } from '../formengine/FormEngineContext';
 import MessageBox from 'sap/m/MessageBox';
+import { RouterState, connectRouterState } from '../utils/StateRouter';
+import { QueryState, createQuery } from '../utils/StateQuery';
+import { FormSchemaEntity, getFormSchemaEntity } from '../api/FormSchemaEntity';
 
-interface FormBuilderState {
+interface FormBuilderState extends RouterState<{ formSchemaId: string }>, FormEngineContext {
   schemaJson: string;
   stateJson: string;
+  formSchemaQuery: QueryState<string, FormSchemaEntity>;
 }
 
 export default class FormBuilderController extends BaseController {
-  formEngineState = createFormEngineContextState({ schema: demoFormSchema });
-
-  state = createState<FormBuilderState>(() => ({
-    schemaJson: JSON.stringify(demoFormSchema, null, 4),
+  state = createState<FormBuilderState>(({ state, get, set }) => ({
+    parameters: {},
+    query: {},
+    schemaJson: '{}',
     stateJson: '{}',
+
+    formSchemaQuery: createQuery({
+      state,
+      key: 'formSchemaQuery',
+      getArgs: (state: FormBuilderState) => state.parameters.formSchemaId,
+      fetch: (id: string) => getFormSchemaEntity(id),
+      onSuccess(formSchema) {
+        const { setSchema } = get();
+        setSchema(JSON.parse(formSchema.SchemaJson));
+        set({ schemaJson: JSON.stringify(formSchema.SchemaJson, null, 4) });
+      },
+    }),
+
+    ...createFormEngineContext(state),
   }));
 
   public onInit() {
     this.connectState(this.state);
-    this.connectState(this.formEngineState, 'formEngine');
-
-    this.state.watch(
-      (s) => s.schemaJson,
-      ({ schemaJson }) => {
-        const schema = tryParseJson(schemaJson);
-        schema && this.formEngineState.get().setSchema(schema);
-      },
-    );
-
-    this.state.watch(
-      (s) => s.stateJson,
-      ({ stateJson }) => {
-        console.log('JSON change: ', stateJson.substring(0, 10));
-        const state = tryParseJson(stateJson);
-        state && this.formEngineState.get().setState(state);
-      },
-    );
-
-    this.formEngineState.watch(
-      (s) => s.state,
-      ({ state }) => {
-        console.log('Engine state change: ', state);
-        this.state.set({ stateJson: JSON.stringify(state, null, 4) });
-      },
-    );
+    connectRouterState(this.state, this.router, 'FormBuilder');
   }
 
   onPreviousPagePress() {
-    this.formEngineState.get().goBackward();
+    this.state.get().goBackward();
   }
 
   onNextPagePress() {
-    this.formEngineState.get().goForward();
+    this.state.get().goForward();
   }
 
   onSubmitPress() {
-    if (this.formEngineState.get().submit()) {
+    if (this.state.get().submit()) {
       MessageBox.success(
         'The form would have been submitted successfully. You can see the console output for details about the final form engine state.',
         { title: 'Form Submitted Successfully' },
       );
 
       console.group('📄 Submitted Form state: ');
-      console.info(this.formEngineState.get().state);
+      console.info(this.state.get().state);
       console.groupEnd();
+    }
+  }
+
+  async getFormSchema() {
+    try {
+      await this.state.get().formSchemaQuery.fetch();
+    } catch (e) {
+      console.error('Error while deleting a form schema result: ', e);
+      MessageBox.error(this.translate('CustomerManagement_FormSchemaResultDeletionError'));
     }
   }
 }

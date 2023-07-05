@@ -1,0 +1,139 @@
+<mvc:View
+  xmlns:internal="sap.landvisz.internal"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:layout="sap.ui.layout"
+  xmlns:core="sap.ui.core"
+  xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  controllerName="csrdreporting.controller.FormSchemaManagement"
+  height="100%">
+  <Page showFooter="true" showNavButton="true" navButtonPress="navBack" navButtonTooltip="Back">
+    <content>
+      <layout:FixFlex class="fixFlexVertical">
+        <layout:fixContent>
+          <ObjectHeader title="{i18n>FormSchemaManagement_Title}" backgroundDesign="Solid" condensed="true">
+            <ObjectAttribute text="Manage the form schemas." />
+          </ObjectHeader>
+        </layout:fixContent>
+        <layout:flexContent>
+          <Page id="details" showHeader="false" class="myBackgroundStyle">
+            <ObjectHeader title="Actions" condensed="true" backgroundDesign="Transparent" />
+            <Panel id="panelForGrid" backgroundDesign="Transparent">
+              <f:GridList id="gridListStatic">
+                <f:customLayout>
+                  <grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, 23rem)" gridGap="2rem" />
+                </f:customLayout>
+                <f:GridListItem type="Active" press="onCreateFormSchemaPress">
+                  <VBox class="sapUiSmallMargin">
+                    <HBox>
+                      <core:Icon
+                        size="3rem"
+                        src="sap-icon://tree"
+                        class="sapUiSmallMarginEnd sapUiSmallMarginTopBottom sapUiTinyMarginBegin"
+                      />
+                      <VBox alignItems="Start" justifyContent="Center" width="100%">
+                        <Title text="Create FormSchema" level="H1" />
+                        <Label text="Create a new form schema." />
+                      </VBox>
+                    </HBox>
+                    <Text text="Here you can create a new form schema with the form builder." class="sapUiTinyMargin" />
+                  </VBox>
+                </f:GridListItem>
+                <f:GridListItem type="Active" press="onSelectDialogPress">
+                  <VBox class="sapUiSmallMargin">
+                    <!-- sap-icon://create-form -->
+                    <HBox>
+                      <core:Icon
+                        size="3rem"
+                        src="sap-icon://copy"
+                        class="sapUiSmallMarginEnd sapUiSmallMarginTopBottom sapUiTinyMarginBegin"
+                      />
+                      <VBox alignItems="Start" justifyContent="Center" width="100%">
+                        <Title text="Duplicate FormSchema" level="H1" />
+                        <Label text="Create a form schema from an existing one." />
+                      </VBox>
+                    </HBox>
+                    <Text
+                      text="Here you can create a form schema from an existing one with the form builder."
+                      class="sapUiTinyMargin"
+                    />
+                  </VBox>
+                </f:GridListItem>
+              </f:GridList>
+              <SelectDialog
+                id="formSchemaSelectDialog"
+                noDataText="No FormSchemas Found"
+                title="{i18n>FormSchemaManagement_DialogTitle}"
+                search="onSearch"
+                confirm="onSelectDialogClose"
+                cancel="onDialogClose"
+                draggable="true"
+                contentHeight="auto"
+                contentWidth="auto"
+                items="{svc>/FormSchemaSet}"
+                showClearButton="true">
+                <StandardListItem
+                  title="FormSchema"
+                  description="Type: {svc>Type}, Version: {svc>Version}, Created at: {path: 'svc>CreatedAt', type: 'sap.ui.model.type.DateTime'}"
+                  icon="sap-icon://manager-insight"
+                  iconDensityAware="false"
+                  highlight="{= ${svc>IsDraft} ? 'Information' : 'None'}"
+                  info="{= ${svc>IsDraft} ? 'Draft' : ''}"
+                  infoStateInverted="{svc>IsDraft}"
+                  infoState="Information"
+                  iconInset="false"
+                  type="Active"
+                  class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
+                />
+              </SelectDialog>
+            </Panel>
+            <ObjectHeader title="Existing FormSchemas" condensed="true" backgroundDesign="Transparent" />
+            <Panel id="existingFormSchemasPanel" backgroundDesign="Transparent">
+              <f:GridList id="gridList" items="{svc>/FormSchemaSet}">
+                <f:customLayout>
+                  <grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, 23rem)" gridGap="2rem" />
+                </f:customLayout>
+                <f:GridListItem type="Active" press="onFormSchemaPress">
+                  <VBox class="sapUiSmallMargin">
+                    <HBox>
+                      <core:Icon size="4rem" src="sap-icon://manager-insight" class="sapUiSmallMargin" />
+                      <VBox alignItems="Start" justifyContent="Center" width="100%">
+                        <HBox>
+                          <Title text="FormSchema" level="H1" />
+                          <ObjectStatus
+                            class="sapUiTinyMarginBegin"
+                            text="Draft"
+                            inverted="true"
+                            state="Information"
+                            visible="{= ${svc>IsDraft}}"
+                          />
+                        </HBox>
+                        <Label text="Type: {svc>Type}" />
+                        <Label text="Version: {svc>Version}" />
+                        <Label text="Created: {path: 'svc>CreatedAt', type: 'sap.ui.model.type.DateTime'}" />
+                      </VBox>
+                      <Button
+                        icon="sap-icon://duplicate"
+                        type="Transparent"
+                        tooltip="Duplicate FormSchema"
+                        press="onDuplicatePress"
+                      />
+                      <Button
+                        icon="sap-icon://decline"
+                        type="Transparent"
+                        tooltip="Delete FormSchema"
+                        press="onFormSchemaDeletePress"
+                        visible="{= ${svc>IsDraft}}"
+                      />
+                    </HBox>
+                  </VBox>
+                </f:GridListItem>
+              </f:GridList>
+            </Panel>
+          </Page>
+        </layout:flexContent>
+      </layout:FixFlex>
+    </content>
+  </Page>
+</mvc:View>
