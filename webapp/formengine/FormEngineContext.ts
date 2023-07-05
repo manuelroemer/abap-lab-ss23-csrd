@@ -3,6 +3,7 @@ import { State, createState } from '../utils/State';
 import { evaluateRules } from './Rules';
 import { FormSchema, FormSchemaElement, FormSchemaPage, emptySchema } from './Schema';
 import { ValidationError, getValidationErrorsForPage } from './Validation';
+import VBox from 'sap/m/VBox';
 
 /**
  * Represents the internal state of the user-entered data that the form engine captures and renders.
@@ -70,16 +71,38 @@ export interface FormEngineContext {
   getValue(id: string): unknown;
   setValue(id: string, value: unknown): void;
   /**
+   * A hook which is called before the form engine starts rendering elements.
+   * Can be used to modify the content before rendering starts.
+   * @param context The same form engine context.
+   * @param content The control which will, after rendering, contain the rendered elements.
+   */
+  onBeforeRender(context: FormEngineContext, content: VBox): void;
+  /**
+   * A hook which is called after the form engine rendered elements.
+   * Can be used to modify the content after rendering finished-
+   * @param context The same form engine context.
+   * @param content The control which contains the rendered elements.
+   */
+  onAfterRender(context: FormEngineContext, content: VBox): void;
+  /**
    * A hook which is called by the form engine once a control to be rendered has been generated.
    * Can be used to modify the control before it is rendered.
    * @param element The element to be rendered.
    * @param context The same form engine context.
    * @param control The control that will be rendered.
+   * @param elementIndex The index of the element within the current page's schema elements.
    */
-  onRenderElement(element: FormSchemaElement, context: FormEngineContext, control: Control): Control;
+  onRenderElement(
+    element: FormSchemaElement,
+    context: FormEngineContext,
+    control: Control,
+    elementIndex: number,
+  ): Control;
 }
 
-export type FormEngineContextInit = Partial<Pick<FormEngineContext, 'schema' | 'state' | 'page' | 'onRenderElement'>>;
+export type FormEngineContextInit = Partial<
+  Pick<FormEngineContext, 'schema' | 'state' | 'page' | 'onBeforeRender' | 'onAfterRender' | 'onRenderElement'>
+>;
 
 export function createFormEngineContext({ get, set }: State<FormEngineContext>, init: FormEngineContextInit = {}) {
   // Update is used instead of `set` here to update the state.
@@ -123,6 +146,8 @@ export function createFormEngineContext({ get, set }: State<FormEngineContext>, 
     schema: init.schema ?? emptySchema,
     state: init.state ?? {},
     page: init.page ?? 0,
+    onBeforeRender: init.onBeforeRender ?? ((_, content) => content),
+    onAfterRender: init.onAfterRender ?? ((_, content) => content),
     onRenderElement: init.onRenderElement ?? ((_, __, control) => control),
 
     setSchema(schema) {

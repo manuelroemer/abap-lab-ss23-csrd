@@ -1,4 +1,5 @@
 import { FormSchemaPage } from '../formengine/Schema';
+import { safeSwap } from '../utils/Array';
 import { State } from '../utils/State';
 import { FormBuilderState } from './State';
 
@@ -56,41 +57,21 @@ export function createFormBuilderPageAreaSlice({ get, set }: State<FormBuilderSt
     },
 
     moveSelectedPageUp() {
-      const { schema, page, currentPage, setSchema, setPage } = get();
+      const { schema, page, setSchema, setPage } = get();
       const currentPages = schema.pages ?? [];
-
-      if (currentPage && page >= 1) {
-        const nextPages = [...currentPages];
-        const tmp = nextPages[page];
-        nextPages[page] = nextPages[page - 1];
-        nextPages[page - 1] = tmp;
-
-        setSchema({
-          ...schema,
-          pages: nextPages,
-        });
-
-        setPage(page - 1);
-      }
+      const nextPages = [...currentPages];
+      safeSwap(nextPages, page, page - 1);
+      setSchema({ ...schema, pages: nextPages });
+      setPage(page - 1);
     },
 
     moveSelectedPageDown() {
-      const { schema, page, currentPage, setSchema, setPage } = get();
+      const { schema, page, setSchema, setPage } = get();
       const currentPages = schema.pages ?? [];
-
-      if (currentPage && page < currentPages.length - 1) {
-        const nextPages = [...currentPages];
-        const tmp = nextPages[page];
-        nextPages[page] = nextPages[page + 1];
-        nextPages[page + 1] = tmp;
-
-        setSchema({
-          ...schema,
-          pages: nextPages,
-        });
-
-        setPage(page + 1);
-      }
+      const nextPages = [...currentPages];
+      safeSwap(nextPages, page, page + 1);
+      setSchema({ ...schema, pages: nextPages });
+      setPage(page + 1);
     },
   };
 }

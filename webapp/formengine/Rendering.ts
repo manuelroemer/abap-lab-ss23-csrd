@@ -29,7 +29,7 @@ import StepInput from 'sap/m/StepInput';
 import ListItem from 'sap/ui/core/ListItem';
 import Select from 'sap/m/Select';
 import DateTimePicker from 'sap/m/DateTimePicker';
-import { uniq } from '../utils/Uniq';
+import { uniq } from '../utils/Array';
 import { ValueState } from 'sap/ui/core/library';
 import { FlexAlignItems } from 'sap/m/library';
 import { evaluateRules } from './Rules';
@@ -56,10 +56,14 @@ const elementRenderers: RenderLookup = {
   'date-time': renderDateTime,
 };
 
-export function render<T extends FormSchemaElement>(element: T, context: FormEngineContext): Control {
+export function render<T extends FormSchemaElement>(
+  element: T,
+  context: FormEngineContext,
+  elementIndex: number,
+): Control {
   const renderer = elementRenderers[element.type] as RenderFormSchemaElement;
   const rawControl = renderer(element, context);
-  const control = context.onRenderElement(element, context, rawControl);
+  const control = context.onRenderElement(element, context, rawControl, elementIndex);
 
   const { hide } = evaluateRules(element, context.state);
   if (hide) {

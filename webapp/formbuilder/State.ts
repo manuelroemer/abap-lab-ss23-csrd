@@ -2,11 +2,12 @@ import { createState } from '../utils/State';
 import {
   FormBuilderStateElementPropertiesAreaSlice,
   createFormBuilderElementPropertiesAreaSlice,
-} from './State.FormBuilderElementPropertiesArea';
+} from './State.ElementPropertiesArea';
 import {
   FormBuilderStatePagePropertiesAreaSlice,
   createFormBuilderPagePropertiesAreaSlice,
-} from './State.FormBuilderPagePropertiesArea';
+} from './State.PagePropertiesArea';
+import { FormBuilderStatePreviewAreaSlice, createFormBuilderPreviewAreaSlice } from './State.PreviewArea';
 import { FormBuilderStateFormEngineSlice, createFormBuilderFormEngineSlice } from './State.FormEngine';
 import { FormBuilderStatePageAreaSlice, createFormBuilderPageAreaSlice } from './State.PageArea';
 
@@ -16,6 +17,7 @@ import { FormBuilderStatePageAreaSlice, createFormBuilderPageAreaSlice } from '.
 export interface FormBuilderState
   extends FormBuilderStateFormEngineSlice,
     FormBuilderStatePageAreaSlice,
+    FormBuilderStatePreviewAreaSlice,
     FormBuilderStatePagePropertiesAreaSlice,
     FormBuilderStateElementPropertiesAreaSlice {}
 
@@ -26,6 +28,7 @@ export function createFormBuilderState() {
   return createState<FormBuilderState>(({ state }) => ({
     ...createFormBuilderFormEngineSlice(state),
     ...createFormBuilderPageAreaSlice(state),
+    ...createFormBuilderPreviewAreaSlice(state),
     ...createFormBuilderPagePropertiesAreaSlice(state),
     ...createFormBuilderElementPropertiesAreaSlice(state),
   }));
