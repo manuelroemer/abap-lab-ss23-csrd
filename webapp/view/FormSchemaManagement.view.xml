@@ -24,7 +24,7 @@
                 <f:customLayout>
                   <grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, 23rem)" gridGap="2rem" />
                 </f:customLayout>
-                <f:GridListItem type="Active" press="navToFormBuilder">
+                <f:GridListItem type="Active" press="onCreateFormSchemaPress">
                   <VBox class="sapUiSmallMargin">
                     <HBox>
                       <core:Icon
@@ -66,7 +66,7 @@
                 noDataText="No FormSchemas Found"
                 title="{i18n>FormSchemaManagement_DialogTitle}"
                 search="onSearch"
-                confirm="onDialogClose"
+                confirm="onSelectDialogClose"
                 cancel="onDialogClose"
                 draggable="true"
                 contentHeight="auto"
@@ -94,7 +94,7 @@
                 <f:customLayout>
                   <grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, 23rem)" gridGap="2rem" />
                 </f:customLayout>
-                <f:GridListItem type="Active" press="">
+                <f:GridListItem type="Active" press="onFormSchemaPress">
                   <VBox class="sapUiSmallMargin">
                     <HBox>
                       <core:Icon size="4rem" src="sap-icon://manager-insight" class="sapUiSmallMargin" />
@@ -113,12 +113,17 @@
                         <Label text="Version: {svc>Version}" />
                         <Label text="Created: {path: 'svc>CreatedAt', type: 'sap.ui.model.type.DateTime'}" />
                       </VBox>
-                      <Button icon="sap-icon://duplicate" type="Transparent" tooltip="Duplicate FormSchema" press="" />
+                      <Button
+                        icon="sap-icon://duplicate"
+                        type="Transparent"
+                        tooltip="Duplicate FormSchema"
+                        press="onDuplicatePress"
+                      />
                       <Button
                         icon="sap-icon://decline"
                         type="Transparent"
                         tooltip="Delete FormSchema"
-                        press=""
+                        press="onFormSchemaDeletePress"
                         visible="{= ${svc>IsDraft}}"
                       />
                     </HBox>

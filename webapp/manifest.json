@@ -101,7 +101,7 @@
         {
           "name": "FormBuilder",
           "target": "FormBuilder",
-          "pattern": "form-builder"
+          "pattern": "form-builder/{formSchemaId}"
         },
         {
           "name": "Questionnaire",

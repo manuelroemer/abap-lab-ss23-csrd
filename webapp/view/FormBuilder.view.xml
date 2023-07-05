@@ -6,28 +6,33 @@
   xmlns="sap.m"
   xmlns:formengine="csrdreporting.formengine"
   xmlns:ce="sap.ui.codeeditor">
-  <Page id="page" title="{i18n>FormBuilder_Title}" showNavButton="true" navButtonPress="navBack">
+  <Page
+    id="page"
+    title="{i18n>FormBuilder_Title}"
+    showNavButton="true"
+    navButtonPress="navBack"
+    busy="{= ${state>/formSchemaQuery/isLoading}}">
     <layout:ResponsiveSplitter defaultPane="formEngine">
       <layout:PaneContainer>
         <layout:SplitPane id="formEngine">
           <VBox>
             <OverflowToolbar>
-              <Label text="{= ${formEngine>/currentPage/title} || ${formEngine>/currentPage/id} }" />
+              <Label text="{= ${state>/currentPage/title} || ${state>/currentPage/id} }" />
               <ToolbarSpacer />
               <Button
                 text="{i18n>FormBuilder_PreviousPage}"
-                enabled="{formEngine>/canGoBackward}"
+                enabled="{state>/canGoBackward}"
                 press="onPreviousPagePress"
               />
               <Button
                 text="{i18n>FormBuilder_NextPage}"
-                enabled="{formEngine>/canGoForward}"
-                visible="{= !${formEngine>/canSubmit} }"
+                enabled="{state>/canGoForward}"
+                visible="{= !${state>/canSubmit} }"
                 press="onNextPagePress"
               />
-              <Button text="{i18n>FormBuilder_Submit}" visible="{formEngine>/canSubmit}" press="onSubmitPress" />
+              <Button text="{i18n>FormBuilder_Submit}" visible="{state>/canSubmit}" press="onSubmitPress" />
             </OverflowToolbar>
-            <formengine:FormEngine class="sapUiResponsiveMargin" formEngineContext="{formEngine>/}" />
+            <formengine:FormEngine class="sapUiResponsiveMargin" formEngineContext="{state>/}" />
           </VBox>
         </layout:SplitPane>
         <layout:SplitPane>
