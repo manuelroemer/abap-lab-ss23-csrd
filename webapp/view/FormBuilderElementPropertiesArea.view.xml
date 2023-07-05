@@ -15,6 +15,10 @@
       <FormattedText
         htmlText="A unique identifier of the element. This value should not be used by any other element on any page. An example could be &lt;code&gt;first-element&lt;/code&gt;."
       />
+
+      <Label text="Text" required="true" />
+      <Input value="{state>/elementToEdit/text}" required="false" />
+      <FormattedText htmlText="The text to be displayed." />
     </VBox>
   </VBox>
 </mvc:View>

@@ -4,7 +4,7 @@ import { FormBuilderState } from './State';
 
 export interface FormBuilderStateElementPropertiesAreaSlice {
   elementToEditIndex?: number;
-  elementToEdit?: Partial<FormSchemaElement>;
+  elementToEdit?: FormSchemaElement;
 
   editElement(index: number): void;
 }
@@ -12,7 +12,40 @@ export interface FormBuilderStateElementPropertiesAreaSlice {
 export function createFormBuilderElementPropertiesAreaSlice({
   get,
   set,
+  watch,
 }: State<FormBuilderState>): FormBuilderStateElementPropertiesAreaSlice {
+  watch(
+    (s) => s.elementToEdit,
+    ({ elementToEdit, elementToEditIndex }) => {
+      if (elementToEdit) {
+        const { page, schema, setSchema } = get();
+
+        setSchema({
+          ...schema,
+          pages: schema.pages.map((p, index) => {
+            if (index !== page) {
+              return p;
+            }
+
+            return {
+              ...p,
+              elements: p.elements.map((e, elementIndex) => {
+                if (elementIndex !== elementToEditIndex) {
+                  return e;
+                }
+
+                return {
+                  ...e,
+                  ...elementToEdit,
+                };
+              }),
+            };
+          }),
+        });
+      }
+    },
+  );
+
   return {
     elementToEdit: undefined,
     elementToEditIndex: undefined,
