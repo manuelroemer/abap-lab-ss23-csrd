@@ -6,7 +6,11 @@
   xmlns="sap.m"
   xmlns:ce="sap.ui.codeeditor">
   <Page backgroundDesign="List" title="Properties">
-    <IconTabBar backgroundDesign="Transparent" applyContentPadding="false" stretchContentHeight="true" class="form-builder-icon-bar">
+    <IconTabBar
+      backgroundDesign="Transparent"
+      applyContentPadding="false"
+      stretchContentHeight="true"
+      class="form-builder-icon-bar">
       <items>
         <IconTabFilter key="page" text="Page">
           <mvc:XMLView class="h-100" viewName="csrdreporting.view.FormBuilderPagePropertiesArea" />
