@@ -10,13 +10,17 @@
     </VBox>
 
     <VBox visible="{= !!${state>/elementToEdit} }">
-      <Label text="ID" required="true" />
-      <Input value="{state>/elementToEdit/id}" required="true" />
-      <Text text="A unique identifier of the element." />
+      <VBox visible="{= ${state>/elementToEditProperties}.includes('id') }">
+        <Label text="ID" required="true" />
+        <Input value="{state>/elementToEdit/id}" required="true" />
+        <Text text="A unique identifier of the element." />
+      </VBox>
 
-      <Label class="sapUiSmallMarginTop" text="Text" required="true" />
-      <Input value="{state>/elementToEdit/text}" required="false" />
-      <Text text="The text to be displayed." />
+      <VBox class="sapUiSmallMarginTop" visible="{= ${state>/elementToEditProperties}.includes('text') }">
+        <Label text="Text" required="true" />
+        <Input value="{state>/elementToEdit/text}" required="false" />
+        <Text text="The text to be displayed." />
+      </VBox>
     </VBox>
   </VBox>
 </mvc:View>
