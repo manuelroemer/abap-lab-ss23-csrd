@@ -5,7 +5,7 @@
   displayBlock="true"
   xmlns="sap.m"
   xmlns:ce="sap.ui.codeeditor">
-  <Page backgroundDesign="List" title="Properties">
+  <Page backgroundDesign="List" title="Properties" enableScrolling="false">
     <IconTabBar
       backgroundDesign="Transparent"
       applyContentPadding="false"

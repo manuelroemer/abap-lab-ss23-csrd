@@ -1,4 +1,4 @@
-import { FormSchemaElement } from '../formengine/Schema';
+import { ChoiceOption, FormSchemaElement } from '../formengine/Schema';
 import { formSchemaJsonSchema } from '../formengine/Schema.JsonSchema.gen';
 import { updateElement } from '../formengine/SchemaReducers';
 import { State } from '../utils/State';
@@ -26,6 +26,15 @@ export interface FormBuilderStateElementPropertiesAreaSlice {
    * @param index The index of the element which should be edited, relative to the `currentPage`.
    */
   setElementToEdit(index?: number): void;
+  /**
+   * Adds a new option to the currently edited element.
+   */
+  addChoiceOption(): void;
+  /**
+   * Deletes the options at the given indices from the currently edited element.
+   * @param indices The indices of the options to be deleted.
+   */
+  deleteChoiceOption(indices: Array<number>): void;
 }
 
 /**
@@ -87,6 +96,34 @@ export function createFormBuilderElementPropertiesAreaSlice({
         elementToEditIndex: index,
         elementToEditProperties,
       });
+    },
+
+    addChoiceOption() {
+      const { elementToEdit } = get();
+
+      if (elementToEdit) {
+        const options: Array<ChoiceOption> = elementToEdit['options'] ?? [];
+        const nextElement = {
+          ...elementToEdit,
+          options: [...options, { value: '', display: '' }],
+        };
+
+        set({ elementToEdit: nextElement });
+      }
+    },
+
+    deleteChoiceOption(indices: Array<number>) {
+      const { elementToEdit } = get();
+
+      if (elementToEdit) {
+        const options: Array<ChoiceOption> = elementToEdit['options'] ?? [];
+        const nextElement = {
+          ...elementToEdit,
+          options: options.filter((_, i) => !indices.includes(i)),
+        };
+
+        set({ elementToEdit: nextElement });
+      }
     },
   };
 }
