@@ -108,8 +108,8 @@
                 <content>
                   <Title text="Options" />
                   <ToolbarSpacer />
-                  <Button icon="sap-icon://add" press="onAddChoiceOptionPress" tooltip="Add Option"/>
-                  <Button icon="sap-icon://delete" press="onRemoveChoiceOptionPress" tooltip="Delete Options"/>
+                  <Button icon="sap-icon://add" press="onAddChoiceOptionPress" tooltip="Add Option" />
+                  <Button icon="sap-icon://delete" press="onRemoveChoiceOptionPress" tooltip="Delete Options" />
                 </content>
               </OverflowToolbar>
             </headerToolbar>
