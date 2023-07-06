@@ -129,10 +129,7 @@
                           <core:Icon size="4rem" src="sap-icon://documents" class="sapUiSmallMargin" />
                           <VBox alignItems="Start" justifyContent="Center" width="100%">
                             <HBox>
-                              <Title
-                                text="{state>Name}"
-                                level="H1"
-                              />
+                              <Title text="{state>Name}" level="H1" />
                               <ObjectStatus
                                 class="sapUiTinyMarginBegin"
                                 text="Draft"
