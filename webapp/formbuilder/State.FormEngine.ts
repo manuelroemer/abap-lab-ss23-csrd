@@ -1,7 +1,10 @@
+import Button from 'sap/m/Button';
+import FlexBox from 'sap/m/FlexBox';
+import VBox from 'sap/m/VBox';
 import { FormEngineContext, createFormEngineContext } from '../formengine/FormEngineContext';
 import { emptySchema } from '../formengine/Schema';
 import { State } from '../utils/State';
-import { FormBuilderState } from './State';
+import type { FormBuilderState } from './State';
 
 export interface FormBuilderStateFormEngineSlice extends FormEngineContext {
   /**
@@ -53,10 +56,67 @@ export function createFormBuilderFormEngineSlice({
     },
   );
 
+  const createAddNewElementButton = (elementIndex = 0) => {
+    return new FlexBox({
+      justifyContent: 'Center',
+      alignItems: 'Center',
+      items: [
+        new Button({
+          text: 'Add New Element',
+          type: 'Transparent',
+          icon: 'sap-icon://add',
+          press: () => get().showAddElementDialog(elementIndex),
+        }).addStyleClass('sapUiSmallMargin'),
+      ],
+    });
+  };
+
   return {
-    ...createFormEngineContext(state, { schema: emptySchema }),
     schemaJson: stringifyJson(emptySchema),
     stateJson: '{}',
+
+    ...createFormEngineContext(state, {
+      schema: emptySchema,
+
+      // Hooks into the form engine to display an "Add New Element" button before each element and
+      // on empty pages.
+      onBeforeRender: (_, content) => {
+        return content.addItem(createAddNewElementButton());
+      },
+
+      // Hooks into the form engine to display an "Add New Element" button after each rendered element
+      // and enriches each rendered elements with controls for modifying it.
+      onRenderElement: (_, __, control, elementIndex) => {
+        return new VBox({
+          items: [
+            new FlexBox({
+              justifyContent: 'End',
+              items: [
+                new Button({
+                  icon: 'sap-icon://slim-arrow-up',
+                  press: () => get().moveElementUp(elementIndex),
+                }).addStyleClass('sapUiTinyMarginEnd'),
+                new Button({
+                  icon: 'sap-icon://slim-arrow-down',
+                  press: () => get().moveElementDown(elementIndex),
+                }).addStyleClass('sapUiTinyMarginEnd'),
+                new Button({
+                  icon: 'sap-icon://edit',
+                  press: () => get().setElementToEdit(elementIndex),
+                }).addStyleClass('sapUiTinyMarginEnd'),
+                new Button({
+                  icon: 'sap-icon://delete',
+                  press: () => get().deleteElement(elementIndex),
+                }),
+              ],
+            }).addStyleClass('sapUiTinyMarginBottom'),
+
+            control,
+            createAddNewElementButton(elementIndex + 1),
+          ],
+        });
+      },
+    }),
   };
 }
 
