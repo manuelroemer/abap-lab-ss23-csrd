@@ -23,7 +23,7 @@ import { QueryState, createQuery } from '../utils/StateQuery';
 import { AsyncState, createAsync } from '../utils/StateAsync';
 import { showConfirmation } from '../utils/Confirmation';
 import FilterOperator from 'sap/ui/model/FilterOperator';
-import { FormSchemaEntity, getAllFormSchemaEntities } from '../api/FormSchemaEntity';
+import { getAllFormSchemaEntities } from '../api/FormSchemaEntity';
 
 interface CustomerManagementState extends RouterState<{ customerId: string }> {
   customerDialogOpen: boolean;
