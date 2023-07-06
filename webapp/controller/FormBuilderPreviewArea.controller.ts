@@ -53,7 +53,7 @@ export default class FormBuilderPreviewAreaController extends BaseController {
           text: 'Add New Element',
           type: 'Transparent',
           icon: 'sap-icon://add',
-          press: () => formBuilderState.get().addElement(elementIndex, 'text'),
+          press: () => formBuilderState.get().showAddElementDialog(elementIndex),
         }).addStyleClass('sapUiSmallMargin'),
       ],
     });

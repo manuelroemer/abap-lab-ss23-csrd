@@ -10,6 +10,10 @@ import {
 import { FormBuilderStatePreviewAreaSlice, createFormBuilderPreviewAreaSlice } from './State.PreviewArea';
 import { FormBuilderStateFormEngineSlice, createFormBuilderFormEngineSlice } from './State.FormEngine';
 import { FormBuilderStatePageAreaSlice, createFormBuilderPageAreaSlice } from './State.PageArea';
+import {
+  FormBuilderStateAddElementDialogSlice,
+  createFormBuilderAddElementDialogSlice,
+} from './State.AddElementDialog';
 
 /**
  * Represents the internal state of the form builder page.
@@ -19,7 +23,8 @@ export interface FormBuilderState
     FormBuilderStatePageAreaSlice,
     FormBuilderStatePreviewAreaSlice,
     FormBuilderStatePagePropertiesAreaSlice,
-    FormBuilderStateElementPropertiesAreaSlice {}
+    FormBuilderStateElementPropertiesAreaSlice,
+    FormBuilderStateAddElementDialogSlice {}
 
 /**
  * Creates the state container for the entire form builder page.
@@ -31,6 +36,7 @@ export function createFormBuilderState() {
     ...createFormBuilderPreviewAreaSlice(state),
     ...createFormBuilderPagePropertiesAreaSlice(state),
     ...createFormBuilderElementPropertiesAreaSlice(state),
+    ...createFormBuilderAddElementDialogSlice(state),
   }));
 }
 

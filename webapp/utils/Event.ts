@@ -5,10 +5,10 @@ export function entityFromEvent<T = unknown>(e, modelName: string): T | undefine
     return undefined;
   }
 
-  return entityFromSource(source, modelName);
+  return entityFromSource<T>(source, modelName);
 }
 
-export function entityFromSource(source: any, modelName: string) {
+export function entityFromSource<T = unknown>(source: any, modelName: string): T | undefined {
   const bindingContext = source.getBindingContext(modelName);
   if (!bindingContext) {
     console.warn(`No binding context could be retrieved from the source. modelName: ${modelName}`, source);

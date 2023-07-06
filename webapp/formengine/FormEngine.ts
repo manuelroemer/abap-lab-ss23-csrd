@@ -2,7 +2,7 @@ import VBox from 'sap/m/VBox';
 import Control from 'sap/ui/core/Control';
 import Text from 'sap/m/Text';
 import RenderManager from 'sap/ui/core/RenderManager';
-import { render } from './Rendering';
+import { render, renderError } from './Rendering';
 import { FormEngineContext } from './FormEngineContext';
 
 /**
@@ -73,14 +73,12 @@ export default class FormEngine extends Control {
       // Hook: Allow modification of the rendered content after rendering.
       context.onAfterRender?.(context, content);
     } catch (e: any) {
-      const errorText = new Text({
-        text: `An error occurred while rendering the form:\n${
-          e?.message ?? e
-        }\n\nSee the developer console for details.`,
-      });
-
       console.error('An error occurred while rendering the form:', e);
-      content.addItem(errorText);
+      content.addItem(
+        renderError(
+          `An error occurred while rendering the form:\n${e?.message ?? e}\n\nSee the developer console for details.`,
+        ),
+      );
     }
   }
 }

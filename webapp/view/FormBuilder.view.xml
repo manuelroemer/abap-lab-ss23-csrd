@@ -20,5 +20,7 @@
         </layout:SplitPane>
       </layout:PaneContainer>
     </layout:ResponsiveSplitter>
+
+    <mvc:XMLView viewName="csrdreporting.view.FormBuilderAddElementDialog" />
   </Page>
 </mvc:View>

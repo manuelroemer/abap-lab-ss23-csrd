@@ -33,6 +33,7 @@ import { uniq } from '../utils/Array';
 import { ValueState } from 'sap/ui/core/library';
 import { FlexAlignItems } from 'sap/m/library';
 import { evaluateRules } from './Rules';
+import MessageStrip from 'sap/m/MessageStrip';
 
 type RenderFormSchemaElement<T extends FormSchemaElement = FormSchemaElement> = (
   element: T,
@@ -56,13 +57,26 @@ const elementRenderers: RenderLookup = {
   'date-time': renderDateTime,
 };
 
+/**
+ * Renders a form schema element. Returns the control instance that should be displayed by the form engine.
+ * @param element The form schema element to be rendered.
+ * @param context The form engine context.
+ * @param elementIndex The index of the element within the current page of the form schema.
+ * @returns The control instance that should be displayed by the form engine.
+ */
 export function render<T extends FormSchemaElement>(
   element: T,
   context: FormEngineContext,
   elementIndex: number,
 ): Control {
+  // Rendering is done by a type-specific rendering function.
+  // The form engine further provides support for hooks which allow modifying the rendered control from
+  // the outside.
+  // Note that rendering can easily fail/error for a variety of reasons, e.g. when the schema is invalid.
+  // For such cases, we do a `safeRender` which catches errors and displays an error message per failed
+  // element instead of tearing down the entire page rendering process.
   const renderer = elementRenderers[element.type] as RenderFormSchemaElement;
-  const rawControl = renderer(element, context);
+  const rawControl = safeRender(renderer, element, context);
   const control = context.onRenderElement(element, context, rawControl, elementIndex);
 
   const { hide } = evaluateRules(element, context.state);
@@ -73,6 +87,26 @@ export function render<T extends FormSchemaElement>(
   control.addStyleClass('sapUiSmallMarginBottom');
 
   return control;
+}
+
+function safeRender(renderer: RenderFormSchemaElement, element: FormSchemaElement, context: FormEngineContext) {
+  try {
+    return renderer(element, context);
+  } catch (e: any) {
+    return renderError(`An error occured while rendering the element of type "${element.type}": ${e.message}`);
+  }
+}
+
+/**
+ * Renders a generic error element.
+ * @param message The error message to be rendered.
+ */
+export function renderError(message: string) {
+  return new MessageStrip({
+    text: message,
+    type: 'Error',
+    showIcon: true,
+  });
 }
 
 function renderHeading({ text, level = 2, wrap = true }: HeadingFormSchemaElement) {
