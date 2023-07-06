@@ -8,6 +8,7 @@ mta-*
 resources
 archive.zip
 .*_mta_build_tmp
+*.gen.ts
 *.gen.d.ts
 
 # DrawIO

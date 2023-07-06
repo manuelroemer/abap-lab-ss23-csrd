@@ -1,2 +1,5 @@
 node_modules
 dist
+
+*.gen.ts
+*.gen.d.ts

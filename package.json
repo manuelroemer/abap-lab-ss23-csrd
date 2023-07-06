@@ -10,17 +10,20 @@
     "sapui5"
   ],
   "scripts": {
-    "start": "npm-run-all --parallel watch watch:controls",
-    "watch": "fiori run --open \"index.html?sap-ui-xx-viewCache=false\"",
-    "watch:controls": "npx @ui5/ts-interface-generator --watch",
-    "declaration": "npx @ui5/ts-interface-generator",
-    "build": "npm run declaration && ui5 build --config=ui5.yaml --clean-dest --dest dist",
+    "start": "npm run generate && npm run watch",
+    "watch": "npm-run-all --parallel watch:app watch:types",
+    "watch:app": "fiori run --open \"index.html?sap-ui-xx-viewCache=false\"",
+    "watch:types": "npx @ui5/ts-interface-generator --watch",
+    "generate": "npm-run-all --parallel generate:types generate:json-schema",
+    "generate:types": "npx @ui5/ts-interface-generator",
+    "generate:json-schema": "node ./tools/generateJsonSchema.js",
+    "build": "npm run generate && ui5 build --config=ui5.yaml --clean-dest --dest dist",
     "deploy": "npm run build && fiori deploy --config ui5-deploy.yaml --yes && rimraf archive.zip",
     "undeploy": "fiori undeploy --config ui5-deploy.yaml",
     "tsc": "tsc --noEmit",
     "format": "prettier -w .",
     "lint": "eslint webapp",
-    "prepare": "husky install && npm run declaration"
+    "prepare": "husky install && npm run generate"
   },
   "devDependencies": {
     "@prettier/plugin-xml": "2.2.0",
@@ -36,11 +39,12 @@
     "husky": "8.0.3",
     "npm-run-all": "4.1.5",
     "prettier": "2.8.8",
-    "typescript": "5.0.4",
-    "ui5-tooling-transpile": "0.7.10",
-    "yo": "4.3.1",
     "rimraf": "3.0.2",
-    "ui5-task-flatten-library": "0.2.5"
+    "ts-json-schema-generator": "1.2.0",
+    "typescript": "5.0.4",
+    "ui5-task-flatten-library": "0.2.5",
+    "ui5-tooling-transpile": "0.7.10",
+    "yo": "4.3.1"
   },
   "sapuxLayer": "CUSTOMER_BASE",
   "ui5": {
