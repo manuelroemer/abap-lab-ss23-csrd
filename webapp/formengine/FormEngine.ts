@@ -1,6 +1,5 @@
 import VBox from 'sap/m/VBox';
 import Control from 'sap/ui/core/Control';
-import Text from 'sap/m/Text';
 import RenderManager from 'sap/ui/core/RenderManager';
 import { render, renderError } from './Rendering';
 import { FormEngineContext } from './FormEngineContext';
