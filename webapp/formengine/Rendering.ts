@@ -130,24 +130,20 @@ function renderTextInput(element: TextInputFormSchemaElement, context: FormEngin
 }
 
 function renderCheckbox(element: CheckboxFormSchemaElement, context: FormEngineContext) {
-  const { id, option } = element;
+  const { id, text } = element;
   const { state, setState } = context;
-  const value = (state[element.id] as Array<string>) ?? [];
 
-  const onSelect = (e: Event) => {
-    const isSelected = e.getParameter('selected') as boolean;
-    setState({
-      ...state,
-      [id]: isSelected ? uniq([...value, option.value]) : value.filter((v) => v !== option.value),
-      [`${id}.${option.value}`]: isSelected,
-    });
-  };
-  const checkbox = new CheckBox({
-    text: option.display ?? option.value,
-    selected: value.includes(option.value),
-    select: onSelect,
+  const checkBox = new CheckBox({
+    text,
+    selected: !!state[id],
+    select: (e: Event) =>
+      setState({
+        ...state,
+        [id]: e.getParameter('selected'),
+      }),
   });
-  return renderDynamicElementWrapper(element, checkbox, context);
+
+  return renderDynamicElementWrapper(element, checkBox, context);
 }
 
 function renderSingleChoice(element: SingleChoiceFormSchemaElement, context: FormEngineContext) {
@@ -166,6 +162,7 @@ function renderSingleChoice(element: SingleChoiceFormSchemaElement, context: For
     selectedIndex: options.findIndex((o) => o.value === value),
     buttons: options.map((option) => new RadioButton({ text: option.display ?? option.value })),
   });
+
   return renderDynamicElementWrapper(element, input, context);
 }
 

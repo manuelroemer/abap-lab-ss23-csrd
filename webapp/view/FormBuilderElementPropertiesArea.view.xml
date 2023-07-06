@@ -97,6 +97,14 @@
         <Input value="{state>/elementToEdit/stepperDescription}" />
         <Text text="A description associated with the value, e.g., a unit." />
       </VBox>
+
+      <VBox
+        class="sapUiMediumMarginBottom"
+        visible="{= ${state>/elementToEditProperties}.includes('stepperDescription') }">
+        <Label text="Value Description" />
+        <Input value="{state>/elementToEdit/stepperDescription}" />
+        <Text text="A description associated with the value, e.g., a unit." />
+      </VBox>
     </VBox>
   </VBox>
 </mvc:View>
