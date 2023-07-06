@@ -12,9 +12,7 @@
     <VBox visible="{= !!${state>/elementToEdit} }">
       <Label text="ID" required="true" />
       <Input value="{state>/elementToEdit/id}" required="true" />
-      <Text
-        text="A unique identifier of the element."
-      />
+      <Text text="A unique identifier of the element." />
 
       <Label class="sapUiSmallMarginTop" text="Text" required="true" />
       <Input value="{state>/elementToEdit/text}" required="false" />
