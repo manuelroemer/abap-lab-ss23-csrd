@@ -7,6 +7,7 @@ import type { Entity, EntityCreate, EntityUpdate } from './Entity';
 export interface CustomerEntity extends Entity {
   Name: string;
   CustomerCode: string;
+  Notes: string;
 }
 
 /**
@@ -15,6 +16,7 @@ export interface CustomerEntity extends Entity {
 export interface CustomerEntityCreate extends EntityCreate {
   Name: string;
   CustomerCode: string;
+  Notes: string;
 }
 
 /**
@@ -23,6 +25,7 @@ export interface CustomerEntityCreate extends EntityCreate {
 export interface CustomerEntityUpdate extends EntityUpdate {
   Name?: string;
   CustomerCode?: string;
+  Notes?: string;
 }
 
 const api = createStandardODataApi<CustomerEntity, CustomerEntityCreate, CustomerEntityUpdate>('/CustomerSet');
