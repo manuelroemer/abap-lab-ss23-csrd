@@ -12,13 +12,13 @@
     <VBox visible="{= !!${state>/elementToEdit} }">
       <Label text="ID" required="true" />
       <Input value="{state>/elementToEdit/id}" required="true" />
-      <FormattedText
-        htmlText="A unique identifier of the element. This value should not be used by any other element on any page. An example could be &lt;code&gt;first-element&lt;/code&gt;."
+      <Text
+        text="A unique identifier of the element."
       />
 
-      <Label text="Text" required="true" />
+      <Label class="sapUiSmallMarginTop" text="Text" required="true" />
       <Input value="{state>/elementToEdit/text}" required="false" />
-      <FormattedText htmlText="The text to be displayed." />
+      <Text text="The text to be displayed." />
     </VBox>
   </VBox>
 </mvc:View>

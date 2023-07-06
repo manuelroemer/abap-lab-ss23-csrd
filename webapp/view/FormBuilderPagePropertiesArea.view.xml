@@ -12,15 +12,11 @@
     <VBox visible="{= !!${state>/pageToEdit} }">
       <Label text="ID" required="true" />
       <Input value="{state>/pageToEdit/id}" required="true" />
-      <FormattedText
-        htmlText="A unique identifier of the page. This value should not be used by any other page. An example could be &lt;code&gt;first-page&lt;/code&gt;."
-      />
+      <Text text="A unique identifier of the page." />
 
       <Label text="Title" class="sapUiSmallMarginTop" />
       <Input value="{state>/pageToEdit/title}" required="true" />
-      <Text
-        text="The page's title. This is displayed to the user when filling out the questionnaire. This is optional. If not given, the ID is used as a fallback."
-      />
+      <Text text="The page's title." />
     </VBox>
   </VBox>
 </mvc:View>
