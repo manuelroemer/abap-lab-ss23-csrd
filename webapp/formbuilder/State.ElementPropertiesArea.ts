@@ -5,9 +5,26 @@ import { State } from '../utils/State';
 import { FormBuilderState } from './State';
 
 export interface FormBuilderStateElementPropertiesAreaSlice {
+  /**
+   * The index of the element which is currently being edited.
+   * This index is relative to the `currentPage`.
+   */
   elementToEditIndex?: number;
+  /**
+   * The element which is currently being edited.
+   * When changed, this is synced back into the `schema`.
+   */
   elementToEdit?: FormSchemaElement;
+  /**
+   * A list of all properties which exist on the form schema element which is currently being edited.
+   * Used to conditionally hide input fields for properties which don't exist on the current element.
+   * This is empty if no element is being edited.
+   */
   elementToEditProperties: Array<string>;
+  /**
+   * Sets the element which should be edited.
+   * @param index The index of the element which should be edited, relative to the `currentPage`.
+   */
   setElementToEdit(index?: number): void;
 }
 
