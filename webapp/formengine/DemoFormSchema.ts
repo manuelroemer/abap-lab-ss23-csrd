@@ -97,10 +97,7 @@ export const demoFormSchema: FormSchema = {
         {
           id: 'TestCheckbox',
           type: 'checkbox',
-          option: {
-            value: 'TestCheckbox',
-            display: 'Apples 🍎',
-          },
+          text: 'I love apples 🍎',
         },
       ],
     },
