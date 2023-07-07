@@ -56,7 +56,6 @@ export function createFormBuilderState() {
       onSuccess(formSchema) {
         const { setSchema } = get();
         setSchema(JSON.parse(formSchema.SchemaJson));
-        set({ schemaJson: JSON.stringify(formSchema.SchemaJson, null, 4) });
       },
     }),
   }));
