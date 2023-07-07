@@ -18,29 +18,7 @@
           <mvc:XMLView class="h-100" viewName="csrdreporting.view.FormBuilderPageArea" />
         </layout:SplitPane>
         <layout:SplitPane id="formEngine">
-          <VBox>
-            <!-- TODO: Move this. We should probably have a toolbar on the very top of the page.
-                The SplitPane should only contain the XMLView, nothing else. -->
-            <OverflowToolbar>
-              <Label text="{= ${state>/currentPage/title} || ${state>/currentPage/id} }" />
-              <ToolbarSpacer />
-              <Button
-                text="{i18n>FormBuilder_PreviousPage}"
-                enabled="{state>/canGoBackward}"
-                press="onPreviousPagePress"
-              />
-              <Button
-                text="{i18n>FormBuilder_NextPage}"
-                enabled="{state>/canGoForward}"
-                visible="{= !${state>/canSubmit} }"
-                press="onNextPagePress"
-              />
-              <Button text="{i18n>FormBuilder_Submit}" visible="{state>/canSubmit}" press="onSubmitPress" />
-            </OverflowToolbar>
-            <!-- END TODO -->
-
-            <mvc:XMLView class="h-100" viewName="csrdreporting.view.FormBuilderPreviewArea" />
-          </VBox>
+          <mvc:XMLView class="h-100" viewName="csrdreporting.view.FormBuilderPreviewArea" />
         </layout:SplitPane>
         <layout:SplitPane id="properties">
           <mvc:XMLView class="h-100" viewName="csrdreporting.view.FormBuilderPropertiesArea" />
