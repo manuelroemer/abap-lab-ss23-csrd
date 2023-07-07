@@ -22,6 +22,8 @@ import { RouterState, connectRouterState } from '../utils/StateRouter';
 import { QueryState, createQuery } from '../utils/StateQuery';
 import { AsyncState, createAsync } from '../utils/StateAsync';
 import { showConfirmation } from '../utils/Confirmation';
+import FilterOperator from 'sap/ui/model/FilterOperator';
+import { getAllFormSchemaEntities } from '../api/FormSchemaEntity';
 
 interface CustomerManagementState extends RouterState<{ customerId: string }> {
   customerDialogOpen: boolean;
@@ -29,9 +31,10 @@ interface CustomerManagementState extends RouterState<{ customerId: string }> {
   editCustomerId?: string;
   customerName: string;
   customerCode: string;
+  notes: string;
 
   customerQuery: QueryState<string, CustomerEntity>;
-  customerFormSchemasQuery: QueryState<string, Array<FormSchemaResultEntity>>;
+  customerFormSchemaResultsQuery: QueryState<string, Array<FormSchemaResultEntity>>;
 
   submitCustomerMutation: AsyncState;
   deleteCustomerMutation: AsyncState<string>;
@@ -54,6 +57,7 @@ export default class CustomerManagementController extends BaseController {
       editCustomerId: undefined,
       customerName: '',
       customerCode: '',
+      notes: '',
 
       customerQuery: createQuery({
         state,
@@ -62,24 +66,38 @@ export default class CustomerManagementController extends BaseController {
         fetch: (customerId) => getCustomerEntity(customerId),
       }),
 
-      customerFormSchemasQuery: createQuery({
+      customerFormSchemaResultsQuery: createQuery({
         state,
-        key: 'customerFormSchemasQuery',
+        key: 'customerFormSchemaResultsQuery',
         getArgs: (state: CustomerManagementState) => state.parameters.customerId,
-        fetch: (customerId) =>
-          getAllFormSchemaResultEntities({
+        fetch: async (customerId) => {
+          const formSchemas = await getAllFormSchemaEntities();
+          const formSchemaResults = await getAllFormSchemaResultEntities({
             filters: [new Filter({ path: 'CustomerId', operator: 'EQ', value1: customerId })],
-          }).then(({ results }) => results),
+          });
+
+          return formSchemaResults.results.map((formSchemaResult) => {
+            const matchingFormSchema = formSchemas.results.find(
+              (schema) => schema.Id === formSchemaResult.FormSchemaId,
+            );
+
+            return {
+              ...formSchemaResult,
+              Name: matchingFormSchema?.Name,
+            };
+          });
+        },
       }),
 
       submitCustomerMutation: createAsync({
         state,
         key: 'submitCustomerMutation',
         fetch: async () => {
-          const { editCustomerId, customerName, customerCode, closeCustomerDialog } = get();
+          const { editCustomerId, customerName, customerCode, notes, closeCustomerDialog } = get();
           const body = {
             Name: customerName,
             CustomerCode: customerCode,
+            Notes: notes,
           };
 
           await (editCustomerId ? updateCustomerEntity(editCustomerId, body) : createCustomerEntity(body));
@@ -106,6 +124,7 @@ export default class CustomerManagementController extends BaseController {
           editCustomerId: customer.Id,
           customerName: customer.Name,
           customerCode: customer.CustomerCode,
+          notes: customer.Notes,
         });
       },
 
@@ -116,6 +135,7 @@ export default class CustomerManagementController extends BaseController {
           editCustomerId: undefined,
           customerName: '',
           customerCode: '',
+          notes: '',
         });
       },
 
@@ -145,6 +165,7 @@ export default class CustomerManagementController extends BaseController {
 
   onCustomerPress(e: Event) {
     const customer = entityFromEvent<CustomerEntity>(e, 'svc');
+    console.log();
     this.router.navTo('CustomerManagement', { customerId: customer?.Id }, true);
   }
 
@@ -201,6 +222,34 @@ export default class CustomerManagementController extends BaseController {
 
   onCustomerDialogCancel() {
     this.state.get().closeCustomerDialog();
+  }
+
+  onQuestionnaireAddPress() {
+    const {
+      parameters: { customerId },
+    } = this.state.get();
+    if (customerId) {
+      this.router.navTo('Questionnaire', { formSchemaType: 'demo', customerId });
+    } else {
+      const dialog = this.byId('customerSelectDialog') as Dialog;
+      dialog.open();
+    }
+  }
+
+  onSearch(e) {
+    const value = e.getParameter('value');
+    const filter = new Filter('Name', FilterOperator.Contains, value);
+    const binding = e.getParameter('itemsBinding');
+    binding.filter([filter]);
+  }
+
+  onDialogClose(e) {
+    const contexts = e.getParameter('selectedContexts');
+    if (contexts && contexts.length) {
+      const customerId = contexts[0].getObject().Id;
+      this.router.navTo('Questionnaire', { formSchemaType: 'demo', customerId });
+    }
+    e.getSource().getBinding('items').filter([]);
   }
 
   async onQuestionnaireDeletePress(e: Event) {
