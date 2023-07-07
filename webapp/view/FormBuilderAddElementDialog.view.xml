@@ -1,0 +1,18 @@
+<mvc:View
+  xmlns:layout="sap.ui.layout"
+  controllerName="csrdreporting.controller.FormBuilderAddElementDialog"
+  xmlns:mvc="sap.ui.core.mvc"
+  displayBlock="true"
+  xmlns="sap.m">
+  <SelectDialog
+    id="addElementDialog"
+    title="Add New Element"
+    contentHeight="auto"
+    contentWidth="auto"
+    items="{state>/addElementDialogItems}"
+    search="onDialogSearch"
+    cancel="onDialogCancel"
+    confirm="onDialogConfirm">
+    <StandardListItem title="{state>title}" description="{state>description}" icon="{state>icon}" type="Active" />
+  </SelectDialog>
+</mvc:View>

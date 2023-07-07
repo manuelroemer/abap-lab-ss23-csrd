@@ -8,12 +8,12 @@
   xmlns:grid="sap.ui.layout.cssgrid"
   controllerName="csrdreporting.controller.FormSchemaManagement"
   height="100%">
-  <Page showFooter="true" showNavButton="true" navButtonPress="navBack" navButtonTooltip="Back">
+  <Page showFooter="true" showNavButton="true" navButtonPress="navBack">
     <content>
       <layout:FixFlex class="fixFlexVertical">
         <layout:fixContent>
           <ObjectHeader title="{i18n>FormSchemaManagement_Title}" backgroundDesign="Solid" condensed="true">
-            <ObjectAttribute text="Manage the form schemas." />
+            <ObjectAttribute text="Manage the questionnaires." />
           </ObjectHeader>
         </layout:fixContent>
         <layout:flexContent>
@@ -33,16 +33,18 @@
                         class="sapUiSmallMarginEnd sapUiSmallMarginTopBottom sapUiTinyMarginBegin"
                       />
                       <VBox alignItems="Start" justifyContent="Center" width="100%">
-                        <Title text="Create FormSchema" level="H1" />
-                        <Label text="Create a new form schema." />
+                        <Title text="Create Questionnaire" level="H1" />
+                        <Label text="Create a new questionnaire." />
                       </VBox>
                     </HBox>
-                    <Text text="Here you can create a new form schema with the form builder." class="sapUiTinyMargin" />
+                    <Text
+                      text="Here you can create a new questionnaire with the form builder."
+                      class="sapUiTinyMargin"
+                    />
                   </VBox>
                 </f:GridListItem>
                 <f:GridListItem type="Active" press="onSelectDialogPress">
                   <VBox class="sapUiSmallMargin">
-                    <!-- sap-icon://create-form -->
                     <HBox>
                       <core:Icon
                         size="3rem"
@@ -50,12 +52,12 @@
                         class="sapUiSmallMarginEnd sapUiSmallMarginTopBottom sapUiTinyMarginBegin"
                       />
                       <VBox alignItems="Start" justifyContent="Center" width="100%">
-                        <Title text="Duplicate FormSchema" level="H1" />
-                        <Label text="Create a form schema from an existing one." />
+                        <Title text="Duplicate Questionnaire" level="H1" />
+                        <Label text="Create an editable version of an existing, undrafted questionnaire." />
                       </VBox>
                     </HBox>
                     <Text
-                      text="Here you can create a form schema from an existing one with the form builder."
+                      text="Here you can create a questionnaire based on an existing one."
                       class="sapUiTinyMargin"
                     />
                   </VBox>
@@ -63,7 +65,7 @@
               </f:GridList>
               <SelectDialog
                 id="formSchemaSelectDialog"
-                noDataText="No FormSchemas Found"
+                noDataText="No Questionnaires Found"
                 title="{i18n>FormSchemaManagement_DialogTitle}"
                 search="onSearch"
                 confirm="onSelectDialogClose"
@@ -74,7 +76,7 @@
                 items="{svc>/FormSchemaSet}"
                 showClearButton="true">
                 <StandardListItem
-                  title="FormSchema"
+                  title="Questionnaire"
                   description="Type: {svc>Type}, Version: {svc>Version}, Created at: {path: 'svc>CreatedAt', type: 'sap.ui.model.type.DateTime'}"
                   icon="sap-icon://manager-insight"
                   iconDensityAware="false"
@@ -88,7 +90,8 @@
                 />
               </SelectDialog>
             </Panel>
-            <ObjectHeader title="Existing FormSchemas" condensed="true" backgroundDesign="Transparent" />
+
+            <ObjectHeader title="Existing Questionnaires" condensed="true" backgroundDesign="Transparent" />
             <Panel id="existingFormSchemasPanel" backgroundDesign="Transparent">
               <f:GridList id="gridList" items="{svc>/FormSchemaSet}">
                 <f:customLayout>
@@ -100,7 +103,7 @@
                       <core:Icon size="4rem" src="sap-icon://manager-insight" class="sapUiSmallMargin" />
                       <VBox alignItems="Start" justifyContent="Center" width="100%">
                         <HBox>
-                          <Title text="{= !!${svc>Name} ? ${svc>Name} : 'FormSchema'}" level="H1" wrapping="true" />
+                          <Title text="{= !!${svc>Name} ? ${svc>Name} : 'Questionnaire'}" level="H1" wrapping="true" />
                           <ObjectStatus
                             class="sapUiTinyMarginBegin"
                             text="Draft"
@@ -114,16 +117,18 @@
                         <Label text="Version: {svc>Version}" wrapping="true" />
                         <Label text="Created: {path: 'svc>CreatedAt', type: 'sap.ui.model.type.DateTime'}" />
                       </VBox>
+
                       <Button
                         icon="sap-icon://duplicate"
                         type="Transparent"
-                        tooltip="Duplicate FormSchema"
+                        tooltip="Duplicate Questionnaire"
                         press="onDuplicatePress"
                       />
+
                       <Button
                         icon="sap-icon://decline"
                         type="Transparent"
-                        tooltip="Delete FormSchema"
+                        tooltip="Delete Questionnaire"
                         press="onFormSchemaDeletePress"
                         visible="{= ${svc>IsDraft}}"
                       />

@@ -1,0 +1,137 @@
+<mvc:View
+  xmlns:layout="sap.ui.layout"
+  controllerName="csrdreporting.controller.FormBuilderElementPropertiesArea"
+  xmlns:mvc="sap.ui.core.mvc"
+  displayBlock="true"
+  xmlns="sap.m">
+  <ScrollContainer height="100%" vertical="true">
+    <VBox class="sapUiMediumMargin">
+      <VBox visible="{= !${state>/elementToEdit} }">
+        <Text text="Select an element to edit its details." />
+      </VBox>
+
+      <VBox visible="{= !!${state>/elementToEdit} }">
+        <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('id') }">
+          <Label text="ID" required="true" />
+          <Input value="{state>/elementToEdit/id}" />
+          <Text text="A unique identifier of the element." />
+        </VBox>
+
+        <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('required') }">
+          <Label text="Mandatory Element" />
+          <CheckBox selected="{state>/elementToEdit/required}" text="Element is required" />
+          <Text text="Whether the user must fill this element." />
+        </VBox>
+
+        <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('label') }">
+          <Label text="Label" />
+          <Input value="{state>/elementToEdit/label}" />
+          <Text text="A label, displayed above the element." />
+        </VBox>
+
+        <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('description') }">
+          <Label text="Description" />
+          <TextArea rows="3" width="100%" value="{state>/elementToEdit/description}" />
+          <Text text="A description of the element, describing its purpose in detail." />
+        </VBox>
+
+        <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('helperText') }">
+          <Label text="Helper Text" />
+          <TextArea rows="3" width="100%" value="{state>/elementToEdit/helperText}" />
+          <Text
+            text="An additional helper text providing granular information about the element, further enriching the information provided in the description."
+          />
+        </VBox>
+
+        <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('text') }">
+          <Label text="Text" />
+          <Input value="{state>/elementToEdit/text}" />
+          <Text text="The text to be displayed." />
+        </VBox>
+
+        <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('level') }">
+          <Label text="Level" />
+          <StepInput min="1" max="6" value="{state>/elementToEdit/level}" />
+          <Text text="The level (effectively, the size) of the heading." />
+        </VBox>
+
+        <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('wrap') }">
+          <Label text="Wrap Text" />
+          <CheckBox selected="{state>/elementToEdit/wrap}" text="Enable text wrapping" />
+          <Text text="Whether long text should wrap to the next line(s)." />
+        </VBox>
+
+        <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('placeholder') }">
+          <Label text="Placeholder" />
+          <Input value="{state>/elementToEdit/placeholder}" />
+          <Text text="A placeholder text which is displayed for empty inputs." />
+        </VBox>
+
+        <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('rows') }">
+          <Label text="Rows" />
+          <StepInput min="1" value="{state>/elementToEdit/rows}" />
+          <Text text="The number of rows to display." />
+        </VBox>
+
+        <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('columns') }">
+          <Label text="Columns" />
+          <StepInput min="1" value="{state>/elementToEdit/columns}" />
+          <Text text="The number of columns to display." />
+        </VBox>
+
+        <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('min') }">
+          <Label text="Minimum Value" />
+          <StepInput value="{state>/elementToEdit/min}" />
+          <Text text="The minimum allowed value." />
+        </VBox>
+
+        <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('max') }">
+          <Label text="Maximum Value" />
+          <StepInput value="{state>/elementToEdit/max}" />
+          <Text text="The maximum allowed value." />
+        </VBox>
+
+        <VBox
+          class="sapUiMediumMarginBottom"
+          visible="{= ${state>/elementToEditProperties}.includes('stepperDescription') }">
+          <Label text="Value Description" />
+          <Input value="{state>/elementToEdit/stepperDescription}" />
+          <Text text="A description associated with the value, e.g., a unit." />
+        </VBox>
+
+        <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('options') }">
+          <Label text="Options" />
+
+          <Table id="multiChoiceOptions" items="{state>/elementToEdit/options}" fixedLayout="false" mode="MultiSelect">
+            <headerToolbar>
+              <OverflowToolbar>
+                <content>
+                  <Title text="Options" />
+                  <ToolbarSpacer />
+                  <Button icon="sap-icon://add" press="onAddChoiceOptionPress" tooltip="Add Option" />
+                  <Button icon="sap-icon://delete" press="onRemoveChoiceOptionPress" tooltip="Delete Options" />
+                </content>
+              </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+              <Column>
+                <Text text="ID" />
+              </Column>
+              <Column>
+                <Text text="Display" />
+              </Column>
+            </columns>
+            <items>
+              <ColumnListItem>
+                <cells>
+                  <Input value="{state>value}" />
+                  <Input value="{state>display}" />
+                </cells>
+              </ColumnListItem>
+            </items>
+          </Table>
+        </VBox>
+      </VBox>
+    </VBox>
+  </ScrollContainer>
+</mvc:View>

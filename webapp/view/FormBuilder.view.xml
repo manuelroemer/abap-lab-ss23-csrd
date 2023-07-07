@@ -7,47 +7,25 @@
   xmlns:formengine="csrdreporting.formengine"
   xmlns:ce="sap.ui.codeeditor">
   <Page
-    id="page"
+    backgroundDesign="List"
     title="{i18n>FormBuilder_Title}"
     showNavButton="true"
     navButtonPress="navBack"
-    busy="{= ${state>/formSchemaQuery/isLoading}}">
+    busy="{= ${state>/formSchemaQuery/isLoading} }">
     <layout:ResponsiveSplitter defaultPane="formEngine">
       <layout:PaneContainer>
-        <layout:SplitPane id="formEngine">
-          <VBox>
-            <OverflowToolbar>
-              <Label text="{= ${state>/currentPage/title} || ${state>/currentPage/id} }" />
-              <ToolbarSpacer />
-              <Button
-                text="{i18n>FormBuilder_PreviousPage}"
-                enabled="{state>/canGoBackward}"
-                press="onPreviousPagePress"
-              />
-              <Button
-                text="{i18n>FormBuilder_NextPage}"
-                enabled="{state>/canGoForward}"
-                visible="{= !${state>/canSubmit} }"
-                press="onNextPagePress"
-              />
-              <Button text="{i18n>FormBuilder_Submit}" visible="{state>/canSubmit}" press="onSubmitPress" />
-            </OverflowToolbar>
-            <formengine:FormEngine class="sapUiResponsiveMargin" formEngineContext="{state>/}" />
-          </VBox>
+        <layout:SplitPane id="pages">
+          <mvc:XMLView class="h-100" viewName="csrdreporting.view.FormBuilderPageArea" />
         </layout:SplitPane>
-        <layout:SplitPane>
-          <IconTabBar applyContentPadding="false" stretchContentHeight="true" class="form-builder-icon-bar">
-            <items>
-              <IconTabFilter key="schema" text="{i18n>FormBuilder_SchemaTab}">
-                <ce:CodeEditor type="json" value="{state>/schemaJson}" />
-              </IconTabFilter>
-              <IconTabFilter key="state" text="{i18n>FormBuilder_StateTab}">
-                <ce:CodeEditor type="json" value="{state>/stateJson}" />
-              </IconTabFilter>
-            </items>
-          </IconTabBar>
+        <layout:SplitPane id="formEngine">
+          <mvc:XMLView class="h-100" viewName="csrdreporting.view.FormBuilderPreviewArea" />
+        </layout:SplitPane>
+        <layout:SplitPane id="properties">
+          <mvc:XMLView class="h-100" viewName="csrdreporting.view.FormBuilderPropertiesArea" />
         </layout:SplitPane>
       </layout:PaneContainer>
     </layout:ResponsiveSplitter>
+
+    <mvc:XMLView viewName="csrdreporting.view.FormBuilderAddElementDialog" />
   </Page>
 </mvc:View>

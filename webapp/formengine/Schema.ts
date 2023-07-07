@@ -172,7 +172,7 @@ export interface ChoiceOption {
  * Single checkbox
  */
 export interface CheckboxFormSchemaElement extends DynamicFormSchemaElement<'checkbox'> {
-  option: ChoiceOption;
+  text: string;
 }
 
 /**

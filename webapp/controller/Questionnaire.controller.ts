@@ -71,6 +71,7 @@ export default class QuestionnaireController extends BaseController {
             formSchemaQuery,
             state,
           } = get();
+
           if (formSchemaResultId) {
             return updateFormSchemaResultEntity(formSchemaResultId, {
               FormSchemaId: formSchemaQuery.data!.Id,

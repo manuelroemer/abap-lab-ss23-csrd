@@ -58,7 +58,7 @@
                     <HBox>
                       <core:Icon size="3rem" src="sap-icon://database" class="sapUiSmallMargin" />
                       <VBox alignItems="Start" justifyContent="Center" width="100%">
-                        <Title text="FormSchema Management" level="H1" />
+                        <Title text="Questionnaire Management" level="H1" />
                         <Label text="Create and edit FormSchemas" />
                       </VBox>
                     </HBox>

@@ -87,7 +87,6 @@ export default class FormSchemaManagementController extends BaseController {
   async onCreateFormSchemaPress() {
     try {
       const formSchema = (await this.state.get().createFormSchemaMutation.fetch(undefined)) as any;
-      console.log(formSchema);
       this.navToFormBuilder(formSchema?.Id);
     } catch (e) {
       console.error('Error while creating a form schema: ', e);

@@ -7,7 +7,7 @@
   xmlns:grid="sap.ui.layout.cssgrid"
   controllerName="csrdreporting.controller.CustomerManagement"
   height="100%">
-  <Page showFooter="true" showNavButton="true" navButtonPress="navBack" navButtonTooltip="Back">
+  <Page showFooter="true" showNavButton="true" navButtonPress="navBack">
     <content>
       <layout:FixFlex class="fixFlexVertical">
         <layout:fixContent>

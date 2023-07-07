@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import { FormSchema } from './Schema';
 
 export const csrdSchema: FormSchema = {
