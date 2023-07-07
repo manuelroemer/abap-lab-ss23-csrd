@@ -37,7 +37,7 @@ export interface FormBuilderState
  * Creates the state container for the entire form builder page.
  */
 export function createFormBuilderState() {
-  return createState<FormBuilderState>(({ get, set, state }) => ({
+  return createState<FormBuilderState>(({ get, state }) => ({
     ...createFormBuilderFormEngineSlice(state),
     ...createFormBuilderPageAreaSlice(state),
     ...createFormBuilderPreviewAreaSlice(state),
