@@ -14,29 +14,51 @@ import {
   FormBuilderStateAddElementDialogSlice,
   createFormBuilderAddElementDialogSlice,
 } from './State.AddElementDialog';
+import { RouterState } from '../utils/StateRouter';
+import { QueryState, createQuery } from '../utils/StateQuery';
+import { FormSchemaEntity, getFormSchemaEntity } from '../api/FormSchemaEntity';
 
 /**
  * Represents the internal state of the form builder page.
  */
 export interface FormBuilderState
-  extends FormBuilderStateFormEngineSlice,
+  extends RouterState<{ formSchemaId: string }>,
+    FormBuilderStateFormEngineSlice,
     FormBuilderStatePageAreaSlice,
     FormBuilderStatePreviewAreaSlice,
     FormBuilderStatePagePropertiesAreaSlice,
     FormBuilderStateElementPropertiesAreaSlice,
-    FormBuilderStateAddElementDialogSlice {}
+    FormBuilderStateAddElementDialogSlice {
+  // TODO: Extract into custom state slice.
+  formSchemaQuery: QueryState<string, FormSchemaEntity>;
+}
 
 /**
  * Creates the state container for the entire form builder page.
  */
 export function createFormBuilderState() {
-  return createState<FormBuilderState>(({ state }) => ({
+  return createState<FormBuilderState>(({ get, set, state }) => ({
     ...createFormBuilderFormEngineSlice(state),
     ...createFormBuilderPageAreaSlice(state),
     ...createFormBuilderPreviewAreaSlice(state),
     ...createFormBuilderPagePropertiesAreaSlice(state),
     ...createFormBuilderElementPropertiesAreaSlice(state),
     ...createFormBuilderAddElementDialogSlice(state),
+
+    // TODO: Extract into custom state slice.
+    parameters: {},
+    query: {},
+    formSchemaQuery: createQuery({
+      state,
+      key: 'formSchemaQuery',
+      getArgs: (state: FormBuilderState) => state.parameters.formSchemaId,
+      fetch: (id: string) => getFormSchemaEntity(id),
+      onSuccess(formSchema) {
+        const { setSchema } = get();
+        setSchema(JSON.parse(formSchema.SchemaJson));
+        set({ schemaJson: JSON.stringify(formSchema.SchemaJson, null, 4) });
+      },
+    }),
   }));
 }
 

@@ -4,8 +4,8 @@ import Dialog from 'sap/m/SelectDialog';
 import Filter from 'sap/ui/model/Filter';
 
 export default class MainController extends BaseController {
-  navToFormBuilder() {
-    this.router.navTo('FormBuilder');
+  navToFormSchemaManagement() {
+    this.router.navTo('FormSchemaManagement');
   }
 
   navToQuestionnaire() {
