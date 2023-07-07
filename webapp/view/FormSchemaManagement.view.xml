@@ -37,7 +37,10 @@
                         <Label text="Create a new questionnaire." />
                       </VBox>
                     </HBox>
-                    <Text text="Here you can create a new questionnaire with the form builder." class="sapUiTinyMargin" />
+                    <Text
+                      text="Here you can create a new questionnaire with the form builder."
+                      class="sapUiTinyMargin"
+                    />
                   </VBox>
                 </f:GridListItem>
                 <f:GridListItem type="Active" press="onSelectDialogPress">
