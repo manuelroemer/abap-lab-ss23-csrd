@@ -103,7 +103,7 @@
                       <core:Icon size="4rem" src="sap-icon://manager-insight" class="sapUiSmallMargin" />
                       <VBox alignItems="Start" justifyContent="Center" width="100%">
                         <HBox>
-                          <Title text="Questionnaires" level="H1" />
+                          <Title text="{= !!${svc>Name} ? ${svc>Name} : 'Questionnaire'}" level="H1" wrapping="true" />
                           <ObjectStatus
                             class="sapUiTinyMarginBegin"
                             text="Draft"
@@ -112,8 +112,9 @@
                             visible="{= ${svc>IsDraft}}"
                           />
                         </HBox>
-                        <Label text="Type: {svc>Type}" />
-                        <Label text="Version: {svc>Version}" />
+                        <Label text="Description: {svc>Description}" wrapping="true" />
+                        <Label text="Type: {svc>Type}" wrapping="true" />
+                        <Label text="Version: {svc>Version}" wrapping="true" />
                         <Label text="Created: {path: 'svc>CreatedAt', type: 'sap.ui.model.type.DateTime'}" />
                       </VBox>
 

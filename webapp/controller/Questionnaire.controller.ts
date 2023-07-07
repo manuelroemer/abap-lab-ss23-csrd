@@ -84,6 +84,7 @@ export default class QuestionnaireController extends BaseController {
               FormSchemaId: formSchemaQuery.data!.Id,
               MetadataJson: '{}',
               ResultJson: JSON.stringify(state),
+              IsDraft: true,
             });
           }
         },

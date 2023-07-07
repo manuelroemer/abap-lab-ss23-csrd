@@ -38,6 +38,8 @@ export default class FormSchemaManagementController extends BaseController {
           SchemaJson: formSchemaTemplate?.SchemaJson ?? '{}',
           MetadataJson: formSchemaTemplate?.MetadataJson ?? '{}',
           IsDraft: true,
+          Name: formSchemaTemplate?.Name ?? '',
+          Description: formSchemaTemplate?.Name ?? '',
         }),
     }),
   }));

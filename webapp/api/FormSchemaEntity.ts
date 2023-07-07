@@ -10,6 +10,8 @@ export interface FormSchemaEntity extends Entity {
   SchemaJson: string;
   MetadataJson: string;
   IsDraft: boolean;
+  Name: string;
+  Description: string;
 }
 
 /**
@@ -20,6 +22,8 @@ export interface FormSchemaEntityCreate extends EntityCreate {
   SchemaJson: string;
   MetadataJson: string;
   IsDraft: boolean;
+  Name: string;
+  Description: string;
 }
 
 /**
@@ -29,6 +33,8 @@ export interface FormSchemaEntityUpdate extends EntityUpdate {
   SchemaJson?: string;
   MetadataJson?: string;
   IsDraft?: boolean;
+  Name?: string;
+  Description?: string;
 }
 
 const api = createStandardODataApi<FormSchemaEntity, FormSchemaEntityCreate, FormSchemaEntityUpdate>('/FormSchemaSet');
