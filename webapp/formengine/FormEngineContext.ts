@@ -127,7 +127,7 @@ export function createFormEngineContext({ get, set }: State<FormEngineContext>, 
     const canGoBackward = previousPageIndex >= 0;
     const canSubmit = isLastPage;
 
-    const currentPageValidationErrors = currentPage ? getValidationErrorsForPage(currentPage, state) : [];
+    const currentPageValidationErrors = currentPage ? getValidationErrorsForPage(currentPage, page, state) : [];
 
     return {
       ...context,

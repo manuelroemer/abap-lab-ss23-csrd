@@ -1,18 +1,26 @@
 import { isExpressionTruthy } from './Expressions';
 import { FormEngineState } from './FormEngineContext';
 import { evaluateRules } from './Rules';
-import { DynamicFormSchemaElement, FormSchemaElement, FormSchemaPage } from './Schema';
+import { DynamicFormSchemaElement, FormSchemaElement, FormSchemaPage, generateId } from './Schema';
 
 export interface ValidationError {
   elementId: string;
   message: string;
 }
 
-export function getValidationErrorsForPage(page: FormSchemaPage, state: FormEngineState): Array<ValidationError> {
-  return page.elements.flatMap((element) => getValidationErrorsForElement(element, state));
+export function getValidationErrorsForPage(
+  page: FormSchemaPage,
+  pageIndex: number,
+  state: FormEngineState,
+): Array<ValidationError> {
+  return page.elements.flatMap((element, elementIndex) =>
+    getValidationErrorsForElement(elementIndex, pageIndex, element, state),
+  );
 }
 
 export function getValidationErrorsForElement(
+  elementIndex: number,
+  pageIndex: number,
   element: FormSchemaElement,
   state: FormEngineState,
 ): Array<ValidationError> {
@@ -23,16 +31,20 @@ export function getValidationErrorsForElement(
   }
 
   if (isRequiredElement(element)) {
-    const elementValue = state[element.id];
+    const id = element.id ?? generateId(pageIndex, elementIndex);
+    const elementValue = state[id];
+
     if (isEffectivelyEmpty(elementValue)) {
-      errors.push({ elementId: element.id, message: 'This field is required.' });
+      errors.push({ elementId: id, message: 'This field is required.' });
     }
   }
 
   if (isValidatableElement(element)) {
+    const id = element.id ?? generateId(pageIndex, elementIndex);
+
     for (const rule of element.validationRules) {
       if (!isExpressionTruthy(rule.condition, state)) {
-        errors.push({ elementId: element.id, message: rule.message });
+        errors.push({ elementId: id, message: rule.message });
       }
     }
   }

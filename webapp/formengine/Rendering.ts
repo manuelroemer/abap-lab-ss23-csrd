@@ -20,6 +20,7 @@ import {
   NumberStepInputFormSchemaElement,
   SingleChoiceSelectFormSchemaElement,
   DateTimeFormSchemaElement,
+  generateId,
 } from './Schema';
 import { FormEngineContext } from './FormEngineContext';
 import RadioButtonGroup from 'sap/m/RadioButtonGroup';
@@ -329,8 +330,4 @@ function renderDynamicElementWrapper(
   });
 
   return container;
-}
-
-function generateId(pageIndex: number, elementIndex: number) {
-  return `page-${pageIndex}-element-${elementIndex}`;
 }
