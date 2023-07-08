@@ -104,7 +104,7 @@ export interface DynamicFormSchemaElement<TType extends string> extends FormSche
    * A unique identifier for this element.
    * This must be unique within the form schema as it is used for generating the form engine's state.
    */
-  id: string;
+  id?: string;
   /**
    * Whether the user must enter data for this element.
    * The default is `false`.
@@ -146,7 +146,7 @@ export interface FormSchemaElementValidationRules {
  * Renders a heading.
  */
 export interface HeadingFormSchemaElement extends StaticFormSchemaElement<'heading'> {
-  text: string;
+  text?: string;
   level?: 1 | 2 | 3 | 4 | 5 | 6;
   wrap?: boolean;
 }
@@ -155,7 +155,7 @@ export interface HeadingFormSchemaElement extends StaticFormSchemaElement<'headi
  * Renders arbitrary text.
  */
 export interface TextFormSchemaElement extends StaticFormSchemaElement<'text'> {
-  text: string;
+  text?: string;
 }
 
 export interface TextInputFormSchemaElement extends DynamicFormSchemaElement<'text-input'> {
@@ -164,7 +164,7 @@ export interface TextInputFormSchemaElement extends DynamicFormSchemaElement<'te
 }
 
 export interface ChoiceOption {
-  value: string;
+  value?: string;
   display?: string;
 }
 
@@ -172,14 +172,14 @@ export interface ChoiceOption {
  * Single checkbox
  */
 export interface CheckboxFormSchemaElement extends DynamicFormSchemaElement<'checkbox'> {
-  text: string;
+  text?: string;
 }
 
 /**
  * RadioButtons with multiple options
  */
 export interface SingleChoiceFormSchemaElement extends DynamicFormSchemaElement<'single-choice'> {
-  options: Array<ChoiceOption>;
+  options?: Array<ChoiceOption>;
   columns?: number;
 }
 
@@ -187,14 +187,14 @@ export interface SingleChoiceFormSchemaElement extends DynamicFormSchemaElement<
  * Select with multiple options
  */
 export interface SingleChoiceSelectFormSchemaElement extends DynamicFormSchemaElement<'single-choice-select'> {
-  options: Array<ChoiceOption>;
+  options?: Array<ChoiceOption>;
 }
 
 /**
  * Checkboxes
  */
 export interface MultiChoiceFormSchemaElement extends DynamicFormSchemaElement<'multi-choice'> {
-  options: Array<ChoiceOption>;
+  options?: Array<ChoiceOption>;
 }
 
 /**

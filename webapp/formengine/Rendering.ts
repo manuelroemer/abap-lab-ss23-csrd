@@ -38,6 +38,7 @@ import MessageStrip from 'sap/m/MessageStrip';
 type RenderFormSchemaElement<T extends FormSchemaElement = FormSchemaElement> = (
   element: T,
   context: FormEngineContext,
+  elementIndex: number,
 ) => Control;
 
 type RenderLookup = {
@@ -76,7 +77,7 @@ export function render<T extends FormSchemaElement>(
   // For such cases, we do a `safeRender` which catches errors and displays an error message per failed
   // element instead of tearing down the entire page rendering process.
   const renderer = elementRenderers[element.type] as RenderFormSchemaElement;
-  const rawControl = safeRender(renderer, element, context);
+  const rawControl = safeRender(renderer, element, context, elementIndex);
   const control = context.onRenderElement(element, context, rawControl, elementIndex);
 
   const { hide } = evaluateRules(element, context.state);
@@ -89,9 +90,14 @@ export function render<T extends FormSchemaElement>(
   return control;
 }
 
-function safeRender(renderer: RenderFormSchemaElement, element: FormSchemaElement, context: FormEngineContext) {
+function safeRender(
+  renderer: RenderFormSchemaElement,
+  element: FormSchemaElement,
+  context: FormEngineContext,
+  elementIndex: number,
+) {
   try {
-    return renderer(element, context);
+    return renderer(element, context, elementIndex);
   } catch (e: any) {
     return renderError(`An error occured while rendering the element of type "${element.type}": ${e.message}`);
   }
@@ -109,29 +115,31 @@ export function renderError(message: string) {
   });
 }
 
-function renderHeading({ text, level = 2, wrap = true }: HeadingFormSchemaElement) {
+function renderHeading({ text = '', level = 2, wrap = true }: HeadingFormSchemaElement) {
   return new Title({ text, level: `H${level}`, titleStyle: `H${level}`, wrapping: wrap });
 }
 
-function renderText({ text }: TextFormSchemaElement) {
+function renderText({ text = '' }: TextFormSchemaElement) {
   return new FormattedText({ htmlText: text });
 }
 
-function renderTextInput(element: TextInputFormSchemaElement, context: FormEngineContext) {
-  const { id, placeholder, rows = 1 } = element;
-  const { getValue, setValue } = context;
-  const value = getValue(element.id)?.toString() ?? '';
+function renderTextInput(element: TextInputFormSchemaElement, context: FormEngineContext, elementIndex: number) {
+  const { page, getValue, setValue } = context;
+  const { id = generateId(page, elementIndex), placeholder = '', rows = 1 } = element;
+  const value = getValue(id)?.toString() ?? '';
   const onChange = (e: Event) => setValue(id, e.getParameter('value'));
+
   const input =
     rows > 1
       ? new Input({ width: '100%', placeholder, value, change: onChange })
       : new TextArea({ width: '100%', placeholder, rows, value, change: onChange });
-  return renderDynamicElementWrapper(element, input, context);
+
+  return renderDynamicElementWrapper(element, input, context, elementIndex);
 }
 
-function renderCheckbox(element: CheckboxFormSchemaElement, context: FormEngineContext) {
-  const { id, text } = element;
-  const { state, setState } = context;
+function renderCheckbox(element: CheckboxFormSchemaElement, context: FormEngineContext, elementIndex: number) {
+  const { page, state, setState } = context;
+  const { id = generateId(page, elementIndex), text } = element;
 
   const checkBox = new CheckBox({
     text,
@@ -143,13 +151,14 @@ function renderCheckbox(element: CheckboxFormSchemaElement, context: FormEngineC
       }),
   });
 
-  return renderDynamicElementWrapper(element, checkBox, context);
+  return renderDynamicElementWrapper(element, checkBox, context, elementIndex);
 }
 
-function renderSingleChoice(element: SingleChoiceFormSchemaElement, context: FormEngineContext) {
-  const { id, options, columns = 1 } = element;
-  const { getValue, setValue } = context;
-  const value = getValue(element.id) ?? '';
+function renderSingleChoice(element: SingleChoiceFormSchemaElement, context: FormEngineContext, elementIndex: number) {
+  const { page, getValue, setValue } = context;
+  const { id = generateId(page, elementIndex), options = [], columns = 1 } = element;
+  const value = getValue(id) ?? '';
+
   const onSelect = (e: Event) => {
     const selectedIndex = e.getParameter('selectedIndex');
     const selectedOption = options[selectedIndex];
@@ -163,13 +172,18 @@ function renderSingleChoice(element: SingleChoiceFormSchemaElement, context: For
     buttons: options.map((option) => new RadioButton({ text: option.display ?? option.value })),
   });
 
-  return renderDynamicElementWrapper(element, input, context);
+  return renderDynamicElementWrapper(element, input, context, elementIndex);
 }
 
-function renderSingleChoiceSelect(element: SingleChoiceSelectFormSchemaElement, context: FormEngineContext) {
-  const { id, options } = element;
-  const { getValue, setValue } = context;
-  const value = getValue(element.id) ?? '';
+function renderSingleChoiceSelect(
+  element: SingleChoiceSelectFormSchemaElement,
+  context: FormEngineContext,
+  elementIndex: number,
+) {
+  const { page, getValue, setValue } = context;
+  const { id = generateId(page, elementIndex), options = [] } = element;
+  const value = getValue(id) ?? '';
+
   const onSelect = (e: Event) => {
     const selectedItemKey = e.getParameter('selectedItem').getKey();
     const selectedOption = options.find((option) => option.value === selectedItemKey);
@@ -188,13 +202,13 @@ function renderSingleChoiceSelect(element: SingleChoiceSelectFormSchemaElement, 
     items,
   });
 
-  return renderDynamicElementWrapper(element, input, context);
+  return renderDynamicElementWrapper(element, input, context, elementIndex);
 }
 
-function renderMultiChoice(element: MultiChoiceFormSchemaElement, context: FormEngineContext) {
-  const { id, options } = element;
-  const { state, setState } = context;
-  const value = (state[element.id] as Array<string>) ?? [];
+function renderMultiChoice(element: MultiChoiceFormSchemaElement, context: FormEngineContext, elementIndex: number) {
+  const { page, state, setState, getValue } = context;
+  const { id = generateId(page, elementIndex), options = [] } = element;
+  const value = (getValue(id) as Array<string>) ?? [];
 
   const items = options.map((option) => {
     const onSelect = (e: Event) => {
@@ -208,22 +222,28 @@ function renderMultiChoice(element: MultiChoiceFormSchemaElement, context: FormE
 
     return new CheckBox({
       text: option.display ?? option.value,
-      selected: value.includes(option.value),
+      selected: value.includes(option.value ?? ''),
       select: onSelect,
     });
   });
 
   const container = new VBox({ items: items });
-  return renderDynamicElementWrapper(element, container, context);
+  return renderDynamicElementWrapper(element, container, context, elementIndex);
 }
 
-function renderBooleanChoice(element: BooleanChoiceFormSchemaElement, context: FormEngineContext) {
-  const { id, columns = 1 } = element;
+function renderBooleanChoice(
+  element: BooleanChoiceFormSchemaElement,
+  context: FormEngineContext,
+  elementIndex: number,
+) {
+  const { page, getValue, setValue } = context;
+  const { id = generateId(page, elementIndex), columns = 1 } = element;
   const options = ['Yes', 'No'];
-  const { getValue, setValue } = context;
-  const value = getValue(element.id);
+
+  const value = getValue(id);
   const hasValue = typeof value === 'boolean';
   const onSelect = (e: Event) => setValue(id, e.getParameter('selectedIndex') === 0);
+
   const inputs = new RadioButtonGroup({
     columns: columns,
     select: onSelect,
@@ -231,13 +251,18 @@ function renderBooleanChoice(element: BooleanChoiceFormSchemaElement, context: F
     buttons: options.map((option) => new RadioButton({ text: option })),
   });
 
-  return renderDynamicElementWrapper(element, inputs, context);
+  return renderDynamicElementWrapper(element, inputs, context, elementIndex);
 }
 
-function renderNumberInput(element: NumberStepInputFormSchemaElement, context: FormEngineContext) {
-  const { id, min, max, stepperDescription } = element;
-  const { getValue, setValue } = context;
-  const value = getValue(element.id) as number;
+function renderNumberInput(
+  element: NumberStepInputFormSchemaElement,
+  context: FormEngineContext,
+  elementIndex: number,
+) {
+  const { page, getValue, setValue } = context;
+  const { id = generateId(page, elementIndex), min, max, stepperDescription } = element;
+
+  const value = getValue(id) as number;
   const onChange = (e: Event) => setValue(id, e.getParameter('value'));
   const input = new StepInput({
     width: '100%',
@@ -248,24 +273,34 @@ function renderNumberInput(element: NumberStepInputFormSchemaElement, context: F
     change: onChange,
   });
 
-  return renderDynamicElementWrapper(element, input, context);
+  return renderDynamicElementWrapper(element, input, context, elementIndex);
 }
 
-function renderDateTime(element: DateTimeFormSchemaElement, context: FormEngineContext) {
-  const { id } = element;
-  const { getValue, setValue } = context;
-  const value = getValue(element.id) as string;
+function renderDateTime(element: DateTimeFormSchemaElement, context: FormEngineContext, elementIndex: number) {
+  const { page, getValue, setValue } = context;
+  const { id = generateId(page, elementIndex) } = element;
+
+  const value = getValue(id) as string;
   const onChange = (e: Event) => setValue(id, e.getParameter('value'));
   const input = new DateTimePicker({ width: '100%', value: value, change: onChange });
-  return renderDynamicElementWrapper(element, input, context);
+
+  return renderDynamicElementWrapper(element, input, context, elementIndex);
 }
 
 function renderDynamicElementWrapper(
   element: DynamicFormSchemaElement<string>,
   innerControl: Control,
   context: FormEngineContext,
+  elementIndex: number,
 ) {
-  const { id, label, description = '', helperText = '', required = false } = element;
+  const { page } = context;
+  const {
+    id = generateId(page, elementIndex),
+    label = '',
+    description = '',
+    helperText = '',
+    required = false,
+  } = element;
 
   // Validation: If validation errors are to be shown, we can make the changes here.
   // We can usually just leverage SAPUI's value state for appending validation info.
@@ -294,4 +329,8 @@ function renderDynamicElementWrapper(
   });
 
   return container;
+}
+
+function generateId(pageIndex: number, elementIndex: number) {
+  return `page-${pageIndex}-element-${elementIndex}`;
 }
