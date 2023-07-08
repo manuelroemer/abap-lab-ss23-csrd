@@ -1,4 +1,5 @@
 <mvc:View
+  xmlns:core="sap.ui.core"
   xmlns:layout="sap.ui.layout"
   controllerName="csrdreporting.controller.FormBuilderElementPropertiesArea"
   xmlns:mvc="sap.ui.core.mvc"
@@ -12,9 +13,35 @@
 
       <VBox visible="{= !!${state>/elementToEdit} }">
         <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('id') }">
-          <Label text="ID" required="true" />
+          <Label text="ID" />
           <Input value="{state>/elementToEdit/id}" />
           <Text text="A unique identifier of the element." />
+        </VBox>
+
+        <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('marginTop') }">
+          <Label text="Top Margin" />
+          <Select selectedKey="{state>/elementToEdit/marginTop}" width="100%">
+            <core:ListItem enabled="false" />
+            <core:ListItem key="None" text="None" />
+            <core:ListItem key="Tiny" text="Tiny" />
+            <core:ListItem key="Small" text="Small" />
+            <core:ListItem key="Medium" text="Medium" />
+            <core:ListItem key="Large" text="Large" />
+          </Select>
+          <Text text="The element's top margin." />
+        </VBox>
+
+        <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('marginBottom') }">
+          <Label text="Bottom Margin" />
+          <Select selectedKey="{state>/elementToEdit/marginBottom}" width="100%">
+            <core:ListItem enabled="false" />
+            <core:ListItem key="None" text="None" />
+            <core:ListItem key="Tiny" text="Tiny" />
+            <core:ListItem key="Small" text="Small" />
+            <core:ListItem key="Medium" text="Medium" />
+            <core:ListItem key="Large" text="Large" />
+          </Select>
+          <Text text="The element's bottom margin." />
         </VBox>
 
         <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('required') }">

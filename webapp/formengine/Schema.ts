@@ -86,10 +86,23 @@ export interface FormSchemaElementBase<TType extends string> {
    */
   type: TType;
   /**
+   * The element's top margin.
+   */
+  marginTop?: Margin;
+  /**
+   * The element's bottom margin.
+   */
+  marginBottom?: Margin;
+  /**
    * Rules that are automatically evaluated before the element is rendered, e.g., to hide the element.
    */
   effects?: Array<FormSchemaElementEffect>;
 }
+
+/**
+ * Defines different margins.
+ */
+export type Margin = 'None' | 'Tiny' | 'Small' | 'Medium' | 'Large';
 
 /**
  * A base type for any form schema element that does **not** allow any kind of data input and/or modification.

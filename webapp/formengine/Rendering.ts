@@ -21,6 +21,7 @@ import {
   SingleChoiceSelectFormSchemaElement,
   DateTimeFormSchemaElement,
   generateId,
+  Margin,
 } from './Schema';
 import { FormEngineContext } from './FormEngineContext';
 import RadioButtonGroup from 'sap/m/RadioButtonGroup';
@@ -86,7 +87,14 @@ export function render<T extends FormSchemaElement>(
     control.setVisible(false);
   }
 
-  control.addStyleClass('sapUiSmallMarginBottom');
+  const { marginTop = 'None', marginBottom = 'Small' } = element;
+  if (marginTop && marginTop !== 'None') {
+    control.addStyleClass(`sapUi${marginTop}MarginTop`);
+  }
+
+  if (marginBottom && marginBottom !== 'None') {
+    control.addStyleClass(`sapUi${marginTop}MarginBottom`);
+  }
 
   return control;
 }
