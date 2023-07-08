@@ -65,12 +65,12 @@ export function createFormBuilderElementPropertiesAreaSlice({
   set,
   watch,
 }: State<FormBuilderState>): FormBuilderStateElementPropertiesAreaSlice {
+  // When the user updates `elementToEdit` (via the UI), the change needs to be merged
+  // back into the schema.
   watch(
-    (s) => s.elementToEdit,
-    ({ elementToEdit, elementToEditIndex }) => {
+    (s) => [s.elementToEdit],
+    ({ page, schema, elementToEdit, elementToEditIndex, setSchema }) => {
       if (elementToEdit && typeof elementToEditIndex === 'number') {
-        const { page, schema, setSchema } = get();
-
         setSchema(
           updateElement(schema, page, elementToEditIndex, (element) => ({
             ...element,
@@ -79,6 +79,14 @@ export function createFormBuilderElementPropertiesAreaSlice({
         );
       }
     },
+  );
+
+  // It's possible to update the schema via other sources, e.g., the JSON editor.
+  // When the current element is edited, the change needs to be reflected into `elementToEdit`,
+  // otherwise it contains stale data.
+  watch(
+    (s) => s.schema,
+    ({ setElementToEdit, elementToEditIndex }) => setElementToEdit(elementToEditIndex),
   );
 
   return {
