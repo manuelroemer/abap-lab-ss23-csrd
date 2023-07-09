@@ -10,12 +10,8 @@
     </VBox>
 
     <VBox visible="{= !!${state>/pageToEdit} }">
-      <Label text="ID" required="true" />
-      <Input value="{state>/pageToEdit/id}" required="true" />
-      <Text text="A unique identifier of the page." />
-
       <Label text="Title" class="sapUiSmallMarginTop" />
-      <Input value="{state>/pageToEdit/title}" required="true" />
+      <Input value="{state>/pageToEdit/title}" />
       <Text text="The page's title." />
     </VBox>
   </VBox>

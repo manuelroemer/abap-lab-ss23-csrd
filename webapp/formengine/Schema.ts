@@ -48,11 +48,6 @@ export interface FormSchema {
  */
 export interface FormSchemaPage {
   /**
-   * A unique identifier of the page.
-   * This must be unique within the form schema.
-   */
-  id: string;
-  /**
    * The pages title, for display.
    */
   title?: string;

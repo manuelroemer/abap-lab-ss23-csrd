@@ -3,7 +3,6 @@ import { FormSchema } from './Schema';
 export const demoFormSchema: FormSchema = {
   pages: [
     {
-      id: 'all-controls',
       title: 'All Controls',
       elements: [
         {
@@ -102,7 +101,6 @@ export const demoFormSchema: FormSchema = {
       ],
     },
     {
-      id: 'conditional-panda-page',
       title: 'The Panda',
       effects: [
         {
@@ -126,7 +124,6 @@ export const demoFormSchema: FormSchema = {
       ],
     },
     {
-      id: 'expression-test',
       title: 'Expression-Test',
       elements: [
         {

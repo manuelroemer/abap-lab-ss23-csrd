@@ -19,7 +19,6 @@ export function createFormBuilderPageAreaSlice({ get, set }: State<FormBuilderSt
         updatePages(schema, (pages) => [
           ...pages,
           {
-            id: `Page ${pages.length + 1}`,
             title: 'New Page',
             elements: [],
           },

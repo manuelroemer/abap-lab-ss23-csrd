@@ -31,7 +31,6 @@ export function createFormBuilderPagePropertiesAreaSlice({
         setSchema(
           updatePage(schema, page, (pageToUpdate) => ({
             ...pageToUpdate,
-            id: pageToEdit.id,
             title: pageToEdit.title,
           })),
         );

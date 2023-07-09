@@ -15,7 +15,6 @@ export function generateId(pageIndex: number, elementIndex: number) {
 export const emptySchema: FormSchema = {
   pages: [
     {
-      id: 'page-1',
       elements: [],
     },
   ],

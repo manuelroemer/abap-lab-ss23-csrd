@@ -15,7 +15,7 @@
       <uxap:headerTitle>
         <uxap:ObjectPageHeader
           objectTitle="Questionnaire"
-          objectSubtitle="{= ${state>/currentPage/title} || ${state>/currentPage/id} }"
+          objectSubtitle="{= ${state>/currentPage/title} }"
         />
       </uxap:headerTitle>
 

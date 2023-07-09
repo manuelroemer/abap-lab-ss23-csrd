@@ -35,7 +35,7 @@
         mode="SingleSelectMaster"
         includeItemInSelection="true"
         selectionChange="onPageSelectionChange">
-        <StandardListItem title="{= ${state>title} || '--' }" description="{= ${state>id} || '--' }" />
+        <StandardListItem title="{= ${state>title} || '--' }" description="{state>elements/length} element(s)" />
       </List>
     </content>
   </Page>
