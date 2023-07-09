@@ -10,7 +10,7 @@ export interface FormBuilderStatePageAreaSlice {
   moveSelectedPageDown(): void;
 }
 
-export function createFormBuilderPageAreaSlice({ get }: State<FormBuilderState>): FormBuilderStatePageAreaSlice {
+export function createFormBuilderPageAreaSlice({ get, set }: State<FormBuilderState>): FormBuilderStatePageAreaSlice {
   return {
     addPage() {
       const { schema, setSchema, setPage } = get();
@@ -26,8 +26,9 @@ export function createFormBuilderPageAreaSlice({ get }: State<FormBuilderState>)
         ]),
       );
 
-      // Auto-select the new page.
+      // Auto-select the new page. Show the page tab.
       setPage(get().schema.pages.length - 1);
+      set({ selectedTab: 'page' });
     },
 
     removeSelectedPage() {

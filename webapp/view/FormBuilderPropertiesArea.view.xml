@@ -11,7 +11,7 @@
       applyContentPadding="false"
       stretchContentHeight="true"
       class="form-builder-icon-bar"
-      selectedKey="element">
+      selectedKey="{state>/selectedTab}">
       <items>
         <IconTabFilter key="questionnaire" text="Questionnaire">
           <mvc:XMLView class="h-100" viewName="csrdreporting.view.FormBuilderQuestionnairePropertiesArea" />

@@ -100,10 +100,14 @@ export function createFormBuilderElementPropertiesAreaSlice({
       const elementToEditProperties = formSchemaElementProperties[elementToEdit?.type ?? ''] ?? [];
 
       set({
-        elementToEdit: typeof index === 'number' ? currentPage?.elements?.[index] : undefined,
         elementToEditIndex: index,
+        elementToEdit,
         elementToEditProperties,
       });
+
+      if (elementToEdit) {
+        set({ selectedTab: 'element' });
+      }
     },
 
     addChoiceOption() {

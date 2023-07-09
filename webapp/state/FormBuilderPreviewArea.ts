@@ -30,7 +30,7 @@ export interface FormBuilderStatePreviewAreaSlice {
 export function createFormBuilderPreviewAreaSlice({ get }: State<FormBuilderState>): FormBuilderStatePreviewAreaSlice {
   return {
     addElement(index, element) {
-      const { page, schema, setSchema } = get();
+      const { page, schema, setSchema, setElementToEdit } = get();
 
       setSchema(
         updateElements(schema, page, (elements) => {
@@ -39,6 +39,8 @@ export function createFormBuilderPreviewAreaSlice({ get }: State<FormBuilderStat
           return next;
         }),
       );
+
+      setElementToEdit(index);
     },
 
     moveElementUp(index) {

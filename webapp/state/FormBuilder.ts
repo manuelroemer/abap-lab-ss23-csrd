@@ -21,6 +21,10 @@ import {
   FormBuilderStateQuestionnairePropertiesAreaSlice,
   createFormBuilderQuestionnairePropertiesAreaSlice,
 } from './FormBuilderQuestionnairePropertiesArea';
+import {
+  FormBuilderStatePropertiesAreaSlice,
+  createFormBuilderStatePropertiesAreaSlice,
+} from './FormBuilderPropertiesArea';
 
 /**
  * Represents the internal state of the form builder page.
@@ -31,6 +35,7 @@ export interface FormBuilderState
     FormBuilderStatePageAreaSlice,
     FormBuilderStatePreviewAreaSlice,
     FormBuilderStateQuestionnairePropertiesAreaSlice,
+    FormBuilderStatePropertiesAreaSlice,
     FormBuilderStatePagePropertiesAreaSlice,
     FormBuilderStateElementPropertiesAreaSlice,
     FormBuilderStateAddElementDialogSlice {
@@ -41,7 +46,7 @@ export interface FormBuilderState
  * Creates the state container for the entire form builder page.
  */
 export function createFormBuilderState() {
-  return createState<FormBuilderState>(({ get, state }) => ({
+  return createState<FormBuilderState>(({ get, set, state }) => ({
     parameters: {},
     query: {},
 
@@ -49,6 +54,7 @@ export function createFormBuilderState() {
     ...createFormBuilderPageAreaSlice(state),
     ...createFormBuilderPreviewAreaSlice(state),
     ...createFormBuilderQuestionnairePropertiesAreaSlice(state),
+    ...createFormBuilderStatePropertiesAreaSlice(state),
     ...createFormBuilderPagePropertiesAreaSlice(state),
     ...createFormBuilderElementPropertiesAreaSlice(state),
     ...createFormBuilderAddElementDialogSlice(state),
@@ -62,6 +68,7 @@ export function createFormBuilderState() {
         const { setSchema, setPage } = get();
         setSchema(JSON.parse(formSchema.SchemaJson));
         setPage(0);
+        set({ selectedTab: 'questionnaire' });
       },
     }),
   }));
