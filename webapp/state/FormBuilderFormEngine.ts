@@ -67,6 +67,7 @@ export function createFormBuilderFormEngineSlice({
       set({
         onBeforeRender: isPreviewModeEnabled ? undefined : onBeforeRender,
         onRenderElement: isPreviewModeEnabled ? undefined : onRenderElement,
+        onHideElement: isPreviewModeEnabled ? undefined : onHideElement,
       });
     },
   );
@@ -119,6 +120,11 @@ export function createFormBuilderFormEngineSlice({
     });
   };
 
+  const onHideElement: FormEngineContext['onHideElement'] = (_, __, control) => {
+    control.addStyleClass('opacity-50');
+    return control;
+  };
+
   // Hooks into the form engine to display an "Add New Element" button after each rendered element
   // and enriches each rendered elements with controls for modifying it.
   const onBeforeRender: FormEngineContext['onBeforeRender'] = (_, content) => {
@@ -134,6 +140,7 @@ export function createFormBuilderFormEngineSlice({
       schema: emptySchema,
       onBeforeRender,
       onRenderElement,
+      onHideElement,
     }),
   };
 }

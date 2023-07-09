@@ -9,3 +9,7 @@
   background-position: right bottom;
   background-image: url('../assets/hexagon.png');
 }
+
+.opacity-50 {
+  opacity: 0.5;
+}

@@ -96,7 +96,11 @@ export function render<T extends FormSchemaElement>(renderContext: RenderContext
   // don't have to take care of it.
   const { hide } = evaluateRules(element, context.state);
   if (hide) {
-    control.setVisible(false);
+    if (context.onHideElement) {
+      context.onHideElement(element, context, control, elementIndex);
+    } else {
+      control.setVisible(false);
+    }
   }
 
   const { marginTop = 'None', marginBottom = 'Small' } = element;
