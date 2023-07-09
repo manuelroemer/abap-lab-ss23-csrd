@@ -21,7 +21,7 @@
           -->
           <SplitContainer id="splitContainer" initialDetail="placeholder" initialMaster="master">
             <masterPages>
-              <Page id="master" title="Customers" backgroundDesign="List">
+              <Page id="master" title="Customers" backgroundDesign="List" busy="{state>/deleteCustomerMutation/isPending}" busyIndicatorDelay="0">
                 <headerContent>
                   <Button icon="sap-icon://add" tooltip="Add Customer" press="onCustomerAddPress" />
                 </headerContent>
@@ -83,7 +83,7 @@
                       <Label text="{i18n>CustomerManagement_DialogCustomerNotes}" class="sapUiSmallMarginTop" />
                       <TextArea
                         id="customerNotes"
-                        value="{state>notes}"
+                        value="{state>/notes}"
                         placeholder="Notes"
                         maxLength="255"
                         width="100%"
@@ -112,7 +112,7 @@
               <Page
                 id="details"
                 title="Questionnaires"
-                busy="{state>/customerFormSchemaResultsQuery/isPending}"
+                busy="{= ${state>/customerFormSchemaResultsQuery/isPending} || ${state>/deleteFormSchemaResultMutation/isPending}}"
                 busyIndicatorDelay="0"
                 class="myBackgroundStyle">
                 <headerContent>

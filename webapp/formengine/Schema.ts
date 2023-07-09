@@ -1,5 +1,10 @@
 export const emptySchema: FormSchema = {
-  pages: [],
+  pages: [
+    {
+      id: 'page-1',
+      elements: [],
+    },
+  ],
 };
 
 export interface FormSchemaExpressionBase<TType extends string> {

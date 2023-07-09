@@ -8,7 +8,12 @@
   xmlns:grid="sap.ui.layout.cssgrid"
   controllerName="csrdreporting.controller.FormSchemaManagement"
   height="100%">
-  <Page showFooter="true" showNavButton="true" navButtonPress="navBack">
+  <Page
+    showFooter="true"
+    showNavButton="true"
+    navButtonPress="navBack"
+    busy="{= ${state>/createFormSchemaMutation/isPending} || ${state>/deleteFormSchemaMutation/isPending} }"
+    busyIndicatorDelay="0">
     <content>
       <layout:FixFlex class="fixFlexVertical">
         <layout:fixContent>
@@ -33,13 +38,14 @@
                         class="sapUiSmallMarginEnd sapUiSmallMarginTopBottom sapUiTinyMarginBegin"
                       />
                       <VBox alignItems="Start" justifyContent="Center" width="100%">
-                        <Title text="Create Questionnaire" level="H1" />
-                        <Label text="Create a new questionnaire." />
+                        <Title text="Create Questionnaire" level="H1" wrapping="true" />
+                        <Label text="Create a new questionnaire." wrapping="true" />
                       </VBox>
                     </HBox>
                     <Text
                       text="Here you can create a new questionnaire with the form builder."
                       class="sapUiTinyMargin"
+                      wrapping="true"
                     />
                   </VBox>
                 </f:GridListItem>
@@ -52,13 +58,17 @@
                         class="sapUiSmallMarginEnd sapUiSmallMarginTopBottom sapUiTinyMarginBegin"
                       />
                       <VBox alignItems="Start" justifyContent="Center" width="100%">
-                        <Title text="Duplicate Questionnaire" level="H1" />
-                        <Label text="Create an editable version of an existing, undrafted questionnaire." />
+                        <Title text="Duplicate Questionnaire" level="H1" wrapping="true" />
+                        <Label
+                          text="Create an editable version of an existing, undrafted questionnaire."
+                          wrapping="true"
+                        />
                       </VBox>
                     </HBox>
                     <Text
                       text="Here you can create a questionnaire based on an existing one."
                       class="sapUiTinyMargin"
+                      wrapping="true"
                     />
                   </VBox>
                 </f:GridListItem>
@@ -115,7 +125,10 @@
                         <Label text="Description: {svc>Description}" wrapping="true" />
                         <Label text="Type: {svc>Type}" wrapping="true" />
                         <Label text="Version: {svc>Version}" wrapping="true" />
-                        <Label text="Created: {path: 'svc>CreatedAt', type: 'sap.ui.model.type.DateTime'}" />
+                        <Label
+                          text="Created: {path: 'svc>CreatedAt', type: 'sap.ui.model.type.DateTime'}"
+                          wrapping="true"
+                        />
                       </VBox>
 
                       <Button
