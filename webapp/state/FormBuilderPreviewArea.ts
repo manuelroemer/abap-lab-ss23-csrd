@@ -1,4 +1,4 @@
-import { FormSchemaElement, FormSchemaElementType } from '../formengine/Schema';
+import { FormSchema, FormSchemaElement, FormSchemaElementType } from '../formengine/Schema';
 import { updateElements } from '../formengine/SchemaReducers';
 import { safeSwap } from '../utils/Array';
 import { State } from '../utils/State';
@@ -10,7 +10,7 @@ export interface FormBuilderStatePreviewAreaSlice {
    * @param index The index at which to insert the new element.
    * @param type The type of the new element.
    */
-  addElement(index: number, type: FormSchemaElementType): void;
+  addElement(index: number, element: FormSchemaElement): void;
   /**
    * Moves the element at the given index up by one position.
    * @param index The index of the element to move up.
@@ -29,13 +29,13 @@ export interface FormBuilderStatePreviewAreaSlice {
 
 export function createFormBuilderPreviewAreaSlice({ get }: State<FormBuilderState>): FormBuilderStatePreviewAreaSlice {
   return {
-    addElement(index, type) {
+    addElement(index, element) {
       const { page, schema, setSchema } = get();
 
       setSchema(
         updateElements(schema, page, (elements) => {
           const next = [...elements];
-          next.splice(index, 0, { type } as FormSchemaElement);
+          next.splice(index, 0, element);
           return next;
         }),
       );
