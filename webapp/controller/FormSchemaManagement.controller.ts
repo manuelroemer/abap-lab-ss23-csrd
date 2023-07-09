@@ -1,49 +1,14 @@
 import Dialog from 'sap/m/SelectDialog';
 import BaseController from './BaseController';
-import {
-  FormSchemaEntity,
-  createFormSchemaEntity,
-  deleteFormSchemaEntity,
-  getFormSchemaEntity,
-} from '../api/FormSchemaEntity';
+import { FormSchemaEntity, getFormSchemaEntity } from '../api/FormSchemaEntity';
 import { entityFromEvent } from '../utils/Event';
 import MessageBox from 'sap/m/MessageBox';
 import MessageToast from 'sap/m/MessageToast';
 import { showConfirmation } from '../utils/Confirmation';
-import { createState } from '../utils/State';
-import { AsyncState, createAsync } from '../utils/StateAsync';
-import { emptySchema } from '../formengine/SchemaUtils';
-
-interface FormSchemaManagementState {
-  deleteFormSchemaMutation: AsyncState<string>;
-  createFormSchemaMutation: AsyncState<FormSchemaEntity | undefined, FormSchemaEntity>;
-}
+import { createFormSchemaManagementState } from '../state/FormSchemaManagement';
 
 export default class FormSchemaManagementController extends BaseController {
-  state = createState<FormSchemaManagementState>(({ state }) => ({
-    parameters: {},
-    query: {},
-
-    deleteFormSchemaMutation: createAsync({
-      state,
-      key: 'deleteFormSchemaMutation',
-      fetch: async (id) => deleteFormSchemaEntity(id),
-    }),
-
-    createFormSchemaMutation: createAsync({
-      state,
-      key: 'createFormSchemaMutation',
-      fetch: (formSchemaTemplate) =>
-        createFormSchemaEntity({
-          Type: formSchemaTemplate?.Type ?? 'demo',
-          SchemaJson: formSchemaTemplate?.SchemaJson ?? JSON.stringify(emptySchema),
-          MetadataJson: formSchemaTemplate?.MetadataJson ?? '{}',
-          IsDraft: true,
-          Name: formSchemaTemplate?.Name ?? '',
-          Description: formSchemaTemplate?.Name ?? '',
-        }),
-    }),
-  }));
+  state = createFormSchemaManagementState();
 
   onInit() {
     this.connectState(this.state);

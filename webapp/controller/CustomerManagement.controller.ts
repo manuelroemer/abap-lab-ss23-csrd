@@ -1,150 +1,19 @@
 import Dialog from 'sap/m/Dialog';
 import BaseController from './BaseController';
-import { createState } from '../utils/State';
-import {
-  CustomerEntity,
-  createCustomerEntity,
-  deleteCustomerEntity,
-  getCustomerEntity,
-  updateCustomerEntity,
-} from '../api/CustomerEntity';
+import { CustomerEntity } from '../api/CustomerEntity';
 import Event from 'sap/ui/base/Event';
 import { entityFromEvent } from '../utils/Event';
-import {
-  FormSchemaResultEntity,
-  deleteFormSchemaResultEntity,
-  getAllFormSchemaResultEntities,
-} from '../api/FormSchemaResultEntity';
+import { FormSchemaResultEntity } from '../api/FormSchemaResultEntity';
 import Filter from 'sap/ui/model/Filter';
 import MessageToast from 'sap/m/MessageToast';
 import MessageBox from 'sap/m/MessageBox';
-import { RouterState, connectRouterState } from '../utils/StateRouter';
-import { QueryState, createQuery } from '../utils/StateQuery';
-import { AsyncState, createAsync } from '../utils/StateAsync';
+import { connectRouterState } from '../utils/StateRouter';
 import { showConfirmation } from '../utils/Confirmation';
 import FilterOperator from 'sap/ui/model/FilterOperator';
-import { getAllFormSchemaEntities } from '../api/FormSchemaEntity';
-
-interface CustomerManagementState extends RouterState<{ customerId: string }> {
-  customerDialogOpen: boolean;
-  customerDialogTitle: string;
-  editCustomerId?: string;
-  customerName: string;
-  customerCode: string;
-  notes: string;
-
-  customerQuery: QueryState<string, CustomerEntity>;
-  customerFormSchemaResultsQuery: QueryState<string, Array<FormSchemaResultEntity>>;
-
-  submitCustomerMutation: AsyncState;
-  deleteCustomerMutation: AsyncState<string>;
-
-  deleteFormSchemaResultMutation: AsyncState<string>;
-
-  showCreateCustomerDialog(): void;
-  showEditCustomerDialog(customer: CustomerEntity): void;
-  closeCustomerDialog(): void;
-}
+import { createCustomerManagementState } from '../state/CustomerManagement';
 
 export default class CustomerManagementController extends BaseController {
-  state = createState<CustomerManagementState>(
-    ({ state, get, set }) => ({
-      parameters: {},
-      query: {},
-
-      customerDialogOpen: false,
-      customerDialogTitle: '',
-      editCustomerId: undefined,
-      customerName: '',
-      customerCode: '',
-      notes: '',
-
-      customerQuery: createQuery({
-        state,
-        key: 'customerQuery',
-        getArgs: (state: CustomerManagementState) => state.parameters.customerId,
-        fetch: (customerId) => getCustomerEntity(customerId),
-      }),
-
-      customerFormSchemaResultsQuery: createQuery({
-        state,
-        key: 'customerFormSchemaResultsQuery',
-        getArgs: (state: CustomerManagementState) => state.parameters.customerId,
-        fetch: async (customerId) => {
-          const formSchemas = await getAllFormSchemaEntities();
-          const formSchemaResults = await getAllFormSchemaResultEntities({
-            filters: [new Filter({ path: 'CustomerId', operator: 'EQ', value1: customerId })],
-          });
-
-          return formSchemaResults.results.map((formSchemaResult) => {
-            const matchingFormSchema = formSchemas.results.find(
-              (schema) => schema.Id === formSchemaResult.FormSchemaId,
-            );
-
-            return {
-              ...formSchemaResult,
-              Name: matchingFormSchema?.Name,
-            };
-          });
-        },
-      }),
-
-      submitCustomerMutation: createAsync({
-        state,
-        key: 'submitCustomerMutation',
-        fetch: async () => {
-          const { editCustomerId, customerName, customerCode, notes, closeCustomerDialog } = get();
-          const body = {
-            Name: customerName,
-            CustomerCode: customerCode,
-            Notes: notes,
-          };
-
-          await (editCustomerId ? updateCustomerEntity(editCustomerId, body) : createCustomerEntity(body));
-          closeCustomerDialog();
-        },
-      }),
-
-      deleteCustomerMutation: createAsync({
-        state,
-        key: 'deleteCustomerMutation',
-        fetch: async (id) => deleteCustomerEntity(id),
-      }),
-
-      deleteFormSchemaResultMutation: createAsync({
-        state,
-        key: 'deleteFormSchemaResultMutation',
-        fetch: async (id) => deleteFormSchemaResultEntity(id),
-      }),
-
-      showEditCustomerDialog(customer) {
-        set({
-          customerDialogOpen: true,
-          customerDialogTitle: 'Edit Customer',
-          editCustomerId: customer.Id,
-          customerName: customer.Name,
-          customerCode: customer.CustomerCode,
-          notes: customer.Notes,
-        });
-      },
-
-      showCreateCustomerDialog() {
-        set({
-          customerDialogOpen: true,
-          customerDialogTitle: 'New Customer',
-          editCustomerId: undefined,
-          customerName: '',
-          customerCode: '',
-          notes: '',
-        });
-      },
-
-      closeCustomerDialog() {
-        set({ customerDialogOpen: false });
-      },
-    }),
-    { name: 'CustomerManagement' },
-  );
+  state = createCustomerManagementState();
 
   onInit() {
     this.connectState(this.state);
