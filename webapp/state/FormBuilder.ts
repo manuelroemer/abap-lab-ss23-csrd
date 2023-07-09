@@ -16,7 +16,12 @@ import {
 } from './FormBuilderAddElementDialog';
 import { RouterState } from '../utils/StateRouter';
 import { QueryState, createQuery } from '../utils/StateQuery';
-import { FormSchemaEntity, getFormSchemaEntity } from '../api/FormSchemaEntity';
+import {
+  FormSchemaEntity,
+  FormSchemaEntityUpdate,
+  getFormSchemaEntity,
+  updateFormSchemaEntity,
+} from '../api/FormSchemaEntity';
 import {
   FormBuilderStateQuestionnairePropertiesAreaSlice,
   createFormBuilderQuestionnairePropertiesAreaSlice,
@@ -25,6 +30,7 @@ import {
   FormBuilderStatePropertiesAreaSlice,
   createFormBuilderStatePropertiesAreaSlice,
 } from './FormBuilderPropertiesArea';
+import { AsyncState, createAsync } from '../utils/StateAsync';
 
 /**
  * Represents the internal state of the form builder page.
@@ -40,6 +46,7 @@ export interface FormBuilderState
     FormBuilderStateElementPropertiesAreaSlice,
     FormBuilderStateAddElementDialogSlice {
   formSchemaQuery: QueryState<string, FormSchemaEntity>;
+  updateFormSchemaMutation: AsyncState<boolean>;
 }
 
 /**
@@ -69,6 +76,22 @@ export function createFormBuilderState() {
         setSchema(JSON.parse(formSchema.SchemaJson));
         setPage(0);
         set({ selectedTab: 'questionnaire' });
+      },
+    }),
+
+    updateFormSchemaMutation: createAsync({
+      state,
+      key: 'updateFormSchemaMutation',
+      fetch: async (undraft: boolean) => {
+        const body: FormSchemaEntityUpdate = {
+          Name: get().name,
+          Description: get().description,
+          SchemaJson: JSON.stringify(get().schema),
+          MetadataJson: '{}',
+          IsDraft: undraft,
+        };
+
+        return await updateFormSchemaEntity(get().parameters.formSchemaId!, body);
       },
     }),
   }));

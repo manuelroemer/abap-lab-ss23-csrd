@@ -3,6 +3,7 @@
   xmlns:layout="sap.ui.layout"
   controllerName="csrdreporting.controller.FormBuilder"
   xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
   displayBlock="true"
   xmlns="sap.m"
   xmlns:formengine="csrdreporting.formengine"
@@ -14,6 +15,21 @@
     navButtonPress="navBack"
     busy="{= ${state>/formSchemaQuery/isPending} }"
     busyIndicatorDelay="0">
+    <headerContent>
+      <MenuButton
+        text="Save"
+        buttonMode="Split"
+        defaultAction="onSave"
+        useDefaultActionOnly="true"
+        icon="sap-icon://save"
+        tooltip="Save">
+        <menu>
+          <Menu itemSelected="onSaveAndUndraft">
+            <MenuItem text="Save and undraft" icon="sap-icon://save" tooltip="Save and undraft"/>
+          </Menu>
+        </menu>
+      </MenuButton>
+    </headerContent>
     <layout:ResponsiveSplitter defaultPane="formEngine">
       <layout:PaneContainer>
         <layout:SplitPane id="pages">
@@ -27,7 +43,6 @@
         </layout:SplitPane>
       </layout:PaneContainer>
     </layout:ResponsiveSplitter>
-
     <mvc:XMLView viewName="csrdreporting.view.FormBuilderAddElementDialog" />
   </Page>
 </mvc:View>
