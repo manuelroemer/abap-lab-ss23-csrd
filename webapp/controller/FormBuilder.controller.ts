@@ -14,7 +14,7 @@ export default class FormBuilderController extends BaseController {
       await formBuilderState.get().formSchemaQuery.fetch();
     } catch (e) {
       console.error('Error while fetching a form schema result: ', e);
-      MessageBox.error(this.translate('CustomerManagement_FormSchemaResultDeletionError'));
+      MessageBox.error('An unexpected error occured while fetching a questionnaire.');
     }
   }
 }

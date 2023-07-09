@@ -2,7 +2,7 @@ import Button from 'sap/m/Button';
 import FlexBox from 'sap/m/FlexBox';
 import VBox from 'sap/m/VBox';
 import { FormEngineContext, createFormEngineContext } from '../formengine/FormEngineContext';
-import { emptySchema } from '../formengine/Schema';
+import { emptySchema } from '../formengine/SchemaUtils';
 import { State } from '../utils/State';
 import type { FormBuilderState } from './State';
 

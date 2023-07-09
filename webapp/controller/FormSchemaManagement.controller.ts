@@ -64,7 +64,7 @@ export default class FormSchemaManagementController extends BaseController {
       this.navToFormBuilder(formSchema?.Id);
     } catch (e) {
       console.error('Error while creating a form schema: ', e);
-      MessageBox.error(this.translate('FormSchemaManagement_FormSchemaCreationError'));
+      MessageBox.error('An unexpected error occured while creating the questionnaire.');
     }
   }
 
@@ -80,8 +80,8 @@ export default class FormSchemaManagementController extends BaseController {
       const formSchema = await this.state.get().createFormSchemaMutation.fetch(toDuplicateSchema);
       this.navToFormBuilder(formSchema?.Id);
     } catch (e) {
-      console.error('Error while creating a form schema: ', e);
-      MessageBox.error(this.translate('FormSchemaManagement_FormSchemaCreationError'));
+      console.error('Error while duplicating a form schema: ', e, toDuplicateSchema);
+      MessageBox.error('An unexpected error occured while duplicating the questionnaire.');
     }
   }
 
@@ -91,7 +91,7 @@ export default class FormSchemaManagementController extends BaseController {
       this.navToFormBuilder(formSchema?.Id);
     } catch (e) {
       console.error('Error while creating a form schema: ', e);
-      MessageBox.error(this.translate('FormSchemaManagement_FormSchemaCreationError'));
+      MessageBox.error('An unexpected error occured while creating the questionnaire.');
     }
   }
 
@@ -105,16 +105,16 @@ export default class FormSchemaManagementController extends BaseController {
 
     if (
       await showConfirmation({
-        title: this.translate('FormSchemaManagement_FormSchemaDeletionTitle'),
-        text: this.translate('FormSchemaManagement_ConfirmFormSchemaDeletion'),
+        title: 'Delete Questionnaire',
+        text: 'Are you sure that you want to delete this questionnaire?',
       })
     ) {
       try {
         await this.state.get().deleteFormSchemaMutation.fetch(formSchema.Id);
-        MessageToast.show(this.translate('FormSchemaManagement_FormSchemaDeletionSuccess'));
+        MessageToast.show('Successfully deleted the questionnaire.');
       } catch (e) {
         console.error('Error while deleting a form schema: ', e);
-        MessageBox.error(this.translate('FormSchemaManagement_FormSchemaDeletionError'));
+        MessageBox.error('An unexpected error occured while deleting the questionnaire.');
       }
     }
   }

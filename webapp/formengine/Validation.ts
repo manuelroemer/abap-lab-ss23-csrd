@@ -2,17 +2,48 @@ import { isExpressionTruthy } from './Expressions';
 import { FormEngineState } from './FormEngineContext';
 import { evaluateRules } from './Rules';
 import { DynamicFormSchemaElement, FormSchemaElement, FormSchemaPage } from './Schema';
+import { generateId } from './SchemaUtils';
 
+/**
+ * Represents a form engine validation error which can be shown to the user.
+ */
 export interface ValidationError {
+  /**
+   * The ID of the element which was the source of the error.
+   */
   elementId: string;
+  /**
+   * The error message.
+   */
   message: string;
 }
 
-export function getValidationErrorsForPage(page: FormSchemaPage, state: FormEngineState): Array<ValidationError> {
-  return page.elements.flatMap((element) => getValidationErrorsForElement(element, state));
+/**
+ * Validates all form schema elements on a specific page and returns any found error(s).
+ * @param page The page to be validated.
+ * @param pageIndex The index of the page to be validated, within the form schema.
+ * @param state The current form engine state.
+ */
+export function getValidationErrorsForPage(
+  page: FormSchemaPage,
+  pageIndex: number,
+  state: FormEngineState,
+): Array<ValidationError> {
+  return page.elements.flatMap((element, elementIndex) =>
+    getValidationErrorsForElement(elementIndex, pageIndex, element, state),
+  );
 }
 
+/**
+ * Validates a specific form schema element and returns any found error(s).
+ * @param elementIndex The index of the element to be validated, within the page.
+ * @param pageIndex The index of the page to be validated, within the form schema.
+ * @param element The element to be validated.
+ * @param state The current form engine state.
+ */
 export function getValidationErrorsForElement(
+  elementIndex: number,
+  pageIndex: number,
   element: FormSchemaElement,
   state: FormEngineState,
 ): Array<ValidationError> {
@@ -23,16 +54,20 @@ export function getValidationErrorsForElement(
   }
 
   if (isRequiredElement(element)) {
-    const elementValue = state[element.id];
+    const id = element.id ?? generateId(pageIndex, elementIndex);
+    const elementValue = state[id];
+
     if (isEffectivelyEmpty(elementValue)) {
-      errors.push({ elementId: element.id, message: 'This field is required.' });
+      errors.push({ elementId: id, message: 'This field is required.' });
     }
   }
 
   if (isValidatableElement(element)) {
+    const id = element.id ?? generateId(pageIndex, elementIndex);
+
     for (const rule of element.validationRules) {
       if (!isExpressionTruthy(rule.condition, state)) {
-        errors.push({ elementId: element.id, message: rule.message });
+        errors.push({ elementId: id, message: rule.message });
       }
     }
   }

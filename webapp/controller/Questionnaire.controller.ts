@@ -118,10 +118,10 @@ export default class QuestionnaireController extends BaseController {
     if (submit()) {
       try {
         await submitMutation.fetch();
-        MessageToast.show(this.translate('Questionnaire_SubmitSuccess'));
+        MessageToast.show('Your questionnaire was successfully saved!');
         this.router.navTo('CustomerManagement', { customerId });
       } catch {
-        MessageBox.error(this.translate('Questionnaire_SubmitError'));
+        MessageBox.error('An unexpected error occured while saving your questionnaire.');
       }
     }
   }

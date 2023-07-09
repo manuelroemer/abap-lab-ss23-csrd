@@ -1,9 +1,10 @@
 import Control from 'sap/ui/core/Control';
 import { State, createState } from '../utils/State';
 import { evaluateRules } from './Rules';
-import { FormSchema, FormSchemaElement, FormSchemaPage, emptySchema } from './Schema';
+import { FormSchema, FormSchemaElement, FormSchemaPage } from './Schema';
 import { ValidationError, getValidationErrorsForPage } from './Validation';
 import VBox from 'sap/m/VBox';
+import { emptySchema } from './SchemaUtils';
 
 /**
  * Represents the internal state of the user-entered data that the form engine captures and renders.
@@ -127,7 +128,7 @@ export function createFormEngineContext({ get, set }: State<FormEngineContext>, 
     const canGoBackward = previousPageIndex >= 0;
     const canSubmit = isLastPage;
 
-    const currentPageValidationErrors = currentPage ? getValidationErrorsForPage(currentPage, state) : [];
+    const currentPageValidationErrors = currentPage ? getValidationErrorsForPage(currentPage, page, state) : [];
 
     return {
       ...context,
