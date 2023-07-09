@@ -105,7 +105,7 @@ export function render<T extends FormSchemaElement>(renderContext: RenderContext
   }
 
   if (marginBottom && marginBottom !== 'None') {
-    control.addStyleClass(`sapUi${marginTop}MarginBottom`);
+    control.addStyleClass(`sapUi${marginBottom}MarginBottom`);
   }
 
   return control;
