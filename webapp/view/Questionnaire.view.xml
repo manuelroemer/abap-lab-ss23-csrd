@@ -8,12 +8,7 @@
   height="100%">
   <Page showNavButton="true" navButtonPress="navBack">
     <headerContent>
-      <Button
-        text="Save"
-        press="onSave"
-        icon="sap-icon://save"
-        tooltip="Save Questionnaire"
-      />
+      <Button text="Save" press="onSave" icon="sap-icon://save" tooltip="Save Questionnaire" />
     </headerContent>
     <uxap:ObjectPageLayout
       id="QuestionnairePageLayout"
