@@ -196,16 +196,16 @@ export default class CustomerManagementController extends BaseController {
 
     if (
       await showConfirmation({
-        title: this.translate('CustomerManagement_CustomerDeletionTitle'),
-        text: this.translate('CustomerManagement_ConfirmCustomerDeletion'),
+        title: 'Delete Customer',
+        text: 'Are you sure that you want to delete this customer?',
       })
     ) {
       try {
         await this.state.get().deleteCustomerMutation.fetch(customer.Id);
-        MessageToast.show(this.translate('CustomerManagement_CustomerDeletionSuccess'));
+        MessageToast.show('Successfully deleted the customer.');
       } catch (e) {
         console.error('Error while deleting a customer: ', e);
-        MessageBox.error(this.translate('CustomerManagement_CustomerDeletionError'));
+        MessageBox.error('An unexpected error occured while deleting the customer.');
       }
     }
   }
@@ -213,10 +213,10 @@ export default class CustomerManagementController extends BaseController {
   async onCustomerDialogSubmit() {
     try {
       await this.state.get().submitCustomerMutation.fetch();
-      MessageToast.show(this.translate('CustomerManagement_CustomerSubmitSuccess'));
+      MessageToast.show('Successfully saved the customer data.');
     } catch (e) {
       console.error('Error while submitting a customer: ', e);
-      MessageBox.error(this.translate('CustomerManagement_CustomerSubmitError'));
+      MessageBox.error('An unexpected error occured while saving the customer data.');
     }
   }
 
@@ -225,9 +225,8 @@ export default class CustomerManagementController extends BaseController {
   }
 
   onQuestionnaireAddPress() {
-    const {
-      parameters: { customerId },
-    } = this.state.get();
+    const customerId = this.state.get().parameters.customerId;
+
     if (customerId) {
       this.router.navTo('Questionnaire', { formSchemaType: 'demo', customerId });
     } else {
@@ -245,10 +244,12 @@ export default class CustomerManagementController extends BaseController {
 
   onDialogClose(e) {
     const contexts = e.getParameter('selectedContexts');
+
     if (contexts && contexts.length) {
       const customerId = contexts[0].getObject().Id;
       this.router.navTo('Questionnaire', { formSchemaType: 'demo', customerId });
     }
+
     e.getSource().getBinding('items').filter([]);
   }
 
@@ -257,16 +258,16 @@ export default class CustomerManagementController extends BaseController {
 
     if (
       await showConfirmation({
-        title: this.translate('CustomerManagement_FormSchemaResultDeletionTitle'),
-        text: this.translate('CustomerManagement_ConfirmFormSchemaResultDeletion'),
+        title: 'Delete Questionnaire',
+        text: 'Are you sure that you want to delete this questionnaire?',
       })
     ) {
       try {
         await this.state.get().deleteFormSchemaResultMutation.fetch(formSchemaResult.Id);
-        MessageToast.show(this.translate('CustomerManagement_FormSchemaResultDeletionSuccess'));
+        MessageToast.show('Successfully deleted the questionnaire.');
       } catch (e) {
         console.error('Error while deleting a form schema result: ', e);
-        MessageBox.error(this.translate('CustomerManagement_FormSchemaResultDeletionError'));
+        MessageBox.error('An unexpected error occured while deleting the questionnaire.');
       }
     }
   }

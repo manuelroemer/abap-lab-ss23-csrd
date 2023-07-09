@@ -11,7 +11,7 @@
     <content>
       <layout:FixFlex class="fixFlexVertical">
         <layout:fixContent>
-          <ObjectHeader title="{i18n>CustomerManagement_Title}" backgroundDesign="Solid" condensed="true">
+          <ObjectHeader title="Management" backgroundDesign="Solid" condensed="true">
             <ObjectAttribute text="Manage the customers and filled questionnaires." />
           </ObjectHeader>
         </layout:fixContent>
@@ -60,7 +60,7 @@
                 <Dialog id="customerDialog" title="{state>/customerDialogTitle}" draggable="true">
                   <content>
                     <VBox class="sapUiMediumMargin">
-                      <Label text="{i18n>CustomerManagement_DialogCustomerName}" required="true" />
+                      <Label text="Name" required="true" />
                       <Input
                         id="customerName"
                         value="{state>/customerName}"
@@ -68,8 +68,9 @@
                         placeholder="Capgemini"
                         maxLength="255"
                       />
+
                       <Label
-                        text="{i18n>CustomerManagement_DialogCustomerCode}"
+                        text="Customer Code"
                         required="true"
                         class="sapUiSmallMarginTop"
                       />
@@ -80,7 +81,8 @@
                         placeholder="customer-123"
                         maxLength="255"
                       />
-                      <Label text="{i18n>CustomerManagement_DialogCustomerNotes}" class="sapUiSmallMarginTop" />
+
+                      <Label text="Notes" class="sapUiSmallMarginTop" />
                       <TextArea
                         id="customerNotes"
                         value="{state>notes}"
@@ -92,14 +94,14 @@
                   </content>
                   <beginButton>
                     <Button
-                      text="{i18n>CustomerManagement_SubmitCustomer}"
+                      text="Submit"
                       press="onCustomerDialogSubmit"
                       type="Emphasized"
                       enabled="{= !!${state>/customerName} &amp;&amp; !!${state>/customerCode} &amp;&amp; !${state>/submitCustomerMutation/isPending} }"
                     />
                   </beginButton>
                   <endButton>
-                    <Button text="{i18n>CustomerManagement_CancelCustomerDialog}" press="onCustomerDialogCancel" />
+                    <Button text="Cancel" press="onCustomerDialogCancel" />
                   </endButton>
                 </Dialog>
               </Page>
@@ -154,7 +156,7 @@
                 <SelectDialog
                   id="customerSelectDialog"
                   noDataText="No Customers Found"
-                  title="{i18n>CustomerManagement_SelectDialogCustomer}"
+                  title="Select Customer"
                   search="onSearch"
                   confirm="onDialogClose"
                   cancel="onDialogClose"

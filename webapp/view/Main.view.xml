@@ -13,7 +13,7 @@
     <content>
       <layout:FixFlex class="fixFlexVertical">
         <layout:fixContent>
-          <ObjectHeader backgroundDesign="Solid" title="{i18n>title}">
+          <ObjectHeader backgroundDesign="Solid" title="CSRD Reporting">
             <ObjectAttribute text="Manage the customers and filled questionnaires." />
           </ObjectHeader>
         </layout:fixContent>
@@ -70,10 +70,11 @@
           </Page>
         </layout:flexContent>
       </layout:FixFlex>
+
       <SelectDialog
         id="customerSelectDialog"
         noDataText="No Customers Found"
-        title="{i18n>Homepage_DialogTitle}"
+        title="Select Customer"
         search="onSearch"
         confirm="onDialogClose"
         cancel="onDialogClose"

@@ -14,34 +14,34 @@
       busy="{= ${state>/customerQuery/isLoading} || ${state>/formSchemaQuery/isLoading} || ${state>/formSchemaResultQuery/isLoading} }">
       <uxap:headerTitle>
         <uxap:ObjectPageHeader
-          objectTitle="{i18n>Questionnaire_Title}"
+          objectTitle="Questionnaire"
           objectSubtitle="{= ${state>/currentPage/title} || ${state>/currentPage/id} }"
         />
       </uxap:headerTitle>
 
       <!--
-    Error Notifications.
-    Conditionally displayed when the data fetching queries resolve with an error.
-    -->
+      Error Notifications.
+      Conditionally displayed when the data fetching queries resolve with an error.
+      -->
       <uxap:sections>
         <uxap:ObjectPageSection
-          title="{i18n>Questionnaire_ErrorTitle}"
+          title="Data Loading Error"
           visible="{= ${state>/customerQuery/hasError} || ${state>/formSchemaResultQuery/hasError} }">
           <uxap:ObjectPageSubSection>
             <VBox>
               <MessageStrip
                 class="sapUiSmallMarginBottom"
-                text="{i18n>Questionnaire_CustomerError} {state>/customerQuery/error/message} ({state>/customerQuery/error/statusCode})"
+                text="There was an error while loading customer data. Details: {state>/customerQuery/error/message} ({state>/customerQuery/error/statusCode})"
                 type="Error"
                 visible="{state>/customerQuery/hasError}"
               />
               <MessageStrip
-                text="{i18n>Questionnaire_FormSchemaError} {state>/formSchemaQuery/error/message} ({state>/formSchemaQuery/error/statusCode})"
+                text="There was an error while loading the questionnaire data. Details: {state>/formSchemaQuery/error/message} ({state>/formSchemaQuery/error/statusCode})"
                 type="Error"
                 visible="{state>/formSchemaQuery/hasError}"
               />
               <MessageStrip
-                text="{i18n>Questionnaire_FormSchemaResultError} {state>/formSchemaResultQuery/error/message} ({state>/formSchemaResultQuery/error/statusCode})"
+                text="There was an error while loading the previously entered questionnaire data. Details: {state>/formSchemaResultQuery/error/message} ({state>/formSchemaResultQuery/error/statusCode})"
                 type="Error"
                 visible="{state>/formSchemaResultQuery/hasError}"
               />
@@ -50,8 +50,8 @@
         </uxap:ObjectPageSection>
 
         <!--
-      The main section displaying the form engine (i.e., the questionnaire).
-      -->
+        The main section displaying the form engine (i.e., the questionnaire).
+        -->
         <uxap:ObjectPageSection
           showTitle="false"
           visible="{= ${state>/customerQuery/hasData} &amp;&amp; ${state>/formSchemaQuery/hasData} &amp;&amp; !${state>/formSchemaResultQuery/hasError} }">
@@ -62,23 +62,23 @@
       </uxap:sections>
 
       <!--
-    Form engine controls.
-    -->
+      Form engine controls.
+      -->
       <uxap:footer>
         <OverflowToolbar
           visible="{= ${state>/customerQuery/hasData} &amp;&amp; ${state>/formSchemaQuery/hasData} &amp;&amp; !${state>/formSchemaResultQuery/hasError} }">
           <ToolbarSpacer />
-          <Button text="{i18n>Questionnaire_PreviousStep}" enabled="{state>/canGoBackward}" press="onPreviousPress" />
+          <Button text="Previous" enabled="{state>/canGoBackward}" press="onPreviousPress" />
           <Button
             type="Emphasized"
-            text="{i18n>Questionnaire_NextStep}"
+            text="Next"
             enabled="{state>/canGoForward}"
             visible="{= !${state>/canSubmit} }"
             press="onNextPress"
           />
           <Button
             type="Emphasized"
-            text="{i18n>Questionnaire_Submit}"
+            text="Submit"
             visible="{state>/canSubmit}"
             press="onSubmitPress"
           />

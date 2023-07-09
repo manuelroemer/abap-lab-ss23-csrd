@@ -7,14 +7,14 @@
   xmlns:formengine="csrdreporting.formengine">
   <Page backgroundDesign="List" title="{= ${state>/currentPage/title} || ${state>/currentPage/id} || 'Page Preview' }">
     <headerContent>
-      <Button text="{i18n>FormBuilder_PreviousPage}" enabled="{state>/canGoBackward}" press="onPreviousPagePress" />
+      <Button text="Previous" enabled="{state>/canGoBackward}" press="onPreviousPagePress" />
       <Button
-        text="{i18n>FormBuilder_NextPage}"
+        text="Next"
         enabled="{state>/canGoForward}"
         visible="{= !${state>/canSubmit} }"
         press="onNextPagePress"
       />
-      <Button text="{i18n>FormBuilder_Submit}" visible="{state>/canSubmit}" press="onSubmitPress" type="Emphasized" />
+      <Button text="Submit" visible="{state>/canSubmit}" press="onSubmitPress" type="Emphasized" />
     </headerContent>
 
     <content>

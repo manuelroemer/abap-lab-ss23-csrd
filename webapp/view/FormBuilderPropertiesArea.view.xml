@@ -18,10 +18,10 @@
         <IconTabFilter key="element" text="Element">
           <mvc:XMLView class="h-100" viewName="csrdreporting.view.FormBuilderElementPropertiesArea" />
         </IconTabFilter>
-        <IconTabFilter key="schema" text="{i18n>FormBuilder_SchemaTab}">
+        <IconTabFilter key="schema" text="Schema">
           <ce:CodeEditor type="json" value="{state>/schemaJson}" />
         </IconTabFilter>
-        <IconTabFilter key="state" text="{i18n>FormBuilder_StateTab}">
+        <IconTabFilter key="state" text="State">
           <ce:CodeEditor type="json" value="{state>/stateJson}" />
         </IconTabFilter>
       </items>

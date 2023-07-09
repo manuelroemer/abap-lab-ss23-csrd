@@ -12,7 +12,7 @@
     <content>
       <layout:FixFlex class="fixFlexVertical">
         <layout:fixContent>
-          <ObjectHeader title="{i18n>FormSchemaManagement_Title}" backgroundDesign="Solid" condensed="true">
+          <ObjectHeader title="Management" backgroundDesign="Solid" condensed="true">
             <ObjectAttribute text="Manage the questionnaires." />
           </ObjectHeader>
         </layout:fixContent>
@@ -66,7 +66,7 @@
               <SelectDialog
                 id="formSchemaSelectDialog"
                 noDataText="No Questionnaires Found"
-                title="{i18n>FormSchemaManagement_DialogTitle}"
+                title="Select Questionnaire"
                 search="onSearch"
                 confirm="onSelectDialogClose"
                 cancel="onDialogClose"
