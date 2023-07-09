@@ -76,6 +76,7 @@ export function createCustomerManagementState() {
             return {
               ...formSchemaResult,
               Name: matchingFormSchema?.Name,
+              Version: matchingFormSchema?.Version,
             };
           });
         },

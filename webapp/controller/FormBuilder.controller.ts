@@ -20,7 +20,7 @@ export default class FormBuilderController extends BaseController {
     }
   }
 
-  async onSaveAndUndraft(e) {
+  async onSaveAndUndraft() {
     if (
       await showConfirmation({
         title: 'Save and undraft Questionnaire',
