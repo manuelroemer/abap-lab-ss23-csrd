@@ -114,6 +114,7 @@ const allDialogItemsRecord: {
     template: {
       type: 'checkbox',
       label: 'New Checkbox',
+      text: 'New Checkbox',
       description: 'Element description.',
       helperText: 'Helper text.',
     },
