@@ -15,7 +15,7 @@ export interface FormSchemaOpBinaryExpression<TType extends string> extends Form
   right: FormSchemaExpressionOrPrimitive;
 }
 
-export type FormSchemaExpressionPrimitive = string | number | boolean;
+export type FormSchemaExpressionPrimitive = string | number | boolean | null | undefined;
 
 export type FormSchemaExpression =
   | FormSchemaValueExpression

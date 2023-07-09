@@ -1,5 +1,6 @@
 import { FormEngineState } from './FormEngineContext';
-import { FormSchemaExpressionOrPrimitive, FormSchemaExpressionPrimitive } from './Schema';
+import { FormSchemaExpressionOrPrimitive } from './Schema';
+import { isPrimitive } from './SchemaUtils';
 
 /**
  * Returns a boolean indicating whether the given form schema expression is truthy.
@@ -66,13 +67,4 @@ function evaluateExpression(expression: FormSchemaExpressionOrPrimitive, state: 
   }
 
   return false;
-}
-
-/**
- * Returns whether the given expression is a primitive, that is, a string, number or boolean.
- * If `false`, the expression is a fully-fledged {@link FormSchemaExpression}.
- * @param expression The form schema expression (or primitive).
- */
-function isPrimitive(expression: FormSchemaExpressionOrPrimitive): expression is FormSchemaExpressionPrimitive {
-  return typeof expression === 'string' || typeof expression === 'number' || typeof expression === 'boolean';
 }

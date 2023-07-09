@@ -99,10 +99,27 @@ export interface FormEngineContext {
     control: Control,
     elementIndex: number,
   ): Control;
+  /**
+   * A hook which is called by the form engine when an element is hidden.
+   * Can be used to modify how elements are hidden.
+   * @param element The element to be rendered.
+   * @param context The same form engine context.
+   * @param control The control that will be rendered.
+   * @param elementIndex The index of the element within the current page's schema elements.
+   */
+  onHideElement?(
+    element: FormSchemaElement,
+    context: FormEngineContext,
+    control: Control,
+    elementIndex: number,
+  ): Control;
 }
 
 export type FormEngineContextInit = Partial<
-  Pick<FormEngineContext, 'schema' | 'state' | 'page' | 'onBeforeRender' | 'onAfterRender' | 'onRenderElement'>
+  Pick<
+    FormEngineContext,
+    'schema' | 'state' | 'page' | 'onBeforeRender' | 'onAfterRender' | 'onRenderElement' | 'onHideElement'
+  >
 >;
 
 export function createFormEngineContext({ get, set }: State<FormEngineContext>, init: FormEngineContextInit = {}) {
