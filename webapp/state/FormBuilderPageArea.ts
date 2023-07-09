@@ -1,7 +1,7 @@
 import { updatePages } from '../formengine/SchemaReducers';
 import { safeSwap } from '../utils/Array';
 import { State } from '../utils/State';
-import { FormBuilderState } from './State';
+import { FormBuilderState } from './FormBuilder';
 
 export interface FormBuilderStatePageAreaSlice {
   addPage(): void;

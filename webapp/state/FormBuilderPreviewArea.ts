@@ -2,7 +2,7 @@ import { FormSchemaElement, FormSchemaElementType } from '../formengine/Schema';
 import { updateElements } from '../formengine/SchemaReducers';
 import { safeSwap } from '../utils/Array';
 import { State } from '../utils/State';
-import { FormBuilderState } from './State';
+import { FormBuilderState } from './FormBuilder';
 
 export interface FormBuilderStatePreviewAreaSlice {
   /**

@@ -2,25 +2,25 @@ import { createState } from '../utils/State';
 import {
   FormBuilderStateElementPropertiesAreaSlice,
   createFormBuilderElementPropertiesAreaSlice,
-} from './State.ElementPropertiesArea';
+} from './FormBuilderElementPropertiesArea';
 import {
   FormBuilderStatePagePropertiesAreaSlice,
   createFormBuilderPagePropertiesAreaSlice,
-} from './State.PagePropertiesArea';
-import { FormBuilderStatePreviewAreaSlice, createFormBuilderPreviewAreaSlice } from './State.PreviewArea';
-import { FormBuilderStateFormEngineSlice, createFormBuilderFormEngineSlice } from './State.FormEngine';
-import { FormBuilderStatePageAreaSlice, createFormBuilderPageAreaSlice } from './State.PageArea';
+} from './FormBuilderPagePropertiesArea';
+import { FormBuilderStatePreviewAreaSlice, createFormBuilderPreviewAreaSlice } from './FormBuilderPreviewArea';
+import { FormBuilderStateFormEngineSlice, createFormBuilderFormEngineSlice } from './FormBuilderFormEngine';
+import { FormBuilderStatePageAreaSlice, createFormBuilderPageAreaSlice } from './FormBuilderPageArea';
 import {
   FormBuilderStateAddElementDialogSlice,
   createFormBuilderAddElementDialogSlice,
-} from './State.AddElementDialog';
+} from './FormBuilderAddElementDialog';
 import { RouterState } from '../utils/StateRouter';
 import { QueryState, createQuery } from '../utils/StateQuery';
 import { FormSchemaEntity, getFormSchemaEntity } from '../api/FormSchemaEntity';
 import {
   FormBuilderStateQuestionnairePropertiesAreaSlice,
   createFormBuilderQuestionnairePropertiesAreaSlice,
-} from './State.QuestionnairePropertiesArea';
+} from './FormBuilderQuestionnairePropertiesArea';
 
 /**
  * Represents the internal state of the form builder page.
@@ -34,7 +34,6 @@ export interface FormBuilderState
     FormBuilderStatePagePropertiesAreaSlice,
     FormBuilderStateElementPropertiesAreaSlice,
     FormBuilderStateAddElementDialogSlice {
-  // TODO: Extract into custom state slice.
   formSchemaQuery: QueryState<string, FormSchemaEntity>;
 }
 
@@ -43,6 +42,9 @@ export interface FormBuilderState
  */
 export function createFormBuilderState() {
   return createState<FormBuilderState>(({ get, state }) => ({
+    parameters: {},
+    query: {},
+
     ...createFormBuilderFormEngineSlice(state),
     ...createFormBuilderPageAreaSlice(state),
     ...createFormBuilderPreviewAreaSlice(state),
@@ -51,17 +53,15 @@ export function createFormBuilderState() {
     ...createFormBuilderElementPropertiesAreaSlice(state),
     ...createFormBuilderAddElementDialogSlice(state),
 
-    // TODO: Extract into custom state slice.
-    parameters: {},
-    query: {},
     formSchemaQuery: createQuery({
       state,
       key: 'formSchemaQuery',
       getArgs: (state: FormBuilderState) => state.parameters.formSchemaId,
       fetch: (id: string) => getFormSchemaEntity(id),
       onSuccess(formSchema) {
-        const { setSchema } = get();
+        const { setSchema, setPage } = get();
         setSchema(JSON.parse(formSchema.SchemaJson));
+        setPage(0);
       },
     }),
   }));

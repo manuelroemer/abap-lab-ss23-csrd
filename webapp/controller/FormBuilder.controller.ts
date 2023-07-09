@@ -1,4 +1,4 @@
-import { formBuilderState } from '../formbuilder/State';
+import { formBuilderState } from '../state/FormBuilder';
 import BaseController from './BaseController';
 import MessageBox from 'sap/m/MessageBox';
 import { connectRouterState } from '../utils/StateRouter';

@@ -1,5 +1,5 @@
 import List from 'sap/m/List';
-import { formBuilderState } from '../formbuilder/State';
+import { formBuilderState } from '../state/FormBuilder';
 import BaseController from './BaseController';
 import ListItemBase from 'sap/m/ListItemBase';
 import { showConfirmation } from '../utils/Confirmation';

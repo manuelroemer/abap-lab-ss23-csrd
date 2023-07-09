@@ -1,7 +1,7 @@
 import { FormSchemaPage } from '../formengine/Schema';
 import { updatePage } from '../formengine/SchemaReducers';
 import { State } from '../utils/State';
-import { FormBuilderState } from './State';
+import { FormBuilderState } from './FormBuilder';
 
 export interface FormBuilderStatePagePropertiesAreaSlice {
   /**

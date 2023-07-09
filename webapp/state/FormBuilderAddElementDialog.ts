@@ -1,6 +1,6 @@
 import { FormSchemaElementType } from '../formengine/Schema';
 import { State } from '../utils/State';
-import { FormBuilderState } from './State';
+import { FormBuilderState } from './FormBuilder';
 
 export interface FormBuilderStateAddElementDialogSlice {
   /**

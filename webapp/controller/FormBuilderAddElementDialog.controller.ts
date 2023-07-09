@@ -1,10 +1,10 @@
 import Dialog from 'sap/m/Dialog';
-import { formBuilderState } from '../formbuilder/State';
+import { formBuilderState } from '../state/FormBuilder';
 import BaseController from './BaseController';
 import Event from 'sap/ui/base/Event';
 import StandardListItem from 'sap/m/StandardListItem';
 import { entityFromSource } from '../utils/Event';
-import { AddElementDialogItem } from '../formbuilder/State.AddElementDialog';
+import { AddElementDialogItem } from '../state/FormBuilderAddElementDialog';
 
 export default class FormBuilderAddElementDialogController extends BaseController {
   onInit() {

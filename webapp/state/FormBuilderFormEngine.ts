@@ -4,7 +4,7 @@ import VBox from 'sap/m/VBox';
 import { FormEngineContext, createFormEngineContext } from '../formengine/FormEngineContext';
 import { emptySchema } from '../formengine/SchemaUtils';
 import { State } from '../utils/State';
-import type { FormBuilderState } from './State';
+import type { FormBuilderState } from './FormBuilder';
 
 export interface FormBuilderStateFormEngineSlice extends FormEngineContext {
   /**
