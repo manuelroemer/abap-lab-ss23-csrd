@@ -1,4 +1,4 @@
-import { FormSchema, FormSchemaElement, FormSchemaElementType } from '../formengine/Schema';
+import { FormSchemaElement } from '../formengine/Schema';
 import { updateElements } from '../formengine/SchemaReducers';
 import { safeSwap } from '../utils/Array';
 import { State } from '../utils/State';
