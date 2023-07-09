@@ -130,7 +130,7 @@
                           visible="{= ${svc>IsDraft}}"
                         />
                       </HBox>
-                      <Label text="Description: {svc>Description}" wrapping="true" />
+                      <Label text="Description: {svc>Description}" wrapping="true" wrappingType="Hyphenated" />
                       <Label text="Type: {svc>Type}" wrapping="true" />
                       <Label text="Version: {svc>Version}" wrapping="true" />
                       <Label
