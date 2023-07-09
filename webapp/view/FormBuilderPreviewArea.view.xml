@@ -8,12 +8,7 @@
   <Page backgroundDesign="List" title="{= ${state>/currentPage/title} || ${state>/currentPage/id} || 'Page Preview' }">
     <headerContent>
       <Button text="Previous" enabled="{state>/canGoBackward}" press="onPreviousPagePress" />
-      <Button
-        text="Next"
-        enabled="{state>/canGoForward}"
-        visible="{= !${state>/canSubmit} }"
-        press="onNextPagePress"
-      />
+      <Button text="Next" enabled="{state>/canGoForward}" visible="{= !${state>/canSubmit} }" press="onNextPagePress" />
       <Button text="Submit" visible="{state>/canSubmit}" press="onSubmitPress" type="Emphasized" />
     </headerContent>
 

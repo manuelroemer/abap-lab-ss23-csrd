@@ -69,11 +69,7 @@
                         maxLength="255"
                       />
 
-                      <Label
-                        text="Customer Code"
-                        required="true"
-                        class="sapUiSmallMarginTop"
-                      />
+                      <Label text="Customer Code" required="true" class="sapUiSmallMarginTop" />
                       <Input
                         id="customerCode"
                         value="{state>/customerCode}"

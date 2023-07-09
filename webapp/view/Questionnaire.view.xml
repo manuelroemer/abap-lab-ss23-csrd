@@ -76,12 +76,7 @@
             visible="{= !${state>/canSubmit} }"
             press="onNextPress"
           />
-          <Button
-            type="Emphasized"
-            text="Submit"
-            visible="{state>/canSubmit}"
-            press="onSubmitPress"
-          />
+          <Button type="Emphasized" text="Submit" visible="{state>/canSubmit}" press="onSubmitPress" />
         </OverflowToolbar>
       </uxap:footer>
     </uxap:ObjectPageLayout>
