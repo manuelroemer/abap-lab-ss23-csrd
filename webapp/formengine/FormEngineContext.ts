@@ -77,14 +77,14 @@ export interface FormEngineContext {
    * @param context The same form engine context.
    * @param content The control which will, after rendering, contain the rendered elements.
    */
-  onBeforeRender(context: FormEngineContext, content: VBox): void;
+  onBeforeRender?(context: FormEngineContext, content: VBox): void;
   /**
    * A hook which is called after the form engine rendered elements.
    * Can be used to modify the content after rendering finished-
    * @param context The same form engine context.
    * @param content The control which contains the rendered elements.
    */
-  onAfterRender(context: FormEngineContext, content: VBox): void;
+  onAfterRender?(context: FormEngineContext, content: VBox): void;
   /**
    * A hook which is called by the form engine once a control to be rendered has been generated.
    * Can be used to modify the control before it is rendered.
@@ -93,7 +93,7 @@ export interface FormEngineContext {
    * @param control The control that will be rendered.
    * @param elementIndex The index of the element within the current page's schema elements.
    */
-  onRenderElement(
+  onRenderElement?(
     element: FormSchemaElement,
     context: FormEngineContext,
     control: Control,
@@ -147,9 +147,6 @@ export function createFormEngineContext({ get, set }: State<FormEngineContext>, 
     schema: init.schema ?? emptySchema,
     state: init.state ?? {},
     page: init.page ?? 0,
-    onBeforeRender: init.onBeforeRender ?? ((_, content) => content),
-    onAfterRender: init.onAfterRender ?? ((_, content) => content),
-    onRenderElement: init.onRenderElement ?? ((_, __, control) => control),
 
     setSchema(schema) {
       update({ schema });

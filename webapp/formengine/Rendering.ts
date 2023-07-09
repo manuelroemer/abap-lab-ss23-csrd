@@ -89,7 +89,7 @@ export function render<T extends FormSchemaElement>(renderContext: RenderContext
   // element instead of tearing down the entire page rendering process.
   const renderer = elementRenderers[element.type] as RenderFormSchemaElement<T>;
   const rawControl = safeRender<T>(renderer, renderContext);
-  const control = context.onRenderElement(element, context, rawControl, elementIndex);
+  const control = context.onRenderElement?.(element, context, rawControl, elementIndex) ?? rawControl;
 
   // This is the highest-level rendering function which handles attributes that may be present
   // on *any* form schema element. Doing this here means that more specific rendering functions

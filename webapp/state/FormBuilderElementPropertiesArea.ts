@@ -89,6 +89,12 @@ export function createFormBuilderElementPropertiesAreaSlice({
     ({ setElementToEdit, elementToEditIndex }) => setElementToEdit(elementToEditIndex),
   );
 
+  // Unset the element to edit when a new page is selected.
+  watch(
+    (s) => s.page,
+    ({ setElementToEdit }) => setElementToEdit(undefined),
+  );
+
   return {
     elementToEdit: undefined,
     elementToEditIndex: undefined,
