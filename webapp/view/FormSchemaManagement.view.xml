@@ -105,48 +105,55 @@
             <Panel id="existingFormSchemasPanel" backgroundDesign="Transparent">
               <f:GridList id="gridList" items="{svc>/FormSchemaSet}">
                 <f:customLayout>
-                  <grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, 23rem)" gridGap="2rem" />
+                  <grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, 24rem)" gridGap="2rem" />
                 </f:customLayout>
                 <f:GridListItem type="Active" press="onFormSchemaPress">
-                  <VBox class="sapUiSmallMargin">
-                    <HBox>
-                      <core:Icon size="4rem" src="sap-icon://manager-insight" class="sapUiSmallMargin" />
-                      <VBox alignItems="Start" justifyContent="Center" width="100%">
-                        <HBox>
-                          <Title text="{= !!${svc>Name} ? ${svc>Name} : 'Questionnaire'}" level="H1" wrapping="true" />
-                          <ObjectStatus
-                            class="sapUiTinyMarginBegin"
-                            text="Draft"
-                            inverted="true"
-                            state="Information"
-                            visible="{= ${svc>IsDraft}}"
-                          />
-                        </HBox>
-                        <Label text="Description: {svc>Description}" wrapping="true" />
-                        <Label text="Type: {svc>Type}" wrapping="true" />
-                        <Label text="Version: {svc>Version}" wrapping="true" />
-                        <Label
-                          text="Created: {path: 'svc>CreatedAt', type: 'sap.ui.model.type.DateTime'}"
+                  <FlexBox class="sapUiSmallMargin">
+                    <core:Icon
+                      size="3rem"
+                      src="sap-icon://manager-insight"
+                      class="sapUiSmallMarginEnd sapUiMediumMarginTopBottom sapUiTinyMarginBegin"
+                    />
+                    <VBox justifyContent="Center" width="100%">
+                      <HBox class="sapUiSmallTinyBottom">
+                        <Title
+                          text="{= ${svc>Name} || 'Untitled Questionnaire'}"
+                          level="H1"
                           wrapping="true"
+                          wrappingType="Hyphenated"
                         />
-                      </VBox>
-
-                      <Button
-                        icon="sap-icon://duplicate"
-                        type="Transparent"
-                        tooltip="Duplicate Questionnaire"
-                        press="onDuplicatePress"
+                        <ObjectStatus
+                          class="sapUiTinyMarginBegin"
+                          text="Draft"
+                          inverted="true"
+                          state="Information"
+                          visible="{= ${svc>IsDraft}}"
+                        />
+                      </HBox>
+                      <Label text="Description: {svc>Description}" wrapping="true" wrappingType="Hyphenated" />
+                      <Label text="Type: {svc>Type}" wrapping="true" />
+                      <Label text="Version: {svc>Version}" wrapping="true" />
+                      <Label
+                        text="Created: {path: 'svc>CreatedAt', type: 'sap.ui.model.type.DateTime'}"
+                        wrapping="true"
                       />
+                    </VBox>
 
-                      <Button
-                        icon="sap-icon://decline"
-                        type="Transparent"
-                        tooltip="Delete Questionnaire"
-                        press="onFormSchemaDeletePress"
-                        visible="{= ${svc>IsDraft}}"
-                      />
-                    </HBox>
-                  </VBox>
+                    <Button
+                      icon="sap-icon://duplicate"
+                      type="Transparent"
+                      tooltip="Duplicate Questionnaire"
+                      press="onDuplicatePress"
+                    />
+
+                    <Button
+                      icon="sap-icon://decline"
+                      type="Transparent"
+                      tooltip="Delete Questionnaire"
+                      press="onFormSchemaDeletePress"
+                      visible="{= ${svc>IsDraft}}"
+                    />
+                  </FlexBox>
                 </f:GridListItem>
               </f:GridList>
             </Panel>

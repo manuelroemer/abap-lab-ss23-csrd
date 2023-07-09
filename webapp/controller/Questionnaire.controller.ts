@@ -20,6 +20,15 @@ export default class QuestionnaireController extends BaseController {
     this.state.get().goForward();
   }
 
+  async onSave() {
+    try {
+      await this.state.get().saveMutation.fetch();
+      MessageToast.show('Your questionnaire was successfully saved!');
+    } catch {
+      MessageBox.error('An unexpected error occured while saving your questionnaire.');
+    }
+  }
+
   async onSubmitPress() {
     const {
       submit,

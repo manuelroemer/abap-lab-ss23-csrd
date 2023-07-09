@@ -132,7 +132,7 @@
                           <core:Icon size="4rem" src="sap-icon://documents" class="sapUiSmallMargin" />
                           <VBox alignItems="Start" justifyContent="Center" width="100%">
                             <HBox>
-                              <Title text="{state>Name}" level="H1" />
+                              <Title text="{= ${state>Name} || 'Untitled Questionnaire'}" level="H1" />
                               <ObjectStatus
                                 class="sapUiTinyMarginBegin"
                                 text="Draft"
@@ -141,6 +141,7 @@
                                 visible="{state>IsDraft}"
                               />
                             </HBox>
+                            <Label text="FormSchema Version: {state>Version}" />
                             <Label text="Filled on: {path: 'state>UpdatedAt', type: 'sap.ui.model.type.DateTime'}" />
                           </VBox>
                           <Button
