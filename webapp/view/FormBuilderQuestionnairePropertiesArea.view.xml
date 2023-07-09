@@ -6,12 +6,13 @@
   xmlns="sap.m">
   <VBox class="sapUiMediumMargin">
     <VBox>
-      <Label text="Name" required="true" />
-      <Input value="{state>/name}" required="true" placeholder="Name" maxLength="255" />
-      <Text text="Name of the questionnaire." />
+      <Label text="Name" />
+      <Input value="{state>/name}" placeholder="Name" maxLength="255" />
+      <Text text="A display name of the questionnaire." />
+
       <Label text="Description" class="sapUiSmallMarginTop" />
-      <TextArea value="{state>/description}" required="true" placeholder="Description" width="100%" maxLength="255" />
-      <Text text="Questionnaires description." />
+      <TextArea value="{state>/description}" rows="5" placeholder="Description" width="100%" maxLength="255" />
+      <Text text="A description of the questionnaire." />
     </VBox>
   </VBox>
 </mvc:View>
