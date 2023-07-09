@@ -6,7 +6,10 @@ import {
   updateFormSchemaResultEntity,
   createFormSchemaResultEntity,
 } from '../api/FormSchemaResultEntity';
-import { FormEngineContext, createFormEngineContext } from '../formengine/FormEngineContext';
+import { FormEngineContext, FormEngineState, createFormEngineContext } from '../formengine/FormEngineContext';
+import { evaluateRules } from '../formengine/Rules';
+import { FormSchema } from '../formengine/Schema';
+import { getValidationErrorsForPage } from '../formengine/Validation';
 import { createState } from '../utils/State';
 import { AsyncState, createAsync } from '../utils/StateAsync';
 import { QueryState, createQuery } from '../utils/StateQuery';
@@ -25,19 +28,20 @@ export interface QuestionnaireState
 export function createQuestionnaireState() {
   return createState<QuestionnaireState>(
     ({ state, get }) => {
-      const saveFormSchemaResult = (save: boolean) => {
+      const saveFormSchemaResult = (isDraft: boolean) => {
         const {
           parameters: { customerId },
           query: { formSchemaResultId },
           formSchemaQuery,
           state,
         } = get();
+
         if (formSchemaResultId) {
           return updateFormSchemaResultEntity(formSchemaResultId, {
             FormSchemaId: formSchemaQuery.data!.Id,
             MetadataJson: '{}',
             ResultJson: JSON.stringify(state),
-            IsDraft: save,
+            IsDraft: isDraft,
           });
         } else {
           return createFormSchemaResultEntity({
@@ -45,9 +49,16 @@ export function createQuestionnaireState() {
             FormSchemaId: formSchemaQuery.data!.Id,
             MetadataJson: '{}',
             ResultJson: JSON.stringify(state),
-            IsDraft: true,
+            IsDraft: isDraft,
           });
         }
+      };
+
+      const goToLastPage = () => {
+        const { schema, state, setPage } = get();
+        const lastPage = findLastPageWithoutErrors(schema, state);
+        console.log(lastPage);
+        setPage(lastPage);
       };
 
       return {
@@ -70,6 +81,7 @@ export function createQuestionnaireState() {
           onSuccess(formSchemaResult) {
             const { setState } = get();
             setState(JSON.parse(formSchemaResult.ResultJson));
+            goToLastPage();
           },
         }),
 
@@ -82,6 +94,7 @@ export function createQuestionnaireState() {
           onSuccess(formSchema) {
             const { setSchema } = get();
             setSchema(JSON.parse(formSchema.SchemaJson));
+            goToLastPage();
           },
         }),
 
@@ -102,4 +115,24 @@ export function createQuestionnaireState() {
     },
     { name: 'Questionnaire' },
   );
+}
+
+function findLastPageWithoutErrors(schema: FormSchema, state: FormEngineState): number {
+  let lastPageWithoutErrors = 0;
+
+  for (let pageIndex = 0; pageIndex < schema.pages.length; pageIndex++) {
+    const page = schema.pages[pageIndex];
+    const isHidden = evaluateRules(page, state).hide;
+    const hasErrors = getValidationErrorsForPage(page, pageIndex, state).length > 0;
+
+    if (!isHidden) {
+      lastPageWithoutErrors = pageIndex;
+    }
+
+    if (!isHidden && hasErrors) {
+      break;
+    }
+  }
+
+  return lastPageWithoutErrors;
 }
