@@ -12,7 +12,7 @@ import MessageToast from 'sap/m/MessageToast';
 import { showConfirmation } from '../utils/Confirmation';
 import { createState } from '../utils/State';
 import { AsyncState, createAsync } from '../utils/StateAsync';
-import { emptySchema } from '../formengine/Schema';
+import { emptySchema } from '../formengine/SchemaUtils';
 
 interface FormSchemaManagementState {
   deleteFormSchemaMutation: AsyncState<string>;
