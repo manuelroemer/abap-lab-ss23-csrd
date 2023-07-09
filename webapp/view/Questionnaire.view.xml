@@ -13,10 +13,7 @@
       busyIndicatorDelay="0"
       busy="{= ${state>/customerQuery/isPending} || ${state>/formSchemaQuery/isPending} || ${state>/formSchemaResultQuery/isPending} }">
       <uxap:headerTitle>
-        <uxap:ObjectPageHeader
-          objectTitle="Questionnaire"
-          objectSubtitle="{= ${state>/currentPage/title} }"
-        />
+        <uxap:ObjectPageHeader objectTitle="Questionnaire" objectSubtitle="{= ${state>/currentPage/title} }" />
       </uxap:headerTitle>
 
       <!--
