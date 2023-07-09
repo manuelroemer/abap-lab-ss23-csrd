@@ -21,7 +21,12 @@
           -->
           <SplitContainer id="splitContainer" initialDetail="placeholder" initialMaster="master">
             <masterPages>
-              <Page id="master" title="Customers" backgroundDesign="List" busy="{state>/deleteCustomerMutation/isPending}" busyIndicatorDelay="0">
+              <Page
+                id="master"
+                title="Customers"
+                backgroundDesign="List"
+                busy="{state>/deleteCustomerMutation/isPending}"
+                busyIndicatorDelay="0">
                 <headerContent>
                   <Button icon="sap-icon://add" tooltip="Add Customer" press="onCustomerAddPress" />
                 </headerContent>

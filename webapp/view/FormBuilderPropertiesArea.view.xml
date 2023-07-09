@@ -13,7 +13,7 @@
       class="form-builder-icon-bar"
       selectedKey="element">
       <items>
-      <IconTabFilter key="questionnaire" text="Questionnaire">
+        <IconTabFilter key="questionnaire" text="Questionnaire">
           <mvc:XMLView class="h-100" viewName="csrdreporting.view.FormBuilderQuestionnairePropertiesArea" />
         </IconTabFilter>
         <IconTabFilter key="page" text="Page">
