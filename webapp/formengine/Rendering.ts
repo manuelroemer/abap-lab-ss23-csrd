@@ -20,8 +20,7 @@ import {
   NumberStepInputFormSchemaElement,
   SingleChoiceSelectFormSchemaElement,
   DateTimeFormSchemaElement,
-  generateId,
-  Margin,
+  FormSchemaElementBase,
 } from './Schema';
 import { FormEngineContext } from './FormEngineContext';
 import RadioButtonGroup from 'sap/m/RadioButtonGroup';
@@ -36,13 +35,27 @@ import { ValueState } from 'sap/ui/core/library';
 import { FlexAlignItems } from 'sap/m/library';
 import { evaluateRules } from './Rules';
 import MessageStrip from 'sap/m/MessageStrip';
+import { generateId } from './SchemaUtils';
 
+/**
+ * Arguments required by form engine element rendering functions.
+ */
+export interface RenderContext<T extends FormSchemaElementBase<string> = FormSchemaElementBase<string>> {
+  element: T;
+  elementIndex: number;
+  context: FormEngineContext;
+}
+
+/**
+ * Represents a function which renders a specific form schema element type.
+ */
 type RenderFormSchemaElement<T extends FormSchemaElement = FormSchemaElement> = (
-  element: T,
-  context: FormEngineContext,
-  elementIndex: number,
+  renderContext: RenderContext<T>,
 ) => Control;
 
+/**
+ * Maps the form schema element types to their respective rendering functions.
+ */
 type RenderLookup = {
   [T in FormSchemaElementType]: RenderFormSchemaElement<Extract<FormSchemaElement, { type: T }>>;
 };
@@ -61,27 +74,26 @@ const elementRenderers: RenderLookup = {
 };
 
 /**
- * Renders a form schema element. Returns the control instance that should be displayed by the form engine.
- * @param element The form schema element to be rendered.
- * @param context The form engine context.
- * @param elementIndex The index of the element within the current page of the form schema.
+ * Renders a single form schema element, i.e., converts the schema element into a UI5 control.
+ * @param renderContext The rendering context.
  * @returns The control instance that should be displayed by the form engine.
  */
-export function render<T extends FormSchemaElement>(
-  element: T,
-  context: FormEngineContext,
-  elementIndex: number,
-): Control {
+export function render<T extends FormSchemaElement>(renderContext: RenderContext<T>): Control {
+  const { element, context, elementIndex } = renderContext;
+
   // Rendering is done by a type-specific rendering function.
   // The form engine further provides support for hooks which allow modifying the rendered control from
   // the outside.
   // Note that rendering can easily fail/error for a variety of reasons, e.g. when the schema is invalid.
   // For such cases, we do a `safeRender` which catches errors and displays an error message per failed
   // element instead of tearing down the entire page rendering process.
-  const renderer = elementRenderers[element.type] as RenderFormSchemaElement;
-  const rawControl = safeRender(renderer, element, context, elementIndex);
+  const renderer = elementRenderers[element.type] as RenderFormSchemaElement<T>;
+  const rawControl = safeRender<T>(renderer, renderContext);
   const control = context.onRenderElement(element, context, rawControl, elementIndex);
 
+  // This is the highest-level rendering function which handles attributes that may be present
+  // on *any* form schema element. Doing this here means that more specific rendering functions
+  // don't have to take care of it.
   const { hide } = evaluateRules(element, context.state);
   if (hide) {
     control.setVisible(false);
@@ -99,16 +111,19 @@ export function render<T extends FormSchemaElement>(
   return control;
 }
 
-function safeRender(
-  renderer: RenderFormSchemaElement,
-  element: FormSchemaElement,
-  context: FormEngineContext,
-  elementIndex: number,
+/**
+ * Invokes a renderer and handles any error thrown by it by rendering a fallback error message control.
+ */
+function safeRender<T extends FormSchemaElement>(
+  renderer: RenderFormSchemaElement<T>,
+  renderContext: RenderContext<T>,
 ) {
   try {
-    return renderer(element, context, elementIndex);
+    return renderer(renderContext);
   } catch (e: any) {
-    return renderError(`An error occured while rendering the element of type "${element.type}": ${e.message}`);
+    return renderError(
+      `An error occured while rendering the element of type "${renderContext.element.type}": ${e.message}`,
+    );
   }
 }
 
@@ -124,15 +139,18 @@ export function renderError(message: string) {
   });
 }
 
-function renderHeading({ text = '', level = 2, wrap = true }: HeadingFormSchemaElement) {
+function renderHeading({ element }: RenderContext<HeadingFormSchemaElement>) {
+  const { text = '', level = 2, wrap = true } = element;
   return new Title({ text, level: `H${level}`, titleStyle: `H${level}`, wrapping: wrap });
 }
 
-function renderText({ text = '' }: TextFormSchemaElement) {
+function renderText({ element }: RenderContext<TextFormSchemaElement>) {
+  const { text = '' } = element;
   return new FormattedText({ htmlText: text });
 }
 
-function renderTextInput(element: TextInputFormSchemaElement, context: FormEngineContext, elementIndex: number) {
+function renderTextInput(renderContext: RenderContext<TextInputFormSchemaElement>) {
+  const { element, elementIndex, context } = renderContext;
   const { page, getValue, setValue } = context;
   const { id = generateId(page, elementIndex), placeholder = '', rows = 1 } = element;
   const value = getValue(id)?.toString() ?? '';
@@ -143,10 +161,11 @@ function renderTextInput(element: TextInputFormSchemaElement, context: FormEngin
       ? new Input({ width: '100%', placeholder, value, change: onChange })
       : new TextArea({ width: '100%', placeholder, rows, value, change: onChange });
 
-  return renderDynamicElementWrapper(element, input, context, elementIndex);
+  return renderDynamicElementWrapper(input, renderContext);
 }
 
-function renderCheckbox(element: CheckboxFormSchemaElement, context: FormEngineContext, elementIndex: number) {
+function renderCheckbox(renderContext: RenderContext<CheckboxFormSchemaElement>) {
+  const { element, elementIndex, context } = renderContext;
   const { page, state, setState } = context;
   const { id = generateId(page, elementIndex), text } = element;
 
@@ -160,10 +179,11 @@ function renderCheckbox(element: CheckboxFormSchemaElement, context: FormEngineC
       }),
   });
 
-  return renderDynamicElementWrapper(element, checkBox, context, elementIndex);
+  return renderDynamicElementWrapper(checkBox, renderContext);
 }
 
-function renderSingleChoice(element: SingleChoiceFormSchemaElement, context: FormEngineContext, elementIndex: number) {
+function renderSingleChoice(renderContext: RenderContext<SingleChoiceFormSchemaElement>) {
+  const { element, elementIndex, context } = renderContext;
   const { page, getValue, setValue } = context;
   const { id = generateId(page, elementIndex), options = [], columns = 1 } = element;
   const value = getValue(id) ?? '';
@@ -181,14 +201,11 @@ function renderSingleChoice(element: SingleChoiceFormSchemaElement, context: For
     buttons: options.map((option) => new RadioButton({ text: option.display ?? option.value })),
   });
 
-  return renderDynamicElementWrapper(element, input, context, elementIndex);
+  return renderDynamicElementWrapper(input, renderContext);
 }
 
-function renderSingleChoiceSelect(
-  element: SingleChoiceSelectFormSchemaElement,
-  context: FormEngineContext,
-  elementIndex: number,
-) {
+function renderSingleChoiceSelect(renderContext: RenderContext<SingleChoiceSelectFormSchemaElement>) {
+  const { element, elementIndex, context } = renderContext;
   const { page, getValue, setValue } = context;
   const { id = generateId(page, elementIndex), options = [] } = element;
   const value = getValue(id) ?? '';
@@ -211,10 +228,11 @@ function renderSingleChoiceSelect(
     items,
   });
 
-  return renderDynamicElementWrapper(element, input, context, elementIndex);
+  return renderDynamicElementWrapper(input, renderContext);
 }
 
-function renderMultiChoice(element: MultiChoiceFormSchemaElement, context: FormEngineContext, elementIndex: number) {
+function renderMultiChoice(renderContext: RenderContext<MultiChoiceFormSchemaElement>) {
+  const { element, elementIndex, context } = renderContext;
   const { page, state, setState, getValue } = context;
   const { id = generateId(page, elementIndex), options = [] } = element;
   const value = (getValue(id) as Array<string>) ?? [];
@@ -235,16 +253,13 @@ function renderMultiChoice(element: MultiChoiceFormSchemaElement, context: FormE
       select: onSelect,
     });
   });
-
   const container = new VBox({ items: items });
-  return renderDynamicElementWrapper(element, container, context, elementIndex);
+
+  return renderDynamicElementWrapper(container, renderContext);
 }
 
-function renderBooleanChoice(
-  element: BooleanChoiceFormSchemaElement,
-  context: FormEngineContext,
-  elementIndex: number,
-) {
+function renderBooleanChoice(renderContext: RenderContext<BooleanChoiceFormSchemaElement>) {
+  const { element, elementIndex, context } = renderContext;
   const { page, getValue, setValue } = context;
   const { id = generateId(page, elementIndex), columns = 1 } = element;
   const options = ['Yes', 'No'];
@@ -260,14 +275,11 @@ function renderBooleanChoice(
     buttons: options.map((option) => new RadioButton({ text: option })),
   });
 
-  return renderDynamicElementWrapper(element, inputs, context, elementIndex);
+  return renderDynamicElementWrapper(inputs, renderContext);
 }
 
-function renderNumberInput(
-  element: NumberStepInputFormSchemaElement,
-  context: FormEngineContext,
-  elementIndex: number,
-) {
+function renderNumberInput(renderContext: RenderContext<NumberStepInputFormSchemaElement>) {
+  const { element, elementIndex, context } = renderContext;
   const { page, getValue, setValue } = context;
   const { id = generateId(page, elementIndex), min, max, stepperDescription } = element;
 
@@ -282,10 +294,11 @@ function renderNumberInput(
     change: onChange,
   });
 
-  return renderDynamicElementWrapper(element, input, context, elementIndex);
+  return renderDynamicElementWrapper(input, renderContext);
 }
 
-function renderDateTime(element: DateTimeFormSchemaElement, context: FormEngineContext, elementIndex: number) {
+function renderDateTime(renderContext: RenderContext<DateTimeFormSchemaElement>) {
+  const { element, elementIndex, context } = renderContext;
   const { page, getValue, setValue } = context;
   const { id = generateId(page, elementIndex) } = element;
 
@@ -293,14 +306,18 @@ function renderDateTime(element: DateTimeFormSchemaElement, context: FormEngineC
   const onChange = (e: Event) => setValue(id, e.getParameter('value'));
   const input = new DateTimePicker({ width: '100%', value: value, change: onChange });
 
-  return renderDynamicElementWrapper(element, input, context, elementIndex);
+  return renderDynamicElementWrapper(input, renderContext);
 }
 
+/**
+ * Wraps the given control of a {@link DynamicFormSchemaElement} in a container that
+ * displays the shared attributes of such dynamic elements, i.e., the label, description,
+ * helper text, etc.
+ * @param innerControl The control to be wrapped.
+ */
 function renderDynamicElementWrapper(
-  element: DynamicFormSchemaElement<string>,
   innerControl: Control,
-  context: FormEngineContext,
-  elementIndex: number,
+  { element, elementIndex, context }: RenderContext<DynamicFormSchemaElement<string>>,
 ) {
   const { page } = context;
   const {

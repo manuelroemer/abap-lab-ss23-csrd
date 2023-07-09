@@ -65,7 +65,7 @@ export default class FormEngine extends Control {
       const elements = context.currentPage.elements ?? [];
       for (let i = 0; i < elements.length; i++) {
         const element = elements[i];
-        const control = render(element, context, i);
+        const control = render({ element, context, elementIndex: i });
         content.addItem(control);
       }
 

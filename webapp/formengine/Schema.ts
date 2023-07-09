@@ -1,11 +1,3 @@
-export function generateId(pageIndex: number, elementIndex: number) {
-  return `page-${pageIndex}-element-${elementIndex}`;
-}
-
-export const emptySchema: FormSchema = {
-  pages: [],
-};
-
 export interface FormSchemaExpressionBase<TType extends string> {
   type: TType;
 }

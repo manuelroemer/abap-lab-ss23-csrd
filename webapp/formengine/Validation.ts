@@ -1,13 +1,29 @@
 import { isExpressionTruthy } from './Expressions';
 import { FormEngineState } from './FormEngineContext';
 import { evaluateRules } from './Rules';
-import { DynamicFormSchemaElement, FormSchemaElement, FormSchemaPage, generateId } from './Schema';
+import { DynamicFormSchemaElement, FormSchemaElement, FormSchemaPage } from './Schema';
+import { generateId } from './SchemaUtils';
 
+/**
+ * Represents a form engine validation error which can be shown to the user.
+ */
 export interface ValidationError {
+  /**
+   * The ID of the element which was the source of the error.
+   */
   elementId: string;
+  /**
+   * The error message.
+   */
   message: string;
 }
 
+/**
+ * Validates all form schema elements on a specific page and returns any found error(s).
+ * @param page The page to be validated.
+ * @param pageIndex The index of the page to be validated, within the form schema.
+ * @param state The current form engine state.
+ */
 export function getValidationErrorsForPage(
   page: FormSchemaPage,
   pageIndex: number,
@@ -18,6 +34,13 @@ export function getValidationErrorsForPage(
   );
 }
 
+/**
+ * Validates a specific form schema element and returns any found error(s).
+ * @param elementIndex The index of the element to be validated, within the page.
+ * @param pageIndex The index of the page to be validated, within the form schema.
+ * @param element The element to be validated.
+ * @param state The current form engine state.
+ */
 export function getValidationErrorsForElement(
   elementIndex: number,
   pageIndex: number,
