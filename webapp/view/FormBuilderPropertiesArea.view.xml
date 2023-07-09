@@ -10,8 +10,12 @@
       backgroundDesign="Transparent"
       applyContentPadding="false"
       stretchContentHeight="true"
-      class="form-builder-icon-bar">
+      class="form-builder-icon-bar"
+      selectedKey="element">
       <items>
+        <IconTabFilter key="questionnaire" text="Questionnaire">
+          <mvc:XMLView class="h-100" viewName="csrdreporting.view.FormBuilderQuestionnairePropertiesArea" />
+        </IconTabFilter>
         <IconTabFilter key="page" text="Page">
           <mvc:XMLView class="h-100" viewName="csrdreporting.view.FormBuilderPagePropertiesArea" />
         </IconTabFilter>

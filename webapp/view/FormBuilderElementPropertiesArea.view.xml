@@ -127,7 +127,7 @@
         </VBox>
 
         <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('options') }">
-          <Label text="Options" />
+          <Label text="Options" required="true" />
 
           <Table id="multiChoiceOptions" items="{state>/elementToEdit/options}" fixedLayout="false" mode="MultiSelect">
             <headerToolbar>

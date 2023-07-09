@@ -13,5 +13,10 @@ export function generateId(pageIndex: number, elementIndex: number) {
  * Represents a bare, empty form schema.
  */
 export const emptySchema: FormSchema = {
-  pages: [],
+  pages: [
+    {
+      id: 'page-1',
+      elements: [],
+    },
+  ],
 };

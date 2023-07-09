@@ -1,0 +1,17 @@
+<mvc:View
+  xmlns:layout="sap.ui.layout"
+  controllerName="csrdreporting.controller.FormBuilderQuestionnairePropertiesArea"
+  xmlns:mvc="sap.ui.core.mvc"
+  displayBlock="true"
+  xmlns="sap.m">
+  <VBox class="sapUiMediumMargin">
+    <VBox>
+      <Label text="Name" required="true" />
+      <Input value="{state>/name}" required="true" placeholder="Name" maxLength="255" />
+      <Text text="Name of the questionnaire." />
+      <Label text="Description" class="sapUiSmallMarginTop" />
+      <TextArea value="{state>/description}" required="true" placeholder="Description" width="100%" maxLength="255" />
+      <Text text="Questionnaires description." />
+    </VBox>
+  </VBox>
+</mvc:View>

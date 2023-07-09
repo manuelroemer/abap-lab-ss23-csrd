@@ -11,7 +11,7 @@
       id="QuestionnairePageLayout"
       showFooter="true"
       busyIndicatorDelay="0"
-      busy="{= ${state>/customerQuery/isLoading} || ${state>/formSchemaQuery/isLoading} || ${state>/formSchemaResultQuery/isLoading} }">
+      busy="{= ${state>/customerQuery/isPending} || ${state>/formSchemaQuery/isPending} || ${state>/formSchemaResultQuery/isPending} }">
       <uxap:headerTitle>
         <uxap:ObjectPageHeader
           objectTitle="Questionnaire"

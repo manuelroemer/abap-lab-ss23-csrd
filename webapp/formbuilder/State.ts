@@ -17,6 +17,10 @@ import {
 import { RouterState } from '../utils/StateRouter';
 import { QueryState, createQuery } from '../utils/StateQuery';
 import { FormSchemaEntity, getFormSchemaEntity } from '../api/FormSchemaEntity';
+import {
+  FormBuilderStateQuestionnairePropertiesAreaSlice,
+  createFormBuilderQuestionnairePropertiesAreaSlice,
+} from './State.QuestionnairePropertiesArea';
 
 /**
  * Represents the internal state of the form builder page.
@@ -26,6 +30,7 @@ export interface FormBuilderState
     FormBuilderStateFormEngineSlice,
     FormBuilderStatePageAreaSlice,
     FormBuilderStatePreviewAreaSlice,
+    FormBuilderStateQuestionnairePropertiesAreaSlice,
     FormBuilderStatePagePropertiesAreaSlice,
     FormBuilderStateElementPropertiesAreaSlice,
     FormBuilderStateAddElementDialogSlice {
@@ -41,6 +46,7 @@ export function createFormBuilderState() {
     ...createFormBuilderFormEngineSlice(state),
     ...createFormBuilderPageAreaSlice(state),
     ...createFormBuilderPreviewAreaSlice(state),
+    ...createFormBuilderQuestionnairePropertiesAreaSlice(state),
     ...createFormBuilderPagePropertiesAreaSlice(state),
     ...createFormBuilderElementPropertiesAreaSlice(state),
     ...createFormBuilderAddElementDialogSlice(state),

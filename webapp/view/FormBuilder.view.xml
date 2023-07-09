@@ -1,4 +1,5 @@
 <mvc:View
+  xmlns:f="sap.f"
   xmlns:layout="sap.ui.layout"
   controllerName="csrdreporting.controller.FormBuilder"
   xmlns:mvc="sap.ui.core.mvc"
@@ -11,7 +12,8 @@
     title="Questionnaire Builder"
     showNavButton="true"
     navButtonPress="navBack"
-    busy="{= ${state>/formSchemaQuery/isLoading} }">
+    busy="{= ${state>/formSchemaQuery/isPending} }"
+    busyIndicatorDelay="0">
     <layout:ResponsiveSplitter defaultPane="formEngine">
       <layout:PaneContainer>
         <layout:SplitPane id="pages">
