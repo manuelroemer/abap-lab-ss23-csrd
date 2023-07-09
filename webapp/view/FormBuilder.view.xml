@@ -25,7 +25,7 @@
         tooltip="Save">
         <menu>
           <Menu itemSelected="onSaveAndUndraft">
-            <MenuItem text="Save and undraft" icon="sap-icon://save" tooltip="Save and undraft"/>
+            <MenuItem text="Save and undraft" icon="sap-icon://save" tooltip="Save and undraft" />
           </Menu>
         </menu>
       </MenuButton>
