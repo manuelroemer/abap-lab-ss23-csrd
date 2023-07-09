@@ -74,5 +74,11 @@ function evaluateExpression(expression: FormSchemaExpressionOrPrimitive, state: 
  * @param expression The form schema expression (or primitive).
  */
 function isPrimitive(expression: FormSchemaExpressionOrPrimitive): expression is FormSchemaExpressionPrimitive {
-  return typeof expression === 'string' || typeof expression === 'number' || typeof expression === 'boolean';
+  return (
+    typeof expression === 'string' ||
+    typeof expression === 'number' ||
+    typeof expression === 'boolean' ||
+    expression === null ||
+    expression === undefined
+  );
 }
