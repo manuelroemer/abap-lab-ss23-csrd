@@ -12,24 +12,10 @@ export interface FormBuilderStateQuestionnairePropertiesAreaSlice {
   readonly description?: string;
 }
 
-export function createFormBuilderQuestionnairePropertiesAreaSlice({
-  state,
-  get,
-}: State<FormBuilderState>): FormBuilderStateQuestionnairePropertiesAreaSlice {
-  state.watch(
-    (s) => s.name,
-    ({ name }) => {
-      get().setState({ name: name });
-    },
-  );
-
-  state.watch(
-    (s) => s.description,
-    ({ description }) => {
-      get().setState({ description: description });
-    },
-  );
-
+export function createFormBuilderQuestionnairePropertiesAreaSlice(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _state: State<FormBuilderState>,
+): FormBuilderStateQuestionnairePropertiesAreaSlice {
   return {
     name: '',
     description: '',

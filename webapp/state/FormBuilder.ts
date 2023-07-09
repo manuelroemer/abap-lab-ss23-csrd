@@ -75,7 +75,11 @@ export function createFormBuilderState() {
         const { setSchema, setPage } = get();
         setSchema(JSON.parse(formSchema.SchemaJson));
         setPage(0);
-        set({ selectedTab: 'questionnaire' });
+        set({
+          selectedTab: 'questionnaire',
+          name: formSchema.Name,
+          description: formSchema.Description,
+        });
       },
     }),
 
