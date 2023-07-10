@@ -134,7 +134,7 @@ export function createFormEngineContext({ get, set }: State<FormEngineContext>, 
 
     // The previous/next page is not, simply, the previous/next page in the schema, but instead the
     // page that is *not* hidden according to its effect rules.
-    const pagesHidden = schema.pages.map((page) => evaluateRules(page, state).hide);
+    const pagesHidden = schema.pages.map((page) => evaluateRules(page, schema, state).hide);
     const previousPageIndex = schema.pages.findLastIndex((_, index) => index < page && !pagesHidden[index]);
     const nextPageIndex = schema.pages.findIndex((_, index) => index > page && !pagesHidden[index]);
 
@@ -145,7 +145,7 @@ export function createFormEngineContext({ get, set }: State<FormEngineContext>, 
     const canGoBackward = previousPageIndex >= 0;
     const canSubmit = isLastPage;
 
-    const currentPageValidationErrors = currentPage ? getValidationErrorsForPage(currentPage, page, state) : [];
+    const currentPageValidationErrors = currentPage ? getValidationErrorsForPage(currentPage, page, schema, state) : [];
 
     return {
       ...context,

@@ -1,7 +1,7 @@
 import { isExpressionTruthy } from './Expressions';
 import { FormEngineState } from './FormEngineContext';
 import { evaluateRules } from './Rules';
-import { DynamicFormSchemaElement, FormSchemaElement, FormSchemaPage } from './Schema';
+import { DynamicFormSchemaElement, FormSchema, FormSchemaElement, FormSchemaPage } from './Schema';
 import { generateId } from './SchemaUtils';
 
 /**
@@ -22,15 +22,17 @@ export interface ValidationError {
  * Validates all form schema elements on a specific page and returns any found error(s).
  * @param page The page to be validated.
  * @param pageIndex The index of the page to be validated, within the form schema.
+ * @param schema The form schema.
  * @param state The current form engine state.
  */
 export function getValidationErrorsForPage(
   page: FormSchemaPage,
   pageIndex: number,
+  schema: FormSchema,
   state: FormEngineState,
 ): Array<ValidationError> {
   return page.elements.flatMap((element, elementIndex) =>
-    getValidationErrorsForElement(elementIndex, pageIndex, element, state),
+    getValidationErrorsForElement(elementIndex, pageIndex, element, schema, state),
   );
 }
 
@@ -39,17 +41,19 @@ export function getValidationErrorsForPage(
  * @param elementIndex The index of the element to be validated, within the page.
  * @param pageIndex The index of the page to be validated, within the form schema.
  * @param element The element to be validated.
+ * @param schema The form schema.
  * @param state The current form engine state.
  */
 export function getValidationErrorsForElement(
   elementIndex: number,
   pageIndex: number,
   element: FormSchemaElement,
+  schema: FormSchema,
   state: FormEngineState,
 ): Array<ValidationError> {
   const errors: Array<ValidationError> = [];
 
-  if (evaluateRules(element, state).hide) {
+  if (evaluateRules(element, schema, state).hide) {
     return [];
   }
 
@@ -66,7 +70,7 @@ export function getValidationErrorsForElement(
     const id = element.id ?? generateId(pageIndex, elementIndex);
 
     for (const rule of element.validationRules) {
-      if (!isExpressionTruthy(rule.condition, state)) {
+      if (!isExpressionTruthy(rule.condition, schema, state)) {
         errors.push({ elementId: id, message: rule.message });
       }
     }

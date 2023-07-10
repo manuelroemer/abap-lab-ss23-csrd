@@ -6,6 +6,10 @@ export interface FormSchemaValueExpression extends FormSchemaExpressionBase<'val
   id: string;
 }
 
+export interface FormSchemaRefExpression extends FormSchemaExpressionBase<'ref'> {
+  id: string;
+}
+
 export interface FormSchemaOpUnaryExpression<TType extends string> extends FormSchemaExpressionBase<TType> {
   value: FormSchemaExpressionOrPrimitive;
 }
@@ -19,6 +23,7 @@ export type FormSchemaExpressionPrimitive = string | number | boolean | null | u
 
 export type FormSchemaExpression =
   | FormSchemaValueExpression
+  | FormSchemaRefExpression
   | FormSchemaOpUnaryExpression<'not'>
   | FormSchemaOpBinaryExpression<'and'>
   | FormSchemaOpBinaryExpression<'or'>
@@ -41,6 +46,9 @@ export interface FormSchema {
    * All pages to be rendered.
    */
   pages: Array<FormSchemaPage>;
+  refs?: {
+    conditions?: Record<string, FormSchemaExpressionOrPrimitive>;
+  };
 }
 
 /**

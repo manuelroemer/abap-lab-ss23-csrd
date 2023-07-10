@@ -94,7 +94,7 @@ export function render<T extends FormSchemaElement>(renderContext: RenderContext
   // This is the highest-level rendering function which handles attributes that may be present
   // on *any* form schema element. Doing this here means that more specific rendering functions
   // don't have to take care of it.
-  const { hide } = evaluateRules(element, context.state);
+  const { hide } = evaluateRules(element, context.schema, context.state);
   if (hide) {
     if (context.onHideElement) {
       context.onHideElement(element, context, control, elementIndex);

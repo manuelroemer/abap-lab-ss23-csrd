@@ -122,8 +122,8 @@ function findLastPageWithoutErrors(schema: FormSchema, state: FormEngineState): 
 
   for (let pageIndex = 0; pageIndex < schema.pages.length; pageIndex++) {
     const page = schema.pages[pageIndex];
-    const isHidden = evaluateRules(page, state).hide;
-    const hasErrors = getValidationErrorsForPage(page, pageIndex, state).length > 0;
+    const isHidden = evaluateRules(page, schema, state).hide;
+    const hasErrors = getValidationErrorsForPage(page, pageIndex, schema, state).length > 0;
 
     if (!isHidden) {
       lastPageWithoutErrors = pageIndex;
