@@ -38,7 +38,11 @@
                 <core:Item key="{state>type}" text="{state>displayName}" />
               </Select>
 
-              <controls:ExpressionTreeEditor expressionTree="{state>condition}" schema="{state>/schema}" class="sapUiSmallMarginBegin" />
+              <controls:ExpressionTreeEditor
+                expressionTree="{state>condition}"
+                schema="{state>/schema}"
+                class="sapUiSmallMarginBegin"
+              />
             </VBox>
           </CustomListItem>
         </List>
