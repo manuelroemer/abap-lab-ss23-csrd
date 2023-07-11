@@ -30,4 +30,15 @@ export default class FormBuilderElementPropertiesAreaController extends BaseCont
     const index = list.indexOfItem(selectedItem);
     formBuilderState.get().deleteElementEffect(index);
   }
+
+  onAddElementValidationRulePress() {
+    formBuilderState.get().addElementValidationRule();
+  }
+
+  onDeleteElementValidationRulePress(e) {
+    const list = this.byId('elementValidationRules') as List;
+    const selectedItem = list.getSelectedItem();
+    const index = list.indexOfItem(selectedItem);
+    formBuilderState.get().deleteElementValidationRule(index);
+  }
 }

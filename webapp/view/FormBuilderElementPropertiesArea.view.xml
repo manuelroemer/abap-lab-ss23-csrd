@@ -188,6 +188,32 @@
             </CustomListItem>
           </List>
         </VBox>
+
+        <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('validationRules') }">
+          <Label text="Validation Rules" />
+          <Text text="Validation rules allow you to conditionally display element validation errors, based on expression trees." />
+
+          <List
+            id="elementValidationRules"
+            items="{state>/elementToEdit/validationRules}"
+            mode="SingleSelectLeft"
+            class="sapUiSmallMarginTop">
+            <headerToolbar>
+              <OverflowToolbar>
+                <ToolbarSpacer />
+                <Button icon="sap-icon://add" press="onAddElementValidationRulePress" />
+                <ToolbarSeparator />
+                <Button icon="sap-icon://delete" press="onDeleteElementValidationRulePress" />
+              </OverflowToolbar>
+            </headerToolbar>
+            <CustomListItem>
+              <VBox class="sapUiTinyMargin">
+                <Input value="{state>message}" placeholder="Error message" />
+                <controls:ExpressionTreeEditor expressionTree="{state>condition}" class="sapUiSmallMarginBegin" />
+              </VBox>
+            </CustomListItem>
+          </List>
+        </VBox>
       </VBox>
     </VBox>
   </ScrollContainer>

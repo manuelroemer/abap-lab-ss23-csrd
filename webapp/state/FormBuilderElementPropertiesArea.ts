@@ -44,6 +44,15 @@ export interface FormBuilderStateElementPropertiesAreaSlice {
    * @param index The index of the effect to be deleted.
    */
   deleteElementEffect(index: number): void;
+  /**
+   * Adds a new validation rule to the element.
+   */
+  addElementValidationRule(): void;
+  /**
+   * Deletes the validation rule at the given index from the currently edited element.
+   * @param index The index of the validation rule to be deleted.
+   */
+  deleteElementValidationRule(index: number): void;
 }
 
 /**
@@ -175,6 +184,34 @@ export function createFormBuilderElementPropertiesAreaSlice({
         const nextElement = {
           ...elementToEdit,
           effects: effects.filter((_, i) => i !== index),
+        };
+
+        set({ elementToEdit: nextElement });
+      }
+    },
+
+    addElementValidationRule() {
+      const { elementToEdit } = get();
+
+      if (elementToEdit) {
+        const validationRules = elementToEdit['validationRules'] ?? [];
+        const nextElement = {
+          ...elementToEdit,
+          validationRules: [...validationRules, { message: '', condition: null } as const],
+        };
+
+        set({ elementToEdit: nextElement });
+      }
+    },
+
+    deleteElementValidationRule(index: number) {
+      const { elementToEdit } = get();
+
+      if (elementToEdit) {
+        const validationRules = elementToEdit['validationRules'] ?? [];
+        const nextElement = {
+          ...elementToEdit,
+          validationRules: validationRules.filter((_, i) => i !== index),
         };
 
         set({ elementToEdit: nextElement });
