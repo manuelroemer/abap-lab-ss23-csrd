@@ -171,6 +171,7 @@
             class="sapUiSmallMarginTop">
             <headerToolbar>
               <OverflowToolbar>
+                <Text text="Element Effects" />
                 <ToolbarSpacer />
                 <Button icon="sap-icon://add" press="onAddElementEffectPress" />
                 <ToolbarSeparator />
@@ -204,6 +205,7 @@
             class="sapUiSmallMarginTop">
             <headerToolbar>
               <OverflowToolbar>
+                <Text text="Element Validation Rules" />
                 <ToolbarSpacer />
                 <Button icon="sap-icon://add" press="onAddElementValidationRulePress" />
                 <ToolbarSeparator />

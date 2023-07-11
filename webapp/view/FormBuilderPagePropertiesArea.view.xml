@@ -25,6 +25,7 @@
         <List id="pageEffects" items="{state>/pageToEdit/effects}" mode="SingleSelectLeft" class="sapUiSmallMarginTop">
           <headerToolbar>
             <OverflowToolbar>
+              <Text text="Page Effects" />
               <ToolbarSpacer />
               <Button icon="sap-icon://add" press="onAddPageEffectPress" />
               <ToolbarSeparator />
