@@ -8,6 +8,15 @@ export interface FormBuilderStatePagePropertiesAreaSlice {
    * The currently selected page.
    */
   pageToEdit?: FormSchemaPage;
+  /**
+   * Adds a new effect to the page.
+   */
+  addPageEffect(): void;
+  /**
+   * Deletes the effect at the given index from the currently edited page.
+   * @param index The index of the effect to be deleted.
+   */
+  deletePageEffect(index: number): void;
 }
 
 export function createFormBuilderPagePropertiesAreaSlice({
@@ -32,6 +41,7 @@ export function createFormBuilderPagePropertiesAreaSlice({
           updatePage(schema, page, (pageToUpdate) => ({
             ...pageToUpdate,
             title: pageToEdit.title,
+            effects: pageToEdit.effects,
           })),
         );
       }
@@ -40,5 +50,33 @@ export function createFormBuilderPagePropertiesAreaSlice({
 
   return {
     pageToEdit: undefined,
+
+    addPageEffect() {
+      const { pageToEdit } = get();
+
+      if (pageToEdit) {
+        const effects = pageToEdit['effects'] ?? [];
+        const nextElement = {
+          ...pageToEdit,
+          effects: [...effects, { effect: 'hide', condition: null } as const],
+        };
+
+        set({ pageToEdit: nextElement });
+      }
+    },
+
+    deletePageEffect(index: number) {
+      const { pageToEdit } = get();
+
+      if (pageToEdit) {
+        const effects = pageToEdit['effects'] ?? [];
+        const nextElement = {
+          ...pageToEdit,
+          effects: effects.filter((_, i) => i !== index),
+        };
+
+        set({ pageToEdit: nextElement });
+      }
+    },
   };
 }
