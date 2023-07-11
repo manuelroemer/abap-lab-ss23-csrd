@@ -1,18 +1,49 @@
 <mvc:View
+  xmlns:core="sap.ui.core"
   xmlns:layout="sap.ui.layout"
   controllerName="csrdreporting.controller.FormBuilderQuestionnairePropertiesArea"
   xmlns:mvc="sap.ui.core.mvc"
   displayBlock="true"
-  xmlns="sap.m">
+  xmlns="sap.m"
+  xmlns:controls="csrdreporting.controls">
   <VBox class="sapUiMediumMargin">
     <VBox>
-      <Label text="Name" />
-      <Input value="{state>/name}" placeholder="Name" maxLength="255" />
-      <Text text="A display name of the questionnaire." />
+      <VBox class="sapUiMediumMarginBottom">
+        <Label text="Name" />
+        <Input value="{state>/name}" placeholder="Name" maxLength="255" />
+        <Text text="A display name of the questionnaire." />
+      </VBox>
 
-      <Label text="Description" class="sapUiSmallMarginTop" />
-      <TextArea value="{state>/description}" rows="5" placeholder="Description" width="100%" maxLength="255" />
-      <Text text="A description of the questionnaire." />
+      <VBox class="sapUiMediumMarginBottom">
+        <Label text="Description" class="sapUiSmallMarginTop" />
+        <TextArea value="{state>/description}" rows="5" placeholder="Description" width="100%" maxLength="255" />
+        <Text text="A description of the questionnaire." />
+      </VBox>
+
+      <VBox class="sapUiMediumMarginBottom">
+        <Label text="Ref Conditions" />
+        <Text
+          text="Global conditions which can be referenced by effects and validation rules. It is recommended to define frequently used conditions here to minimize complexity."
+        />
+
+        <List id="refConditions" items="{state>/refConditions}" mode="SingleSelectLeft" class="sapUiSmallMarginTop">
+          <headerToolbar>
+            <OverflowToolbar>
+              <Text text="Ref Conditions" />
+              <ToolbarSpacer />
+              <Button icon="sap-icon://add" press="onAddRefConditionPress" />
+              <ToolbarSeparator />
+              <Button icon="sap-icon://delete" press="onDeleteRefConditionPress" />
+            </OverflowToolbar>
+          </headerToolbar>
+          <CustomListItem>
+            <VBox class="sapUiTinyMargin">
+              <Input value="{state>key}" placeholder="ID" />
+              <controls:ExpressionTreeEditor expressionTree="{state>condition}" class="sapUiSmallMarginBegin" />
+            </VBox>
+          </CustomListItem>
+        </List>
+      </VBox>
     </VBox>
   </VBox>
 </mvc:View>
