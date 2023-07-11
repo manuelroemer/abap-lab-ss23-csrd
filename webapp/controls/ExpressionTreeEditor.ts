@@ -2,18 +2,20 @@
 import Tree from 'sap/m/Tree';
 import Control from 'sap/ui/core/Control';
 import RenderManager from 'sap/ui/core/RenderManager';
-import { FormSchemaExpressionOrPrimitive, FormSchemaExpressionType } from '../formengine/Schema';
+import { FormSchema, FormSchemaExpressionOrPrimitive, FormSchemaExpressionType } from '../formengine/Schema';
 import { State, createState } from '../utils/State';
 import Context from 'sap/ui/model/Context';
 import CustomTreeItem from 'sap/m/CustomTreeItem';
 import HBox from 'sap/m/HBox';
 import Input from 'sap/m/Input';
-import { isPrimitive } from '../formengine/SchemaUtils';
+import { getExplicitlyDeclaredIds, isPrimitive } from '../formengine/SchemaUtils';
 import Select from 'sap/m/Select';
 import ListItem from 'sap/ui/core/ListItem';
 import FlexItemData from 'sap/m/FlexItemData';
 import StepInput from 'sap/m/StepInput';
 import CheckBox from 'sap/m/CheckBox';
+import ComboBox from 'sap/m/ComboBox';
+import Item from 'sap/ui/core/Item';
 
 interface ExpressionTreeEditorState {
   items: {
@@ -24,6 +26,8 @@ interface ExpressionTreeEditorState {
     type: ExtendedExpressionType;
     displayName: string;
   }>;
+  ids: Array<string>;
+  refConditionIds: Array<string>;
 }
 
 interface ExpressionTreeItem {
@@ -55,6 +59,7 @@ export default class ExpressionTreeEditor extends Control {
   static readonly metadata = {
     properties: {
       expressionTree: { type: 'any', defaultValue: null },
+      schema: { type: 'object', defaultValue: null },
     },
     aggregations: {
       _tree: { type: 'sap.m.Tree', multiple: false, visibility: 'hidden' },
@@ -98,6 +103,8 @@ export default class ExpressionTreeEditor extends Control {
           { type: 'gt', displayName: '> (gt)' },
           { type: 'ge', displayName: '>= (ge)' },
         ],
+        ids: [],
+        refConditionIds: [],
       }),
       { name: 'ExpressionTreeEditor' },
     );
@@ -114,6 +121,14 @@ export default class ExpressionTreeEditor extends Control {
       items: {
         root: this.mapExpressionToTreeItem(expressionTree),
       },
+    });
+  }
+
+  setSchema(schema?: FormSchema) {
+    this.setProperty('schema', schema);
+    this.state.set({
+      ids: schema ? getExplicitlyDeclaredIds(schema) : [],
+      refConditionIds: schema ? Object.keys(schema?.refs?.conditions ?? {}) : [],
     });
   }
 
@@ -141,8 +156,12 @@ export default class ExpressionTreeEditor extends Control {
           return { itemId: previous.itemId, type: 'boolean', value: false };
         }
 
-        if (nextType === 'value' || nextType === 'ref') {
-          return { itemId: previous.itemId, type: nextType, id: '' };
+        if (nextType === 'ref') {
+          return { itemId: previous.itemId, type: 'ref', id: '' };
+        }
+
+        if (nextType === 'value') {
+          return { itemId: previous.itemId, type: 'value', value: '' };
         }
 
         if (nextType === 'not') {
@@ -189,17 +208,34 @@ export default class ExpressionTreeEditor extends Control {
             })
             .addStyleClass('sapUiTinyMarginEnd'),
 
-          new Input({
+          new ComboBox({
             placeholder: 'ID',
             value: `${treeItem.id}`,
             visible: 'id' in treeItem,
             change: (e) => handleIdChange(e.getParameter('value')),
-          }).setLayoutData(new FlexItemData({ growFactor: 1 })),
+          })
+            .setLayoutData(new FlexItemData({ growFactor: 1 }))
+            .bindItems({
+              path: '/refConditionIds',
+              template: new Item().bindProperty('key', { path: '' }).bindProperty('text', { path: '' }),
+            }),
+
+          new ComboBox({
+            placeholder: 'Value',
+            value: `${treeItem.value}`,
+            visible: 'value' in treeItem && treeItem.type === 'value',
+            change: (e) => handleValueChange(e.getParameter('value')),
+          })
+            .setLayoutData(new FlexItemData({ growFactor: 1 }))
+            .bindItems({
+              path: '/ids',
+              template: new Item().bindProperty('key', { path: '' }).bindProperty('text', { path: '' }),
+            }),
 
           new Input({
             placeholder: 'Value',
             value: `${treeItem.value}`,
-            visible: 'value' in treeItem && (treeItem.type === 'value' || treeItem.type === 'string'),
+            visible: 'value' in treeItem && treeItem.type === 'string',
             change: (e) => handleValueChange(e.getParameter('value')),
           }).setLayoutData(new FlexItemData({ growFactor: 1 })),
 
@@ -270,11 +306,19 @@ export default class ExpressionTreeEditor extends Control {
       };
     }
 
-    if (expression.type === 'value' || expression.type === 'ref') {
+    if (expression.type === 'ref') {
       return {
         itemId: this.nextItemId(),
         type: expression.type,
         id: expression.id,
+      };
+    }
+
+    if (expression.type === 'value') {
+      return {
+        itemId: this.nextItemId(),
+        type: expression.type,
+        value: expression.value,
       };
     }
 
@@ -307,8 +351,12 @@ export default class ExpressionTreeEditor extends Control {
       return treeItem.value;
     }
 
-    if (treeItem.type === 'value' || treeItem.type === 'ref') {
+    if (treeItem.type === 'ref') {
       return { type: treeItem.type, id: treeItem.id ?? '' };
+    }
+
+    if (treeItem.type === 'value') {
+      return { type: treeItem.type, value: treeItem.value ?? '' };
     }
 
     if (treeItem.type === 'not') {

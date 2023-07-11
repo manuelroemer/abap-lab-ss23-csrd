@@ -184,7 +184,7 @@
                   <core:Item key="{state>type}" text="{state>displayName}" />
                 </Select>
 
-                <controls:ExpressionTreeEditor expressionTree="{state>condition}" class="sapUiSmallMarginBegin" />
+                <controls:ExpressionTreeEditor expressionTree="{state>condition}" schema="{state>/schema}" class="sapUiSmallMarginBegin" />
               </VBox>
             </CustomListItem>
           </List>
@@ -215,7 +215,7 @@
             <CustomListItem>
               <VBox class="sapUiTinyMargin">
                 <Input value="{state>message}" placeholder="Error message" />
-                <controls:ExpressionTreeEditor expressionTree="{state>condition}" class="sapUiSmallMarginBegin" />
+                <controls:ExpressionTreeEditor expressionTree="{state>condition}" schema="{state>/schema}" class="sapUiSmallMarginBegin" />
               </VBox>
             </CustomListItem>
           </List>

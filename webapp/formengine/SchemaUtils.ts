@@ -34,3 +34,33 @@ export function isPrimitive(expression: FormSchemaExpressionOrPrimitive): expres
     expression === undefined
   );
 }
+
+/**
+ * In a best-effort principle, tries to extract all explicitly defined IDs from the given form schema.
+ * Suitable for auto suggestions or alike features.
+ * @param schema The schema.
+ * @returns A set of IDs.
+ */
+export function getExplicitlyDeclaredIds(schema: FormSchema) {
+  const ids = new Set<string>();
+
+  for (const page of schema.pages ?? []) {
+    for (const element of page.elements ?? []) {
+      const anyElement = element as any;
+
+      if (typeof anyElement.id === 'string') {
+        ids.add(anyElement.id);
+
+        if (element.type === 'multi-choice' && Array.isArray(element.options)) {
+          for (const option of element.options) {
+            if (typeof option.value === 'string') {
+              ids.add(`${anyElement.id}.${option.value}`);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return [...ids].sort((a, b) => a.localeCompare(b));
+}

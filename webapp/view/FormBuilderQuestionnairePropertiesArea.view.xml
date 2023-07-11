@@ -39,7 +39,7 @@
           <CustomListItem>
             <VBox class="sapUiTinyMargin">
               <Input value="{state>key}" placeholder="ID" />
-              <controls:ExpressionTreeEditor expressionTree="{state>condition}" class="sapUiSmallMarginBegin" />
+              <controls:ExpressionTreeEditor expressionTree="{state>condition}" schema="{state>/schema}" class="sapUiSmallMarginBegin" />
             </VBox>
           </CustomListItem>
         </List>
