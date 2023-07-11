@@ -3,7 +3,7 @@ export interface FormSchemaExpressionBase<TType extends string> {
 }
 
 export interface FormSchemaValueExpression extends FormSchemaExpressionBase<'value'> {
-  id: string;
+  value: string;
 }
 
 export interface FormSchemaRefExpression extends FormSchemaExpressionBase<'ref'> {
@@ -11,7 +11,7 @@ export interface FormSchemaRefExpression extends FormSchemaExpressionBase<'ref'>
 }
 
 export interface FormSchemaOpUnaryExpression<TType extends string> extends FormSchemaExpressionBase<TType> {
-  value: FormSchemaExpressionOrPrimitive;
+  expression: FormSchemaExpressionOrPrimitive;
 }
 
 export interface FormSchemaOpBinaryExpression<TType extends string> extends FormSchemaExpressionBase<TType> {
