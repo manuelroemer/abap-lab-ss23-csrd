@@ -17,5 +17,4 @@ export default class FormBuilderQuestionnairePropertiesArea extends BaseControll
     const index = list.indexOfItem(selectedItem);
     formBuilderState.get().deleteRefCondition(index);
   }
-
 }
