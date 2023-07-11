@@ -45,6 +45,7 @@ export interface FormBuilderState
     FormBuilderStatePagePropertiesAreaSlice,
     FormBuilderStateElementPropertiesAreaSlice,
     FormBuilderStateAddElementDialogSlice {
+  effectTypes: Array<{ type: string; displayName: string }>;
   formSchemaQuery: QueryState<string, FormSchemaEntity>;
   updateFormSchemaMutation: AsyncState<boolean>;
 }
@@ -57,6 +58,8 @@ export function createFormBuilderState() {
     ({ get, set, state }) => ({
       parameters: {},
       query: {},
+
+      effectTypes: [{ type: 'hide', displayName: 'Hide' }],
 
       ...createFormBuilderFormEngineSlice(state),
       ...createFormBuilderPageAreaSlice(state),

@@ -4,7 +4,8 @@
   controllerName="csrdreporting.controller.FormBuilderElementPropertiesArea"
   xmlns:mvc="sap.ui.core.mvc"
   displayBlock="true"
-  xmlns="sap.m">
+  xmlns="sap.m"
+  xmlns:controls="csrdreporting.controls">
   <ScrollContainer height="100%" vertical="true">
     <VBox class="sapUiMediumMargin">
       <VBox visible="{= !${state>/elementToEdit} }">
@@ -157,6 +158,35 @@
               </ColumnListItem>
             </items>
           </Table>
+        </VBox>
+
+        <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('effects') }">
+          <Label text="Effects" />
+          <Text text="Effects allow you to conditionally show or hide the element, based on expression trees." />
+
+          <List
+            id="elementEffects"
+            items="{state>/elementToEdit/effects}"
+            mode="SingleSelectLeft"
+            class="sapUiSmallMarginTop">
+            <headerToolbar>
+              <OverflowToolbar>
+                <ToolbarSpacer />
+                <Button icon="sap-icon://add" press="onAddElementEffectPress" />
+                <ToolbarSeparator />
+                <Button icon="sap-icon://delete" press="onDeleteElementEffectPress" />
+              </OverflowToolbar>
+            </headerToolbar>
+            <CustomListItem>
+              <VBox class="sapUiTinyMargin">
+                <Select items="{state>/effectTypes}" selectedKey="{state>effect}" class="sapUiTinyMarginBottom">
+                  <core:Item key="{state>type}" text="{state>displayName}" />
+                </Select>
+
+                <controls:ExpressionTreeEditor expressionTree="{state>condition}" class="sapUiSmallMarginBegin" />
+              </VBox>
+            </CustomListItem>
+          </List>
         </VBox>
       </VBox>
     </VBox>
