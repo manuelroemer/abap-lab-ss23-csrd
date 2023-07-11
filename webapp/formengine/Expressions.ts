@@ -42,7 +42,7 @@ function evaluateExpression(
   }
 
   if (expression.type === 'not') {
-    const tempValue = evaluateExpression(expression.value, schema, state);
+    const tempValue = evaluateExpression(expression.expression, schema, state);
     return !tempValue;
   }
 

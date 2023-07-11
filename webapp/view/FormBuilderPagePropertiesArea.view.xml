@@ -3,7 +3,8 @@
   controllerName="csrdreporting.controller.FormBuilderPagePropertiesArea"
   xmlns:mvc="sap.ui.core.mvc"
   displayBlock="true"
-  xmlns="sap.m">
+  xmlns="sap.m"
+  xmlns:controls="csrdreporting.controls">
   <VBox class="sapUiMediumMargin">
     <VBox visible="{= !${state>/pageToEdit} }">
       <Text text="Select a page to edit its details." />
@@ -14,5 +15,11 @@
       <Input value="{state>/pageToEdit/title}" />
       <Text text="The page's title." />
     </VBox>
+
+    <List items="{state>/pageToEdit/effects}">
+      <CustomListItem>
+        <controls:ExpressionTreeEditor expressionTree="{state>condition}" />
+      </CustomListItem>
+    </List>
   </VBox>
 </mvc:View>
