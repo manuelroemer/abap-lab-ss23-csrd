@@ -190,22 +190,23 @@ export default class ExpressionTreeEditor extends Control {
             .addStyleClass('sapUiTinyMarginEnd'),
 
           new Input({
+            placeholder: 'ID',
             value: `${treeItem.id}`,
             visible: 'id' in treeItem,
             change: (e) => handleIdChange(e.getParameter('value')),
           }).setLayoutData(new FlexItemData({ growFactor: 1 })),
 
           new Input({
+            placeholder: 'Value',
             value: `${treeItem.value}`,
             visible: 'value' in treeItem && (treeItem.type === 'value' || treeItem.type === 'string'),
-            placeholder: 'Value...',
             change: (e) => handleValueChange(e.getParameter('value')),
           }).setLayoutData(new FlexItemData({ growFactor: 1 })),
 
           new StepInput({
+            placeholder: 'Value',
             value: +treeItem.value,
             visible: 'value' in treeItem && treeItem.type === 'number',
-            placeholder: 'Value...',
             change: (e) => handleValueChange(e.getParameter('value')),
           }).setLayoutData(new FlexItemData({ growFactor: 1 })),
 

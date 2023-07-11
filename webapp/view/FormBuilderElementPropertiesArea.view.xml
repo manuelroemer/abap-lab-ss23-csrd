@@ -189,9 +189,13 @@
           </List>
         </VBox>
 
-        <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('validationRules') }">
+        <VBox
+          class="sapUiMediumMarginBottom"
+          visible="{= ${state>/elementToEditProperties}.includes('validationRules') }">
           <Label text="Validation Rules" />
-          <Text text="Validation rules allow you to conditionally display element validation errors, based on expression trees." />
+          <Text
+            text="Validation rules allow you to conditionally display element validation errors, based on expression trees."
+          />
 
           <List
             id="elementValidationRules"
