@@ -13,22 +13,35 @@ export default class FormEngine extends Control {
     properties: {
       formEngineContext: { type: 'object', defaultValue: null },
     },
+    aggregations: {
+      _content: { type: 'sap.ui.core.Control', multiple: false, visibility: 'hidden' },
+    },
   };
 
   static renderer = (rm: RenderManager, control: FormEngine) => {
-    const content = control.getContentToRender();
     rm.openStart('section', control);
     rm.class('form-engine');
     rm.openEnd();
-    rm.renderControl(content);
+    rm.renderControl(control.getContent());
     rm.close('section');
   };
 
   private lastRenderedContent?: Control;
   private lastRenderedVersion = -1;
 
+  init() {
+    this.setAggregation('_content', new VBox());
+  }
+
+  private getContent() {
+    return this.getAggregation('_content') as VBox;
+  }
   setFormEngineContext(context: FormEngineContext) {
-    this.setProperty('formEngineContext', context);
+    this.setProperty('formEngineContext', context, true);
+
+    const content = this.getContent();
+    content.removeAllItems();
+    content.addItem(this.getContentToRender());
   }
 
   private getContentToRender() {
