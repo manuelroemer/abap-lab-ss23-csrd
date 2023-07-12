@@ -33,7 +33,7 @@ function evaluateExpression(
   }
 
   if (expression.type === 'value') {
-    return state[expression.value];
+    return state[expression.id];
   }
 
   if (expression.type === 'ref') {

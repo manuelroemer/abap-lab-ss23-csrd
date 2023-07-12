@@ -46,19 +46,19 @@ export const csrdSchema: FormSchema = {
                   type: 'and',
                   left: {
                     type: 'gt',
-                    left: { type: 'value', value: 'numEmployees' },
+                    left: { type: 'value', id: 'numEmployees' },
                     right: 250,
                   },
                   right: {
                     type: 'or',
                     left: {
                       type: 'gt',
-                      left: { type: 'value', value: 'netSales' },
+                      left: { type: 'value', id: 'netSales' },
                       right: 40,
                     },
                     right: {
                       type: 'gt',
-                      left: { type: 'value', value: 'totalBalancesheet' },
+                      left: { type: 'value', id: 'totalBalancesheet' },
                       right: 20,
                     },
                   },
@@ -67,12 +67,12 @@ export const csrdSchema: FormSchema = {
                   type: 'and',
                   left: {
                     type: 'gt',
-                    left: { type: 'value', value: 'netSales' },
+                    left: { type: 'value', id: 'netSales' },
                     right: 40,
                   },
                   right: {
                     type: 'gt',
-                    left: { type: 'value', value: 'totalBalancesheet' },
+                    left: { type: 'value', id: 'totalBalancesheet' },
                     right: 20,
                   },
                 },
@@ -90,7 +90,7 @@ export const csrdSchema: FormSchema = {
           effect: 'hide',
           condition: {
             type: 'gt',
-            left: { type: 'value', value: 'numEmployees' },
+            left: { type: 'value', id: 'numEmployees' },
             right: 250,
           },
         },
@@ -193,7 +193,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'tempRelated.tempRelated',
+                id: 'tempRelated.tempRelated',
               },
             },
           ],
@@ -217,7 +217,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'tempRelated.tempRelated',
+                id: 'tempRelated.tempRelated',
               },
             },
           ],
@@ -240,7 +240,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'tempRelated.tempRelated',
+                id: 'tempRelated.tempRelated',
               },
             },
           ],
@@ -255,7 +255,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'tempRelated.tempRelated',
+                id: 'tempRelated.tempRelated',
               },
             },
           ],
@@ -274,7 +274,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'windRelated.windRelated',
+                id: 'windRelated.windRelated',
               },
             },
           ],
@@ -290,7 +290,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'windRelated.windRelated',
+                id: 'windRelated.windRelated',
               },
             },
           ],
@@ -313,7 +313,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'windRelated.windRelated',
+                id: 'windRelated.windRelated',
               },
             },
           ],
@@ -328,7 +328,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'windRelated.windRelated',
+                id: 'windRelated.windRelated',
               },
             },
           ],
@@ -347,7 +347,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'waterRelated.waterRelated',
+                id: 'waterRelated.waterRelated',
               },
             },
           ],
@@ -376,7 +376,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'waterRelated.waterRelated',
+                id: 'waterRelated.waterRelated',
               },
             },
           ],
@@ -400,7 +400,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'waterRelated.waterRelated',
+                id: 'waterRelated.waterRelated',
               },
             },
           ],
@@ -415,7 +415,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'waterRelated.waterRelated',
+                id: 'waterRelated.waterRelated',
               },
             },
           ],
@@ -434,7 +434,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'solidMassRelated.solidMassRelated',
+                id: 'solidMassRelated.solidMassRelated',
               },
             },
           ],
@@ -458,7 +458,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'solidMassRelated.solidMassRelated',
+                id: 'solidMassRelated.solidMassRelated',
               },
             },
           ],
@@ -481,7 +481,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'solidMassRelated.solidMassRelated',
+                id: 'solidMassRelated.solidMassRelated',
               },
             },
           ],
@@ -496,7 +496,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'solidMassRelated.solidMassRelated',
+                id: 'solidMassRelated.solidMassRelated',
               },
             },
           ],
@@ -525,7 +525,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'policy.policy',
+                id: 'policy.policy',
               },
             },
           ],
@@ -549,7 +549,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'policy.policy',
+                id: 'policy.policy',
               },
             },
           ],
@@ -568,7 +568,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'technology.technology',
+                id: 'technology.technology',
               },
             },
           ],
@@ -593,7 +593,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'technology.technology',
+                id: 'technology.technology',
               },
             },
           ],
@@ -612,7 +612,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'market.market',
+                id: 'market.market',
               },
             },
           ],
@@ -634,7 +634,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'market.market',
+                id: 'market.market',
               },
             },
           ],
@@ -653,7 +653,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'reputation.reputation',
+                id: 'reputation.reputation',
               },
             },
           ],
@@ -676,7 +676,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'reputation.reputation',
+                id: 'reputation.reputation',
               },
             },
           ],
@@ -762,7 +762,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'eq',
-                left: { type: 'value', value: 'coal.coal' },
+                left: { type: 'value', id: 'coal.coal' },
                 right: true,
               },
             },
@@ -783,7 +783,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'eq',
-                left: { type: 'value', value: 'petroleum.petroleum' },
+                left: { type: 'value', id: 'petroleum.petroleum' },
                 right: true,
               },
             },
@@ -804,7 +804,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'eq',
-                left: { type: 'value', value: 'gas.gas' },
+                left: { type: 'value', id: 'gas.gas' },
                 right: true,
               },
             },
@@ -825,7 +825,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'eq',
-                left: { type: 'value', value: 'other-non-renewable.other-non-renewable' },
+                left: { type: 'value', id: 'other-non-renewable.other-non-renewable' },
                 right: true,
               },
             },
@@ -846,7 +846,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'eq',
-                left: { type: 'value', value: 'nuclear.nuclear' },
+                left: { type: 'value', id: 'nuclear.nuclear' },
                 right: true,
               },
             },
@@ -871,7 +871,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'eq',
-                left: { type: 'value', value: 'purchased-non-renew.purchased-non-renew' },
+                left: { type: 'value', id: 'purchased-non-renew.purchased-non-renew' },
                 right: true,
               },
             },
@@ -902,7 +902,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'eq',
-                left: { type: 'value', value: 'renew-fuel.renew-fuel' },
+                left: { type: 'value', id: 'renew-fuel.renew-fuel' },
                 right: true,
               },
             },
@@ -927,7 +927,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'eq',
-                left: { type: 'value', value: 'purchased-renew.purchased-renew' },
+                left: { type: 'value', id: 'purchased-renew.purchased-renew' },
                 right: true,
               },
             },
@@ -948,7 +948,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'eq',
-                left: { type: 'value', value: 'self-generated.self-generated' },
+                left: { type: 'value', id: 'self-generated.self-generated' },
                 right: true,
               },
             },
@@ -972,7 +972,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'isProdEnergy',
+                id: 'isProdEnergy',
               },
             },
           ],
@@ -1120,7 +1120,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'variingStandards',
+                id: 'variingStandards',
               },
             },
           ],
@@ -1133,7 +1133,7 @@ export const csrdSchema: FormSchema = {
               effect: 'hide',
               condition: {
                 type: 'value',
-                value: 'variingStandards',
+                id: 'variingStandards',
               },
             },
           ],

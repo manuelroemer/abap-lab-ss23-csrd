@@ -3,7 +3,7 @@ export interface FormSchemaExpressionBase<TType extends string> {
 }
 
 export interface FormSchemaValueExpression extends FormSchemaExpressionBase<'value'> {
-  value: string;
+  id: string;
 }
 
 export interface FormSchemaRefExpression extends FormSchemaExpressionBase<'ref'> {
