@@ -240,9 +240,7 @@ export function createState<T extends object>(
   const withAutoBatchedFunctions = (initial: T) => {
     for (const [key, value] of Object.entries(initial)) {
       if (typeof value === 'function') {
-        initial[key] = (...args: any[]) => {
-          state.batch(() => value(...args));
-        };
+        initial[key] = (...args: any[]) => state.batch(() => value(...args));
       }
     }
 
