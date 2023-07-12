@@ -174,7 +174,7 @@ export default class ExpressionTreeEditor extends Control {
         }
 
         if (nextType === 'value') {
-          return { itemId: previous.itemId, type: 'value', value: '' };
+          return { itemId: previous.itemId, type: 'value', id: '' };
         }
 
         if (nextType === 'not') {
@@ -224,7 +224,7 @@ export default class ExpressionTreeEditor extends Control {
           new ComboBox({
             placeholder: 'ID',
             value: `${treeItem.id}`,
-            visible: 'id' in treeItem,
+            visible: 'id' in treeItem && treeItem.type === 'ref',
             change: (e) => handleIdChange(e.getParameter('value')),
           })
             .setLayoutData(new FlexItemData({ growFactor: 1 }))
@@ -234,10 +234,10 @@ export default class ExpressionTreeEditor extends Control {
             }),
 
           new ComboBox({
-            placeholder: 'Value',
-            value: `${treeItem.value}`,
-            visible: 'value' in treeItem && treeItem.type === 'value',
-            change: (e) => handleValueChange(e.getParameter('value')),
+            placeholder: 'ID',
+            value: `${treeItem.id}`,
+            visible: 'id' in treeItem && treeItem.type === 'value',
+            change: (e) => handleIdChange(e.getParameter('value')),
           })
             .setLayoutData(new FlexItemData({ growFactor: 1 }))
             .bindItems({
@@ -331,7 +331,7 @@ export default class ExpressionTreeEditor extends Control {
       return {
         itemId: this.nextItemId(),
         type: expression.type,
-        value: expression.value,
+        id: expression.id,
       };
     }
 
@@ -369,7 +369,7 @@ export default class ExpressionTreeEditor extends Control {
     }
 
     if (treeItem.type === 'value') {
-      return { type: treeItem.type, value: treeItem.value ?? '' };
+      return { type: treeItem.type, id: treeItem.id ?? '' };
     }
 
     if (treeItem.type === 'not') {
