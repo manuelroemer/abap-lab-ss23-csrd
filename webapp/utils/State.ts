@@ -237,6 +237,8 @@ export function createState<T extends object>(
     },
   });
 
+  // We're automatically batching any function that is part of the state, as these
+  // typically trigger state changes. Batching them by default makes sense, performance-wise.
   const withAutoBatchedFunctions = (initial: T) => {
     for (const [key, value] of Object.entries(initial)) {
       if (typeof value === 'function') {
