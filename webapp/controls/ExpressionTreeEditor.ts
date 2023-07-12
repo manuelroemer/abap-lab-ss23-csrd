@@ -16,6 +16,7 @@ import StepInput from 'sap/m/StepInput';
 import CheckBox from 'sap/m/CheckBox';
 import ComboBox from 'sap/m/ComboBox';
 import Item from 'sap/ui/core/Item';
+import deepEqual from 'sap/base/util/deepEqual';
 
 interface ExpressionTreeEditorState {
   items: {
@@ -126,9 +127,21 @@ export default class ExpressionTreeEditor extends Control {
 
   setSchema(schema?: FormSchema) {
     this.setProperty('schema', schema);
+
+    const ids = schema ? getExplicitlyDeclaredIds(schema) : [];
+    const refConditionIds = schema ? Object.keys(schema?.refs?.conditions ?? {}) : [];
+
+    // We do this check here because out of sync updates to this closes the ComboBox's suggestion list.
+    // E.g., when the user opens the ComboBox and *then* the IDs are updated with an equal array,
+    // the ComboBox closes instead of simply updating the list.
+    // This equality check is a dirty workaround.
+    if (deepEqual(ids, this.state.get().ids) && deepEqual(refConditionIds, this.state.get().refConditionIds)) {
+      return;
+    }
+
     this.state.set({
-      ids: schema ? getExplicitlyDeclaredIds(schema) : [],
-      refConditionIds: schema ? Object.keys(schema?.refs?.conditions ?? {}) : [],
+      ids,
+      refConditionIds,
     });
   }
 
