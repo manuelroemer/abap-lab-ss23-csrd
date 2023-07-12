@@ -27,49 +27,38 @@ export interface FormBuilderStatePreviewAreaSlice {
   deleteElement(index: number): void;
 }
 
-export function createFormBuilderPreviewAreaSlice({
-  get,
-  batch,
-}: State<FormBuilderState>): FormBuilderStatePreviewAreaSlice {
+export function createFormBuilderPreviewAreaSlice({ get }: State<FormBuilderState>): FormBuilderStatePreviewAreaSlice {
   return {
     addElement(index, element) {
-      batch(() => {
-        const { page, schema, setSchema, setElementToEdit } = get();
+      const { page, schema, setSchema, setElementToEdit } = get();
 
-        setSchema(
-          updateElements(schema, page, (elements) => {
-            const next = [...elements];
-            next.splice(index, 0, element);
-            return next;
-          }),
-        );
+      setSchema(
+        updateElements(schema, page, (elements) => {
+          const next = [...elements];
+          next.splice(index, 0, element);
+          return next;
+        }),
+      );
 
-        setElementToEdit(index);
-      });
+      setElementToEdit(index);
     },
 
     moveElementUp(index) {
-      batch(() => {
-        const { page, schema, setSchema, setElementToEdit } = get();
-        setSchema(updateElements(schema, page, (elements) => safeSwap([...elements], index, index - 1)));
-        setElementToEdit(undefined);
-      });
+      const { page, schema, setSchema, setElementToEdit } = get();
+      setSchema(updateElements(schema, page, (elements) => safeSwap([...elements], index, index - 1)));
+      setElementToEdit(undefined);
     },
 
     moveElementDown(index) {
-      batch(() => {
-        const { page, schema, setSchema, setElementToEdit } = get();
-        setSchema(updateElements(schema, page, (elements) => safeSwap([...elements], index, index + 1)));
-        setElementToEdit(undefined);
-      });
+      const { page, schema, setSchema, setElementToEdit } = get();
+      setSchema(updateElements(schema, page, (elements) => safeSwap([...elements], index, index + 1)));
+      setElementToEdit(undefined);
     },
 
     deleteElement(index) {
-      batch(() => {
-        const { page, schema, setSchema, setElementToEdit } = get();
-        setSchema(updateElements(schema, page, (elements) => elements.filter((_, i) => i !== index)));
-        setElementToEdit(undefined);
-      });
+      const { page, schema, setSchema, setElementToEdit } = get();
+      setSchema(updateElements(schema, page, (elements) => elements.filter((_, i) => i !== index)));
+      setElementToEdit(undefined);
     },
   };
 }

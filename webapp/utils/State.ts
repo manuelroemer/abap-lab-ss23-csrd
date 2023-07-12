@@ -91,7 +91,7 @@ export interface State<T extends object = object> {
    * Subscribers are called normally.
    * @param fn The function to be run as a batch operation.
    */
-  batch(fn: () => void): void;
+  batch<TResult = void>(fn: () => void): TResult;
 }
 
 /**
@@ -223,18 +223,33 @@ export function createState<T extends object>(
     },
 
     batch(fn) {
+      let result: any = undefined;
+
       try {
         pendingBatches++;
-        fn();
+        result = fn();
       } finally {
         pendingBatches--;
       }
 
       state.notify();
+      return result;
     },
   });
 
-  initialValue = createInitialState(state);
+  const withAutoBatchedFunctions = (initial: T) => {
+    for (const [key, value] of Object.entries(initial)) {
+      if (typeof value === 'function') {
+        initial[key] = (...args: any[]) => {
+          state.batch(() => value(...args));
+        };
+      }
+    }
+
+    return initial;
+  };
+
+  initialValue = withAutoBatchedFunctions(createInitialState(state));
   state.reset();
 
   // UI5's models support two-way binding. When the model updates, the internal state must
@@ -248,7 +263,6 @@ export function createState<T extends object>(
     const topLevelPath = `/${topLevelProperty}`;
     const topLevelValue = model.getProperty(topLevelPath);
     const stateUpdate = { [topLevelProperty]: deepClone(topLevelValue, maxCloneDepth) };
-    console.log('PANDÖ', stateUpdate);
     state.set(stateUpdate);
   });
 
