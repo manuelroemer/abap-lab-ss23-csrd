@@ -1,5 +1,6 @@
 import deepClone from 'sap/base/util/deepClone';
 import deepEqual from 'sap/base/util/deepEqual';
+import Context from 'sap/ui/model/Context';
 import JSONModel from 'sap/ui/model/json/JSONModel';
 
 /**
@@ -192,9 +193,14 @@ export function createState<T extends object>(
   // be synchronized with the new values.
   // Calling `state.set` here *does* again update the model, but it is smart enough to not
   // run into cycles.
-  model.attachPropertyChange(() => {
-    const modelValue = model.getProperty('/');
-    state.set(deepClone(modelValue, maxCloneDepth));
+  model.attachPropertyChange((e) => {
+    const context = e.getParameter('context') as Context | undefined;
+    const path = context?.getPath() ?? e.getParameter('path') ?? '/';
+    const topLevelProperty = path.split('/')[1];
+    const topLevelPath = `/${topLevelProperty}`;
+    const topLevelValue = model.getProperty(topLevelPath);
+    const stateUpdate = { [topLevelProperty]: deepClone(topLevelValue, maxCloneDepth) };
+    state.set(stateUpdate);
   });
 
   return state;
