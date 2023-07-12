@@ -64,11 +64,10 @@ export function createFormBuilderFormEngineSlice({
   watch(
     (s) => s.isPreviewModeEnabled,
     ({ isPreviewModeEnabled }) => {
-      set({
-        onBeforeRender: isPreviewModeEnabled ? undefined : onBeforeRender,
-        onRenderElement: isPreviewModeEnabled ? undefined : onRenderElement,
-        onHideElement: isPreviewModeEnabled ? undefined : onHideElement,
-      });
+      const { setOnBeforeRender, setOnRenderElement, setOnHideElement } = get();
+      setOnBeforeRender(isPreviewModeEnabled ? undefined : onBeforeRender);
+      setOnRenderElement(isPreviewModeEnabled ? undefined : onRenderElement);
+      setOnHideElement(isPreviewModeEnabled ? undefined : onHideElement);
     },
   );
 

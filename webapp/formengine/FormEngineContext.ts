@@ -13,8 +13,29 @@ export type FormEngineState = Record<string, unknown>;
 
 /**
  * Represents data that is provided by the form engine control to renderers.
+ * This context is required by the form engine control to render its UI.
+ *
+ * **⚠️ Important:** DO NOT directly modify any of the context's properties via `set` calls.
+ * Instead, use the functions provided by the state, e.g., `setSchema` or `setPage`.
+ * Manually setting context specific properties *will* lead to inconsistencies within the form engine.
  */
 export interface FormEngineContext {
+  /**
+   * An incrementing version of the form engine context.
+   * Whenever the form engine needs to re-render, this version is incremented.
+   *
+   * This is introduced as a performance optimization.
+   * The form engine context is frequently merged into other states in this project.
+   * Those other states may update very frequently, causing the form engine to re-render by default.
+   * By introducing this version field, the engine can determine whether a state change was caused
+   * by the context itself - and can thus more efficiently render.
+   *
+   * If the project had had more time, this would not be necessary - instead, we'd have a more
+   * sophisticated state management solution (probably a 3rd party library and nothing custom)
+   * which would support isolated states and/or more fine-grained updates/subscriptions, making
+   * this version here unnecessary.
+   */
+  renderVersion: number;
   /**
    * The form schema that is tracked by the context.
    */
@@ -63,28 +84,20 @@ export interface FormEngineContext {
    * This is `false` until the user attempts to navigate to the next page.
    */
   readonly showValidationErrors: boolean;
-  setSchema(schema: FormSchema): void;
-  setState(state: FormEngineState): void;
-  setPage(page: number): void;
-  goForward(): boolean;
-  goBackward(): boolean;
-  submit(): boolean;
-  getValue(id: string): unknown;
-  setValue(id: string, value: unknown): void;
   /**
    * A hook which is called before the form engine starts rendering elements.
    * Can be used to modify the content before rendering starts.
    * @param context The same form engine context.
    * @param content The control which will, after rendering, contain the rendered elements.
    */
-  onBeforeRender?(context: FormEngineContext, content: VBox): void;
+  readonly onBeforeRender?: (context: FormEngineContext, content: VBox) => void;
   /**
    * A hook which is called after the form engine rendered elements.
    * Can be used to modify the content after rendering finished-
    * @param context The same form engine context.
    * @param content The control which contains the rendered elements.
    */
-  onAfterRender?(context: FormEngineContext, content: VBox): void;
+  readonly onAfterRender?: (context: FormEngineContext, content: VBox) => void;
   /**
    * A hook which is called by the form engine once a control to be rendered has been generated.
    * Can be used to modify the control before it is rendered.
@@ -93,12 +106,12 @@ export interface FormEngineContext {
    * @param control The control that will be rendered.
    * @param elementIndex The index of the element within the current page's schema elements.
    */
-  onRenderElement?(
+  readonly onRenderElement?: (
     element: FormSchemaElement,
     context: FormEngineContext,
     control: Control,
     elementIndex: number,
-  ): Control;
+  ) => Control;
   /**
    * A hook which is called by the form engine when an element is hidden.
    * Can be used to modify how elements are hidden.
@@ -107,12 +120,25 @@ export interface FormEngineContext {
    * @param control The control that will be rendered.
    * @param elementIndex The index of the element within the current page's schema elements.
    */
-  onHideElement?(
+  readonly onHideElement?: (
     element: FormSchemaElement,
     context: FormEngineContext,
     control: Control,
     elementIndex: number,
-  ): Control;
+  ) => Control;
+
+  goForward(): boolean;
+  goBackward(): boolean;
+  submit(): boolean;
+  getValue(id: string): unknown;
+  setValue(id: string, value: unknown): void;
+  setSchema(schema: FormSchema): void;
+  setState(state: FormEngineState): void;
+  setPage(page: number): void;
+  setOnBeforeRender(value: FormEngineContext['onBeforeRender']): void;
+  setOnAfterRender(value: FormEngineContext['onAfterRender']): void;
+  setOnRenderElement(value: FormEngineContext['onRenderElement']): void;
+  setOnHideElement(value: FormEngineContext['onHideElement']): void;
 }
 
 export type FormEngineContextInit = Partial<
@@ -123,14 +149,12 @@ export type FormEngineContextInit = Partial<
 >;
 
 export function createFormEngineContext({ get, set }: State<FormEngineContext>, init: FormEngineContextInit = {}) {
-  // Update is used instead of `set` here to update the state.
-  // The difference to `set` is that `update` auto-computes certain properties.
-  const update = (context: Partial<FormEngineContext>) => {
+  const setContext = (context: Partial<FormEngineContext>) => {
     return set(withComputedProps({ ...get(), ...context }));
   };
 
   const withComputedProps = (context: FormEngineContext): FormEngineContext => {
-    const { schema, state, page } = context;
+    const { schema, state, page, renderVersion } = context;
 
     // The previous/next page is not, simply, the previous/next page in the schema, but instead the
     // page that is *not* hidden according to its effect rules.
@@ -156,6 +180,7 @@ export function createFormEngineContext({ get, set }: State<FormEngineContext>, 
       nextPageIndex,
       currentPage,
       currentPageValidationErrors,
+      renderVersion: renderVersion + 1,
     };
   };
 
@@ -164,27 +189,13 @@ export function createFormEngineContext({ get, set }: State<FormEngineContext>, 
     schema: init.schema ?? emptySchema,
     state: init.state ?? {},
     page: init.page ?? 0,
-
-    setSchema(schema) {
-      update({ schema });
-    },
-
-    setState(state) {
-      update({ state });
-    },
-
-    setPage(page) {
-      const { schema } = get();
-      const maxPages = schema.pages.length;
-      const clampedPage = Math.max(0, Math.min(page, maxPages - 1));
-      update({ page: clampedPage, showValidationErrors: false });
-    },
+    renderVersion: 0,
 
     goForward() {
       const { canGoForward, nextPageIndex, currentPageValidationErrors, setPage } = get();
 
       if (currentPageValidationErrors.length > 0) {
-        set({ showValidationErrors: true });
+        setContext({ showValidationErrors: true });
         return false;
       }
 
@@ -215,7 +226,7 @@ export function createFormEngineContext({ get, set }: State<FormEngineContext>, 
       }
 
       if (currentPageValidationErrors.length > 0) {
-        set({ showValidationErrors: true });
+        setContext({ showValidationErrors: true });
         return false;
       }
 
@@ -228,11 +239,38 @@ export function createFormEngineContext({ get, set }: State<FormEngineContext>, 
     },
 
     setValue(id, value) {
-      update({ state: { ...get().state, [id]: value } });
+      setContext({ state: { ...get().state, [id]: value } });
+    },
+
+    setSchema(schema) {
+      setContext({ schema });
+    },
+
+    setState(state) {
+      setContext({ state });
+    },
+
+    setPage(page) {
+      const { schema } = get();
+      const maxPages = schema.pages.length;
+      const clampedPage = Math.max(0, Math.min(page, maxPages - 1));
+      setContext({ page: clampedPage, showValidationErrors: false });
+    },
+
+    setOnBeforeRender(onBeforeRender) {
+      setContext({ onBeforeRender });
+    },
+
+    setOnAfterRender(onAfterRender) {
+      setContext({ onAfterRender });
+    },
+
+    setOnRenderElement(onRenderElement) {
+      setContext({ onRenderElement });
+    },
+
+    setOnHideElement(onHideElement) {
+      setContext({ onHideElement });
     },
   } as FormEngineContext);
-}
-
-export function createFormEngineContextState(init?: FormEngineContextInit) {
-  return createState<FormEngineContext>((state) => createFormEngineContext(state, init));
 }
