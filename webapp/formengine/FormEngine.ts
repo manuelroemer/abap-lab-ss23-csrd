@@ -29,19 +29,22 @@ export default class FormEngine extends Control {
   private lastRenderedContent?: Control;
   private lastRenderedVersion = -1;
 
-  init() {
+  public override init() {
     this.setAggregation('_content', new VBox());
+  }
+
+  public override onBeforeRendering(): void {
+    const content = this.getContent();
+    content.removeAllItems();
+    content.addItem(this.getContentToRender());
   }
 
   private getContent() {
     return this.getAggregation('_content') as VBox;
   }
-  setFormEngineContext(context: FormEngineContext) {
-    this.setProperty('formEngineContext', context, true);
 
-    const content = this.getContent();
-    content.removeAllItems();
-    content.addItem(this.getContentToRender());
+  public setFormEngineContext(context: FormEngineContext) {
+    this.setProperty('formEngineContext', context);
   }
 
   private getContentToRender() {
