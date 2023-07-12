@@ -119,7 +119,7 @@ export function createFormBuilderElementPropertiesAreaSlice({
     elementToEditProperties: [],
 
     setElementToEdit(index) {
-      const { currentPage } = get();
+      const { elementToEditIndex, currentPage } = get();
       const elementToEdit = typeof index === 'number' ? currentPage?.elements?.[index] : undefined;
       const elementToEditProperties = formSchemaElementProperties[elementToEdit?.type ?? ''] ?? [];
 
@@ -129,7 +129,7 @@ export function createFormBuilderElementPropertiesAreaSlice({
         elementToEditProperties,
       });
 
-      if (elementToEdit) {
+      if (elementToEdit && elementToEditIndex !== index) {
         set({ selectedTab: 'element' });
       }
     },
