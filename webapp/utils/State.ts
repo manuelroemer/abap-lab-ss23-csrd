@@ -79,6 +79,19 @@ export interface State<T extends object = object> {
    * Resets the state to its initial value.
    */
   reset(): void;
+  /**
+   * Notifies about a state change, if one is pending.
+   * This does not update the associated {@link JSONModel} if called within a batch operation.
+   */
+  notify(): void;
+  /**
+   * Runs the given function as a batch operation.
+   * State changes only propagate to the associated {@link JSONModel} after the batch operation
+   * has completed.
+   * Subscribers are called normally.
+   * @param fn The function to be run as a batch operation.
+   */
+  batch(fn: () => void): void;
 }
 
 /**
@@ -119,50 +132,48 @@ export function createState<T extends object>(
   const subscribers: Array<StateSubscriber<T>> = [];
   let currentValue = undefined as unknown as T;
   let lastNotifiedValue = undefined as unknown as T;
+  let lastNotifiedModelValue = undefined as unknown as T;
   let initialValue: T = undefined as unknown as T;
+  let pendingBatches = 0;
 
   const state = Object.freeze<State<T>>({
+    model,
+
     get state() {
       return state;
     },
-    model,
+
     get() {
       return currentValue;
     },
+
     set(value, replace = false, notify = true) {
       if (typeof value === 'function') {
         value = value(currentValue);
       }
 
-      currentValue = (replace ? value : Object.assign({}, currentValue, value)) as T;
+      const previous = currentValue;
+      const next = (replace ? value : Object.assign({}, currentValue, value)) as T;
+      currentValue = next;
 
       if (notify) {
-        // Run the notification on the next tick.
-        // This is done because subscribers can themselves call `set` again, which would cause out-of-order
-        // state updates.
-        setTimeout(() => {
-          const previous = lastNotifiedValue;
-          const next = currentValue;
-          lastNotifiedValue = currentValue;
-          model.setProperty('/', deepClone(next, maxCloneDepth));
-
-          for (const subscriber of subscribers) {
-            subscriber(next, previous, state);
-          }
-
-          console.group(`State change${options.name ? ' - ' + options.name : ''}`);
-          console.debug('Previous: ', previous);
-          console.debug('Next: ', next);
-          console.groupEnd();
-        }, 0);
+        state.notify();
       }
 
-      return currentValue;
+      console.group(`State Change${options.name ? ' - ' + options.name : ''}`);
+      console.debug(replace ? 'Full Replace' : Object.keys(value).join(', '));
+      console.debug('Previous: ', previous);
+      console.debug('Next: ', currentValue);
+      console.groupEnd();
+
+      return next;
     },
+
     subscribe(cb) {
       subscribers.push(cb);
       return () => subscribers.splice(subscribers.indexOf(cb), 1);
     },
+
     watch(selector, cb) {
       return state.subscribe((nextValue, previousValue, state) => {
         // Special case: When the state is created for the first time, we don't have a previous value.
@@ -181,8 +192,45 @@ export function createState<T extends object>(
         }
       });
     },
+
     reset() {
       state.set(deepClone(initialValue, maxCloneDepth), true);
+    },
+
+    notify() {
+      // Subscribers are always notified (only if there was a change, of course).
+      // These are typically very fast, therefore frequent calls don't hurt.
+      if (currentValue !== lastNotifiedValue) {
+        const previous = lastNotifiedValue;
+        lastNotifiedValue = currentValue;
+
+        state.batch(() => {
+          for (const subscriber of subscribers) {
+            subscriber(currentValue, previous, state);
+          }
+        });
+      }
+
+      // Updating the associated JSON model can become a very expensive operation.
+      // Therefore, this is only done once per "batch" of state changes, at the end,
+      // once all other subscribers have settled.
+      if (pendingBatches === 0 && currentValue !== lastNotifiedModelValue) {
+        lastNotifiedModelValue = currentValue;
+
+        model.setProperty('/', deepClone(currentValue, maxCloneDepth));
+        console.debug(`${options.name ?? 'State'} JSON model synchronized.`);
+      }
+    },
+
+    batch(fn) {
+      try {
+        pendingBatches++;
+        fn();
+      } finally {
+        pendingBatches--;
+      }
+
+      state.notify();
     },
   });
 
@@ -200,6 +248,7 @@ export function createState<T extends object>(
     const topLevelPath = `/${topLevelProperty}`;
     const topLevelValue = model.getProperty(topLevelPath);
     const stateUpdate = { [topLevelProperty]: deepClone(topLevelValue, maxCloneDepth) };
+    console.log('PANDÖ', stateUpdate);
     state.set(stateUpdate);
   });
 
