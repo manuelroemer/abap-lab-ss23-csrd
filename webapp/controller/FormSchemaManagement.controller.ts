@@ -67,7 +67,7 @@ export default class FormSchemaManagementController extends BaseController {
       if (
         await showConfirmation({
           title: 'Undrafted Questionnaire',
-          text: 'Undrafted questionnaire schemas can not be edited. Only title and description can be changed. \nIf you want to change the actual schema please duplicate the questionnaire. \nDo you want to continue? ',
+          text: 'Undrafted questionnaire schemas cannot be edited. Only the title and description can be changed.\nIf you want to change the actual schema, please duplicate the questionnaire before making any changes to it.\nDo you want to continue editing this undrafted questionnaire?',
         })
       ) {
         this.navToFormBuilder(formSchema.Id);
