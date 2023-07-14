@@ -34,7 +34,7 @@
         </IconTabFilter>
         <IconTabFilter key="state" text="State">
           <MessageStrip
-            text="Warning: This is only for advance use cases. Incorrectly updating the JSON state may cause severe errors and instability within the form builder and questionnaire."
+            text="Warning: This is only for advanced use cases. Incorrectly updating the JSON state may cause severe errors and instability within the form builder and questionnaire."
             type="Warning"
             showIcon="true"
             showCloseButton="true"
