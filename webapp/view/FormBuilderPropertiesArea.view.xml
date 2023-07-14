@@ -23,9 +23,23 @@
           <mvc:XMLView class="h-100" viewName="csrdreporting.view.FormBuilderElementPropertiesArea" />
         </IconTabFilter>
         <IconTabFilter key="schema" text="Schema">
+          <MessageStrip
+            text="Warning: This is only for advanced use cases. Incorrectly updating the JSON schema may cause severe errors and instability within the form builder and questionnaire."
+            type="Warning"
+            showIcon="true"
+            showCloseButton="true"
+            class="sapUiMediumMarginBottom"
+          />
           <ce:CodeEditor type="json" value="{state>/schemaJson}" />
         </IconTabFilter>
         <IconTabFilter key="state" text="State">
+          <MessageStrip
+            text="Warning: This is only for advanced use cases. Incorrectly updating the JSON state may cause severe errors and instability within the form builder and questionnaire."
+            type="Warning"
+            showIcon="true"
+            showCloseButton="true"
+            class="sapUiMediumMarginBottom"
+          />
           <ce:CodeEditor type="json" value="{state>/stateJson}" />
         </IconTabFilter>
       </items>

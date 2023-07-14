@@ -101,7 +101,16 @@
               </SelectDialog>
             </Panel>
 
-            <ObjectHeader title="Existing Questionnaires" condensed="true" backgroundDesign="Transparent" />
+            <HBox alignItems="Center" justifyContent="Start">
+              <ObjectHeader title="Existing Questionnaires" condensed="true" backgroundDesign="Transparent" />
+              <Button
+                icon="sap-icon://hint"
+                type="Transparent"
+                press="handleInformationPopoverPress"
+                tooltip="information"
+              />
+            </HBox>
+
             <Panel id="existingFormSchemasPanel" backgroundDesign="Transparent">
               <f:GridList id="gridList" items="{svc>/FormSchemaSet}">
                 <f:customLayout>
@@ -156,6 +165,16 @@
                   </FlexBox>
                 </f:GridListItem>
               </f:GridList>
+              <Popover
+                id="informationDraftPopover"
+                title="Information"
+                class="sapUiResponsivePadding--header sapUiResponsivePadding--footer"
+                placement="Bottom">
+                <Text
+                  text="Draft: Questionnaires can be edited and saved. &#xA;Undraft: Questionnaires' schema cannot be edited. Only title and description can be edited."
+                  class="sapUiTinyMargin"
+                />
+              </Popover>
             </Panel>
           </Page>
         </layout:flexContent>
