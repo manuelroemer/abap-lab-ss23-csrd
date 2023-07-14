@@ -15,7 +15,7 @@
       <VBox visible="{= !!${state>/elementToEdit} }">
         <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('id') }">
           <Label text="ID" />
-          <Input value="{state>/elementToEdit/id}" maxLength="255"/>
+          <Input value="{state>/elementToEdit/id}" maxLength="255" />
           <Text text="A unique identifier of the element." />
         </VBox>
 
@@ -53,7 +53,7 @@
 
         <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('label') }">
           <Label text="Label" />
-          <Input value="{state>/elementToEdit/label}" maxLength="255"/>
+          <Input value="{state>/elementToEdit/label}" maxLength="255" />
           <Text text="A label, displayed above the element." />
         </VBox>
 
@@ -73,7 +73,7 @@
 
         <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('text') }">
           <Label text="Text" />
-          <Input value="{state>/elementToEdit/text}" maxLength="255"/>
+          <Input value="{state>/elementToEdit/text}" maxLength="255" />
           <Text text="The text to be displayed." />
         </VBox>
 
@@ -91,7 +91,7 @@
 
         <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('placeholder') }">
           <Label text="Placeholder" />
-          <Input value="{state>/elementToEdit/placeholder}" maxLength="255"/>
+          <Input value="{state>/elementToEdit/placeholder}" maxLength="255" />
           <Text text="A placeholder text which is displayed for empty inputs." />
         </VBox>
 
@@ -123,7 +123,7 @@
           class="sapUiMediumMarginBottom"
           visible="{= ${state>/elementToEditProperties}.includes('stepperDescription') }">
           <Label text="Value Description" />
-          <Input value="{state>/elementToEdit/stepperDescription}" maxLength="255"/>
+          <Input value="{state>/elementToEdit/stepperDescription}" maxLength="255" />
           <Text text="A description associated with the value, e.g., a unit." />
         </VBox>
 
@@ -152,8 +152,8 @@
             <items>
               <ColumnListItem>
                 <cells>
-                  <Input value="{state>value}" maxLength="255"/>
-                  <Input value="{state>display}" maxLength="255"/>
+                  <Input value="{state>value}" maxLength="255" />
+                  <Input value="{state>display}" maxLength="255" />
                 </cells>
               </ColumnListItem>
             </items>
@@ -218,7 +218,7 @@
             </headerToolbar>
             <CustomListItem>
               <VBox class="sapUiTinyMargin">
-                <Input value="{state>message}" placeholder="Error message" maxLength="255"/>
+                <Input value="{state>message}" placeholder="Error message" maxLength="255" />
                 <controls:ExpressionTreeEditor
                   expressionTree="{state>condition}"
                   schema="{state>/schema}"
