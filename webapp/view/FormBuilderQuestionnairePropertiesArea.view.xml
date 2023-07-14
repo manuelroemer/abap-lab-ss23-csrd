@@ -38,7 +38,7 @@
           </headerToolbar>
           <CustomListItem>
             <VBox class="sapUiTinyMargin">
-              <Input value="{state>key}" placeholder="ID" />
+              <Input value="{state>key}" placeholder="ID" maxLength="255"/>
               <controls:ExpressionTreeEditor
                 expressionTree="{state>condition}"
                 schema="{state>/schema}"

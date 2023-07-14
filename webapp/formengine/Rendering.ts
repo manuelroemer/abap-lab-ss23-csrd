@@ -162,8 +162,8 @@ function renderTextInput(renderContext: RenderContext<TextInputFormSchemaElement
 
   const input =
     rows > 1
-      ? new Input({ width: '100%', placeholder, value, change: onChange })
-      : new TextArea({ width: '100%', placeholder, rows, value, change: onChange });
+      ? new Input({ width: '100%', placeholder, value, change: onChange, maxLength: 255 })
+      : new TextArea({ width: '100%', placeholder, rows, value, change: onChange, maxLength: 255 });
 
   return renderDynamicElementWrapper(input, renderContext);
 }

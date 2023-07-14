@@ -14,7 +14,7 @@
     <VBox visible="{= !!${state>/pageToEdit} }">
       <VBox class="sapUiMediumMarginBottom">
         <Label text="Title" class="sapUiSmallMarginTop" />
-        <Input value="{state>/pageToEdit/title}" />
+        <Input value="{state>/pageToEdit/title}" maxLength="255"/>
         <Text text="The page's title." />
       </VBox>
 
