@@ -249,7 +249,6 @@ export default class ExpressionTreeEditor extends Control {
             placeholder: 'Value',
             value: `${treeItem.value}`,
             visible: 'value' in treeItem && treeItem.type === 'string',
-            maxLength: 255,
             change: (e) => handleValueChange(e.getParameter('value')),
           }).setLayoutData(new FlexItemData({ growFactor: 1 })),
 

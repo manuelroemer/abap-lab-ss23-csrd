@@ -6,6 +6,7 @@ import MessageBox from 'sap/m/MessageBox';
 import MessageToast from 'sap/m/MessageToast';
 import { showConfirmation } from '../utils/Confirmation';
 import { createFormSchemaManagementState } from '../state/FormSchemaManagement';
+import Popover from 'sap/m/Popover';
 
 export default class FormSchemaManagementController extends BaseController {
   state = createFormSchemaManagementState();
@@ -82,6 +83,12 @@ export default class FormSchemaManagementController extends BaseController {
         MessageBox.error('An unexpected error occured while deleting the questionnaire.');
       }
     }
+  }
+
+  handleInformationPopoverPress(e) {
+    const button = e.getSource();
+    const popover = this.byId('informationDraftPopover') as Popover;
+    popover.openBy(button);
   }
 
   navToFormBuilder(formSchemaId: string) {
