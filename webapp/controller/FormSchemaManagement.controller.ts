@@ -63,7 +63,18 @@ export default class FormSchemaManagementController extends BaseController {
 
   async onFormSchemaPress(e) {
     const formSchema = entityFromEvent<FormSchemaEntity>(e, 'svc')!;
-    this.navToFormBuilder(formSchema.Id);
+    if (!formSchema.IsDraft) {
+      if (
+        await showConfirmation({
+          title: 'Undrafted Questionnaire',
+          text: 'Undrafted questionnaire schemas can not be edited. Only title and description can be changed. \nIf you want to change the actual schema please duplicate the questionnaire. \nDo you want to continue? ',
+        })
+      ) {
+        this.navToFormBuilder(formSchema.Id);
+      }
+    } else {
+      this.navToFormBuilder(formSchema.Id);
+    }
   }
 
   async onFormSchemaDeletePress(e: Event) {
