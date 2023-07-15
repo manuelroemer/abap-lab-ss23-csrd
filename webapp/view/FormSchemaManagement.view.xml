@@ -107,7 +107,7 @@
                 icon="sap-icon://hint"
                 type="Transparent"
                 press="handleInformationPopoverPress"
-                tooltip="information"
+                tooltip="Draft Information"
               />
             </HBox>
 
@@ -165,16 +165,6 @@
                   </FlexBox>
                 </f:GridListItem>
               </f:GridList>
-              <Popover
-                id="informationDraftPopover"
-                title="Information"
-                class="sapUiResponsivePadding--header sapUiResponsivePadding--footer"
-                placement="Bottom">
-                <Text
-                  text="Draft: Questionnaires can be edited and saved. &#xA;Undraft: Questionnaires' schema cannot be edited. Only title and description can be edited."
-                  class="sapUiTinyMargin"
-                />
-              </Popover>
             </Panel>
           </Page>
         </layout:flexContent>

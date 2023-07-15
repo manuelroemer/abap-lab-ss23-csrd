@@ -119,12 +119,19 @@
                 busyIndicatorDelay="0"
                 class="myBackgroundStyle">
                 <headerContent>
+                  <Button
+                    icon="sap-icon://hint"
+                    type="Transparent"
+                    press="handleInformationPopoverPress"
+                    tooltip="Draft Information"
+                  />
+                  <ToolbarSpacer />
                   <Button icon="sap-icon://add" tooltip="Add Questionnaire" press="onQuestionnaireAddPress" />
                 </headerContent>
                 <Panel backgroundDesign="Transparent">
                   <f:GridList id="gridList" items="{state>/customerFormSchemaResultsQuery/data}" showNoData="false">
                     <f:customLayout>
-                      <grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, 23rem)" gridGap="2rem" />
+                      <grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, 24rem)" gridGap="2rem" />
                     </f:customLayout>
                     <f:GridListItem type="Active" press="onFormSchemaResultPress">
                       <VBox class="sapUiSmallMargin">
@@ -141,14 +148,22 @@
                                 visible="{state>IsDraft}"
                               />
                             </HBox>
-                            <Label text="FormSchema Version: {state>Version}" />
+                            <Label text="Questionnaire Version: {state>Version}" />
                             <Label text="Filled on: {path: 'state>UpdatedAt', type: 'sap.ui.model.type.DateTime'}" />
                           </VBox>
+                          <Button
+                            icon="sap-icon://synchronize"
+                            type="Transparent"
+                            tooltip="Migrate Questionnaire"
+                            press=".onQuestionnaireMigratePress"
+                            visible="{state>CanMigrate}"
+                          />
                           <Button
                             icon="sap-icon://decline"
                             type="Transparent"
                             tooltip="Delete Questionnaire"
                             press=".onQuestionnaireDeletePress"
+                            class="sapUiTinyMarginEnd"
                           />
                         </HBox>
                       </VBox>

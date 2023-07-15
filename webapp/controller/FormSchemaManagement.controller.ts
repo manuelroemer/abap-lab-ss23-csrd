@@ -6,7 +6,7 @@ import MessageBox from 'sap/m/MessageBox';
 import MessageToast from 'sap/m/MessageToast';
 import { showConfirmation } from '../utils/Confirmation';
 import { createFormSchemaManagementState } from '../state/FormSchemaManagement';
-import Popover from 'sap/m/Popover';
+import { showPopover } from '../utils/Popover';
 
 export default class FormSchemaManagementController extends BaseController {
   state = createFormSchemaManagementState();
@@ -97,9 +97,11 @@ export default class FormSchemaManagementController extends BaseController {
   }
 
   handleInformationPopoverPress(e) {
-    const button = e.getSource();
-    const popover = this.byId('informationDraftPopover') as Popover;
-    popover.openBy(button);
+    const popover = showPopover({
+      title: 'Information',
+      text: "Draft: Questionnaires can be edited and saved. \nUndraft: Questionnaires' schema cannot be edited. Only title and description can be edited.",
+    });
+    popover.openBy(e.getSource());
   }
 
   navToFormBuilder(formSchemaId: string) {
