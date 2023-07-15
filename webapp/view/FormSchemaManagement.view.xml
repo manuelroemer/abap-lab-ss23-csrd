@@ -83,11 +83,10 @@
                 draggable="true"
                 contentHeight="auto"
                 contentWidth="auto"
-                items="{svc>/FormSchemaSet}"
-                showClearButton="true">
+                items="{svc>/FormSchemaSet}">
                 <StandardListItem
-                  title="Questionnaire"
-                  description="Type: {svc>Type}, Version: {svc>Version}, Created at: {path: 'svc>CreatedAt', type: 'sap.ui.model.type.DateTime'}"
+                  title="{= ${svc>Name} || 'Untitled Questionnaire'}"
+                  description="Description: {= ${svc>Description} === '' ? 'None' : ${svc>Description}}, Type: {svc>Type}, Version: {svc>Version}, Created at: {path: 'svc>CreatedAt', type: 'sap.ui.model.type.DateTime'}"
                   icon="sap-icon://manager-insight"
                   iconDensityAware="false"
                   highlight="{= ${svc>IsDraft} ? 'Information' : 'None'}"

@@ -7,6 +7,8 @@ import MessageToast from 'sap/m/MessageToast';
 import { showConfirmation } from '../utils/Confirmation';
 import { createFormSchemaManagementState } from '../state/FormSchemaManagement';
 import { showPopover } from '../utils/Popover';
+import Filter from 'sap/ui/model/Filter';
+import FilterOperator from 'sap/ui/model/FilterOperator';
 
 export default class FormSchemaManagementController extends BaseController {
   state = createFormSchemaManagementState();
@@ -36,6 +38,16 @@ export default class FormSchemaManagementController extends BaseController {
 
   onDialogClose(e) {
     e.getSource().getBinding('items').filter([]);
+  }
+
+  onSearch(e) {
+    const value = e.getParameter('value');
+    const filter = new Filter('Name', FilterOperator.Contains, value);
+    const filterDescription = new Filter('Description', FilterOperator.Contains, value);
+    const filters = new Filter({ filters: [filter, filterDescription], and: false });
+
+    const binding = e.getParameter('itemsBinding');
+    binding.filter([filters]);
   }
 
   async onDuplicatePress(e) {
