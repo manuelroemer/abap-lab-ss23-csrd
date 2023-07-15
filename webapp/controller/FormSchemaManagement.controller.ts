@@ -23,8 +23,8 @@ export default class FormSchemaManagementController extends BaseController {
   async onSelectDialogClose(e) {
     const context = e.getParameter('selectedContexts');
     const formSchemaId = context[0].getObject().Id;
-
     const toDuplicateSchema = await getFormSchemaEntity(formSchemaId);
+
     try {
       const formSchema = await this.state.get().createFormSchemaMutation.fetch(toDuplicateSchema);
       this.navToFormBuilder(formSchema?.Id);
@@ -39,6 +39,8 @@ export default class FormSchemaManagementController extends BaseController {
   }
 
   async onDuplicatePress(e) {
+    // Refetching the schema because schema provided by the eventbinding is fetch via the Get All endpoint.
+    // This endpoint does not return the "SchemaJSON" attribute.
     const formSchema = entityFromEvent<FormSchemaEntity>(e, 'svc')!;
     const toDuplicateSchema = await getFormSchemaEntity(formSchema.Id);
 

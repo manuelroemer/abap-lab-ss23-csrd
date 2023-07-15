@@ -29,7 +29,7 @@ export function createFormSchemaManagementState() {
           MetadataJson: formSchemaTemplate?.MetadataJson ?? '{}',
           IsDraft: true,
           Name: formSchemaTemplate?.Name ?? '',
-          Description: formSchemaTemplate?.Name ?? '',
+          Description: formSchemaTemplate?.Description ?? '',
         }),
     }),
   }));
