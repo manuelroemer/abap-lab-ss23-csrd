@@ -83,11 +83,10 @@
                 draggable="true"
                 contentHeight="auto"
                 contentWidth="auto"
-                items="{svc>/FormSchemaSet}"
-                showClearButton="true">
+                items="{svc>/FormSchemaSet}">
                 <StandardListItem
-                  title="Questionnaire"
-                  description="Type: {svc>Type}, Version: {svc>Version}, Created at: {path: 'svc>CreatedAt', type: 'sap.ui.model.type.DateTime'}"
+                  title="{= ${svc>Name} || 'Untitled Questionnaire'}"
+                  description="Description: {= ${svc>Description} === '' ? 'None' : ${svc>Description}}, Type: {svc>Type}, Version: {svc>Version}, Created at: {path: 'svc>CreatedAt', type: 'sap.ui.model.type.DateTime'}"
                   icon="sap-icon://manager-insight"
                   iconDensityAware="false"
                   highlight="{= ${svc>IsDraft} ? 'Information' : 'None'}"
@@ -107,30 +106,27 @@
                 icon="sap-icon://hint"
                 type="Transparent"
                 press="handleInformationPopoverPress"
-                tooltip="information"
+                tooltip="Draft Information"
               />
             </HBox>
 
             <Panel id="existingFormSchemasPanel" backgroundDesign="Transparent">
               <f:GridList id="gridList" items="{svc>/FormSchemaSet}">
                 <f:customLayout>
-                  <grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, 24rem)" gridGap="2rem" />
+                  <grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, 26rem)" gridGap="2rem" />
                 </f:customLayout>
                 <f:GridListItem type="Active" press="onFormSchemaPress">
-                  <FlexBox class="sapUiSmallMargin">
-                    <core:Icon
-                      size="3rem"
-                      src="sap-icon://manager-insight"
-                      class="sapUiSmallMarginEnd sapUiMediumMarginTopBottom sapUiTinyMarginBegin"
-                    />
-                    <VBox justifyContent="Center" width="100%">
-                      <HBox class="sapUiSmallTinyBottom">
-                        <Title
-                          text="{= ${svc>Name} || 'Untitled Questionnaire'}"
-                          level="H1"
-                          wrapping="true"
-                          wrappingType="Hyphenated"
-                        />
+                  <grid:CSSGrid id="grid1" gridTemplateColumns="1fr 4fr 2fr">
+                    <VBox
+                      justifyContent="Center"
+                      alignItems="Start"
+                      alignContent="Center"
+                      class="sapUiSmallMarginTop sapUiSmallMarginBottom">
+                      <layoutData>
+                        <grid:GridItemLayoutData gridColumn="2 / 2" gridRow="1 / 3" />
+                      </layoutData>
+                      <HBox>
+                        <Title text="{= ${svc>Name} || 'Untitled Questionnaire'}" level="H1" class="card-title" />
                         <ObjectStatus
                           class="sapUiTinyMarginBegin"
                           text="Draft"
@@ -139,7 +135,7 @@
                           visible="{= ${svc>IsDraft}}"
                         />
                       </HBox>
-                      <Label text="Description: {svc>Description}" wrapping="true" wrappingType="Hyphenated" />
+                      <Label text="Description: {svc>Description}" width="200px" />
                       <Label text="Type: {svc>Type}" wrapping="true" />
                       <Label text="Version: {svc>Version}" wrapping="true" />
                       <Label
@@ -147,34 +143,37 @@
                         wrapping="true"
                       />
                     </VBox>
-
-                    <Button
-                      icon="sap-icon://duplicate"
-                      type="Transparent"
-                      tooltip="Duplicate Questionnaire"
-                      press="onDuplicatePress"
-                    />
-
-                    <Button
-                      icon="sap-icon://decline"
-                      type="Transparent"
-                      tooltip="Delete Questionnaire"
-                      press="onFormSchemaDeletePress"
-                      visible="{= ${svc>IsDraft}}"
-                    />
-                  </FlexBox>
+                    <VBox
+                      justifyContent="Center"
+                      class="sapUiMediumMarginTop sapUiMediumMarginBottom sapUiSmallMarginBegin sapUiSmallMarginEnd">
+                      <layoutData>
+                        <grid:GridItemLayoutData gridColumn="1 / 1" gridRow="1 / 3" />
+                      </layoutData>
+                      <core:Icon size="3rem" src="sap-icon://manager-insight" />
+                    </VBox>
+                    <VBox class="sapUiSmallMarginTop sapUiSmallMarginEnd" justifyContent="Start" alignItems="End">
+                      <layoutData>
+                        <grid:GridItemLayoutData gridColumn="3 / 3" gridRow="1 / 3" />
+                      </layoutData>
+                      <HBox>
+                        <Button
+                          icon="sap-icon://duplicate"
+                          type="Transparent"
+                          tooltip="Duplicate Questionnaire"
+                          press="onDuplicatePress"
+                        />
+                        <Button
+                          icon="sap-icon://decline"
+                          type="Transparent"
+                          tooltip="Delete Questionnaire"
+                          press="onFormSchemaDeletePress"
+                          visible="{= ${svc>IsDraft}}"
+                        />
+                      </HBox>
+                    </VBox>
+                  </grid:CSSGrid>
                 </f:GridListItem>
               </f:GridList>
-              <Popover
-                id="informationDraftPopover"
-                title="Information"
-                class="sapUiResponsivePadding--header sapUiResponsivePadding--footer"
-                placement="Bottom">
-                <Text
-                  text="Draft: Questionnaires can be edited and saved. &#xA;Undraft: Questionnaires' schema cannot be edited. Only title and description can be edited."
-                  class="sapUiTinyMargin"
-                />
-              </Popover>
             </Panel>
           </Page>
         </layout:flexContent>

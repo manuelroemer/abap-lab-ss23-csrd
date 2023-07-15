@@ -13,3 +13,8 @@
 .opacity-50 {
   opacity: 0.5;
 }
+
+.card-title {
+  max-width: 170px;
+  width: auto;
+}

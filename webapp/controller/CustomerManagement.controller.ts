@@ -11,6 +11,7 @@ import { connectRouterState } from '../utils/StateRouter';
 import { showConfirmation } from '../utils/Confirmation';
 import FilterOperator from 'sap/ui/model/FilterOperator';
 import { createCustomerManagementState } from '../state/CustomerManagement';
+import { showPopover } from '../utils/Popover';
 
 export default class CustomerManagementController extends BaseController {
   state = createCustomerManagementState();
@@ -34,7 +35,6 @@ export default class CustomerManagementController extends BaseController {
 
   onCustomerPress(e: Event) {
     const customer = entityFromEvent<CustomerEntity>(e, 'svc');
-    console.log();
     this.router.navTo('CustomerManagement', { customerId: customer?.Id }, true);
   }
 
@@ -71,6 +71,7 @@ export default class CustomerManagementController extends BaseController {
     ) {
       try {
         await this.state.get().deleteCustomerMutation.fetch(customer.Id);
+        this.router.navTo('CustomerManagement', { replace: true });
         MessageToast.show('Successfully deleted the customer.');
       } catch (e) {
         console.error('Error while deleting a customer: ', e);
@@ -93,17 +94,6 @@ export default class CustomerManagementController extends BaseController {
     this.state.get().closeCustomerDialog();
   }
 
-  onQuestionnaireAddPress() {
-    const customerId = this.state.get().parameters.customerId;
-
-    if (customerId) {
-      this.router.navTo('Questionnaire', { formSchemaType: 'demo', customerId });
-    } else {
-      const dialog = this.byId('customerSelectDialog') as Dialog;
-      dialog.open();
-    }
-  }
-
   onSearch(e) {
     const value = e.getParameter('value');
     const filter = new Filter('Name', FilterOperator.Contains, value);
@@ -116,10 +106,22 @@ export default class CustomerManagementController extends BaseController {
 
     if (contexts && contexts.length) {
       const customerId = contexts[0].getObject().Id;
+      this.router.navTo('CustomerManagement', { customerId });
       this.router.navTo('Questionnaire', { formSchemaType: 'demo', customerId });
     }
 
     e.getSource().getBinding('items').filter([]);
+  }
+
+  onQuestionnaireAddPress() {
+    const customerId = this.state.get().parameters.customerId;
+
+    if (customerId) {
+      this.router.navTo('Questionnaire', { formSchemaType: 'demo', customerId });
+    } else {
+      const dialog = this.byId('customerSelectDialog') as Dialog;
+      dialog.open();
+    }
   }
 
   async onQuestionnaireDeletePress(e: Event) {
@@ -139,5 +141,35 @@ export default class CustomerManagementController extends BaseController {
         MessageBox.error('An unexpected error occured while deleting the questionnaire.');
       }
     }
+  }
+
+  async onQuestionnaireMigratePress(e: Event) {
+    const formSchemaResult = entityFromEvent<FormSchemaResultEntity>(e, 'state')!;
+    if (
+      await showConfirmation({
+        title: 'Migrate Questionnaire',
+        text: 'This questionnaire is outdated - a newer version exists. \nYou can migrate this questionnaire to a newer version. Be aware that this could potentially result in issues if the newer version introduced any breaking changes. \nMigrating is non-destructive, however. We will create a copy of this questionnaire without deleting the old version. \nDo you want to continue? ',
+      })
+    ) {
+      try {
+        await this.state.get().migrateFormSchemaResultMutation.fetch(formSchemaResult);
+        this.router.navTo('Questionnaire', { formSchemaType: 'demo', customerId: formSchemaResult.CustomerId });
+      } catch (e) {
+        console.error('Error while migrating the questionnaire: ', e);
+        MessageBox.error('An unexpected error occured while migrating the questionnaire.');
+      }
+    }
+  }
+
+  handleInformationPopoverPress(e) {
+    const popover = showPopover({
+      title: 'Information',
+      text: 'Draft: Questionnaires which are not yet finished (submitted). \nUndraft: Questionnaires which have been submitted least once.',
+    });
+    popover.openBy(e.getSource());
+  }
+
+  navToFormBuilder(formSchemaId: string) {
+    this.router.navTo('FormBuilder', { formSchemaId });
   }
 }

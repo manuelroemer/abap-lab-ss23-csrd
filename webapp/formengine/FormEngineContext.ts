@@ -190,6 +190,10 @@ export function createFormEngineContext({ get, set }: State<FormEngineContext>, 
     state: init.state ?? {},
     page: init.page ?? 0,
     renderVersion: 0,
+    onBeforeRender: init.onBeforeRender,
+    onAfterRender: init.onAfterRender,
+    onRenderElement: init.onRenderElement,
+    onHideElement: init.onHideElement,
 
     goForward() {
       const { canGoForward, nextPageIndex, currentPageValidationErrors, setPage } = get();
