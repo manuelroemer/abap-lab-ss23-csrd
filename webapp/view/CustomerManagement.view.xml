@@ -131,42 +131,56 @@
                 <Panel backgroundDesign="Transparent">
                   <f:GridList id="gridList" items="{state>/customerFormSchemaResultsQuery/data}" showNoData="false">
                     <f:customLayout>
-                      <grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, 24rem)" gridGap="2rem" />
+                      <grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, 26rem)" gridGap="2rem" />
                     </f:customLayout>
                     <f:GridListItem type="Active" press="onFormSchemaResultPress">
-                      <VBox class="sapUiSmallMargin">
-                        <HBox>
-                          <core:Icon size="4rem" src="sap-icon://documents" class="sapUiSmallMargin" />
-                          <VBox alignItems="Start" justifyContent="Center" width="100%">
-                            <HBox>
-                              <Title text="{= ${state>Name} || 'Untitled Questionnaire'}" level="H1" />
-                              <ObjectStatus
-                                class="sapUiTinyMarginBegin"
-                                text="Draft"
-                                inverted="true"
-                                state="Information"
-                                visible="{state>IsDraft}"
-                              />
-                            </HBox>
-                            <Label text="Questionnaire Version: {state>Version}" />
-                            <Label text="Filled on: {path: 'state>UpdatedAt', type: 'sap.ui.model.type.DateTime'}" />
-                          </VBox>
-                          <Button
-                            icon="sap-icon://synchronize"
-                            type="Transparent"
-                            tooltip="Migrate Questionnaire"
-                            press=".onQuestionnaireMigratePress"
-                            visible="{state>CanMigrate}"
-                          />
-                          <Button
-                            icon="sap-icon://decline"
-                            type="Transparent"
-                            tooltip="Delete Questionnaire"
-                            press=".onQuestionnaireDeletePress"
-                            class="sapUiTinyMarginEnd"
-                          />
-                        </HBox>
-                      </VBox>
+                      <grid:CSSGrid id="grid1" gridTemplateColumns="1fr 4fr 2fr">
+                        <VBox justifyContent="Center" alignItems="Start">
+                          <layoutData>
+                            <grid:GridItemLayoutData gridColumn="2 / 2" gridRow="1 / 3" />
+                          </layoutData>
+                          <HBox>
+                            <Title text="{= ${state>Name} || 'Untitled Questionnaire'}" level="H1" class="card-title" />
+                            <ObjectStatus
+                              class="sapUiTinyMarginBegin"
+                              text="Draft"
+                              inverted="true"
+                              state="Information"
+                              visible="{state>IsDraft}"
+                            />
+                          </HBox>
+                          <Label text="Questionnaire Version: {state>Version}" />
+                          <Label text="Filled on: {path: 'state>UpdatedAt', type: 'sap.ui.model.type.DateTime'}" />
+                        </VBox>
+                        <VBox
+                          justifyContent="Center"
+                          class="sapUiMediumMarginTop sapUiMediumMarginBottom sapUiSmallMarginBegin sapUiSmallMarginEnd">
+                          <layoutData>
+                            <grid:GridItemLayoutData gridColumn="1 / 1" gridRow="1 / 3" />
+                          </layoutData>
+                          <core:Icon size="4rem" src="sap-icon://documents" />
+                        </VBox>
+                        <VBox class="sapUiSmallMarginTop sapUiSmallMarginEnd" justifyContent="Start" alignItems="End">
+                          <layoutData>
+                            <grid:GridItemLayoutData gridColumn="3 / 3" gridRow="1 / 3" />
+                          </layoutData>
+                          <HBox>
+                            <Button
+                              icon="sap-icon://synchronize"
+                              type="Transparent"
+                              tooltip="Migrate Questionnaire"
+                              press=".onQuestionnaireMigratePress"
+                              visible="{state>CanMigrate}"
+                            />
+                            <Button
+                              icon="sap-icon://decline"
+                              type="Transparent"
+                              tooltip="Delete Questionnaire"
+                              press=".onQuestionnaireDeletePress"
+                            />
+                          </HBox>
+                        </VBox>
+                      </grid:CSSGrid>
                     </f:GridListItem>
                   </f:GridList>
                 </Panel>

@@ -151,7 +151,13 @@ export default class CustomerManagementController extends BaseController {
         text: 'This questionnaire is outdated - a newer version exists. \nYou can migrate this questionnaire to a newer version. Be aware that this could potentially result in issues if the newer version introduced any breaking changes. \nMigrating is non-destructive, however. We will create a copy of this questionnaire without deleting the old version. \nDo you want to continue? ',
       })
     ) {
-      this.state.get().migrateFormSchemaResultMutation.fetch(formSchemaResult);
+      try {
+        await this.state.get().migrateFormSchemaResultMutation.fetch(formSchemaResult);
+        this.router.navTo('Questionnaire', { formSchemaType: 'demo', customerId: formSchemaResult.CustomerId });
+      } catch (e) {
+        console.error('Error while migrating the questionnaire: ', e);
+        MessageBox.error('An unexpected error occured while migrating the questionnaire.');
+      }
     }
   }
 
