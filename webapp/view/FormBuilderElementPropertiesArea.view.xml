@@ -73,7 +73,7 @@
 
         <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('text') }">
           <Label text="Text" />
-          <Input value="{state>/elementToEdit/text}" />
+          <TextArea value="{state>/elementToEdit/text}" width="100%" />
           <Text text="The text to be displayed." />
         </VBox>
 

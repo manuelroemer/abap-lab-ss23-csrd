@@ -6,6 +6,9 @@ import MessageBox from 'sap/m/MessageBox';
 import MessageToast from 'sap/m/MessageToast';
 import { showConfirmation } from '../utils/Confirmation';
 import { createFormSchemaManagementState } from '../state/FormSchemaManagement';
+import { showPopover } from '../utils/Popover';
+import Filter from 'sap/ui/model/Filter';
+import FilterOperator from 'sap/ui/model/FilterOperator';
 
 export default class FormSchemaManagementController extends BaseController {
   state = createFormSchemaManagementState();
@@ -22,8 +25,8 @@ export default class FormSchemaManagementController extends BaseController {
   async onSelectDialogClose(e) {
     const context = e.getParameter('selectedContexts');
     const formSchemaId = context[0].getObject().Id;
-
     const toDuplicateSchema = await getFormSchemaEntity(formSchemaId);
+
     try {
       const formSchema = await this.state.get().createFormSchemaMutation.fetch(toDuplicateSchema);
       this.navToFormBuilder(formSchema?.Id);
@@ -37,7 +40,19 @@ export default class FormSchemaManagementController extends BaseController {
     e.getSource().getBinding('items').filter([]);
   }
 
+  onSearch(e) {
+    const value = e.getParameter('value');
+    const filter = new Filter('Name', FilterOperator.Contains, value);
+    const filterDescription = new Filter('Description', FilterOperator.Contains, value);
+    const filters = new Filter({ filters: [filter, filterDescription], and: false });
+
+    const binding = e.getParameter('itemsBinding');
+    binding.filter([filters]);
+  }
+
   async onDuplicatePress(e) {
+    // Refetching the schema because schema provided by the eventbinding is fetch via the Get All endpoint.
+    // This endpoint does not return the "SchemaJSON" attribute.
     const formSchema = entityFromEvent<FormSchemaEntity>(e, 'svc')!;
     const toDuplicateSchema = await getFormSchemaEntity(formSchema.Id);
 
@@ -62,7 +77,18 @@ export default class FormSchemaManagementController extends BaseController {
 
   async onFormSchemaPress(e) {
     const formSchema = entityFromEvent<FormSchemaEntity>(e, 'svc')!;
-    this.navToFormBuilder(formSchema.Id);
+    if (!formSchema.IsDraft) {
+      if (
+        await showConfirmation({
+          title: 'Undrafted Questionnaire',
+          text: 'Undrafted questionnaire schemas cannot be edited. Only the title and description can be changed.\nIf you want to change the actual schema, please duplicate the questionnaire before making any changes to it.\nDo you want to continue editing this undrafted questionnaire?',
+        })
+      ) {
+        this.navToFormBuilder(formSchema.Id);
+      }
+    } else {
+      this.navToFormBuilder(formSchema.Id);
+    }
   }
 
   async onFormSchemaDeletePress(e: Event) {
@@ -82,6 +108,14 @@ export default class FormSchemaManagementController extends BaseController {
         MessageBox.error('An unexpected error occured while deleting the questionnaire.');
       }
     }
+  }
+
+  handleInformationPopoverPress(e) {
+    const popover = showPopover({
+      title: 'Information',
+      text: "Draft: Questionnaires can be edited and saved. \nUndraft: Questionnaires' schema cannot be edited. Only title and description can be edited.",
+    });
+    popover.openBy(e.getSource());
   }
 
   navToFormBuilder(formSchemaId: string) {
