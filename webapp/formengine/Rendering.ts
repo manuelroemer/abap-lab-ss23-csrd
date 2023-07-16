@@ -176,6 +176,7 @@ function renderCheckbox(renderContext: RenderContext<CheckboxFormSchemaElement>)
   const checkBox = new CheckBox({
     text,
     selected: !!state[id],
+    wrapping: true,
     select: (e: Event) =>
       setState({
         ...state,
