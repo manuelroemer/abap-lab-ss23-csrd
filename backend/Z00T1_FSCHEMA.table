@@ -1,0 +1,22 @@
+@EndUserText.label : 'Form Schemas of the CSRD application'
+@AbapCatalog.enhancementCategory : #EXTENSIBLE_ANY
+@AbapCatalog.tableCategory : #TRANSPARENT
+@AbapCatalog.deliveryClass : #A
+@AbapCatalog.dataMaintenance : #ALLOWED
+define table z00t1_fschema {
+  key mandt    : mandt not null;
+  key id       : sysuuid_c36 not null;
+  name         : z00t1_sstring;
+  description  : z00t1_sstring;
+  type         : z00t1_sstring not null;
+  @EndUserText.label : 'The actual schema, as JSON'
+  schemajson   : abap.string(0);
+  @EndUserText.label : 'Arbitrary metadata to be used by the frontend, as JSON'
+  metadatajson : abap.string(0);
+  createdat    : timestamp not null;
+  updatedat    : timestamp not null;
+  @EndUserText.label : 'A version identifier, used to identify breaking changes'
+  version      : abap.int4 not null;
+  isdraft      : abap_boolean not null;
+
+}

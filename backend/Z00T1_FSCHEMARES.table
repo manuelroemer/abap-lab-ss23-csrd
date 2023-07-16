@@ -1,0 +1,27 @@
+@EndUserText.label : 'Form Schema Results of the CSRD'
+@AbapCatalog.enhancementCategory : #EXTENSIBLE_ANY
+@AbapCatalog.tableCategory : #TRANSPARENT
+@AbapCatalog.deliveryClass : #A
+@AbapCatalog.dataMaintenance : #ALLOWED
+define table z00t1_fschemares {
+  key mandt    : mandt not null;
+  key id       : sysuuid_c36 not null;
+  @AbapCatalog.foreignKey.screenCheck : true
+  formschemaid : sysuuid_c36
+    with foreign key z00t1_fschema
+      where mandt = z00t1_fschemares.mandt
+        and id = z00t1_fschemares.formschemaid;
+  @EndUserText.label : 'The result produced by the form, in JSON format'
+  resultjson   : abap.string(0);
+  @EndUserText.label : 'Arbitrary metadata to be used by the frontend, as JSON'
+  metadatajson : abap.string(0);
+  createdat    : timestamp;
+  updatedat    : timestamp;
+  isdraft      : abap_boolean not null;
+  @AbapCatalog.foreignKey.screenCheck : true
+  customerid   : sysuuid_c36
+    with foreign key z00t1_customer
+      where mandt = z00t1_fschemares.mandt
+        and id = z00t1_fschemares.customerid;
+
+}

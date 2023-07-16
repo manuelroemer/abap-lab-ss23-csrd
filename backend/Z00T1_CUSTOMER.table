@@ -1,0 +1,15 @@
+@EndUserText.label : 'Customer table.'
+@AbapCatalog.enhancementCategory : #EXTENSIBLE_ANY
+@AbapCatalog.tableCategory : #TRANSPARENT
+@AbapCatalog.deliveryClass : #A
+@AbapCatalog.dataMaintenance : #ALLOWED
+define table z00t1_customer {
+  key mandt    : mandt not null;
+  key id       : sysuuid_c36 not null;
+  name         : z00t1_sstring;
+  customercode : z00t1_sstring;
+  notes        : z00t1_sstring;
+  createdat    : timestamp;
+  updatedat    : timestamp;
+
+}
