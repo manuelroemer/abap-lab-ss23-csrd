@@ -20,7 +20,9 @@
 
       <VBox class="sapUiMediumMarginBottom">
         <Label text="Effects" />
-        <Text text="Effects allow you to conditionally show the page, based on expression trees. If an effect is defined, the element is hidden by default and only shown if the condition evaluates to true." />
+        <Text
+          text="Effects allow you to conditionally show the page, based on expression trees. If an effect is defined, the element is hidden by default and only shown if the condition evaluates to true."
+        />
 
         <List id="pageEffects" items="{state>/pageToEdit/effects}" mode="SingleSelectLeft" class="sapUiSmallMarginTop">
           <headerToolbar>
