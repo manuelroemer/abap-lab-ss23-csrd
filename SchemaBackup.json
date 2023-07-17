@@ -3,7 +3,7 @@
     "conditions": {
       "Page1Checked": {
         "type": "not",
-        "value": {
+        "expression": {
           "type": "value",
           "id": "page1done"
         }
@@ -12,7 +12,7 @@
         "type": "and",
         "left": {
           "type": "not",
-          "value": {
+          "expression": {
             "type": "value",
             "id": "page2done"
           }
@@ -28,28 +28,28 @@
       },
       "Page3Checked": {
         "type": "not",
-        "value": {
+        "expression": {
           "type": "value",
           "id": "page3done"
         }
       },
       "Page4Checked": {
         "type": "not",
-        "value": {
+        "expression": {
           "type": "value",
           "id": "page4done"
         }
       },
       "Page5Checked": {
         "type": "not",
-        "value": {
+        "expression": {
           "type": "value",
           "id": "page5done"
         }
       },
       "Page6Checked": {
         "type": "not",
-        "value": {
+        "expression": {
           "type": "value",
           "id": "page6done"
         }
@@ -85,6 +85,10 @@
           "label": "Balance sheet total in million euros",
           "description": "Please enter your balance sheet total (in million euros):",
           "required": true
+        },
+        {
+          "type": "text",
+          "text": "TEST"
         },
         {
           "type": "text",
@@ -1171,6 +1175,19 @@
           "required": true
         },
         {
+          "type": "text",
+          "text": "In addition the undertaking shall disaggregate and disclose separately its non-renewable energy production and renewable energy production in MWh.",
+          "effects": [
+            {
+              "effect": "hide",
+              "condition": {
+                "type": "value",
+                "id": "isProdEnergy"
+              }
+            }
+          ]
+        },
+        {
           "type": "heading",
           "text": "Energy intensity based on net revenue",
           "level": 5,
@@ -1228,7 +1245,7 @@
         },
         {
           "type": "heading",
-          "text": "65 (a): Specify the the gender distribution in number and percentage at top management level amongst its employees:",
+          "text": "65 (a): Specify the gender distribution in number and percentage at top management level amongst its employees:",
           "level": 5,
           "marginTop": "Small"
         },
@@ -1309,6 +1326,33 @@
           "id": "variingStandards",
           "description": "Is the company dealing with standard contractual payment terms that differ significantly depending on country or type of supplier?",
           "required": false
+        },
+        {
+          "type": "heading",
+          "text": "An example of what the description of standard contract term disclosures in paragraph 33 (b) could look like:",
+          "level": 6,
+          "effects": [
+            {
+              "effect": "hide",
+              "condition": {
+                "type": "value",
+                "id": "variingStandards"
+              }
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "ABC’s standard contract payment terms are payment on invoice for wholesalers which encompass approximately 80% of its annual invoices. It pays for services received within 30 days after receipt of the invoice which are about 5% of its annual invoices. The remainder of its invoices are paid within 60 days of receipt except for those in country X which in accordance with the marketplace standards are paid within 90 days of receipt.",
+          "effects": [
+            {
+              "effect": "hide",
+              "condition": {
+                "type": "value",
+                "id": "variingStandards"
+              }
+            }
+          ]
         },
         {
           "type": "heading",
@@ -1454,23 +1498,11 @@
           ]
         },
         {
-          "type": "heading",
-          "text": "34 (a): Disclose the scope, main features and components of the risk management and internal control processes and systems in relation to sustainability reporting:",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page2Checked"
-              }
-            }
-          ],
-          "marginTop": "Small"
-        },
-        {
-          "type": "text-input",
-          "id": "scope",
+          "type": "checkbox",
+          "label": "",
+          "text": "34 (a): The scope, main features and components of the risk management and internal control processes and systems in relation to sustainability reporting",
+          "description": "",
+          "helperText": "",
           "effects": [
             {
               "effect": "hide",
@@ -1482,23 +1514,11 @@
           ]
         },
         {
-          "type": "heading",
-          "text": "34 (b): Disclose the risk assessment approach followed, including the risk prioritisation methodology:",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page2Checked"
-              }
-            }
-          ],
-          "marginTop": "Small"
-        },
-        {
-          "type": "text-input",
-          "id": "riskPrioritisation",
+          "type": "checkbox",
+          "label": "",
+          "text": "34 (b): The risk assessment approach followed, including the risk prioritisation methodology",
+          "description": "",
+          "helperText": "",
           "effects": [
             {
               "effect": "hide",
@@ -1510,23 +1530,11 @@
           ]
         },
         {
-          "type": "heading",
-          "text": "34 (c): Disclose the main risks identified, actual and potential, and their mitigation strategies including related controls:",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page2Checked"
-              }
-            }
-          ],
-          "marginTop": "Small"
-        },
-        {
-          "type": "text-input",
-          "id": "mainRisks",
+          "type": "checkbox",
+          "label": "",
+          "text": "34 (c): The main risks identified, actual and potential, and their mitigation strategies including related controls",
+          "description": "",
+          "helperText": "",
           "effects": [
             {
               "effect": "hide",
@@ -1538,23 +1546,11 @@
           ]
         },
         {
-          "type": "heading",
-          "text": "34 (d): Provide a description of how the undertaking integrates the findings of its risk assessment and internal controls as regards the sustainability reporting process into relevant internal functions and processes:",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page2Checked"
-              }
-            }
-          ],
-          "marginTop": "Small"
-        },
-        {
-          "type": "text-input",
-          "id": "integrationRisks",
+          "type": "checkbox",
+          "label": "",
+          "text": "34 (d): Description of how the undertaking integrates the findings of its risk assessment and internal controls as regards the sustainability reporting process into relevant internal functions and processes",
+          "description": "",
+          "helperText": "",
           "effects": [
             {
               "effect": "hide",
@@ -1566,23 +1562,11 @@
           ]
         },
         {
-          "type": "heading",
-          "text": "34 (e): Provide a description of the periodic reporting of the findings to the administrative, management and supervisory bodies:",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page2Checked"
-              }
-            }
-          ],
-          "marginTop": "Small"
-        },
-        {
-          "type": "text-input",
-          "id": "periodicReporting",
+          "type": "checkbox",
+          "label": "",
+          "text": "34 (e): Description of the periodic reporting of the findings to the administrative, management and supervisory bodies",
+          "description": "",
+          "helperText": "",
           "effects": [
             {
               "effect": "hide",
@@ -1634,52 +1618,11 @@
           ]
         },
         {
-          "type": "heading",
-          "text": "18 (a): The companies impacts on climate change, in particular, the undertaking’s GHG emissions: ",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page3Checked"
-              }
-            }
-          ],
-          "marginTop": "Small"
-        },
-        {
-          "type": "text-input",
-          "id": "impactGHGEmiss",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page3Checked"
-              }
-            }
-          ]
-        },
-        {
-          "type": "heading",
-          "text": "18 (b): Climate-related physical risks in own operations and along the value chain: ",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page3Checked"
-              }
-            }
-          ],
-          "marginTop": "Small"
-        },
-        {
-          "id": "tempRelated",
           "type": "checkbox",
-          "text": "Temperature-related",
+          "label": "",
+          "text": "18 (a): Impacts on climate change",
+          "description": "",
+          "helperText": "",
           "effects": [
             {
               "effect": "hide",
@@ -1788,42 +1731,6 @@
           ]
         },
         {
-          "type": "text-input",
-          "id": "temperature-related-input",
-          "description": "Assessment of how its assets and business activities may be exposed and are sensitive to these temperature-related hazards, creating gross physical risks for the undertaking.",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "and",
-                "left": {
-                  "type": "ref",
-                  "id": "Page3Checked"
-                },
-                "right": {
-                  "type": "value",
-                  "id": "tempRelated"
-                }
-              }
-            }
-          ],
-          "marginBottom": "Small"
-        },
-        {
-          "id": "windRelated",
-          "type": "checkbox",
-          "text": "Wind-related",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page3Checked"
-              }
-            }
-          ]
-        },
-        {
           "type": "heading",
           "text": "Wind-related",
           "level": 5,
@@ -1904,42 +1811,6 @@
                   "type": "value",
                   "id": "windRelated"
                 }
-              }
-            }
-          ]
-        },
-        {
-          "type": "text-input",
-          "id": "wind-related-input",
-          "description": "Assessment of how its assets and business activities may be exposed and are sensitive to these wind-related hazards, creating gross physical risks for the undertaking.",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "and",
-                "left": {
-                  "type": "ref",
-                  "id": "Page3Checked"
-                },
-                "right": {
-                  "type": "value",
-                  "id": "windRelated"
-                }
-              }
-            }
-          ],
-          "marginBottom": "Small"
-        },
-        {
-          "id": "waterRelated",
-          "type": "checkbox",
-          "text": "Water-related",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page3Checked"
               }
             }
           ]
@@ -2054,42 +1925,6 @@
           ]
         },
         {
-          "type": "text-input",
-          "id": "water-related-input",
-          "description": "Assessment of how its assets and business activities may be exposed and are sensitive to these water-related hazards, creating gross physical risks for the undertaking.",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "and",
-                "left": {
-                  "type": "ref",
-                  "id": "Page3Checked"
-                },
-                "right": {
-                  "type": "value",
-                  "id": "waterRelated"
-                }
-              }
-            }
-          ],
-          "marginBottom": "Small"
-        },
-        {
-          "id": "solidMassRelated",
-          "type": "checkbox",
-          "text": "Solid mass-related",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page3Checked"
-              }
-            }
-          ]
-        },
-        {
           "type": "heading",
           "text": "Solid mass-related",
           "level": 5,
@@ -2187,59 +2022,11 @@
           ]
         },
         {
-          "type": "text-input",
-          "id": "solidMass-related-input",
-          "description": "Assessment of how its assets and business activities may be exposed and are sensitive to these solid mass-related hazards, creating gross physical risks for the undertaking.",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "and",
-                "left": {
-                  "type": "ref",
-                  "id": "Page3Checked"
-                },
-                "right": {
-                  "type": "value",
-                  "id": "solidMassRelated"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "type": "heading",
-          "text": "18 (c): Climate-related transition risks and opportunities in own operations and along the value chain:",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page3Checked"
-              }
-            }
-          ],
-          "marginTop": "Small"
-        },
-        {
-          "type": "heading",
-          "text": "Examples of climate-related transition events (examples based on TCFD classification):",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page3Checked"
-              }
-            }
-          ]
-        },
-        {
-          "id": "policy",
           "type": "checkbox",
-          "text": "Policy and legal",
+          "label": "",
+          "text": "18 (b): Climate-related physical risks in own operations and along the value chain",
+          "description": "",
+          "helperText": "",
           "effects": [
             {
               "effect": "hide",
@@ -2251,74 +2038,11 @@
           ]
         },
         {
-          "type": "heading",
-          "text": "Policy and legal:",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "and",
-                "left": {
-                  "type": "ref",
-                  "id": "Page3Checked"
-                },
-                "right": {
-                  "type": "value",
-                  "id": "policy"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "type": "multi-choice",
-          "id": "policy-choice",
-          "options": [
-            {
-              "value": "pricingOfGHG",
-              "display": "Increased pricing of GHG emissions"
-            },
-            {
-              "value": "enhancedEmissions-reporting",
-              "display": "Enhanced emissions-reporting obligations"
-            },
-            {
-              "value": "mandatesServices",
-              "display": "Mandates on and regulation of existing products and services"
-            },
-            {
-              "value": "mandatesProcesses",
-              "display": "Mandates on and regulation of existing production processes"
-            },
-            {
-              "value": "litigation",
-              "display": "Exposure to litigation"
-            }
-          ],
-          "required": false,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "and",
-                "left": {
-                  "type": "ref",
-                  "id": "Page3Checked"
-                },
-                "right": {
-                  "type": "value",
-                  "id": "policy"
-                }
-              }
-            }
-          ],
-          "marginBottom": "Small"
-        },
-        {
-          "id": "technology",
           "type": "checkbox",
-          "text": "Technology",
+          "label": "",
+          "text": "18 (c): Climate-related transition risks and opportunities in own operations and along the value chain",
+          "description": "",
+          "helperText": "",
           "effects": [
             {
               "effect": "hide",
@@ -2330,294 +2054,11 @@
           ]
         },
         {
-          "type": "heading",
-          "text": "Technology:",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "and",
-                "left": {
-                  "type": "ref",
-                  "id": "Page3Checked"
-                },
-                "right": {
-                  "type": "value",
-                  "id": "technology"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "type": "multi-choice",
-          "id": "technology-choice",
-          "options": [
-            {
-              "value": "lowerEmissionsOptions",
-              "display": "Substitution of existing products and services with lower emissions options"
-            },
-            {
-              "value": "unsuccessfulInvestment",
-              "display": "Unsuccessful investment in new technologies"
-            },
-            {
-              "value": "lowerEmissionsTech",
-              "display": "Costs of transition to lower emissions technology"
-            }
-          ],
-          "required": false,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "and",
-                "left": {
-                  "type": "ref",
-                  "id": "Page3Checked"
-                },
-                "right": {
-                  "type": "value",
-                  "id": "technology"
-                }
-              }
-            }
-          ],
-          "marginBottom": "Small"
-        },
-        {
-          "id": "market",
           "type": "checkbox",
-          "text": "Market",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page3Checked"
-              }
-            }
-          ]
-        },
-        {
-          "type": "heading",
-          "text": "Market:",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "and",
-                "left": {
-                  "type": "ref",
-                  "id": "Page3Checked"
-                },
-                "right": {
-                  "type": "value",
-                  "id": "market"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "type": "multi-choice",
-          "id": "market-choice",
-          "options": [
-            {
-              "value": "customerBehaviour",
-              "display": "Changing customer behaviour"
-            },
-            {
-              "value": "uncertaintyMarket",
-              "display": "Uncertainty in market signals"
-            },
-            {
-              "value": "costRawMaterials",
-              "display": "Increased cost of raw materials"
-            }
-          ],
-          "required": false,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "and",
-                "left": {
-                  "type": "ref",
-                  "id": "Page3Checked"
-                },
-                "right": {
-                  "type": "value",
-                  "id": "market"
-                }
-              }
-            }
-          ],
-          "marginBottom": "Small"
-        },
-        {
-          "id": "reputation",
-          "type": "checkbox",
-          "text": "Reputation",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page3Checked"
-              }
-            }
-          ]
-        },
-        {
-          "type": "heading",
-          "text": "Reputation:",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "and",
-                "left": {
-                  "type": "ref",
-                  "id": "Page3Checked"
-                },
-                "right": {
-                  "type": "value",
-                  "id": "reputation"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "type": "multi-choice",
-          "id": "reputation-choice",
-          "options": [
-            {
-              "value": "shiftPreference",
-              "display": "Shifts in consumer preference"
-            },
-            {
-              "value": "stigmatization",
-              "display": "Stigmatization of sector"
-            },
-            {
-              "value": "stakeholderConcern",
-              "display": "Increased stakeholder concern"
-            },
-            {
-              "value": "stakeholderFeedback",
-              "display": "Negative stakeholder feedback"
-            }
-          ],
-          "required": false,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "and",
-                "left": {
-                  "type": "ref",
-                  "id": "Page3Checked"
-                },
-                "right": {
-                  "type": "value",
-                  "id": "reputation"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "type": "heading",
-          "text": "19: Explain how it has used climate-related scenario analysis to inform the identification and assessment of physical and transition risks and opportunities over the short-, medium- and long-term time horizons:",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page3Checked"
-              }
-            }
-          ],
-          "marginTop": "Small"
-        },
-        {
-          "type": "heading",
-          "text": "Short-term:",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page3Checked"
-              }
-            }
-          ],
-          "marginTop": "Small"
-        },
-        {
-          "type": "text-input",
-          "id": "shortTerm",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page3Checked"
-              }
-            }
-          ]
-        },
-        {
-          "type": "heading",
-          "text": "Medium-term:",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page3Checked"
-              }
-            }
-          ]
-        },
-        {
-          "type": "text-input",
-          "id": "mediumTerm",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page3Checked"
-              }
-            }
-          ]
-        },
-        {
-          "type": "heading",
-          "text": "Long-term:",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page3Checked"
-              }
-            }
-          ]
-        },
-        {
-          "type": "text-input",
-          "id": "longTerm",
+          "label": "",
+          "text": "19: Use of climate-related scenario analysis to inform the identification and assessment of physical and transition risks and opportunities over the short-, medium- and long-term time horizons",
+          "description": "",
+          "helperText": "",
           "effects": [
             {
               "effect": "hide",
@@ -2656,67 +2097,11 @@
           ]
         },
         {
-          "type": "heading",
-          "text": "35: What is the total energy consumption of your company in MWh?",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page4Checked"
-              }
-            }
-          ],
-          "marginTop": "Small"
-        },
-        {
-          "type": "number-input",
-          "id": "totalEnergyCons",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page4Checked"
-              }
-            }
-          ]
-        },
-        {
-          "type": "heading",
-          "text": "35 (a): Consumption from non-renewable sources:",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page4Checked"
-              }
-            }
-          ],
-          "marginTop": "Small"
-        },
-        {
-          "type": "number-input",
-          "id": "totalNonRenewEnergyCons",
-          "description": "Total energy consumption from non-renewable sources in MWh:",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page4Checked"
-              }
-            }
-          ],
-          "marginBottom": "Small"
-        },
-        {
-          "id": "coal",
           "type": "checkbox",
-          "text": "coal and coal products",
+          "label": "",
+          "text": "35: Total energy consumption of your company in MWh ",
+          "description": "",
+          "helperText": "",
           "effects": [
             {
               "effect": "hide",
@@ -2728,270 +2113,153 @@
           ]
         },
         {
-          "type": "number-input",
-          "id": "coal-amount",
-          "description": "Energy consumption from coal and coal products in MWh:",
-          "required": false,
+          "type": "checkbox",
+          "label": "",
+          "text": "35 (a): Total energy consumption from non-renewable sources",
+          "description": "",
+          "helperText": "",
+          "effects": [
+            {
+              "effect": "hide",
+              "condition": {
+                "type": "ref",
+                "id": "Page4Checked"
+              }
+            }
+          ]
+        },
+        {
+          "id": "ai",
+          "type": "checkbox",
+          "text": "35 (a) i.: coal and coal products",
           "effects": [
             {
               "effect": "hide",
               "condition": {
                 "type": "and",
                 "left": {
-                  "type": "ref",
-                  "id": "Page4Checked"
+                  "type": "value",
+                  "id": "coal"
                 },
                 "right": {
-                  "type": "eq",
-                  "left": {
-                    "type": "value",
-                    "id": "coal"
-                  },
-                  "right": true
+                  "type": "ref",
+                  "id": "Page4Checked"
                 }
-              }
-            }
-          ],
-          "marginBottom": "Small"
-        },
-        {
-          "id": "petroleum",
-          "type": "checkbox",
-          "text": "crude oil and petroleum products",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page4Checked"
               }
             }
           ]
         },
         {
-          "type": "number-input",
-          "id": "petroleum-amount",
-          "description": "Energy consumption from crude oil and petroleum products in MWh:",
-          "required": false,
+          "id": "aii",
+          "type": "checkbox",
+          "text": "35 (a) ii.: crude oil and petroleum products",
           "effects": [
             {
               "effect": "hide",
               "condition": {
                 "type": "and",
                 "left": {
-                  "type": "ref",
-                  "id": "Page4Checked"
+                  "type": "value",
+                  "id": "petroleum"
                 },
                 "right": {
-                  "type": "eq",
-                  "left": {
-                    "type": "value",
-                    "id": "petroleum"
-                  },
-                  "right": true
+                  "type": "ref",
+                  "id": "Page4Checked"
                 }
-              }
-            }
-          ],
-          "marginBottom": "Small"
-        },
-        {
-          "id": "gas",
-          "type": "checkbox",
-          "text": "natural gas",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page4Checked"
               }
             }
           ]
         },
         {
-          "type": "number-input",
-          "id": "gas-amount",
-          "description": "Energy consumption from natural gas in MWh:",
-          "required": false,
+          "id": "aiii",
+          "type": "checkbox",
+          "text": "35 (a) iii.: natural gas",
           "effects": [
             {
               "effect": "hide",
               "condition": {
                 "type": "and",
                 "left": {
-                  "type": "ref",
-                  "id": "Page4Checked"
+                  "type": "value",
+                  "id": "gas"
                 },
                 "right": {
-                  "type": "eq",
-                  "left": {
-                    "type": "value",
-                    "id": "gas"
-                  },
-                  "right": true
+                  "type": "ref",
+                  "id": "Page4Checked"
                 }
-              }
-            }
-          ],
-          "marginBottom": "Small"
-        },
-        {
-          "id": "other-non-renewable",
-          "type": "checkbox",
-          "text": "other non-renewable sources",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page4Checked"
               }
             }
           ]
         },
         {
-          "type": "number-input",
-          "id": "other-non-renewable-amount",
-          "description": "Energy consumption from other non-renewable sources in MWh:",
-          "required": false,
+          "id": "aiv",
+          "type": "checkbox",
+          "text": "35 (a) iv.: other non-renewable sources",
           "effects": [
             {
               "effect": "hide",
               "condition": {
                 "type": "and",
                 "left": {
-                  "type": "ref",
-                  "id": "Page4Checked"
+                  "type": "value",
+                  "id": "other-non-renewable"
                 },
                 "right": {
-                  "type": "eq",
-                  "left": {
-                    "type": "value",
-                    "id": "other-non-renewable"
-                  },
-                  "right": true
+                  "type": "ref",
+                  "id": "Page4Checked"
                 }
-              }
-            }
-          ],
-          "marginBottom": "Small"
-        },
-        {
-          "id": "nuclear",
-          "type": "checkbox",
-          "text": "nuclear products",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page4Checked"
               }
             }
           ]
         },
         {
-          "type": "number-input",
-          "id": "nuclear-amount",
-          "description": "Nuclear energy consumption in MWh:",
-          "required": false,
+          "id": "av",
+          "type": "checkbox",
+          "text": "35 (a) v.: nuclear products",
           "effects": [
             {
               "effect": "hide",
               "condition": {
                 "type": "and",
                 "left": {
-                  "type": "ref",
-                  "id": "Page4Checked"
+                  "type": "value",
+                  "id": "nuclear"
                 },
                 "right": {
-                  "type": "eq",
-                  "left": {
-                    "type": "value",
-                    "id": "nuclear"
-                  },
-                  "right": true
+                  "type": "ref",
+                  "id": "Page4Checked"
                 }
-              }
-            }
-          ],
-          "marginBottom": "Small"
-        },
-        {
-          "id": "purchased-non-renew",
-          "type": "checkbox",
-          "text": "purchased or acquired electricity, heat, steam, and cooling from non-renewable sources",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page4Checked"
               }
             }
           ]
         },
         {
-          "type": "number-input",
-          "id": "purchased-non-renew-amount",
-          "description": "Energy consumption from purchased or acquired electricity, heat, steam, and cooling from non-renewable sources in MWh:",
-          "required": false,
+          "id": "avi",
+          "type": "checkbox",
+          "text": "35 (a) vi.: purchased or acquired electricity, heat, steam, and cooling from non-renewable sources",
           "effects": [
             {
               "effect": "hide",
               "condition": {
                 "type": "and",
                 "left": {
-                  "type": "ref",
-                  "id": "Page4Checked"
+                  "type": "value",
+                  "id": "purchased-non-renew"
                 },
                 "right": {
-                  "type": "eq",
-                  "left": {
-                    "type": "value",
-                    "id": "purchased-non-renew"
-                  },
-                  "right": true
+                  "type": "ref",
+                  "id": "Page4Checked"
                 }
               }
             }
           ]
         },
         {
-          "type": "heading",
-          "text": "35 (b) Consumption from renewable sources:",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page4Checked"
-              }
-            }
-          ],
-          "marginTop": "Small"
-        },
-        {
-          "type": "number-input",
-          "id": "totalRenewEnergyCons",
-          "description": "Total energy consumption from renewable sources in MWh:",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page4Checked"
-              }
-            }
-          ],
-          "marginBottom": "Small"
-        },
-        {
-          "id": "renew-fuel",
           "type": "checkbox",
-          "text": "renewable fuel sources",
+          "label": "",
+          "text": "35 (b): Total energy consumption from renewable sources",
+          "description": "",
+          "helperText": "",
           "effects": [
             {
               "effect": "hide",
@@ -3003,145 +2271,74 @@
           ]
         },
         {
-          "type": "number-input",
-          "id": "renew-fuel-amount",
-          "description": "Energy consumption from renewable fuel sources in MWh:",
-          "required": false,
+          "id": "bi",
+          "type": "checkbox",
+          "text": "35 (b) i.: renewable fuel sources",
           "effects": [
             {
               "effect": "hide",
               "condition": {
                 "type": "and",
                 "left": {
-                  "type": "ref",
-                  "id": "Page4Checked"
+                  "type": "value",
+                  "id": "renew-fuel"
                 },
                 "right": {
-                  "type": "eq",
-                  "left": {
-                    "type": "value",
-                    "id": "renew-fuel"
-                  },
-                  "right": true
+                  "type": "ref",
+                  "id": "Page4Checked"
                 }
-              }
-            }
-          ],
-          "marginBottom": "Small"
-        },
-        {
-          "id": "purchased-renew",
-          "type": "checkbox",
-          "text": "purchased or acquired electricity, heat, steam, and cooling from renewable sources",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page4Checked"
               }
             }
           ]
         },
         {
-          "type": "number-input",
-          "id": "purchased-renew-amount",
-          "description": "Energy consumption of purchased or acquired electricity, heat, steam, and cooling from renewable sources in MWh:",
-          "required": false,
+          "id": "bii",
+          "type": "checkbox",
+          "text": "35 (b) ii.: purchased or acquired electricity, heat, steam, and cooling from renewable sources",
           "effects": [
             {
               "effect": "hide",
               "condition": {
                 "type": "and",
                 "left": {
-                  "type": "ref",
-                  "id": "Page4Checked"
+                  "type": "value",
+                  "id": "purchased-renew"
                 },
                 "right": {
-                  "type": "eq",
-                  "left": {
-                    "type": "value",
-                    "id": "purchased-renew"
-                  },
-                  "right": true
+                  "type": "ref",
+                  "id": "Page4Checked"
                 }
-              }
-            }
-          ],
-          "marginBottom": "Small"
-        },
-        {
-          "id": "self-generated",
-          "type": "checkbox",
-          "text": "self-generated non-fuel renewable energy",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page4Checked"
               }
             }
           ]
         },
         {
-          "type": "number-input",
-          "id": "self-generated-amount",
-          "description": "Energy consumption from self-generated non-fuel renewable energy in MWH",
-          "required": false,
+          "id": "biii",
+          "type": "checkbox",
+          "text": "35 (b) iii.: self-generated non-fuel renewable energy",
           "effects": [
             {
               "effect": "hide",
               "condition": {
                 "type": "and",
                 "left": {
-                  "type": "ref",
-                  "id": "Page4Checked"
+                  "type": "value",
+                  "id": "self-generated"
                 },
                 "right": {
-                  "type": "eq",
-                  "left": {
-                    "type": "value",
-                    "id": "self-generated"
-                  },
-                  "right": true
+                  "type": "ref",
+                  "id": "Page4Checked"
                 }
               }
             }
           ]
         },
         {
-          "type": "heading",
-          "text": "36: Does the company produce energy?",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page4Checked"
-              }
-            }
-          ],
-          "marginTop": "Small"
-        },
-        {
-          "type": "boolean-choice",
-          "id": "isProdEnergy",
-          "required": true,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page4Checked"
-              }
-            }
-          ]
-        },
-        {
-          "type": "text",
-          "text": "In addition the undertaking shall disaggregate and disclose separately its non-renewable energy production and renewable energy production in MWh.",
+          "type": "checkbox",
+          "label": "",
+          "text": "36: Produced energy",
+          "description": "",
+          "helperText": "",
           "effects": [
             {
               "effect": "hide",
@@ -3175,9 +2372,11 @@
           "marginTop": "Small"
         },
         {
-          "type": "heading",
-          "text": "37: Provide information on the energy intensity (total energy consumption per net revenue) associated with activities in high climate impact sectors:",
-          "level": 5,
+          "type": "checkbox",
+          "label": "",
+          "text": "37: Information on the energy intensity",
+          "description": "",
+          "helperText": "",
           "effects": [
             {
               "effect": "hide",
@@ -3189,9 +2388,11 @@
           ]
         },
         {
-          "type": "number-input",
-          "id": "periodicReporting",
-          "description": "Total energy consumption in high climate impact sectors in MWh:",
+          "type": "checkbox",
+          "label": "",
+          "text": "39: High climate impact sectors that are used to determine the energy intensity required by paragraph 37",
+          "description": "",
+          "helperText": "",
           "effects": [
             {
               "effect": "hide",
@@ -3203,65 +2404,11 @@
           ]
         },
         {
-          "type": "number-input",
-          "id": "periodicReporting",
-          "description": "Net revenue in high climate impact sectors:",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page4Checked"
-              }
-            }
-          ]
-        },
-        {
-          "type": "heading",
-          "text": "39: Specify the high climate impact sectors that are used to determine the energy intensity required by paragraph 37:",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page4Checked"
-              }
-            }
-          ],
-          "marginTop": "Small"
-        },
-        {
-          "type": "text-input",
-          "id": "sectorSpecification",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page4Checked"
-              }
-            }
-          ]
-        },
-        {
-          "type": "heading",
-          "text": "40: Disclose the reconciliation to the relevant line item or notes in the financial statements of the net revenue amount from activities in high climate impact sectors (the denominator in the calculation of the energy intensity required by paragraph 37):",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page4Checked"
-              }
-            }
-          ],
-          "marginTop": "Small"
-        },
-        {
-          "type": "text-input",
-          "id": "lineItems",
+          "type": "checkbox",
+          "label": "",
+          "text": "40: Relevant line item or notes in the financial statements of the net revenue amount ",
+          "description": "",
+          "helperText": "",
           "effects": [
             {
               "effect": "hide",
@@ -3300,24 +2447,28 @@
           ]
         },
         {
-          "type": "heading",
-          "text": "65 (a): Specify the the gender distribution in number and percentage at top management level amongst its employees:",
-          "level": 5,
-          "effects": [
+          "type": "multi-choice",
+          "label": "",
+          "description": "65 (a): The gender distribution in number and percentage at top management level amongst",
+          "helperText": "",
+          "options": [
             {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page5Checked"
-              }
+              "display": "Number of male employees at the top management level",
+              "value": "option-1"
+            },
+            {
+              "display": "Percentage of male employees at the top management level",
+              "value": "option-2"
+            },
+            {
+              "value": "option-3",
+              "display": "Number of female employees at the top management level"
+            },
+            {
+              "value": "option-4",
+              "display": "Percentage of female employees at the top management level"
             }
           ],
-          "marginTop": "Small"
-        },
-        {
-          "type": "number-input",
-          "id": "numMaleManagement",
-          "label": "Number of male employees at the top management level:",
           "effects": [
             {
               "effect": "hide",
@@ -3329,94 +2480,24 @@
           ]
         },
         {
-          "type": "number-input",
-          "id": "percMaleManagement",
-          "label": "Percentage of male employees at the top management level:",
-          "effects": [
+          "type": "multi-choice",
+          "label": "",
+          "description": "65 (b): Distribution of employees by age group",
+          "helperText": "",
+          "options": [
             {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page5Checked"
-              }
-            }
-          ]
-        },
-        {
-          "type": "number-input",
-          "id": "numFemaleManagement",
-          "label": "Number of female employees at the top management level:",
-          "effects": [
+              "display": "Percentage of employees under 30 years old",
+              "value": "option-1"
+            },
             {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page5Checked"
-              }
-            }
-          ]
-        },
-        {
-          "type": "number-input",
-          "id": "percFemaleManagement",
-          "label": "Percentage of female employees at the top management level:",
-          "effects": [
+              "display": "Percentage of employees between 30 and 50 years old",
+              "value": "option-2"
+            },
             {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page5Checked"
-              }
-            }
-          ]
-        },
-        {
-          "type": "heading",
-          "text": "65 (b): Distribution of employees by age group",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page5Checked"
-              }
+              "value": "option-3",
+              "display": "Percentage of employees older than 50 years old"
             }
           ],
-          "marginTop": "Small"
-        },
-        {
-          "type": "number-input",
-          "id": "percU30Empl",
-          "label": "Percentage of employees under 30 years old:",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page5Checked"
-              }
-            }
-          ]
-        },
-        {
-          "type": "number-input",
-          "id": "perc30To50Empl",
-          "label": "Percentage of employees between 30 and 50 years old:",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page5Checked"
-              }
-            }
-          ]
-        },
-        {
-          "type": "number-input",
-          "id": "percO50Empl",
-          "label": "Percentage of employees older than 50 years old:",
           "effects": [
             {
               "effect": "hide",
@@ -3455,23 +2536,11 @@
           ]
         },
         {
-          "type": "heading",
-          "text": "33 (a): What is the average time the company takes to pay an invoice from the date when the contractual or statutory term of payment starts to be calculated, in number of days?",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page6Checked"
-              }
-            }
-          ],
-          "marginTop": "Small"
-        },
-        {
-          "type": "number-input",
-          "id": "AvgTimeToPayInvoice",
+          "type": "checkbox",
+          "label": "",
+          "text": "33 (a): The average time the company takes to pay an invoice from the date when the contractual or statutory term of payment starts to be calculated",
+          "description": "",
+          "helperText": "",
           "effects": [
             {
               "effect": "hide",
@@ -3483,25 +2552,11 @@
           ]
         },
         {
-          "type": "heading",
-          "text": "33 (b): A description of the undertaking’s standard payment terms in number of days by main category of suppliers and the percentage of its payments aligned with these standard terms is required here.",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page6Checked"
-              }
-            }
-          ],
-          "marginTop": "Small"
-        },
-        {
-          "type": "boolean-choice",
-          "id": "variingStandards",
-          "description": "Is the company dealing with standard contractual payment terms that differ significantly depending on country or type of supplier?",
-          "required": true,
+          "type": "checkbox",
+          "label": "",
+          "text": "33 (b): The undertaking’s standard payment terms in number of days by main category of suppliers and the percentage of its payments aligned with these standard terms",
+          "description": "",
+          "helperText": "",
           "effects": [
             {
               "effect": "hide",
@@ -3513,64 +2568,11 @@
           ]
         },
         {
-          "type": "heading",
-          "text": "An example of what the description of standard contract term disclosures in paragraph 33 (b) could look like:",
-          "level": 6,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "and",
-                "left": {
-                  "type": "value",
-                  "id": "variingStandards"
-                },
-                "right": {
-                  "type": "ref",
-                  "id": "Page6Checked"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "type": "text",
-          "text": "ABC’s standard contract payment terms are payment on invoice for wholesalers which encompass approximately 80% of its annual invoices. It pays for services received within 30 days after receipt of the invoice which are about 5% of its annual invoices. The remainder of its invoices are paid within 60 days of receipt except for those in country X which in accordance with the marketplace standards are paid within 90 days of receipt.",
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "and",
-                "left": {
-                  "type": "value",
-                  "id": "variingStandards"
-                },
-                "right": {
-                  "type": "ref",
-                  "id": "Page6Checked"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "type": "heading",
-          "text": "33 (c): What is the number of legal proceedings (currently outstanding) during the reporting period for late payments?",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page6Checked"
-              }
-            }
-          ],
-          "marginTop": "Small"
-        },
-        {
-          "type": "number-input",
-          "id": "numOfLegalProceedingsOutstanding",
+          "type": "checkbox",
+          "label": "",
+          "text": "33 (c): Number of legal proceedings (currently outstanding) during the reporting period for late payments",
+          "description": "",
+          "helperText": "",
           "effects": [
             {
               "effect": "hide",
@@ -3582,23 +2584,11 @@
           ]
         },
         {
-          "type": "heading",
-          "text": "33 (d): Include complementary information necessary to provide sufficient context:",
-          "level": 5,
-          "effects": [
-            {
-              "effect": "hide",
-              "condition": {
-                "type": "ref",
-                "id": "Page6Checked"
-              }
-            }
-          ],
-          "marginTop": "Small"
-        },
-        {
-          "type": "text-input",
-          "id": "complementaryPaymentPractices",
+          "type": "checkbox",
+          "label": "",
+          "text": "33 (d): Complementary information necessary to provide sufficient context",
+          "description": "",
+          "helperText": "",
           "effects": [
             {
               "effect": "hide",

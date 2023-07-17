@@ -24,7 +24,7 @@ export default class FormBuilderElementPropertiesAreaController extends BaseCont
     formBuilderState.get().addElementEffect();
   }
 
-  onDeleteElementEffectPress(e) {
+  onDeleteElementEffectPress() {
     const list = this.byId('elementEffects') as List;
     const selectedItem = list.getSelectedItem();
     const index = list.indexOfItem(selectedItem);
@@ -35,7 +35,7 @@ export default class FormBuilderElementPropertiesAreaController extends BaseCont
     formBuilderState.get().addElementValidationRule();
   }
 
-  onDeleteElementValidationRulePress(e) {
+  onDeleteElementValidationRulePress() {
     const list = this.byId('elementValidationRules') as List;
     const selectedItem = list.getSelectedItem();
     const index = list.indexOfItem(selectedItem);
