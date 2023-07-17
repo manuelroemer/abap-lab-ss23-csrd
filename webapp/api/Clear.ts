@@ -43,7 +43,7 @@ export async function resetBackend() {
   console.info('Creating CSRD form schema...');
   await createFormSchemaEntity({
     Name: 'CSRD PoC',
-    Description: 'The CSRD questionnaire (Proof of Concept).',
+    Description: 'The CSRD questionnaire.',
     Type: 'csrd',
     IsDraft: false,
     MetadataJson: '{}',
