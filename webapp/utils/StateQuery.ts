@@ -20,7 +20,7 @@ export type QueryState<TArgs = void, TData = unknown, TError = unknown> = Omit<
 /**
  * Creates a {@link QueryState} object that can be added to a state container.
  * A query is a specialization of {@link AsyncState}, inspired by the popular React libraries
- * [`react-query`](https://tanstack.com/query/v4/docs/react/overview) and (`swr`)[https://swr.vercel.app/].
+ * [`react-query`](https://tanstack.com/query/v4/docs/react/overview) and [`swr`](https://swr.vercel.app/).
  *
  * It is an abstraction for fetching ("querying") arbitrary data based on arguments coming from the state.
  * A simple example is a web request. Assume that you have a state object like this:
