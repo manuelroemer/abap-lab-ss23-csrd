@@ -1,4 +1,4 @@
-import { FormSchema } from './Schema';
+import { FormSchema } from '../Schema';
 
 export const demoFormSchema: FormSchema = {
   pages: [

@@ -3,7 +3,7 @@ import BaseController from './BaseController';
 import Dialog from 'sap/m/SelectDialog';
 import Filter from 'sap/ui/model/Filter';
 import { showConfirmation } from '../utils/Confirmation';
-import { clearBackend } from '../api/Clear';
+import { resetBackend } from '../api/Clear';
 import MessageToast from 'sap/m/MessageToast';
 
 export default class MainController extends BaseController {
@@ -49,7 +49,7 @@ export default class MainController extends BaseController {
     ) {
       try {
         MessageToast.show('Clearing the backend started. Please wait until the next notification.');
-        await clearBackend();
+        await resetBackend();
         MessageToast.show('The backend was successfully cleared. We recommend reloading the current browser tab.');
       } catch (e) {
         console.error('Unexpected error while clearing the backend: ', e);
