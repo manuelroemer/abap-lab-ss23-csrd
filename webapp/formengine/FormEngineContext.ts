@@ -1,5 +1,5 @@
 import Control from 'sap/ui/core/Control';
-import { State, createState } from '../utils/State';
+import { State } from '../utils/State';
 import { evaluateRules } from './Rules';
 import { FormSchema, FormSchemaElement, FormSchemaPage } from './Schema';
 import { ValidationError, getValidationErrorsForPage } from './Validation';

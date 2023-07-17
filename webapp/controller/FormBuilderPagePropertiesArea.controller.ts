@@ -11,7 +11,7 @@ export default class FormBuilderPagePropertiesAreaController extends BaseControl
     formBuilderState.get().addPageEffect();
   }
 
-  onDeletePageEffectPress(e) {
+  onDeletePageEffectPress() {
     const list = this.byId('pageEffects') as List;
     const selectedItem = list.getSelectedItem();
     const index = list.indexOfItem(selectedItem);
