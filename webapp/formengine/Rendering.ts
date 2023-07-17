@@ -296,7 +296,25 @@ function renderNumberInput(renderContext: RenderContext<NumberStepInputFormSchem
     max,
     description: stepperDescription,
     change: onChange,
-  });
+  }) as any;
+
+  // Dirty hack for a behavior of UI5:
+  // UI5's StepInput always renders '0' as the default value and there is no in-built way to change this.
+  // What we *want* is that the input shows nothing if the value is not set (i.e., undefined/null).
+  // Otherwise, we have a confusing scenario during validation:
+  // The field shows a value '0', but a validation error claims that the value is not set.
+  // From a user's perspective, this is wrong.
+  //
+  // Since there is no official way (TM) to alter the control's behavior, we resort to the following hack:
+  // UI5's implementation of StepInput has a private method `_getFormattedValue` that is used to retrieve
+  // the value that is displayed. Details can be found here: https://github.com/SAP/openui5/blob/fc697ddff48c6b05ca03509c03ab6a9df8c2b86c/src/sap.m/src/sap/m/StepInput.js#L864
+  // We simply override this function with a version that returns our desired value (i.e., nothing)
+  // if the value is not set.
+  // This could always break with a UI5 version update, but considering that we've pinned the version
+  // and are unlikely to update this in the future, we'll do it. d=====(￣▽￣*)b
+  if (value === undefined || (value === null && typeof input._getFormattedValue === 'function')) {
+    input._getFormattedValue = () => '';
+  }
 
   return renderDynamicElementWrapper(input, renderContext);
 }
