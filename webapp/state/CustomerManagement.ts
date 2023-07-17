@@ -33,7 +33,7 @@ export interface CustomerManagementState extends RouterState<{ customerId: strin
   deleteCustomerMutation: AsyncState<string>;
 
   deleteFormSchemaResultMutation: AsyncState<string>;
-  migrateFormSchemaResultMutation: AsyncState<FormSchemaResultEntity>;
+  migrateFormSchemaResultMutation: AsyncState<FormSchemaResultEntity, FormSchemaResultEntity>;
 
   showCreateCustomerDialog(): void;
   showEditCustomerDialog(customer: CustomerEntity): void;
@@ -129,7 +129,7 @@ export function createCustomerManagementState() {
             filters: [new Filter({ path: 'Type', operator: 'EQ', value1: formSchema.Type })],
           });
           const maxFormSchemaVersionId = matchingFormSchema.results.sort((a, b) => b.Version - a.Version)[0].Id;
-          await createFormSchemaResultEntity({
+          return await createFormSchemaResultEntity({
             CustomerId: formSchemaResult.CustomerId,
             FormSchemaId: maxFormSchemaVersionId,
             ResultJson: formSchemaResult.ResultJson,
