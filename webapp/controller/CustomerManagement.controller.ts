@@ -45,7 +45,7 @@ export default class CustomerManagementController extends BaseController {
     } = this.state.get();
 
     this.router.navTo('Questionnaire', {
-      formSchemaType: 'demo',
+      formSchemaType: 'csrd',
       customerId,
       '?query': { formSchemaResultId: result?.Id },
     });
@@ -107,7 +107,7 @@ export default class CustomerManagementController extends BaseController {
     if (contexts && contexts.length) {
       const customerId = contexts[0].getObject().Id;
       this.router.navTo('CustomerManagement', { customerId });
-      this.router.navTo('Questionnaire', { formSchemaType: 'demo', customerId });
+      this.router.navTo('Questionnaire', { formSchemaType: 'csrd', customerId });
     }
 
     e.getSource().getBinding('items').filter([]);
@@ -117,7 +117,7 @@ export default class CustomerManagementController extends BaseController {
     const customerId = this.state.get().parameters.customerId;
 
     if (customerId) {
-      this.router.navTo('Questionnaire', { formSchemaType: 'demo', customerId });
+      this.router.navTo('Questionnaire', { formSchemaType: 'csrd', customerId });
     } else {
       const dialog = this.byId('customerSelectDialog') as Dialog;
       dialog.open();
@@ -158,7 +158,7 @@ export default class CustomerManagementController extends BaseController {
           .migrateFormSchemaResultMutation.fetch(toMigrateFormSchemaResult);
 
         this.router.navTo('Questionnaire', {
-          formSchemaType: 'demo',
+          formSchemaType: 'csrd',
           customerId: newDuplicatedFormSchema.CustomerId,
           '?query': { formSchemaResultId: newDuplicatedFormSchema?.Id },
         });

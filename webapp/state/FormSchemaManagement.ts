@@ -24,7 +24,7 @@ export function createFormSchemaManagementState() {
       key: 'createFormSchemaMutation',
       fetch: (formSchemaTemplate) =>
         createFormSchemaEntity({
-          Type: formSchemaTemplate?.Type ?? 'demo',
+          Type: formSchemaTemplate?.Type ?? 'csrd',
           SchemaJson: formSchemaTemplate?.SchemaJson ?? JSON.stringify(emptySchema),
           MetadataJson: formSchemaTemplate?.MetadataJson ?? '{}',
           IsDraft: true,

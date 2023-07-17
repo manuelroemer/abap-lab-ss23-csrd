@@ -35,7 +35,7 @@ export default class MainController extends BaseController {
     const contexts = e.getParameter('selectedContexts');
     if (contexts && contexts.length) {
       const customerId = contexts[0].getObject().Id;
-      this.router.navTo('Questionnaire', { formSchemaType: 'demo', customerId });
+      this.router.navTo('Questionnaire', { formSchemaType: 'csrd', customerId });
     }
     e.getSource().getBinding('items').filter([]);
   }
