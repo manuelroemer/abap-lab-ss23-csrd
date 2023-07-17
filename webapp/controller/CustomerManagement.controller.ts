@@ -3,7 +3,7 @@ import BaseController from './BaseController';
 import { CustomerEntity } from '../api/CustomerEntity';
 import Event from 'sap/ui/base/Event';
 import { entityFromEvent } from '../utils/Event';
-import { FormSchemaResultEntity } from '../api/FormSchemaResultEntity';
+import { FormSchemaResultEntity, getFormSchemaResultEntity } from '../api/FormSchemaResultEntity';
 import Filter from 'sap/ui/model/Filter';
 import MessageToast from 'sap/m/MessageToast';
 import MessageBox from 'sap/m/MessageBox';
@@ -145,6 +145,7 @@ export default class CustomerManagementController extends BaseController {
 
   async onQuestionnaireMigratePress(e: Event) {
     const formSchemaResult = entityFromEvent<FormSchemaResultEntity>(e, 'state')!;
+    const toMigrateFormSchemaResult = await getFormSchemaResultEntity(formSchemaResult.Id);
     if (
       await showConfirmation({
         title: 'Migrate Questionnaire',
@@ -152,8 +153,15 @@ export default class CustomerManagementController extends BaseController {
       })
     ) {
       try {
-        await this.state.get().migrateFormSchemaResultMutation.fetch(formSchemaResult);
-        this.router.navTo('Questionnaire', { formSchemaType: 'demo', customerId: formSchemaResult.CustomerId });
+        const newDuplicatedFormSchema = await this.state
+          .get()
+          .migrateFormSchemaResultMutation.fetch(toMigrateFormSchemaResult);
+
+        this.router.navTo('Questionnaire', {
+          formSchemaType: 'demo',
+          customerId: newDuplicatedFormSchema.CustomerId,
+          '?query': { formSchemaResultId: newDuplicatedFormSchema?.Id },
+        });
       } catch (e) {
         console.error('Error while migrating the questionnaire: ', e);
         MessageBox.error('An unexpected error occured while migrating the questionnaire.');

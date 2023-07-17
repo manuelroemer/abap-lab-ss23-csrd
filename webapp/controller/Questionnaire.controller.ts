@@ -30,17 +30,13 @@ export default class QuestionnaireController extends BaseController {
   }
 
   async onSubmitPress() {
-    const {
-      submit,
-      submitMutation,
-      parameters: { customerId },
-    } = this.state.get();
+    const { submit, submitMutation } = this.state.get();
 
     if (submit()) {
       try {
         await submitMutation.fetch();
         MessageToast.show('Your questionnaire was successfully saved!');
-        this.router.navTo('CustomerManagement', { customerId });
+        this.navBack();
       } catch {
         MessageBox.error('An unexpected error occured while saving your questionnaire.');
       }
