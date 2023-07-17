@@ -53,6 +53,7 @@
                     />
                   </VBox>
                 </f:GridListItem>
+
                 <f:GridListItem type="Active" press="navToFormSchemaManagement">
                   <VBox class="sapUiSmallMargin">
                     <HBox>
@@ -63,6 +64,19 @@
                       </VBox>
                     </HBox>
                     <Text text="Here you can create and edit your FormSchemas." class="sapUiTinyMargin" />
+                  </VBox>
+                </f:GridListItem>
+
+                <f:GridListItem type="Active" press="onNukeBackend">
+                  <VBox class="sapUiSmallMargin">
+                    <HBox>
+                      <core:Icon size="3rem" src="sap-icon://sys-cancel" class="sapUiSmallMargin" />
+                      <VBox alignItems="Start" justifyContent="Center" width="100%">
+                        <Title text="Reset Backend" level="H1" />
+                        <Label text="Clears all backend tables" />
+                      </VBox>
+                    </HBox>
+                    <Text text="Resets all tables in the backend to a new, demo-like state." class="sapUiTinyMargin" />
                   </VBox>
                 </f:GridListItem>
               </f:GridList>
