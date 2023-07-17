@@ -59,7 +59,7 @@ export function createFormBuilderState() {
       parameters: {},
       query: {},
 
-      effectTypes: [{ type: 'hide', displayName: 'Hide' }],
+      effectTypes: [{ type: 'show', displayName: 'Show' }],
 
       ...createFormBuilderFormEngineSlice(state),
       ...createFormBuilderPageAreaSlice(state),

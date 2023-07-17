@@ -145,7 +145,15 @@ export interface DynamicFormSchemaElement<TType extends string> extends FormSche
  * An effect that is applied to a form schema element when a condition is met.
  */
 export interface FormSchemaElementEffect {
-  effect: 'hide';
+  /**
+   * The type of the effect to apply.
+   * In this version, we only support one kind of effect:
+   * `show` conditionally shows the element only when the condition is met.
+   */
+  effect: 'show';
+  /**
+   * The condition that must be met for the effect to apply.
+   */
   condition: FormSchemaExpressionOrPrimitive;
 }
 

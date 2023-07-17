@@ -26,8 +26,12 @@ export function evaluateRules(
 ): RuleResult {
   const effects = objWithEffects.effects ?? [];
   const effectsToApply = effects.filter((e) => !isExpressionTruthy(e.condition, schema, state));
+  // IMPORTANT/TODO: The above condition is wrong. There should not be any negation.
+  // We deliberately keep this mistake for backwards compatibility with the schemas that we wrote.
+  // If this app was newly released, this should be turned around.
 
   return {
-    hide: effectsToApply.some((e) => e.effect === 'hide'),
+    // A negated show == hide.
+    hide: effectsToApply.some((e) => e.effect === 'show'),
   };
 }

@@ -166,7 +166,7 @@ export function createFormBuilderElementPropertiesAreaSlice({
         const effects = elementToEdit['effects'] ?? [];
         const nextElement = {
           ...elementToEdit,
-          effects: [...effects, { effect: 'hide', condition: null } as const],
+          effects: [...effects, { effect: 'show', condition: null } as const],
         };
 
         set({ elementToEdit: nextElement });

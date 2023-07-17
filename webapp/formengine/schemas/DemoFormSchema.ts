@@ -104,7 +104,7 @@ export const demoFormSchema: FormSchema = {
       title: 'The Panda',
       effects: [
         {
-          effect: 'hide',
+          effect: 'show',
           condition: {
             type: 'eq',
             left: { type: 'value', id: 'animal' },
@@ -147,7 +147,7 @@ export const demoFormSchema: FormSchema = {
           text: 'Num1 is bigger than Num2! (>)',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'gt',
                 left: { type: 'value', id: 'num1' },
@@ -161,7 +161,7 @@ export const demoFormSchema: FormSchema = {
           text: 'Num1 is smaller than Num2! (<)',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'lt',
                 left: { type: 'value', id: 'num1' },
@@ -175,7 +175,7 @@ export const demoFormSchema: FormSchema = {
           text: 'Num1 is bigger than or equal to Num2! (>=)',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ge',
                 left: { type: 'value', id: 'num1' },
@@ -189,7 +189,7 @@ export const demoFormSchema: FormSchema = {
           text: 'Num1 is smaller than or equal to Num2! (<=)',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'le',
                 left: { type: 'value', id: 'num1' },
@@ -215,7 +215,7 @@ export const demoFormSchema: FormSchema = {
           text: 'Both booleans are true (yes)! (AND)',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'and',
                 left: { type: 'value', id: 'bool1' },
@@ -229,7 +229,7 @@ export const demoFormSchema: FormSchema = {
           text: 'Either of booleans is true (yes)! (OR)',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'or',
                 left: { type: 'value', id: 'bool1' },
@@ -243,7 +243,7 @@ export const demoFormSchema: FormSchema = {
           text: 'Both booleans have the same value! (EQ)',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'eq',
                 left: { type: 'value', id: 'bool1' },
@@ -257,7 +257,7 @@ export const demoFormSchema: FormSchema = {
           text: 'The booleans have different values! (NE)',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ne',
                 left: { type: 'value', id: 'bool1' },

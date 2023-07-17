@@ -58,7 +58,7 @@ export function createFormBuilderPagePropertiesAreaSlice({
         const effects = pageToEdit['effects'] ?? [];
         const nextElement = {
           ...pageToEdit,
-          effects: [...effects, { effect: 'hide', condition: null } as const],
+          effects: [...effects, { effect: 'show', condition: null } as const],
         };
 
         set({ pageToEdit: nextElement });

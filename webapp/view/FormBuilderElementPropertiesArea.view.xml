@@ -162,7 +162,7 @@
 
         <VBox class="sapUiMediumMarginBottom" visible="{= ${state>/elementToEditProperties}.includes('effects') }">
           <Label text="Effects" />
-          <Text text="Effects allow you to conditionally show or hide the element, based on expression trees." />
+          <Text text="Effects allow you to conditionally show the element, based on expression trees. If an effect is defined, the element is hidden by default and only shown if the condition evaluates to true." />
 
           <List
             id="elementEffects"

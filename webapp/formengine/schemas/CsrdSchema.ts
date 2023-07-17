@@ -100,7 +100,7 @@ export const csrdFormSchema: FormSchema = {
           text: '',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'or',
                 left: {
@@ -163,7 +163,7 @@ export const csrdFormSchema: FormSchema = {
       title: 'GOV-5 General disclosures',
       effects: [
         {
-          effect: 'hide',
+          effect: 'show',
           condition: {
             type: 'gt',
             left: {
@@ -276,7 +276,7 @@ export const csrdFormSchema: FormSchema = {
           level: 5,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'tempRelated',
@@ -309,7 +309,7 @@ export const csrdFormSchema: FormSchema = {
           description: 'Temperature-related chronic:',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'tempRelated',
@@ -338,7 +338,7 @@ export const csrdFormSchema: FormSchema = {
           description: 'Temperature-related acute:',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'tempRelated',
@@ -353,7 +353,7 @@ export const csrdFormSchema: FormSchema = {
             'Assessment of how its assets and business activities may be exposed and are sensitive to these temperature-related hazards, creating gross physical risks for the undertaking.',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'tempRelated',
@@ -373,7 +373,7 @@ export const csrdFormSchema: FormSchema = {
           level: 5,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'windRelated',
@@ -394,7 +394,7 @@ export const csrdFormSchema: FormSchema = {
           description: 'Wind-related chronic:',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'windRelated',
@@ -423,7 +423,7 @@ export const csrdFormSchema: FormSchema = {
           description: 'Wind-related acute:',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'windRelated',
@@ -438,7 +438,7 @@ export const csrdFormSchema: FormSchema = {
             'Assessment of how its assets and business activities may be exposed and are sensitive to these wind-related hazards, creating gross physical risks for the undertaking.',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'windRelated',
@@ -458,7 +458,7 @@ export const csrdFormSchema: FormSchema = {
           level: 5,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'waterRelated',
@@ -499,7 +499,7 @@ export const csrdFormSchema: FormSchema = {
           description: 'Water-related chronic:',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'waterRelated',
@@ -532,7 +532,7 @@ export const csrdFormSchema: FormSchema = {
           description: 'Water-related acute:',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'waterRelated',
@@ -547,7 +547,7 @@ export const csrdFormSchema: FormSchema = {
             'Assessment of how its assets and business activities may be exposed and are sensitive to these water-related hazards, creating gross physical risks for the undertaking.',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'waterRelated',
@@ -567,7 +567,7 @@ export const csrdFormSchema: FormSchema = {
           level: 5,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'solidMassRelated',
@@ -600,7 +600,7 @@ export const csrdFormSchema: FormSchema = {
           description: 'Solid mass-related chronic:',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'solidMassRelated',
@@ -629,7 +629,7 @@ export const csrdFormSchema: FormSchema = {
           description: 'Solid mass-related acute:',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'solidMassRelated',
@@ -644,7 +644,7 @@ export const csrdFormSchema: FormSchema = {
             'Assessment of how its assets and business activities may be exposed and are sensitive to these solid mass-related hazards, creating gross physical risks for the undertaking.',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'solidMassRelated',
@@ -674,7 +674,7 @@ export const csrdFormSchema: FormSchema = {
           level: 5,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'policy',
@@ -710,7 +710,7 @@ export const csrdFormSchema: FormSchema = {
           required: false,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'policy',
@@ -730,7 +730,7 @@ export const csrdFormSchema: FormSchema = {
           level: 5,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'technology',
@@ -758,7 +758,7 @@ export const csrdFormSchema: FormSchema = {
           required: false,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'technology',
@@ -778,7 +778,7 @@ export const csrdFormSchema: FormSchema = {
           level: 5,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'market',
@@ -806,7 +806,7 @@ export const csrdFormSchema: FormSchema = {
           required: false,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'market',
@@ -826,7 +826,7 @@ export const csrdFormSchema: FormSchema = {
           level: 5,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'reputation',
@@ -858,7 +858,7 @@ export const csrdFormSchema: FormSchema = {
           required: false,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'reputation',
@@ -948,7 +948,7 @@ export const csrdFormSchema: FormSchema = {
           required: false,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'eq',
                 left: {
@@ -974,7 +974,7 @@ export const csrdFormSchema: FormSchema = {
           required: false,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'eq',
                 left: {
@@ -999,7 +999,7 @@ export const csrdFormSchema: FormSchema = {
           required: false,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'eq',
                 left: {
@@ -1024,7 +1024,7 @@ export const csrdFormSchema: FormSchema = {
           required: false,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'eq',
                 left: {
@@ -1049,7 +1049,7 @@ export const csrdFormSchema: FormSchema = {
           required: false,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'eq',
                 left: {
@@ -1075,7 +1075,7 @@ export const csrdFormSchema: FormSchema = {
           required: false,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'eq',
                 left: {
@@ -1111,7 +1111,7 @@ export const csrdFormSchema: FormSchema = {
           required: false,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'eq',
                 left: {
@@ -1137,7 +1137,7 @@ export const csrdFormSchema: FormSchema = {
           required: false,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'eq',
                 left: {
@@ -1162,7 +1162,7 @@ export const csrdFormSchema: FormSchema = {
           required: false,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'eq',
                 left: {
@@ -1190,7 +1190,7 @@ export const csrdFormSchema: FormSchema = {
           text: 'In addition the undertaking shall disaggregate and disclose separately its non-renewable energy production and renewable energy production in MWh.',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'isProdEnergy',
@@ -1345,7 +1345,7 @@ export const csrdFormSchema: FormSchema = {
           level: 6,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'variingStandards',
@@ -1358,7 +1358,7 @@ export const csrdFormSchema: FormSchema = {
           text: 'ABC’s standard contract payment terms are payment on invoice for wholesalers which encompass approximately 80% of its annual invoices. It pays for services received within 30 days after receipt of the invoice which are about 5% of its annual invoices. The remainder of its invoices are paid within 60 days of receipt except for those in country X which in accordance with the marketplace standards are paid within 90 days of receipt.',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'value',
                 id: 'variingStandards',
@@ -1421,7 +1421,7 @@ export const csrdFormSchema: FormSchema = {
           text: '',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'or',
                 left: {
@@ -1482,7 +1482,7 @@ export const csrdFormSchema: FormSchema = {
           text: 'GOV-5 - Risk management and internal controls over sustainability reporting',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'gt',
                 left: {
@@ -1501,7 +1501,7 @@ export const csrdFormSchema: FormSchema = {
           level: 5,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page2Checked',
@@ -1517,7 +1517,7 @@ export const csrdFormSchema: FormSchema = {
           helperText: '',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page2Checked',
@@ -1533,7 +1533,7 @@ export const csrdFormSchema: FormSchema = {
           helperText: '',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page2Checked',
@@ -1549,7 +1549,7 @@ export const csrdFormSchema: FormSchema = {
           helperText: '',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page2Checked',
@@ -1565,7 +1565,7 @@ export const csrdFormSchema: FormSchema = {
           helperText: '',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page2Checked',
@@ -1581,7 +1581,7 @@ export const csrdFormSchema: FormSchema = {
           helperText: '',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page2Checked',
@@ -1598,7 +1598,7 @@ export const csrdFormSchema: FormSchema = {
           id: 'page2done',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'gt',
                 left: {
@@ -1621,7 +1621,7 @@ export const csrdFormSchema: FormSchema = {
           level: 5,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page3Checked',
@@ -1637,7 +1637,7 @@ export const csrdFormSchema: FormSchema = {
           helperText: '',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page3Checked',
@@ -1651,7 +1651,7 @@ export const csrdFormSchema: FormSchema = {
           level: 5,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'and',
                 left: {
@@ -1691,7 +1691,7 @@ export const csrdFormSchema: FormSchema = {
           description: 'Temperature-related chronic:',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'and',
                 left: {
@@ -1727,7 +1727,7 @@ export const csrdFormSchema: FormSchema = {
           description: 'Temperature-related acute:',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'and',
                 left: {
@@ -1748,7 +1748,7 @@ export const csrdFormSchema: FormSchema = {
           level: 5,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'and',
                 left: {
@@ -1776,7 +1776,7 @@ export const csrdFormSchema: FormSchema = {
           description: 'Wind-related chronic:',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'and',
                 left: {
@@ -1812,7 +1812,7 @@ export const csrdFormSchema: FormSchema = {
           description: 'Wind-related acute:',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'and',
                 left: {
@@ -1833,7 +1833,7 @@ export const csrdFormSchema: FormSchema = {
           level: 5,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'and',
                 left: {
@@ -1881,7 +1881,7 @@ export const csrdFormSchema: FormSchema = {
           description: 'Water-related chronic:',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'and',
                 left: {
@@ -1921,7 +1921,7 @@ export const csrdFormSchema: FormSchema = {
           description: 'Water-related acute:',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'and',
                 left: {
@@ -1942,7 +1942,7 @@ export const csrdFormSchema: FormSchema = {
           level: 5,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'and',
                 left: {
@@ -1982,7 +1982,7 @@ export const csrdFormSchema: FormSchema = {
           description: 'Solid mass-related chronic:',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'and',
                 left: {
@@ -2018,7 +2018,7 @@ export const csrdFormSchema: FormSchema = {
           description: 'Solid mass-related acute:',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'and',
                 left: {
@@ -2041,7 +2041,7 @@ export const csrdFormSchema: FormSchema = {
           helperText: '',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page3Checked',
@@ -2057,7 +2057,7 @@ export const csrdFormSchema: FormSchema = {
           helperText: '',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page3Checked',
@@ -2073,7 +2073,7 @@ export const csrdFormSchema: FormSchema = {
           helperText: '',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page3Checked',
@@ -2100,7 +2100,7 @@ export const csrdFormSchema: FormSchema = {
           level: 5,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page4Checked',
@@ -2116,7 +2116,7 @@ export const csrdFormSchema: FormSchema = {
           helperText: '',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page4Checked',
@@ -2132,7 +2132,7 @@ export const csrdFormSchema: FormSchema = {
           helperText: '',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page4Checked',
@@ -2146,7 +2146,7 @@ export const csrdFormSchema: FormSchema = {
           text: '35 (a) i.: coal and coal products',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'and',
                 left: {
@@ -2167,7 +2167,7 @@ export const csrdFormSchema: FormSchema = {
           text: '35 (a) ii.: crude oil and petroleum products',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'and',
                 left: {
@@ -2188,7 +2188,7 @@ export const csrdFormSchema: FormSchema = {
           text: '35 (a) iii.: natural gas',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'and',
                 left: {
@@ -2209,7 +2209,7 @@ export const csrdFormSchema: FormSchema = {
           text: '35 (a) iv.: other non-renewable sources',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'and',
                 left: {
@@ -2230,7 +2230,7 @@ export const csrdFormSchema: FormSchema = {
           text: '35 (a) v.: nuclear products',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'and',
                 left: {
@@ -2251,7 +2251,7 @@ export const csrdFormSchema: FormSchema = {
           text: '35 (a) vi.: purchased or acquired electricity, heat, steam, and cooling from non-renewable sources',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'and',
                 left: {
@@ -2274,7 +2274,7 @@ export const csrdFormSchema: FormSchema = {
           helperText: '',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page4Checked',
@@ -2288,7 +2288,7 @@ export const csrdFormSchema: FormSchema = {
           text: '35 (b) i.: renewable fuel sources',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'and',
                 left: {
@@ -2309,7 +2309,7 @@ export const csrdFormSchema: FormSchema = {
           text: '35 (b) ii.: purchased or acquired electricity, heat, steam, and cooling from renewable sources',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'and',
                 left: {
@@ -2330,7 +2330,7 @@ export const csrdFormSchema: FormSchema = {
           text: '35 (b) iii.: self-generated non-fuel renewable energy',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'and',
                 left: {
@@ -2353,7 +2353,7 @@ export const csrdFormSchema: FormSchema = {
           helperText: '',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'and',
                 left: {
@@ -2374,7 +2374,7 @@ export const csrdFormSchema: FormSchema = {
           level: 5,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page4Checked',
@@ -2391,7 +2391,7 @@ export const csrdFormSchema: FormSchema = {
           helperText: '',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page4Checked',
@@ -2407,7 +2407,7 @@ export const csrdFormSchema: FormSchema = {
           helperText: '',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page4Checked',
@@ -2423,7 +2423,7 @@ export const csrdFormSchema: FormSchema = {
           helperText: '',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page4Checked',
@@ -2450,7 +2450,7 @@ export const csrdFormSchema: FormSchema = {
           level: 5,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page5Checked',
@@ -2483,7 +2483,7 @@ export const csrdFormSchema: FormSchema = {
           ],
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page5Checked',
@@ -2512,7 +2512,7 @@ export const csrdFormSchema: FormSchema = {
           ],
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page5Checked',
@@ -2539,7 +2539,7 @@ export const csrdFormSchema: FormSchema = {
           level: 5,
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page6Checked',
@@ -2555,7 +2555,7 @@ export const csrdFormSchema: FormSchema = {
           helperText: '',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page6Checked',
@@ -2571,7 +2571,7 @@ export const csrdFormSchema: FormSchema = {
           helperText: '',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page6Checked',
@@ -2587,7 +2587,7 @@ export const csrdFormSchema: FormSchema = {
           helperText: '',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page6Checked',
@@ -2603,7 +2603,7 @@ export const csrdFormSchema: FormSchema = {
           helperText: '',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'ref',
                 id: 'Page6Checked',
@@ -2624,7 +2624,7 @@ export const csrdFormSchema: FormSchema = {
           text: 'Congratulations, you have met all the requirements!',
           effects: [
             {
-              effect: 'hide',
+              effect: 'show',
               condition: {
                 type: 'and',
                 left: {
