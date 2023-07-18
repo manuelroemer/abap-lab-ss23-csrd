@@ -157,6 +157,13 @@
                       </layoutData>
                       <HBox>
                         <Button
+                          icon="sap-icon://checklist-item"
+                          type="Transparent"
+                          tooltip="Undraft Questionnaire"
+                          press="onUndraftPress"
+                          visible="{svc>IsDraft}"
+                        />
+                        <Button
                           icon="sap-icon://duplicate"
                           type="Transparent"
                           tooltip="Duplicate Questionnaire"
@@ -167,7 +174,7 @@
                           type="Transparent"
                           tooltip="Delete Questionnaire"
                           press="onFormSchemaDeletePress"
-                          visible="{= ${svc>IsDraft}}"
+                          visible="{svc>IsDraft}"
                         />
                       </HBox>
                     </VBox>

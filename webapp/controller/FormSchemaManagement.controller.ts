@@ -75,6 +75,25 @@ export default class FormSchemaManagementController extends BaseController {
     }
   }
 
+  async onUndraftPress(e) {
+    const formSchema = entityFromEvent<FormSchemaEntity>(e, 'svc')!;
+    const toUndraftFormSchema = await getFormSchemaEntity(formSchema.Id);
+    if (
+      await showConfirmation({
+        title: 'Undraft Questionnaire',
+        text: 'Undrafted questionnaire schemas cannot longer be edited. Only the title and description can be changed. \nDo you really want to undraft this questionnaire?',
+      })
+    ) {
+      try {
+        await this.state.get().updateFormSchemaMutation.fetch(toUndraftFormSchema);
+        MessageToast.show('Successfully undrafted the questionnaire.');
+      } catch (e) {
+        console.error('Error while undrafting a questionnaire: ', e);
+        MessageBox.error('An unexpected error occured while undrafting the questionnaire.');
+      }
+    }
+  }
+
   async onFormSchemaPress(e) {
     const formSchema = entityFromEvent<FormSchemaEntity>(e, 'svc')!;
     if (!formSchema.IsDraft) {

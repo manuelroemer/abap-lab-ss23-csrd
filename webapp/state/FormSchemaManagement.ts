@@ -1,10 +1,16 @@
-import { FormSchemaEntity, deleteFormSchemaEntity, createFormSchemaEntity } from '../api/FormSchemaEntity';
+import {
+  FormSchemaEntity,
+  deleteFormSchemaEntity,
+  createFormSchemaEntity,
+  updateFormSchemaEntity,
+} from '../api/FormSchemaEntity';
 import { emptySchema } from '../formengine/SchemaUtils';
 import { createState } from '../utils/State';
 import { AsyncState, createAsync } from '../utils/StateAsync';
 
 export interface FormSchemaManagementState {
   deleteFormSchemaMutation: AsyncState<string>;
+  updateFormSchemaMutation: AsyncState<FormSchemaEntity>;
   createFormSchemaMutation: AsyncState<FormSchemaEntity | undefined, FormSchemaEntity>;
 }
 
@@ -17,6 +23,20 @@ export function createFormSchemaManagementState() {
       state,
       key: 'deleteFormSchemaMutation',
       fetch: (id) => deleteFormSchemaEntity(id),
+    }),
+
+    updateFormSchemaMutation: createAsync({
+      state,
+      key: 'updateFormSchemaMutation',
+      fetch: async (formSchema) => {
+        updateFormSchemaEntity(formSchema.Id, {
+          Name: formSchema.Name,
+          Description: formSchema.Description,
+          SchemaJson: JSON.stringify(formSchema.SchemaJson),
+          MetadataJson: JSON.stringify(formSchema.MetadataJson),
+          IsDraft: false,
+        });
+      },
     }),
 
     createFormSchemaMutation: createAsync({
