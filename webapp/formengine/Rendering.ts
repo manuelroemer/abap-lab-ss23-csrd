@@ -312,7 +312,7 @@ function renderNumberInput(renderContext: RenderContext<NumberStepInputFormSchem
   // if the value is not set.
   // This could always break with a UI5 version update, but considering that we've pinned the version
   // and are unlikely to update this in the future, we'll do it. d=====(￣▽￣*)b
-  if (value === undefined || (value === null && typeof input._getFormattedValue === 'function')) {
+  if ((value === undefined || value === null) && typeof input._getFormattedValue === 'function') {
     input._getFormattedValue = () => '';
   }
 
