@@ -93,10 +93,6 @@ export const csrdFormSchema: FormSchema = {
         },
         {
           type: 'text',
-          text: 'TEST',
-        },
-        {
-          type: 'text',
           text: '',
           effects: [
             {
