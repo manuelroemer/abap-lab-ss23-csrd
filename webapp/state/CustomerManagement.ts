@@ -108,13 +108,13 @@ export function createCustomerManagementState() {
       deleteCustomerMutation: createAsync({
         state,
         key: 'deleteCustomerMutation',
-        fetch: async (id) => deleteCustomerEntity(id),
+        fetch: (id) => deleteCustomerEntity(id),
       }),
 
       deleteFormSchemaResultMutation: createAsync({
         state,
         key: 'deleteFormSchemaResultMutation',
-        fetch: async (id) => deleteFormSchemaResultEntity(id),
+        fetch: (id) => deleteFormSchemaResultEntity(id),
         onSuccess() {
           get().customerFormSchemaResultsQuery.fetch();
         },

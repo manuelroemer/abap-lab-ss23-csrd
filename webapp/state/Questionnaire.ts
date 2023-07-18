@@ -57,7 +57,6 @@ export function createQuestionnaireState() {
       const goToLastPage = () => {
         const { schema, state, setPage } = get();
         const lastPage = findLastPageWithoutErrors(schema, state);
-        console.log(lastPage);
         setPage(lastPage);
       };
 

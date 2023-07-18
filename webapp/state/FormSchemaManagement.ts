@@ -16,7 +16,7 @@ export function createFormSchemaManagementState() {
     deleteFormSchemaMutation: createAsync({
       state,
       key: 'deleteFormSchemaMutation',
-      fetch: async (id) => deleteFormSchemaEntity(id),
+      fetch: (id) => deleteFormSchemaEntity(id),
     }),
 
     createFormSchemaMutation: createAsync({
