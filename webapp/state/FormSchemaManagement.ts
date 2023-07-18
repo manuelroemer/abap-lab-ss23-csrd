@@ -29,11 +29,7 @@ export function createFormSchemaManagementState() {
       state,
       key: 'updateFormSchemaMutation',
       fetch: async (formSchema) => {
-        updateFormSchemaEntity(formSchema.Id, {
-          Name: formSchema.Name,
-          Description: formSchema.Description,
-          SchemaJson: JSON.stringify(formSchema.SchemaJson),
-          MetadataJson: JSON.stringify(formSchema.MetadataJson),
+        await updateFormSchemaEntity(formSchema.Id, {
           IsDraft: false,
         });
       },

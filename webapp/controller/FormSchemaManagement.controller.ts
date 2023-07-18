@@ -77,7 +77,6 @@ export default class FormSchemaManagementController extends BaseController {
 
   async onUndraftPress(e) {
     const formSchema = entityFromEvent<FormSchemaEntity>(e, 'svc')!;
-    const toUndraftFormSchema = await getFormSchemaEntity(formSchema.Id);
     if (
       await showConfirmation({
         title: 'Undraft Questionnaire',
@@ -85,7 +84,7 @@ export default class FormSchemaManagementController extends BaseController {
       })
     ) {
       try {
-        await this.state.get().updateFormSchemaMutation.fetch(toUndraftFormSchema);
+        await this.state.get().updateFormSchemaMutation.fetch(formSchema);
         MessageToast.show('Successfully undrafted the questionnaire.');
       } catch (e) {
         console.error('Error while undrafting a questionnaire: ', e);
