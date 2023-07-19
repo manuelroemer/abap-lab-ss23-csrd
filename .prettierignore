@@ -3,3 +3,5 @@ dist
 
 *.gen.ts
 *.gen.d.ts
+
+*.cff
