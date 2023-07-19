@@ -9,15 +9,18 @@ This project was written as part of the _"Master-Praktikum - Enterprise Software
 We were tasked by Capgemini to develop an application that assist a consultant in consulting a customer on their CSRD reporting requirements. The CSRD is a law that was passed by the European Union on January 5th, 2023 and will take full effect starting at the end of 2024, gradually ramping up until 2028, when all listed companies in the EU will be forced to hand in detailed reports about their company's specific, sustainability related matters. This is a considerable effort for companies, eating up a lot of hours and money.
 
 Our application should, therefore, do the following:
+
 - ❓ Provide the ability for a consultant to collect CSRD-related information about a customer.
 - 📃 Query the information via an interactive questionnaire, similar to tax reporting applications or online forms.
 - ✔️ Provide the user with a checklist tha gives information about _what_ reports his specific company needs to deliver.
 
 We further defined the following points that we wanted to fulfill ourselves:
+
 - 🔧 Make the application easily extensible.
 - 👩🏻‍💻 Build a WYSIWYG editor that assists in the creation of the questionnaire.
 
 From the university's perspective, we had the following requirements:
+
 - The application needs to consist of a frontend and backend.
 - The frontend must be built in SAPUI5 and the backend with ABAP.
 
