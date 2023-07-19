@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you want to cite parts of this application or our documentation, you can use the following."
+authors:
+- family-names: "Römer"
+  given-names: "Manuel"
+- family-names: "Duong"
+  given-names: "Minh Nhu"
+- family-names: "Köneke"
+  given-names: "Tim"
+title: "Corporate Sustainability Reporting"
+version: 1.0.0
+date-released: 2023-07-20
+url: "https://github.com/manuelroemer/abap-lab-ss23-csrd"
