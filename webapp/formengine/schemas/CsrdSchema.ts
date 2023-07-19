@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
+import deepClone from 'sap/base/util/deepClone';
 import { FormSchema } from '../Schema';
 
 export const csrdFormSchema: FormSchema = {
@@ -59,6 +60,58 @@ export const csrdFormSchema: FormSchema = {
           id: 'page6done',
         },
       },
+      CSRDrelevant: {
+        type: 'or',
+        left: {
+          type: 'and',
+          left: {
+            type: 'gt',
+            left: {
+              type: 'value',
+              id: 'numEmployees',
+            },
+            right: 250,
+          },
+          right: {
+            type: 'or',
+            left: {
+              type: 'gt',
+              left: {
+                type: 'value',
+                id: 'netSales',
+              },
+              right: 40,
+            },
+            right: {
+              type: 'gt',
+              left: {
+                type: 'value',
+                id: 'totalBalancesheet',
+              },
+              right: 20,
+            },
+          },
+        },
+        right: {
+          type: 'and',
+          left: {
+            type: 'gt',
+            left: {
+              type: 'value',
+              id: 'netSales',
+            },
+            right: 40,
+          },
+          right: {
+            type: 'gt',
+            left: {
+              type: 'value',
+              id: 'totalBalancesheet',
+            },
+            right: 20,
+          },
+        },
+      },
     },
   },
   pages: [
@@ -91,67 +144,6 @@ export const csrdFormSchema: FormSchema = {
           description: 'Please enter your balance sheet total (in million euros):',
           required: true,
         },
-        {
-          type: 'text',
-          text: '',
-          effects: [
-            {
-              effect: 'show',
-              condition: {
-                type: 'or',
-                left: {
-                  type: 'and',
-                  left: {
-                    type: 'gt',
-                    left: {
-                      type: 'value',
-                      id: 'numEmployees',
-                    },
-                    right: 250,
-                  },
-                  right: {
-                    type: 'or',
-                    left: {
-                      type: 'gt',
-                      left: {
-                        type: 'value',
-                        id: 'netSales',
-                      },
-                      right: 40,
-                    },
-                    right: {
-                      type: 'gt',
-                      left: {
-                        type: 'value',
-                        id: 'totalBalancesheet',
-                      },
-                      right: 20,
-                    },
-                  },
-                },
-                right: {
-                  type: 'and',
-                  left: {
-                    type: 'gt',
-                    left: {
-                      type: 'value',
-                      id: 'netSales',
-                    },
-                    right: 40,
-                  },
-                  right: {
-                    type: 'gt',
-                    left: {
-                      type: 'value',
-                      id: 'totalBalancesheet',
-                    },
-                    right: 20,
-                  },
-                },
-              },
-            },
-          ],
-        },
       ],
     },
     {
@@ -161,12 +153,19 @@ export const csrdFormSchema: FormSchema = {
         {
           effect: 'show',
           condition: {
-            type: 'gt',
+            type: 'and',
             left: {
-              type: 'value',
-              id: 'numEmployees',
+              type: 'gt',
+              left: {
+                type: 'value',
+                id: 'numEmployees',
+              },
+              right: 250,
             },
-            right: 250,
+            right: {
+              type: 'ref',
+              id: 'CSRDrelevant',
+            },
           },
         },
       ],
@@ -896,6 +895,15 @@ export const csrdFormSchema: FormSchema = {
           id: 'longTerm',
         },
       ],
+      effects: [
+        {
+          effect: 'show',
+          condition: {
+            type: 'ref',
+            id: 'CSRDrelevant',
+          },
+        },
+      ],
     },
     {
       id: 'E1-5',
@@ -1236,6 +1244,15 @@ export const csrdFormSchema: FormSchema = {
           id: 'lineItems',
         },
       ],
+      effects: [
+        {
+          effect: 'show',
+          condition: {
+            type: 'ref',
+            id: 'CSRDrelevant',
+          },
+        },
+      ],
     },
     {
       id: 'S1-9',
@@ -1296,6 +1313,15 @@ export const csrdFormSchema: FormSchema = {
           type: 'number-input',
           id: 'percO50Empl',
           label: 'Percentage of employees older than 50 years old:',
+        },
+      ],
+      effects: [
+        {
+          effect: 'show',
+          condition: {
+            type: 'ref',
+            id: 'CSRDrelevant',
+          },
         },
       ],
     },
@@ -1381,6 +1407,15 @@ export const csrdFormSchema: FormSchema = {
         {
           type: 'text-input',
           id: 'complementaryPaymentPractices',
+        },
+      ],
+      effects: [
+        {
+          effect: 'show',
+          condition: {
+            type: 'ref',
+            id: 'CSRDrelevant',
+          },
         },
       ],
     },
@@ -1637,394 +1672,6 @@ export const csrdFormSchema: FormSchema = {
               condition: {
                 type: 'ref',
                 id: 'Page3Checked',
-              },
-            },
-          ],
-        },
-        {
-          type: 'heading',
-          text: 'Temperature-related',
-          level: 5,
-          effects: [
-            {
-              effect: 'show',
-              condition: {
-                type: 'and',
-                left: {
-                  type: 'ref',
-                  id: 'Page3Checked',
-                },
-                right: {
-                  type: 'value',
-                  id: 'tempRelated',
-                },
-              },
-            },
-          ],
-        },
-        {
-          type: 'multi-choice',
-          id: 'tempRelated-chronic',
-          options: [
-            {
-              value: 'changingTemp',
-              display: 'Changing temperature (air, freshwater, marine water)',
-            },
-            {
-              value: 'heatStress',
-              display: 'Heat stress',
-            },
-            {
-              value: 'temperatureVari',
-              display: 'Temperature variability',
-            },
-            {
-              value: 'permafrostThawing',
-              display: 'Permafrost thawing',
-            },
-          ],
-          required: false,
-          description: 'Temperature-related chronic:',
-          effects: [
-            {
-              effect: 'show',
-              condition: {
-                type: 'and',
-                left: {
-                  type: 'ref',
-                  id: 'Page3Checked',
-                },
-                right: {
-                  type: 'value',
-                  id: 'tempRelated',
-                },
-              },
-            },
-          ],
-        },
-        {
-          type: 'multi-choice',
-          id: 'tempRelated-acute',
-          options: [
-            {
-              value: 'heatWave',
-              display: 'Heat wave',
-            },
-            {
-              value: 'coldwave',
-              display: 'Cold wave/frost',
-            },
-            {
-              value: 'wildfire',
-              display: 'Wildfire',
-            },
-          ],
-          required: false,
-          description: 'Temperature-related acute:',
-          effects: [
-            {
-              effect: 'show',
-              condition: {
-                type: 'and',
-                left: {
-                  type: 'ref',
-                  id: 'Page3Checked',
-                },
-                right: {
-                  type: 'value',
-                  id: 'tempRelated',
-                },
-              },
-            },
-          ],
-        },
-        {
-          type: 'heading',
-          text: 'Wind-related',
-          level: 5,
-          effects: [
-            {
-              effect: 'show',
-              condition: {
-                type: 'and',
-                left: {
-                  type: 'ref',
-                  id: 'Page3Checked',
-                },
-                right: {
-                  type: 'value',
-                  id: 'windRelated',
-                },
-              },
-            },
-          ],
-        },
-        {
-          type: 'multi-choice',
-          id: 'windRelated-chronic',
-          options: [
-            {
-              value: 'changingTWind',
-              display: 'Changing wind patterns',
-            },
-          ],
-          required: false,
-          description: 'Wind-related chronic:',
-          effects: [
-            {
-              effect: 'show',
-              condition: {
-                type: 'and',
-                left: {
-                  type: 'ref',
-                  id: 'Page3Checked',
-                },
-                right: {
-                  type: 'value',
-                  id: 'windRelated',
-                },
-              },
-            },
-          ],
-        },
-        {
-          type: 'multi-choice',
-          id: 'windRelated-acute',
-          options: [
-            {
-              value: 'cyclones',
-              display: 'Cyclones, hurricanes, typhoons',
-            },
-            {
-              value: 'storms',
-              display: 'Storms (including blizzards, dust, and sandstorms)',
-            },
-            {
-              value: 'tornado',
-              display: 'Tornado',
-            },
-          ],
-          required: false,
-          description: 'Wind-related acute:',
-          effects: [
-            {
-              effect: 'show',
-              condition: {
-                type: 'and',
-                left: {
-                  type: 'ref',
-                  id: 'Page3Checked',
-                },
-                right: {
-                  type: 'value',
-                  id: 'windRelated',
-                },
-              },
-            },
-          ],
-        },
-        {
-          type: 'heading',
-          text: 'Water-related',
-          level: 5,
-          effects: [
-            {
-              effect: 'show',
-              condition: {
-                type: 'and',
-                left: {
-                  type: 'ref',
-                  id: 'Page3Checked',
-                },
-                right: {
-                  type: 'value',
-                  id: 'waterRelated',
-                },
-              },
-            },
-          ],
-        },
-        {
-          type: 'multi-choice',
-          id: 'waterRelated-chronic',
-          options: [
-            {
-              value: 'changingPrecipitation',
-              display: 'Changing precipitation patterns and types (rain, hail, snow/ice)',
-            },
-            {
-              value: 'hydrologicalVari',
-              display: 'Precipitation or hydrological variability',
-            },
-            {
-              value: 'oceanAcidification',
-              display: 'Ocean acidification',
-            },
-            {
-              value: 'salineIntrusion',
-              display: 'Saline intrusion',
-            },
-            {
-              value: 'seaLevelRise',
-              display: 'Sea level rise',
-            },
-            {
-              value: 'waterStress',
-              display: 'Water stress',
-            },
-          ],
-          required: false,
-          description: 'Water-related chronic:',
-          effects: [
-            {
-              effect: 'show',
-              condition: {
-                type: 'and',
-                left: {
-                  type: 'ref',
-                  id: 'Page3Checked',
-                },
-                right: {
-                  type: 'value',
-                  id: 'waterRelated',
-                },
-              },
-            },
-          ],
-        },
-        {
-          type: 'multi-choice',
-          id: 'waterRelated-acute',
-          options: [
-            {
-              value: 'drought',
-              display: 'Drought',
-            },
-            {
-              value: 'heavyPrecipitation',
-              display: 'Heavy precipitation (rain, hail, snow/ice)',
-            },
-            {
-              value: 'flood',
-              display: 'Flood (coastal, fluvial, pluvial, ground water)',
-            },
-            {
-              value: 'glacialLake',
-              display: 'Glacial lake outburst',
-            },
-          ],
-          required: false,
-          description: 'Water-related acute:',
-          effects: [
-            {
-              effect: 'show',
-              condition: {
-                type: 'and',
-                left: {
-                  type: 'ref',
-                  id: 'Page3Checked',
-                },
-                right: {
-                  type: 'value',
-                  id: 'waterRelated',
-                },
-              },
-            },
-          ],
-        },
-        {
-          type: 'heading',
-          text: 'Solid mass-related',
-          level: 5,
-          effects: [
-            {
-              effect: 'show',
-              condition: {
-                type: 'and',
-                left: {
-                  type: 'ref',
-                  id: 'Page3Checked',
-                },
-                right: {
-                  type: 'value',
-                  id: 'solidMassRelated',
-                },
-              },
-            },
-          ],
-        },
-        {
-          type: 'multi-choice',
-          id: 'solidMassRelated-chronic',
-          options: [
-            {
-              value: 'coastalErosion',
-              display: 'Coastal erosion',
-            },
-            {
-              value: 'soilDegradation',
-              display: 'Soil degradation',
-            },
-            {
-              value: 'soilErosion',
-              display: 'Soil erosion',
-            },
-            {
-              value: 'Solifluction',
-              display: 'Solifluction',
-            },
-          ],
-          required: false,
-          description: 'Solid mass-related chronic:',
-          effects: [
-            {
-              effect: 'show',
-              condition: {
-                type: 'and',
-                left: {
-                  type: 'ref',
-                  id: 'Page3Checked',
-                },
-                right: {
-                  type: 'value',
-                  id: 'solidMassRelated',
-                },
-              },
-            },
-          ],
-        },
-        {
-          type: 'multi-choice',
-          id: 'solidMassRelated-acute',
-          options: [
-            {
-              value: 'avalanche',
-              display: 'Avalanche',
-            },
-            {
-              value: 'landslide',
-              display: 'Landslide',
-            },
-            {
-              value: 'subsidence',
-              display: 'Subsidence',
-            },
-          ],
-          required: false,
-          description: 'Solid mass-related acute:',
-          effects: [
-            {
-              effect: 'show',
-              condition: {
-                type: 'and',
-                left: {
-                  type: 'ref',
-                  id: 'Page3Checked',
-                },
-                right: {
-                  type: 'value',
-                  id: 'solidMassRelated',
-                },
               },
             },
           ],
@@ -2673,6 +2320,94 @@ export const csrdFormSchema: FormSchema = {
           marginTop: 'Large',
         },
       ],
+      effects: [
+        {
+          effect: 'show',
+          condition: {
+            type: 'ref',
+            id: 'CSRDrelevant',
+          },
+        },
+      ],
+    },
+    {
+      title: 'New Page',
+      elements: [
+        {
+          type: 'heading',
+          text: 'Thank you for participating! ',
+          marginTop: 'Medium',
+        },
+        {
+          type: 'heading',
+          text: 'Your company is not required to disclose the CSRD.',
+          marginTop: 'Medium',
+        },
+      ],
+      effects: [
+        {
+          effect: 'show',
+          condition: {
+            type: 'not',
+            expression: {
+              type: 'ref',
+              id: 'CSRDrelevant',
+            },
+          },
+        },
+      ],
     },
   ],
 };
+
+// This is our updated schema for the demo. It's based on the CSRD schema and dynamically injects the following elements:
+const updatedElements = [
+  {
+    type: 'heading',
+    text: '📢 Customer Feedback',
+  },
+  {
+    type: 'text',
+    text: 'This new section was added to evaluate how the customer rates his experience with the CSRD questionnaire and the resulting checklist.',
+  },
+  {
+    type: 'single-choice',
+    label: 'How would you rate your experience with the CSRD questionnaire?',
+    description: '',
+    helperText: '',
+    options: [
+      {
+        display: 'Awesome',
+        value: 'awesome',
+      },
+      {
+        display: 'Fantastic',
+        value: 'fantastic',
+      },
+      {
+        value: 'delightful',
+        display: 'Delightful',
+      },
+    ],
+    required: true,
+    id: 'feedback-rating',
+  },
+  {
+    type: 'text-input',
+    label: 'Additional comments:',
+    description: 'You can write anything here...',
+    helperText: '...as long as it is positive feedback.',
+    required: true,
+    id: 'feedback-text',
+    marginBottom: 'Large',
+    rows: 4,
+  },
+];
+
+const updatedCsrdFormSchema = deepClone(csrdFormSchema, Number.MAX_SAFE_INTEGER);
+const pageToUpdate = updatedCsrdFormSchema.pages.length - 2;
+updatedCsrdFormSchema.pages[pageToUpdate].elements = [
+  ...updatedElements,
+  ...updatedCsrdFormSchema.pages[pageToUpdate].elements,
+];
+export { updatedCsrdFormSchema };

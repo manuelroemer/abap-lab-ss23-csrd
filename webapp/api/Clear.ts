@@ -1,4 +1,4 @@
-import { csrdFormSchema } from '../formengine/schemas/CsrdSchema';
+import { csrdFormSchema, updatedCsrdFormSchema } from '../formengine/schemas/CsrdSchema';
 import { demoFormSchema } from '../formengine/schemas/DemoFormSchema';
 import { createCustomerEntity, deleteCustomerEntity, getAllCustomerEntities } from './CustomerEntity';
 import { createFormSchemaEntity, deleteFormSchemaEntity, getAllFormSchemaEntities } from './FormSchemaEntity';
@@ -42,11 +42,21 @@ export async function resetBackend() {
 
   console.info('Creating CSRD form schema...');
   await createFormSchemaEntity({
-    Name: 'CSRD PoC',
+    Name: 'CSRD',
     Description: 'The CSRD questionnaire.',
     Type: 'csrd',
     IsDraft: false,
     MetadataJson: '{}',
     SchemaJson: JSON.stringify(csrdFormSchema),
+  });
+
+  console.info('Creating updated CSRD form schema...');
+  await createFormSchemaEntity({
+    Name: 'CSRD With Feedback',
+    Description: 'The CSRD questionnaire with a new customer feedback section.',
+    Type: 'csrd',
+    IsDraft: true,
+    MetadataJson: '{}',
+    SchemaJson: JSON.stringify(updatedCsrdFormSchema),
   });
 }
