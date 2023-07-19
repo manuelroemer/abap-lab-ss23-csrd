@@ -1,10 +1,37 @@
 # CSRD Reporting
 
-This repository contains the CSRD Reporting application's frontend, written in SAPUI5.
+This repository contains the CSRD Reporting application, written with ABAP and UI5.
+
+## Background
+
+This project was written as part of the _"Master-Praktikum - Enterprise Software Engineering am Beispiel von SAP"_ course at the [TUM](https://www.tum.de/).
+
+We were tasked by Capgemini to develop an application that assist a consultant in consulting a customer on their CSRD reporting requirements. The CSRD is a law that was passed by the European Union on January 5th, 2023 and will take full effect starting at the end of 2024, gradually ramping up until 2028, when all listed companies in the EU will be forced to hand in detailed reports about their company's specific, sustainability related matters. This is a considerable effort for companies, eating up a lot of hours and money.
+
+Our application should, therefore, do the following:
+- ❓ Provide the ability for a consultant to collect CSRD-related information about a customer.
+- 📃 Query the information via an interactive questionnaire, similar to tax reporting applications or online forms.
+- ✔️ Provide the user with a checklist tha gives information about _what_ reports his specific company needs to deliver.
+
+We further defined the following points that we wanted to fulfill ourselves:
+- 🔧 Make the application easily extensible.
+- 👩🏻‍💻 Build a WYSIWYG editor that assists in the creation of the questionnaire.
+
+From the university's perspective, we had the following requirements:
+- The application needs to consist of a frontend and backend.
+- The frontend must be built in SAPUI5 and the backend with ABAP.
+
+## Documentation
+
+As part of the course, we had to hand in a document which documents the project. We uploaded a PDF version of that document inside this repository at [./doc/Project Documentation.pdf](./doc/Project%20Documentation.pdf). This is an extensive documentation about the project's architecture and internal implementation details. If you are interested in the project's details, we heavily recommend reading that documentation, especially the _Implementation_ chapter.
 
 ## Getting Started
 
-Overall, this is a normal SAPUI5/web project that uses NPM. To get started, clone the repository and run the following commands to start a local dev server:
+> **⚠️ Important:**  
+> You will, most likely, not be able to run the project yourself. The application requires our backend OData services to run properly. Since those are/were hosted by our university's [SAP UCC](https://ucc.tum.de/) behind password-protected user accounts, it is not possible to access them without an account.  
+> This means that the only option to properly run the project is to **self-host and/or replace** the OData services manually. We provided the ABAP code in the [`./backend`](./backend) directory. The directory also contains the structures of the tables that might need to create. If done properly, you should be able to recreate those OData services. All that's left is reconfiguring the URLs within the frontend - a simple find and replace should be enough here. For reference, all API calls are contained in the [`./webapp/api`](./webapp/api) directory. You might also have to update the proxy config in [`./ui5.yaml`](./ui5.yaml), depending on how you want to run/deploy the app.
+
+Apart from the above, this is a normal SAPUI5/web project that uses NPM with a few specialities like code generation built in. To get started, clone the repository and run the following commands to start a local dev server:
 
 ```sh
 npm i     # To install dependencies.
@@ -13,7 +40,7 @@ npm start # To start a local dev server.
 # A browser window should automatically open on localhost:8080.
 ```
 
-To function correctly, the app must connect to an OData backend. We were using the infrastructure hosted by the TUM's UCC.
+To function correctly, the app must connect to the above mentioned OData service(s). We were using the infrastructure hosted by the TUM's UCC.
 If you have access to that infrastructure, you can use it by creating a `.env` file in the repository's root with the following content:
 
 ```ini
@@ -25,6 +52,8 @@ S72_PASSWORD=YOUR_PASSWORD
 FIORI_TOOLS_USER=YOUR_USERNAME
 FIORI_TOOLS_PASSWORD=YOUR_PASSWORD
 ```
+
+If you are using a self-hosted version, replace the values accordingly.
 
 ### Debugging
 
@@ -49,3 +78,17 @@ The entire project is heavily frontend-based, meaning that most development effo
 
 For details about how SAPUI5 integrates with TypeScript, see [this link](https://sap.github.io/ui5-typescript/).
 For the project setup, we followed [this official guide](https://github.com/SAP-samples/ui5-typescript-helloworld/blob/22c61f51647f397784f5a66ddfa63031fe96aac8/step-by-step.md).
+
+## Issues
+
+The project was created during four sprints, each taking ~2 weeks. For our team organization, we used GitHub Issues to plan and schedule user stories. These can be seen in [the project's issues](https://github.com/manuelroemer/abap-lab-ss23-csrd/issues). We managed the issues in a GitHub project board and will not close them, so that they remain easily accessible for future reference.
+
+## Contributing
+
+This was a project done during a university course. We do not expect future development. We will, very likely, not make or accept any modifications of this project.
+
+If you are interested in it and have some questions, feel free to create issues or discussions though. 😊
+
+## License
+
+We release the code under the AGPL license. See [./LICENSE](./LICENSE) for details.
