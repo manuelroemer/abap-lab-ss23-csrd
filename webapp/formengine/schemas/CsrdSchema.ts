@@ -1420,7 +1420,7 @@ export const csrdFormSchema: FormSchema = {
       ],
     },
     {
-      title: 'FinalChecklist',
+      title: 'CSRD Checklist',
       elements: [
         {
           type: 'heading',
@@ -2331,7 +2331,7 @@ export const csrdFormSchema: FormSchema = {
       ],
     },
     {
-      title: 'New Page',
+      title: 'Result',
       elements: [
         {
           type: 'heading',
