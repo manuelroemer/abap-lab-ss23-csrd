@@ -28,6 +28,11 @@ From the university's perspective, we had the following requirements:
 
 As part of the course, we had to hand in a document which documents the project. We uploaded a PDF version of that document inside this repository at [./doc/Project Documentation.pdf](./doc/Project%20Documentation.pdf). This is an extensive documentation about the project's architecture and internal implementation details. If you are interested in the project's details, we heavily recommend reading that documentation, especially the _Implementation_ chapter.
 
+## Demo Video
+
+A video giving a demo of the application's features (admittedly, with bad audio quality) is available on YouTube:  
+[📹 CSRD Reporting Walkthrough](https://www.youtube.com/watch?v=UB1L-lemyjY)
+
 ## Getting Started
 
 > **⚠️ Important:**  
