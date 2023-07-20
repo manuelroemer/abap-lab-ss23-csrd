@@ -26,7 +26,10 @@ export const demoFormSchema: FormSchema = {
               message: 'You must write "Hello world!".',
               condition: {
                 type: 'eq',
-                left: { type: 'value', id: 'message' },
+                left: {
+                  type: 'value',
+                  id: 'message',
+                },
                 right: 'Hello world!',
               },
             },
@@ -55,10 +58,22 @@ export const demoFormSchema: FormSchema = {
           label: 'Your favorite animal',
           description: 'If you had to pick one, what is your favorite animal?',
           options: [
-            { value: 'cat', display: 'Cat 🐈' },
-            { value: 'dog', display: 'Dog 🐕' },
-            { value: 'pandö', display: 'Panda 🐼' },
-            { value: 'whale', display: 'Whale 🐳' },
+            {
+              value: 'cat',
+              display: 'Cat 🐈',
+            },
+            {
+              value: 'dog',
+              display: 'Dog 🐕',
+            },
+            {
+              value: 'pandö',
+              display: 'Panda 🐼',
+            },
+            {
+              value: 'whale',
+              display: 'Whale 🐳',
+            },
           ],
           required: false,
           columns: 2,
@@ -68,9 +83,18 @@ export const demoFormSchema: FormSchema = {
           type: 'single-choice-select',
           label: 'What is your favorite dessert?',
           options: [
-            { value: 'cake', display: 'Cake 🍰' },
-            { value: 'cookie', display: 'Cookie 🍪' },
-            { value: 'ice', display: 'Ice 🍧' },
+            {
+              value: 'cake',
+              display: 'Cake 🍰',
+            },
+            {
+              value: 'cookie',
+              display: 'Cookie 🍪',
+            },
+            {
+              value: 'ice',
+              display: 'Ice 🍧',
+            },
           ],
           required: false,
         },
@@ -80,9 +104,18 @@ export const demoFormSchema: FormSchema = {
           label: 'Fruits',
           description: 'What type of fruit do you like?',
           options: [
-            { value: 'apples', display: 'Apples 🍎' },
-            { value: 'bananas', display: 'Bananas 🍌' },
-            { value: 'cherries', display: 'Cherry 🍒' },
+            {
+              value: 'apples',
+              display: 'Apples 🍎',
+            },
+            {
+              value: 'bananas',
+              display: 'Bananas 🍌',
+            },
+            {
+              value: 'cherries',
+              display: 'Cherry 🍒',
+            },
           ],
           required: false,
         },
@@ -107,7 +140,10 @@ export const demoFormSchema: FormSchema = {
           effect: 'show',
           condition: {
             type: 'eq',
-            left: { type: 'value', id: 'animal' },
+            left: {
+              type: 'value',
+              id: 'animal',
+            },
             right: 'pandö',
           },
         },
@@ -150,8 +186,14 @@ export const demoFormSchema: FormSchema = {
               effect: 'show',
               condition: {
                 type: 'gt',
-                left: { type: 'value', id: 'num1' },
-                right: { type: 'value', id: 'num2' },
+                left: {
+                  type: 'value',
+                  id: 'num1',
+                },
+                right: {
+                  type: 'value',
+                  id: 'num2',
+                },
               },
             },
           ],
@@ -164,8 +206,14 @@ export const demoFormSchema: FormSchema = {
               effect: 'show',
               condition: {
                 type: 'lt',
-                left: { type: 'value', id: 'num1' },
-                right: { type: 'value', id: 'num2' },
+                left: {
+                  type: 'value',
+                  id: 'num1',
+                },
+                right: {
+                  type: 'value',
+                  id: 'num2',
+                },
               },
             },
           ],
@@ -178,8 +226,14 @@ export const demoFormSchema: FormSchema = {
               effect: 'show',
               condition: {
                 type: 'ge',
-                left: { type: 'value', id: 'num1' },
-                right: { type: 'value', id: 'num2' },
+                left: {
+                  type: 'value',
+                  id: 'num1',
+                },
+                right: {
+                  type: 'value',
+                  id: 'num2',
+                },
               },
             },
           ],
@@ -192,8 +246,14 @@ export const demoFormSchema: FormSchema = {
               effect: 'show',
               condition: {
                 type: 'le',
-                left: { type: 'value', id: 'num1' },
-                right: { type: 'value', id: 'num2' },
+                left: {
+                  type: 'value',
+                  id: 'num1',
+                },
+                right: {
+                  type: 'value',
+                  id: 'num2',
+                },
               },
             },
           ],
@@ -218,8 +278,14 @@ export const demoFormSchema: FormSchema = {
               effect: 'show',
               condition: {
                 type: 'and',
-                left: { type: 'value', id: 'bool1' },
-                right: { type: 'value', id: 'bool2' },
+                left: {
+                  type: 'value',
+                  id: 'bool1',
+                },
+                right: {
+                  type: 'value',
+                  id: 'bool2',
+                },
               },
             },
           ],
@@ -232,8 +298,14 @@ export const demoFormSchema: FormSchema = {
               effect: 'show',
               condition: {
                 type: 'or',
-                left: { type: 'value', id: 'bool1' },
-                right: { type: 'value', id: 'bool2' },
+                left: {
+                  type: 'value',
+                  id: 'bool1',
+                },
+                right: {
+                  type: 'value',
+                  id: 'bool2',
+                },
               },
             },
           ],
@@ -246,8 +318,14 @@ export const demoFormSchema: FormSchema = {
               effect: 'show',
               condition: {
                 type: 'eq',
-                left: { type: 'value', id: 'bool1' },
-                right: { type: 'value', id: 'bool2' },
+                left: {
+                  type: 'value',
+                  id: 'bool1',
+                },
+                right: {
+                  type: 'value',
+                  id: 'bool2',
+                },
               },
             },
           ],
@@ -260,13 +338,129 @@ export const demoFormSchema: FormSchema = {
               effect: 'show',
               condition: {
                 type: 'ne',
-                left: { type: 'value', id: 'bool1' },
-                right: { type: 'value', id: 'bool2' },
+                left: {
+                  type: 'value',
+                  id: 'bool1',
+                },
+                right: {
+                  type: 'value',
+                  id: 'bool2',
+                },
               },
             },
           ],
         },
       ],
     },
+    {
+      title: 'Feedback Demo',
+      elements: [
+        {
+          type: 'heading',
+          text: '📢 Feedback (Demo)',
+        },
+        {
+          type: 'single-choice',
+          label: 'How would you rate your experience with the form builder?',
+          description: '',
+          helperText: '',
+          options: [
+            {
+              display: 'Good',
+              value: 'good',
+            },
+            {
+              display: 'Medium',
+              value: 'medium',
+            },
+            {
+              value: 'bad',
+              display: 'Bad',
+            },
+          ],
+          id: 'demo-feedback',
+        },
+        {
+          type: 'text-input',
+          label: 'Why did you choose "Bad"?',
+          description: "We'd be happy to hear your feedback.",
+          helperText: '',
+          required: true,
+          rows: 3,
+          id: 'demo-feedback-bad-reason',
+          effects: [
+            {
+              effect: 'show',
+              condition: {
+                type: 'eq',
+                left: {
+                  type: 'value',
+                  id: 'demo-feedback',
+                },
+                right: 'bad',
+              },
+            },
+          ],
+        },
+        {
+          type: 'text-input',
+          label: 'Any additional comments that you want to leave?',
+          description: "Anything that isn't already covered by the above field.",
+          helperText: '',
+          required: true,
+          rows: 3,
+          effects: [
+            {
+              effect: 'show',
+              condition: {
+                type: 'eq',
+                left: {
+                  type: 'value',
+                  id: 'demo-feedback',
+                },
+                right: 'bad',
+              },
+            },
+          ],
+          id: 'demo-feedback-bad-comments',
+        },
+      ],
+    },
+    {
+      title: 'Feedback Recreation',
+      elements: [
+        {
+          type: 'text-input',
+          label: 'Why did you choose "Bad"?',
+          description: "We'd be happy to hear your feedback.",
+          helperText: '',
+          required: true,
+          rows: 3,
+          id: 'feedback-bad-reason',
+        },
+        {
+          type: 'text-input',
+          label: 'Any additional comments that you want to leave?',
+          description: "Anything that isn't already covered by the above field.",
+          helperText: '',
+          required: true,
+          rows: 3,
+          effects: [],
+          id: 'feedback-bad-comments',
+        },
+      ],
+    },
   ],
+  refs: {
+    conditions: {
+      'feedback-bad-chosen': {
+        type: 'eq',
+        left: {
+          type: 'value',
+          id: 'feedback',
+        },
+        right: 'bad',
+      },
+    },
+  },
 };
